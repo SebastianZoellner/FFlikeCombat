@@ -6,18 +6,27 @@
             "id": "e33d45f7-0d50-4e6c-b37e-a8c72439fa30",
             "actions": [
                 {
-                    "name": "Attack",
+                    "name": "Select",
                     "type": "Button",
-                    "id": "7ee99f07-a8b3-457e-afea-3ff1c9365de8",
+                    "id": "56a97cdb-1a1e-4795-a160-b1aff845160a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Select",
+                    "name": "Explore",
                     "type": "Button",
-                    "id": "56a97cdb-1a1e-4795-a160-b1aff845160a",
+                    "id": "3eb29fc0-2530-49db-a715-e06c4defae4c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "7ee99f07-a8b3-457e-afea-3ff1c9365de8",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -31,9 +40,40 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Deselect",
+                    "type": "Button",
+                    "id": "e9a154a2-cfca-4804-a953-93fdcaf47486",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
+                {
+                    "name": "",
+                    "id": "7ec89cfb-7249-4e9e-a4c9-204fac1e079d",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Explore",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "98fff3dc-f7bd-4d36-b181-d13c08d74d68",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Select",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
                 {
                     "name": "",
                     "id": "9e26c6cc-8ea8-48c7-8d7e-e7cce6862dbb",
@@ -47,23 +87,23 @@
                 },
                 {
                     "name": "",
-                    "id": "98fff3dc-f7bd-4d36-b181-d13c08d74d68",
-                    "path": "<Mouse>/leftButton",
+                    "id": "2232c5fe-7795-4c3b-bf01-ce566f9ff2a1",
+                    "path": "<Keyboard>/2",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Select",
+                    "groups": "Keyboard",
+                    "action": "Attack 2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "2232c5fe-7795-4c3b-bf01-ce566f9ff2a1",
-                    "path": "<Keyboard>/2",
+                    "id": "b1eba3ab-024b-48d3-8348-4ab781803cd4",
+                    "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
-                    "action": "Attack 2",
+                    "groups": "Keyboard",
+                    "action": "Deselect",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

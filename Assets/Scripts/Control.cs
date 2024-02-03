@@ -28,18 +28,27 @@ public partial class @Controls: IInputActionCollection2, IDisposable
             ""id"": ""e33d45f7-0d50-4e6c-b37e-a8c72439fa30"",
             ""actions"": [
                 {
-                    ""name"": ""Attack"",
+                    ""name"": ""Select"",
                     ""type"": ""Button"",
-                    ""id"": ""7ee99f07-a8b3-457e-afea-3ff1c9365de8"",
+                    ""id"": ""56a97cdb-1a1e-4795-a160-b1aff845160a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Select"",
+                    ""name"": ""Explore"",
                     ""type"": ""Button"",
-                    ""id"": ""56a97cdb-1a1e-4795-a160-b1aff845160a"",
+                    ""id"": ""3eb29fc0-2530-49db-a715-e06c4defae4c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Attack"",
+                    ""type"": ""Button"",
+                    ""id"": ""7ee99f07-a8b3-457e-afea-3ff1c9365de8"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -53,9 +62,40 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Deselect"",
+                    ""type"": ""Button"",
+                    ""id"": ""e9a154a2-cfca-4804-a953-93fdcaf47486"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7ec89cfb-7249-4e9e-a4c9-204fac1e079d"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Explore"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""98fff3dc-f7bd-4d36-b181-d13c08d74d68"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Select"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
                 {
                     ""name"": """",
                     ""id"": ""9e26c6cc-8ea8-48c7-8d7e-e7cce6862dbb"",
@@ -69,23 +109,23 @@ public partial class @Controls: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""98fff3dc-f7bd-4d36-b181-d13c08d74d68"",
-                    ""path"": ""<Mouse>/leftButton"",
+                    ""id"": ""2232c5fe-7795-4c3b-bf01-ce566f9ff2a1"",
+                    ""path"": ""<Keyboard>/2"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Select"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Attack 2"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""2232c5fe-7795-4c3b-bf01-ce566f9ff2a1"",
-                    ""path"": ""<Keyboard>/2"",
+                    ""id"": ""b1eba3ab-024b-48d3-8348-4ab781803cd4"",
+                    ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack 2"",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Deselect"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -113,9 +153,11 @@ public partial class @Controls: IInputActionCollection2, IDisposable
 }");
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
-        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Select = m_Player.FindAction("Select", throwIfNotFound: true);
+        m_Player_Explore = m_Player.FindAction("Explore", throwIfNotFound: true);
+        m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Attack2 = m_Player.FindAction("Attack 2", throwIfNotFound: true);
+        m_Player_Deselect = m_Player.FindAction("Deselect", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -177,16 +219,20 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     // Player
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
-    private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Select;
+    private readonly InputAction m_Player_Explore;
+    private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Attack2;
+    private readonly InputAction m_Player_Deselect;
     public struct PlayerActions
     {
         private @Controls m_Wrapper;
         public PlayerActions(@Controls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Select => m_Wrapper.m_Player_Select;
+        public InputAction @Explore => m_Wrapper.m_Player_Explore;
+        public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Attack2 => m_Wrapper.m_Player_Attack2;
+        public InputAction @Deselect => m_Wrapper.m_Player_Deselect;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -196,28 +242,40 @@ public partial class @Controls: IInputActionCollection2, IDisposable
         {
             if (instance == null || m_Wrapper.m_PlayerActionsCallbackInterfaces.Contains(instance)) return;
             m_Wrapper.m_PlayerActionsCallbackInterfaces.Add(instance);
-            @Attack.started += instance.OnAttack;
-            @Attack.performed += instance.OnAttack;
-            @Attack.canceled += instance.OnAttack;
             @Select.started += instance.OnSelect;
             @Select.performed += instance.OnSelect;
             @Select.canceled += instance.OnSelect;
+            @Explore.started += instance.OnExplore;
+            @Explore.performed += instance.OnExplore;
+            @Explore.canceled += instance.OnExplore;
+            @Attack.started += instance.OnAttack;
+            @Attack.performed += instance.OnAttack;
+            @Attack.canceled += instance.OnAttack;
             @Attack2.started += instance.OnAttack2;
             @Attack2.performed += instance.OnAttack2;
             @Attack2.canceled += instance.OnAttack2;
+            @Deselect.started += instance.OnDeselect;
+            @Deselect.performed += instance.OnDeselect;
+            @Deselect.canceled += instance.OnDeselect;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
         {
-            @Attack.started -= instance.OnAttack;
-            @Attack.performed -= instance.OnAttack;
-            @Attack.canceled -= instance.OnAttack;
             @Select.started -= instance.OnSelect;
             @Select.performed -= instance.OnSelect;
             @Select.canceled -= instance.OnSelect;
+            @Explore.started -= instance.OnExplore;
+            @Explore.performed -= instance.OnExplore;
+            @Explore.canceled -= instance.OnExplore;
+            @Attack.started -= instance.OnAttack;
+            @Attack.performed -= instance.OnAttack;
+            @Attack.canceled -= instance.OnAttack;
             @Attack2.started -= instance.OnAttack2;
             @Attack2.performed -= instance.OnAttack2;
             @Attack2.canceled -= instance.OnAttack2;
+            @Deselect.started -= instance.OnDeselect;
+            @Deselect.performed -= instance.OnDeselect;
+            @Deselect.canceled -= instance.OnDeselect;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -246,8 +304,10 @@ public partial class @Controls: IInputActionCollection2, IDisposable
     }
     public interface IPlayerActions
     {
-        void OnAttack(InputAction.CallbackContext context);
         void OnSelect(InputAction.CallbackContext context);
+        void OnExplore(InputAction.CallbackContext context);
+        void OnAttack(InputAction.CallbackContext context);
         void OnAttack2(InputAction.CallbackContext context);
+        void OnDeselect(InputAction.CallbackContext context);
     }
 }

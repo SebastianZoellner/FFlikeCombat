@@ -4,16 +4,29 @@ using System;
 
 public class CharacterHealth : MonoBehaviour
 {
-    [SerializeField] float startingHealth;
-    [SerializeField] float presentHealth;
+    public static Action<CharacterHealth> OnAnyPCDied=delegate { };
+    public static Action<CharacterHealth> OnAnyEnemyDied = delegate { };
 
+    public Action OnHealthChanged = delegate { };
+
+    public float StartingHealth { get; private set; }
+    public float PresentHealth { get; private set; }
+
+    public SelectionIndicator selectionIndicator { get; private set; }
+    public CharacterStats Stats { get; private set; }
+
+    private void Awake()
+    {
+        selectionIndicator = GetComponent<SelectionIndicator>();
+        Stats = GetComponent<CharacterStats>();
+    }
 
     private void Start()
     {
-        presentHealth = startingHealth;
+        PresentHealth = StartingHealth;
     }
 
-    public float GetHealth() => presentHealth;
+    //public float GetHealth() => PresentHealth;
 
 
     public void TakeDamage(float damage)
@@ -24,22 +37,29 @@ public class CharacterHealth : MonoBehaviour
 
     public void SetStartingHealth(float startingHealth)
     {
-        this.startingHealth = startingHealth;
+        this.StartingHealth = startingHealth;
     }
 
 
 
     private void ChangeHealth(float change)
     {
-        presentHealth += change;
-        if (presentHealth > startingHealth)
-            presentHealth = startingHealth;
-        if (presentHealth <= 0)
+        PresentHealth += change;
+        if (PresentHealth > StartingHealth)
+            PresentHealth = StartingHealth;
+
+        OnHealthChanged.Invoke();
+        if (PresentHealth <= 0)
             Die();
     }
 
     private void Die()
     {
+        if (GetComponent<PCController>())
+            OnAnyPCDied.Invoke(this);
+        else
+            OnAnyEnemyDied.Invoke(this);
+
         Destroy(gameObject);
     }
 }

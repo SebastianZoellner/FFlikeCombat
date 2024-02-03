@@ -8,6 +8,7 @@ public class CharacterSO : ScriptableObject
     public string CharacterName;
    public PowerSO[] powerArray;
     public float startingHealth;
+    
 
     public bool HasPowerID(int powerId)
     {

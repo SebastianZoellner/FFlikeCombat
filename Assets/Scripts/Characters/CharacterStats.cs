@@ -6,6 +6,7 @@ public class CharacterStats : MonoBehaviour
 {
     [SerializeField] private CharacterSO character;
 
+    private float defense;
     private void Awake()
     {
         CharacterHealth health = GetComponent<CharacterHealth>();
@@ -17,4 +18,11 @@ public class CharacterStats : MonoBehaviour
     public PowerSO GetPower(int index) => character.GetPower(index);
     public bool HasPowerID(int index) => character.HasPowerID(index);
     public int GetNumbeOfPowers() => character.powerArray.Length;
+    public float GetDefenseValue() => defense;
+
+    public void SetDefense(float powerDefenseValue)
+    {
+        defense = powerDefenseValue;
+    }
+
 }

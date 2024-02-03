@@ -19,10 +19,11 @@ public class AIBrain : MonoBehaviour
     {
         CharacterHealth target = lastTarget;
 
-        foreach (PCController pcc in characterManager.playerCharacterArray)
+        foreach (PCController pcc in characterManager.playerCharacterList)
         {
+            Debug.Log("Evaluating " + pcc.GetName());
             CharacterHealth health = pcc.GetComponent<CharacterHealth>();
-            if (target.GetHealth() > health.GetHealth())
+            if (!target || target.PresentHealth > health.PresentHealth)
                 target = health;
         }
         return target;

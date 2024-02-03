@@ -12,11 +12,12 @@ public class TurnManager : MonoBehaviour
 
     private EnemyController activeEnemy;
     private int activeEnemyId;
+    
 
 
     private void OnEnable()
     {
-        foreach (PCController pcc in characterManager.playerCharacterArray)
+        foreach (PCController pcc in characterManager.playerCharacterList)
         {
             pcc.OnHasActed += PCC_OnHasActed;
         }
@@ -29,7 +30,7 @@ public class TurnManager : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (PCController pcc in characterManager.playerCharacterArray)
+        foreach (PCController pcc in characterManager.playerCharacterList)
         {
             pcc.OnHasActed -= PCC_OnHasActed;
         }
@@ -38,17 +39,19 @@ public class TurnManager : MonoBehaviour
     private void StartPlayerTurn()
     {
         turnNumber++;
+        Debug.Log("Starting Turn " + turnNumber);
         charactersActed = 0;
-        foreach (PCController pcc in characterManager.playerCharacterArray)
+        foreach (PCController pcc in characterManager.playerCharacterList)
         {
             pcc.StartTurn(turnNumber);
+            pcc.GetComponent<StatusManager>().StartTurn();
         }
     }
 
     private void PCC_OnHasActed()
     {
         charactersActed++;
-        if (charactersActed == characterManager.playerCharacterArray.Length)
+        if (charactersActed == characterManager.playerCharacterList.Count)
             EndPlayerTurn(); ;
     }
 
@@ -61,14 +64,19 @@ public class TurnManager : MonoBehaviour
     private void EnemyTurn()
     {
         activeEnemyId = 0;
+        foreach (EnemyController ec in characterManager.enemyList)
+        {          
+            ec.GetComponent<StatusManager>().StartTurn();
+        }
+
         TakeNextTurn();
     }
 
     private void TakeNextTurn()
     {
-        if (activeEnemyId < characterManager.enemyArray.Length)
+        if (activeEnemyId < characterManager.enemyList.Count)
         {
-            activeEnemy = characterManager.enemyArray[activeEnemyId];
+            activeEnemy = characterManager.enemyList[activeEnemyId];
             activeEnemy.OnTurnFinished += ActiveEnemy_OnTurnFinished;
             activeEnemy.TakeTurn();
         }

@@ -3,10 +3,15 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class InputReader : MonoBehaviour,Controls.IPlayerActions
+public class InputReader : MonoBehaviour, Controls.IPlayerActions
 {
-    public event Action <int> OnAttackSelected = delegate { };
-    public event Action<CharacterHealth> OnTargetSelected = delegate { };
+    public static event Action<Entity> OnSelectedEntityChanged = delegate { };
+    
+    public static Entity SelectedEntity { get; private set; }
+
+    public event Action<int> OnAttackSelected = delegate { };
+    public event Action<CharacterHealth> OnCharacterSelected = delegate { };
+    public event Action OnDeselected = delegate { };
 
     [SerializeField] private LayerMask SelectableLayerMask;
     private Controls controls;
@@ -24,23 +29,66 @@ public class InputReader : MonoBehaviour,Controls.IPlayerActions
         controls.Player.Disable();
     }
 
+    //----------------------------------------------
+    //       public functions
+    //----------------------------------------------
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (!context.performed) return;
         PowerButton(1);
     }
 
     public void OnAttack2(InputAction.CallbackContext context)
     {
+        if (!context.performed) return;
         PowerButton(2);
     }
 
     public void OnSelect(InputAction.CallbackContext context)
     {
-        CharacterHealth targetHealth=GetTarget();
+        if (!context.performed) return;
+
+        //We will want to check if action is ongoing 
+
+        CharacterHealth targetHealth = GetTarget<CharacterHealth>();
+
         if (targetHealth)
-            OnTargetSelected.Invoke(targetHealth);
+        {
+            OnCharacterSelected.Invoke(targetHealth);
+        }
+        else
+            OnCharacterSelected.Invoke(null);     
     }
+
+    public void OnExplore(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+
+        Entity entity = GetTarget<Entity>();
+
+        if (entity)
+        {
+            OnSelectedEntityChanged.Invoke(entity);
+            SelectedEntity = entity;
+        }
+        else
+        {
+            OnSelectedEntityChanged.Invoke(null);
+            SelectedEntity = null;
+        }
+    }
+
+    public void OnDeselect(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        OnDeselected.Invoke();
+        OnSelectedEntityChanged.Invoke(null);
+        SelectedEntity = null;
+    }
+    //---------------------------------------------
+    //     private functions
+    //---------------------------------------------
 
     IEnumerator DisableKeyboard()
     {
@@ -49,13 +97,11 @@ public class InputReader : MonoBehaviour,Controls.IPlayerActions
         keysDisabled = false;
     }
 
-    
-
     private void PowerButton(int powerId)
     {
         if (keysDisabled)
             return;
-       // Debug.Log("Attack Signal "+powerId);
+        
         OnAttackSelected.Invoke(powerId);
         StartCoroutine(DisableKeyboard());
     }
@@ -65,20 +111,23 @@ public class InputReader : MonoBehaviour,Controls.IPlayerActions
         return Mouse.current.position.ReadValue();
     }
 
-    private CharacterHealth GetTarget()
+    
+    private T GetTarget<T>()
     {
         Ray ray = Camera.main.ScreenPointToRay(GetMouseScreenPosition());
-        CharacterHealth targetHealth;
+        T target;
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, SelectableLayerMask))
         {
-            targetHealth=raycastHit.collider.GetComponentInParent<CharacterHealth>();
+            target = raycastHit.collider.GetComponentInParent<T>();
             //Debug.Log("Ray hit " +raycastHit.collider.name+ "Component "+targetHealth.name);
-            return targetHealth;
+            return target;
         }
         else
         {
-            return null;
+            return default(T);
         }
     }
+
+
 }

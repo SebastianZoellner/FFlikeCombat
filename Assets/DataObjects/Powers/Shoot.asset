@@ -14,3 +14,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDamage: 2
   maxDamage: 3
+  attack: 0
+  defense: 0
+  successEffectArray:
+  - level: 2
+    status: 0
+    intensity: 1
+    duration: 2
+  - level: 3
+    status: 0
+    intensity: 1
+    duration: 3
+  - level: 0
+    status: 0
+    intensity: 2
+    duration: 3

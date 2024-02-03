@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,9 +9,36 @@ public class PowerSO : ScriptableObject
 {
     [SerializeField] float minDamage;
     [SerializeField] float maxDamage;
+    public float attack;
+    public float defense;
+    [SerializeField] SuccessEffect[] successEffectArray;
+    public string buttonName;
+    public Sprite icon;
+
 
     public float GetDamage()
     {
-        return Random.Range(minDamage, maxDamage);
+        return UnityEngine.Random.Range(minDamage, maxDamage);
     }
+
+    public (StatusName,float,int) GetStatusEffect(int successLevel)
+    {
+        foreach(SuccessEffect se in successEffectArray)
+        {
+            if (successLevel == se.level)
+                return (se.status, se.intensity,se.duration);
+        }
+        return (StatusName.None, 0,0);
+    }
+}
+
+
+[Serializable]
+public struct SuccessEffect
+{
+    public int level;
+    public StatusName status;
+    public float intensity;
+    public int duration;
+
 }
