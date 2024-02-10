@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class InputReader : MonoBehaviour, Controls.IPlayerActions
@@ -49,6 +50,11 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     {
         if (!context.performed) return;
 
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            //Debug.Log("Mouse is over UI element!");
+            return;
+        }
         //We will want to check if action is ongoing 
 
         CharacterHealth targetHealth = GetTarget<CharacterHealth>();
@@ -64,6 +70,12 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public void OnExplore(InputAction.CallbackContext context)
     {
         if (!context.performed) return;
+
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            //Debug.Log("Mouse is over UI element!");
+            return;
+        }
 
         Entity entity = GetTarget<Entity>();
 
@@ -114,6 +126,8 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     
     private T GetTarget<T>()
     {
+        
+
         Ray ray = Camera.main.ScreenPointToRay(GetMouseScreenPosition());
         T target;
 

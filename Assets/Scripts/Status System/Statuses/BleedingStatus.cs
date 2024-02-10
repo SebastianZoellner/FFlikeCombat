@@ -33,5 +33,10 @@ public class BleedingStatus : BaseStatus
     {
         //remove bleeding FX
     }
+
+    public override float GetAttributeEffect(Attribute attribute)
+    {
+        return 0;
+    }
 }
 

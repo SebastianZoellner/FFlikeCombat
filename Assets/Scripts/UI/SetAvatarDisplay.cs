@@ -37,6 +37,7 @@ public class SetAvatarDisplay : MonoBehaviour
         display.SetActive(true);
 
         playerName.text = health.Stats.GetName();
+        avatar.sprite = health.Stats.GetIcon();
 
         ChangeHealthBar();
     }

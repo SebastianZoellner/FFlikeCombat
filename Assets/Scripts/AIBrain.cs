@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AIBrain : MonoBehaviour
 {
     public static AIBrain Instance;
     [SerializeField] CharacterManager characterManager;
-
     CharacterHealth lastTarget;
 
     private void Awake()
@@ -21,7 +18,7 @@ public class AIBrain : MonoBehaviour
 
         foreach (PCController pcc in characterManager.playerCharacterList)
         {
-            Debug.Log("Evaluating " + pcc.GetName());
+            //Debug.Log("Evaluating " + pcc.GetName());
             CharacterHealth health = pcc.GetComponent<CharacterHealth>();
             if (!target || target.PresentHealth > health.PresentHealth)
                 target = health;

@@ -28,4 +28,9 @@ public class DamageStatus : BaseStatus
     {
         
     }
+
+    public override float GetAttributeEffect(Attribute attribute)
+    {
+        return 0;
+    }
 }

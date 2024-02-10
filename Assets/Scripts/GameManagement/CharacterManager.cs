@@ -33,14 +33,14 @@ public class CharacterManager : MonoBehaviour
 
     private void Start()
     {
-        SelectNewCharacter(playerCharacterList[0]);
+       // SelectNewCharacter(playerCharacterList[0]);
     }
 
     private void OnDisable()
     {
         input.OnCharacterSelected -= Input_OnCharacterSelected;
         input.OnAttackSelected -= Input_OnAttackSelected;      
-        input.OnDeselected += Input_OnDeselected;
+        input.OnDeselected -= Input_OnDeselected;
         CharacterHealth.OnAnyPCDied -= CharacterHealth_OnAnyPCDied;
         CharacterHealth.OnAnyEnemyDied -= CharacterHealth_OnAnyEnemyDied;
     } 
@@ -52,9 +52,15 @@ public class CharacterManager : MonoBehaviour
     {
         if (actionOngoing)
             return false;
-        //Debug.Log("Starting attack " + attackId);
+        attackID += 1;
+        Debug.Log("Starting attack " + attackID);
         activeCharacter.StartAttack(attackID);
         return true;
+    }
+
+    public void SetSelectedPlayer(PCController selectedPlayer)
+    {
+        SelectNewCharacter(selectedPlayer);
     }
 
     //-----------------------------------------
@@ -84,8 +90,8 @@ public class CharacterManager : MonoBehaviour
             SelectEnemy(health);
             return;
         }
-
-        SelectNewCharacter(selectedPlayer);
+        return;
+        //SelectNewCharacter(selectedPlayer);
     }
 
     private void SelectEnemy(CharacterHealth health)
@@ -105,12 +111,12 @@ public class CharacterManager : MonoBehaviour
         if (!activeCharacter) return;
 
         activeCharacter.SetTarget(null);
-        activeCharacter.SetDeselected();
+       // activeCharacter.SetDeselected();
 
-        OnPlayerSelectedChanged.Invoke(null);
+       // OnPlayerSelectedChanged.Invoke(null);
         OnEnemySelectedChanged.Invoke(null);
 
-        activeCharacter = null;
+        //activeCharacter = null;
     }
 
     private void SelectNewCharacter(PCController newCharacter)

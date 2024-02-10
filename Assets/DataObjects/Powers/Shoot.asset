@@ -29,3 +29,8 @@ MonoBehaviour:
     status: 0
     intensity: 2
     duration: 3
+  buttonName: Gunshot
+  icon: {fileID: 0}
+  setupTime: 0.01
+  recoveryTime: 0.5
+  range: 4

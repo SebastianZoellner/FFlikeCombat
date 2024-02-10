@@ -14,7 +14,9 @@ public class PowerSO : ScriptableObject
     [SerializeField] SuccessEffect[] successEffectArray;
     public string buttonName;
     public Sprite icon;
-
+    public float setupTime;
+    public float recoveryTime;
+    public float range;
 
     public float GetDamage()
     {

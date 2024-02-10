@@ -1,24 +1,22 @@
 using UnityEngine;
+using HighlightPlus;
 
 public class SelectionIndicator : MonoBehaviour
 {
-    [SerializeField] Material selectedMaterial;
-    private Material oldMaterial;
-    private MeshRenderer meshRenderer;
+    private HighlightEffect highlightEffect;
 
     private void Awake()
     {
-        meshRenderer = GetComponentInChildren<MeshRenderer>();
+        highlightEffect = GetComponent<HighlightEffect>();
     }
 
     public void SetSelected()
     {
-        oldMaterial = meshRenderer.material;
-        meshRenderer.material = selectedMaterial;
+        highlightEffect.highlighted = true;
     }
 
     public void SetDeselected()
     {
-        meshRenderer.material = oldMaterial;
+       highlightEffect.highlighted=false;
     }
 }

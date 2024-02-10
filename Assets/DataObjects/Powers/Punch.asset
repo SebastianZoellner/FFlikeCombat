@@ -16,3 +16,9 @@ MonoBehaviour:
   maxDamage: 2
   attack: 10
   defense: 10
+  successEffectArray: []
+  buttonName: Punch
+  icon: {fileID: 0}
+  setupTime: 0.1
+  recoveryTime: 0.4
+  range: 2

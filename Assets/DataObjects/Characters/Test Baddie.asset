@@ -17,3 +17,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 99054659b0f16f047b6fab2c1266e5f8, type: 2}
   - {fileID: 11400000, guid: 307dbe79fc3df9046a4810d07d7ac1e6, type: 2}
   startingHealth: 20
+  attributeArray:
+  - attribute: 2
+    value: 10
+  - attribute: 5
+    value: 10
+  icon: {fileID: 21300000, guid: 482fa146bc489044eb41bc1595b45d3d, type: 3}

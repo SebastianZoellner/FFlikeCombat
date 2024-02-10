@@ -10,11 +10,12 @@ public class PCController : MonoBehaviour
 
     [SerializeField] private CharacterHealth target;
 
-    private CharacterCombat combat;
+    //private CharacterCombat combat;
+    private CharacterInitiative initiative;
     public CharacterStats stats { get; private set; }
     private SelectionIndicator selectionIndicator;// { get; private set; }
 
-    private bool hasActed;
+    //private bool hasActed;
 
     //---------------------------------------------
     //      Lifecycle Functions
@@ -22,20 +23,21 @@ public class PCController : MonoBehaviour
 
     private void Awake()
     {
-        combat = GetComponent<CharacterCombat>();
+        //combat = GetComponent<CharacterCombat>();
         stats = GetComponent<CharacterStats>();
+        initiative = GetComponent<CharacterInitiative>();
         selectionIndicator = GetComponent<SelectionIndicator>();
     }
 
     private void OnEnable()
     {
-        combat.OnAttackFinished += Combat_OnAttackFinished;
+       // combat.OnAttackFinished += Combat_OnAttackFinished;
     }
 
 
     private void OnDisable()
     {
-        combat.OnAttackFinished -= Combat_OnAttackFinished;
+       // combat.OnAttackFinished -= Combat_OnAttackFinished;
     }
     //---------------------------------------------
     //      Basic Getters
@@ -47,6 +49,8 @@ public class PCController : MonoBehaviour
     //      Public Methods
     //----------------------------------------------
 
+    public void StartTurn(int turnNumber) { }
+    
     public void SetSelected()
     {
         if (target)
@@ -63,24 +67,19 @@ public class PCController : MonoBehaviour
         selectionIndicator.SetDeselected();
     }
 
-    public void StartTurn(int turnNumber)
-    {
-        hasActed = false;
-    }
+    
 
     public void StartAttack(int powerId)
     {
-        if (hasActed)
-        {
-            Debug.Log(stats.GetName() + " has acted");
-            return;
-        }
+       
         if (!stats.HasPowerID(powerId - 1))
             return;
+        if (!target)
+            return;
 
-        OnActionStarted.Invoke();
+        //OnActionStarted.Invoke();
 
-        combat.Attack(stats.GetPower(powerId - 1), target);
+        initiative.ReadyAttack(stats.GetPower(powerId - 1), target);
     }
 
 
@@ -94,16 +93,4 @@ public class PCController : MonoBehaviour
         //Debug.Log("Set new target: " + target.name);
     }
 
-
-
-    //---------------------------------------------
-    //      Private Methods
-    //-----------------------------------------------
-    private void Combat_OnAttackFinished(bool success)
-    {
-        OnActionEnded.Invoke();
-        hasActed = success;
-        if (success)
-            OnHasActed.Invoke();
-    }
 }

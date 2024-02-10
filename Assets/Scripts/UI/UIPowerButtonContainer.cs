@@ -12,11 +12,15 @@ public class UIPowerButtonContainer : MonoBehaviour
     private void Awake()
     {
         characterManager = FindObjectOfType<CharacterManager>();
+        
     }
     private void OnEnable()
     {
         CharacterManager.OnPlayerSelectedChanged += CharacterManager_OnPlayerSelectedChanged;
+        CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied;
     }
+
+   
 
     private void OnDisable()
     {
@@ -50,5 +54,10 @@ public class UIPowerButtonContainer : MonoBehaviour
         {
             Destroy(tr.gameObject);
         }
+    }
+
+    private void CharacterInitiative_OnAttackReadied(bool arg1, CharacterInitiative arg2)
+    {
+        powerButtonContainer.SetActive(false);
     }
 }

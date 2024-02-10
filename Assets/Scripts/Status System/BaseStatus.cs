@@ -1,3 +1,5 @@
+
+
 public abstract class BaseStatus
 {
     protected int statusIndex;
@@ -14,7 +16,7 @@ public abstract class BaseStatus
         this.duration = duration;
     }
 
-
+    
     public abstract void BeginStatus();
 
 
@@ -25,6 +27,8 @@ public abstract class BaseStatus
 
 
     public abstract void EndStatus();
+
+    public abstract float GetAttributeEffect(Attribute attribute);
 
     public StatusName GetStatusName() => statusName;
 

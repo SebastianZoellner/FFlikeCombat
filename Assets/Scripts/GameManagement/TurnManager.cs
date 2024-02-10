@@ -12,8 +12,8 @@ public class TurnManager : MonoBehaviour
 
     private EnemyController activeEnemy;
     private int activeEnemyId;
-    
 
+    
 
     private void OnEnable()
     {
@@ -44,7 +44,7 @@ public class TurnManager : MonoBehaviour
         foreach (PCController pcc in characterManager.playerCharacterList)
         {
             pcc.StartTurn(turnNumber);
-            pcc.GetComponent<StatusManager>().StartTurn();
+            pcc.GetComponent<StatusManager>().StartTurn(turnNumber);
         }
     }
 
@@ -66,7 +66,7 @@ public class TurnManager : MonoBehaviour
         activeEnemyId = 0;
         foreach (EnemyController ec in characterManager.enemyList)
         {          
-            ec.GetComponent<StatusManager>().StartTurn();
+            ec.GetComponent<StatusManager>().StartTurn(turnNumber);
         }
 
         TakeNextTurn();

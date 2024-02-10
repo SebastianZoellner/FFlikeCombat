@@ -18,17 +18,40 @@ public class StatusManager : MonoBehaviour
         activeStatusList = new List<BaseStatus>();
 
     }
-
-
-    public void StartTurn()
+    private void OnEnable()
     {
-        
+        ActionSequencer.OnNewRoundStarted += StartTurn;
+    }
+
+    private void OnDisable()
+    {
+        ActionSequencer.OnNewRoundStarted -= StartTurn;
+    }
+
+    public void StartTurn(int turn)
+    {     
         foreach (BaseStatus bs in activeStatusList)
         {
             bs.OnTurnStart();
-        }
+        }    
+    }
 
-       
+    public void AcivateCharacter()
+    {
+        foreach (BaseStatus bs in activeStatusList)
+        {
+            bs.OnActivation();
+        }
+    }
+
+    public float GetAttributeModifiers(Attribute attribute)
+    {
+        float modifiers = 0;
+        foreach (BaseStatus bs in activeStatusList)
+        {
+            modifiers+=bs.GetAttributeEffect(attribute);
+        }
+        return modifiers;
     }
 
     public void GainStatus(StatusName newStatusName, float intensity, int duration)
@@ -43,14 +66,15 @@ public class StatusManager : MonoBehaviour
             case StatusName.Damage:
                 newStatus = new DamageStatus(this, activeStatusList.Count, intensity, 0);
                 break;
-
+            case StatusName.Entangled:
+                newStatus = new EntangleStatus(this, activeStatusList.Count, intensity, duration);
+                break;
         }
         if (newStatus == null)
             return;
 
         activeStatusList.Add(newStatus);
         newStatus.BeginStatus();
-
     }
 
     public void LoseStatus(int statusIndex)

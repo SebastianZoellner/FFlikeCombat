@@ -5,7 +5,7 @@ public class LevelSetup : MonoBehaviour
 {
     private void Awake()
     {
-        SceneManager.LoadScene("UI", LoadSceneMode.Additive);
-        Debug.Log("Loaded?");
+        SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
+        
     }
 }

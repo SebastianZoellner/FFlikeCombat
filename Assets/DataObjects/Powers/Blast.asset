@@ -14,3 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDamage: 3
   maxDamage: 5
+  attack: 0
+  defense: 0
+  successEffectArray: []
+  buttonName: Blast
+  icon: {fileID: 0}
+  setupTime: 0.05
+  recoveryTime: 0.5
+  range: 5

@@ -25,3 +25,8 @@ MonoBehaviour:
     status: 2
     intensity: 10
     duration: 0
+  buttonName: Haymaker
+  icon: {fileID: 0}
+  setupTime: 0.2
+  recoveryTime: 0.7
+  range: 2

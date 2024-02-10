@@ -23,6 +23,7 @@ public class UIPowerButton : MonoBehaviour
 
     public void PowerButtonPressed()
     {
+        Debug.Log("Calling power " + powerID);
         characterManager.PressAttackButton(powerID);
     }
 }
