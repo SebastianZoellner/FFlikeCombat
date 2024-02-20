@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: ClubHit
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 6cfc2e18cce4645cba8eed977d53550f, type: 3}
+  - {fileID: 8300000, guid: f69fccea9345047d39311370961385d4, type: 3}
+  - {fileID: 8300000, guid: 8246d63b6e5f4467bb3e5f9eca0d1198, type: 3}
+  - {fileID: 8300000, guid: 6dc20e20794494ec99d6e313e1a75954, type: 3}
+  - {fileID: 8300000, guid: b4f8ac1b615824fd0bef068a89ceb989, type: 3}
+  - {fileID: 8300000, guid: aa83d29290693469285945505f89162a, type: 3}
+  volumeRange: {x: 0.9, y: 1.1}
+  pitchRange: {x: 0.9, y: 1.1}
+  distance: {x: 1, y: 498.17044}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

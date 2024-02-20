@@ -7,8 +7,11 @@ public class CharacterManager : MonoBehaviour
 {
     public static event Action<CharacterHealth> OnPlayerSelectedChanged = delegate { };
     public static event Action<CharacterHealth> OnEnemySelectedChanged = delegate { };
+    public static event Action<CharacterInitiative> OnCharacterAdded = delegate { };
+    public static event Action OnAllHeroesDead = delegate { };
+    public static event Action OnAllEnemiesDead = delegate { };
 
-    public List<PCController> playerCharacterList;
+    public List<PCController> heroList;
     public List<EnemyController> enemyList;
 
     [SerializeField] InputReader input;
@@ -16,6 +19,7 @@ public class CharacterManager : MonoBehaviour
     private PCController activeCharacter;
 
     private bool actionOngoing;
+    private bool allEnemiesSpawned = false;
 
 
     //-----------------------------------------
@@ -31,11 +35,6 @@ public class CharacterManager : MonoBehaviour
         CharacterHealth.OnAnyEnemyDied+= CharacterHealth_OnAnyEnemyDied;
     }
 
-    private void Start()
-    {
-       // SelectNewCharacter(playerCharacterList[0]);
-    }
-
     private void OnDisable()
     {
         input.OnCharacterSelected -= Input_OnCharacterSelected;
@@ -48,19 +47,40 @@ public class CharacterManager : MonoBehaviour
     //      Public Methods
     //-----------------------------------------
 
-    public bool PressAttackButton(int attackID)
+    public bool PressAttackButton(PowerSO power)
     {
         if (actionOngoing)
             return false;
-        attackID += 1;
-        Debug.Log("Starting attack " + attackID);
-        activeCharacter.StartAttack(attackID);
+       
+       // Debug.Log("Starting attack " + attackID);
+        activeCharacter.StartAttack(power);
         return true;
     }
 
     public void SetSelectedPlayer(PCController selectedPlayer)
     {
         SelectNewCharacter(selectedPlayer);
+    }
+    public void AddEnemy(EnemyController enemy)
+    {
+        if (enemy)
+        {
+            enemyList.Add(enemy);
+            OnCharacterAdded.Invoke(enemy.GetComponent<CharacterInitiative>());
+        }
+    }
+    public void AddHero(PCController hero)
+    {
+        if (hero)
+        {
+            heroList.Add(hero);
+            OnCharacterAdded.Invoke(hero.GetComponent<CharacterInitiative>());
+        }
+    }
+
+    public void SetAllEnemiesSpawned()
+    {
+        allEnemiesSpawned = true ;
     }
 
     //-----------------------------------------
@@ -71,8 +91,12 @@ public class CharacterManager : MonoBehaviour
     {
         if (actionOngoing)
             return;
-        //Debug.Log("Starting attack " + attackId);
-        activeCharacter.StartAttack(attackId);
+        PowerSO[] availablePowers = activeCharacter.stats.GetAvailablePowers();
+        if (attackId < availablePowers.Length)
+        {
+            //Debug.Log("Starting attack " + attackId);
+            activeCharacter.StartAttack(availablePowers[attackId]);
+        }
     }
 
     private void Input_OnCharacterSelected(CharacterHealth health)
@@ -148,12 +172,25 @@ public class CharacterManager : MonoBehaviour
     private void CharacterHealth_OnAnyPCDied(CharacterHealth deadPCHealth)
     {
         PCController deadPC = deadPCHealth.GetComponent<PCController>();
-        playerCharacterList.Remove(deadPC);
+        heroList.Remove(deadPC);
+        if (heroList.Count == 0)
+            OnAllHeroesDead.Invoke();
     }
 
     private void CharacterHealth_OnAnyEnemyDied(CharacterHealth deadEnemyHealth)
     {
         EnemyController deadEnemy = deadEnemyHealth.GetComponent<EnemyController>();
         enemyList.Remove(deadEnemy);
+
+        if(enemyList.Count==0)
+        {
+            if (allEnemiesSpawned)
+                OnAllEnemiesDead.Invoke();
+            else
+            {
+                //we need some way to skip player actions
+            }
+
+        }
     }
 }

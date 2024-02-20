@@ -57,6 +57,8 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
         }
         //We will want to check if action is ongoing 
 
+       // Debug.Log("Select Button Down");
+
         CharacterHealth targetHealth = GetTarget<CharacterHealth>();
 
         if (targetHealth)
@@ -77,6 +79,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
             return;
         }
 
+        Debug.Log("Explore button down");
         Entity entity = GetTarget<Entity>();
 
         if (entity)
@@ -126,15 +129,15 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     
     private T GetTarget<T>()
     {
-        
 
+        //Debug.Log("Get Target Called");
         Ray ray = Camera.main.ScreenPointToRay(GetMouseScreenPosition());
         T target;
 
         if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, SelectableLayerMask))
         {
             target = raycastHit.collider.GetComponentInParent<T>();
-            //Debug.Log("Ray hit " +raycastHit.collider.name+ "Component "+targetHealth.name);
+            //Debug.Log("Ray hit " +raycastHit.collider.name+ "Component ");
             return target;
         }
         else

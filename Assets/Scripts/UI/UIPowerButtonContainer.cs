@@ -38,13 +38,13 @@ public class UIPowerButtonContainer : MonoBehaviour
 
         powerButtonContainer.SetActive(true);
 
-        int numberOfPowers = health.Stats.GetNumbeOfPowers();
+        PowerSO[] availablePowerArray = health.Stats.GetAvailablePowers();
 
-        for(int i = 0; i < numberOfPowers; ++i)
+        foreach(PowerSO pow in availablePowerArray)
         {
             GameObject newButton=Instantiate(powerButtonObject, powerButtonContainer.transform);
 
-            newButton.GetComponent<UIPowerButton>().Setup(health.Stats.GetPower(i),characterManager, i);
+            newButton.GetComponent<UIPowerButton>().Setup(pow,characterManager);
         }
     }
 

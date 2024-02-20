@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Blaster
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 6356905e93d4c42409461c51843a89ea, type: 3}
+  - {fileID: 8300000, guid: 6c557d6b4c4b38448896b64147d1a394, type: 3}
+  - {fileID: 8300000, guid: 82afa2061d07c4c45b281d036331b248, type: 3}
+  - {fileID: 8300000, guid: 2b3e7026338742d4f923d744ded4e401, type: 3}
+  - {fileID: 8300000, guid: 8da42433c66cd424a9b6555b20ebe549, type: 3}
+  volumeRange: {x: 0.9686357, y: 1}
+  pitchRange: {x: 0.94058204, y: 1.1287681}
+  distance: {x: 1, y: 449.38144}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

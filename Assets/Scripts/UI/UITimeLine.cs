@@ -18,14 +18,17 @@ public class UITimeLine : MonoBehaviour
     private void Awake()
     {
         actionSequencer = FindObjectOfType<ActionSequencer>();
+        placedIconsList = new List<PlacedIcons>();
     }
 
     private void OnEnable()
     {
-        
+        CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
         actionSequencer.OnCharacterRemoved += ActionSequencer_OnCharacterRemoved;
         CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied;
     }
+
+    
 
     private void Start()
     {
@@ -47,6 +50,7 @@ public class UITimeLine : MonoBehaviour
 
     private void OnDisable()
     {
+        CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
         actionSequencer.OnCharacterRemoved -= ActionSequencer_OnCharacterRemoved;
         CharacterInitiative.OnAttackReadied -= CharacterInitiative_OnAttackReadied;
     }
@@ -67,25 +71,38 @@ public class UITimeLine : MonoBehaviour
 
     private void InitializeActionSequence() 
     {
-        placedIconsList = new List<PlacedIcons>();
-
        List<CharacterInitiative> characterList = actionSequencer.GetCharacters();
         foreach (CharacterInitiative ci in characterList)
         {
-            GameObject newIcon = Instantiate(IconObject, timeline);
-            Image image = newIcon.GetComponent<Image>();
-            image.sprite = ci.GetComponent<CharacterStats>().GetIcon();
             
-            PlacedIcons newPlacedIcon;
-            //newPlacedIcon.time = ci.nextActionTime;
-            newPlacedIcon.Icon = newIcon;
-            newPlacedIcon.initiative = ci;
-
-            MoveIcon(newPlacedIcon);
-            placedIconsList.Add(newPlacedIcon);
+            if(!IsPlaced(ci))
+            PlaceIcon(ci);
         }
-    
     }
+
+    private bool IsPlaced(CharacterInitiative initiative)
+    {
+        foreach (PlacedIcons pi in placedIconsList)
+            if (pi.initiative == initiative)
+                return true;
+        return false;
+    }
+
+    private void PlaceIcon(CharacterInitiative ci)
+    {
+        GameObject newIcon = Instantiate(IconObject, timeline);
+        Image image = newIcon.GetComponent<Image>();
+        image.sprite = ci.GetComponent<CharacterStats>().GetIcon();
+
+        PlacedIcons newPlacedIcon;
+        //newPlacedIcon.time = ci.nextActionTime;
+        newPlacedIcon.Icon = newIcon;
+        newPlacedIcon.initiative = ci;
+
+        MoveIcon(newPlacedIcon);
+        placedIconsList.Add(newPlacedIcon);
+    }
+
     private void MoveIcon(PlacedIcons icon)
     {
         Vector2 targetPosition = new Vector2((icon.initiative.nextActionTime - baseTime) * scalingFactor, 0);
@@ -102,6 +119,12 @@ public class UITimeLine : MonoBehaviour
             pi.Icon.GetComponent<UITimeLineButton>().SetReadyIndicator(readied);
             break;
         }
+    }
+
+    private void CharacterManager_OnCharacterAdded(CharacterInitiative initiative)
+    {
+        if (!IsPlaced(initiative))
+            PlaceIcon(initiative);
     }
 }
 

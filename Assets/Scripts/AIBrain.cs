@@ -16,7 +16,7 @@ public class AIBrain : MonoBehaviour
     {
         CharacterHealth target = lastTarget;
 
-        foreach (PCController pcc in characterManager.playerCharacterList)
+        foreach (PCController pcc in characterManager.heroList)
         {
             //Debug.Log("Evaluating " + pcc.GetName());
             CharacterHealth health = pcc.GetComponent<CharacterHealth>();

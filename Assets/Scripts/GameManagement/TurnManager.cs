@@ -17,7 +17,7 @@ public class TurnManager : MonoBehaviour
 
     private void OnEnable()
     {
-        foreach (PCController pcc in characterManager.playerCharacterList)
+        foreach (PCController pcc in characterManager.heroList)
         {
             pcc.OnHasActed += PCC_OnHasActed;
         }
@@ -30,7 +30,7 @@ public class TurnManager : MonoBehaviour
 
     private void OnDisable()
     {
-        foreach (PCController pcc in characterManager.playerCharacterList)
+        foreach (PCController pcc in characterManager.heroList)
         {
             pcc.OnHasActed -= PCC_OnHasActed;
         }
@@ -41,17 +41,17 @@ public class TurnManager : MonoBehaviour
         turnNumber++;
         Debug.Log("Starting Turn " + turnNumber);
         charactersActed = 0;
-        foreach (PCController pcc in characterManager.playerCharacterList)
+        foreach (PCController pcc in characterManager.heroList)
         {
-            pcc.StartTurn(turnNumber);
-            pcc.GetComponent<StatusManager>().StartTurn(turnNumber);
+            //pcc.StartTurn(turnNumber);
+            //pcc.GetComponent<StatusManager>().StartTurn(turnNumber);
         }
     }
 
     private void PCC_OnHasActed()
     {
         charactersActed++;
-        if (charactersActed == characterManager.playerCharacterList.Count)
+        if (charactersActed == characterManager.heroList.Count)
             EndPlayerTurn(); ;
     }
 
@@ -66,7 +66,7 @@ public class TurnManager : MonoBehaviour
         activeEnemyId = 0;
         foreach (EnemyController ec in characterManager.enemyList)
         {          
-            ec.GetComponent<StatusManager>().StartTurn(turnNumber);
+            //ec.GetComponent<StatusManager>().StartTurn(turnNumber);
         }
 
         TakeNextTurn();

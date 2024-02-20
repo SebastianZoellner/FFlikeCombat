@@ -8,7 +8,7 @@ public class ActionSequencer : MonoBehaviour
     public event Action<CharacterInitiative> OnActionSequenceChanged = delegate { };
     public event Action<CharacterInitiative> OnCharacterRemoved = delegate { };
     public event Action<CharacterInitiative> OncharacterAdded = delegate { };//no use for this right now, but maybe later
-    public static event Action <int> OnNewRoundStarted=delegate{};
+    public static event Action <int> OnNewRoundStarted=delegate{}; //Fires UI, Spawns new Wave, removes fallen enemies
 
     [SerializeField] CharacterManager characterManager;
     [SerializeField] float actionSpeed = 0.02f;
@@ -19,27 +19,29 @@ public class ActionSequencer : MonoBehaviour
     private List<CharacterInitiative> characterInitiativeList;
     private bool listInitialized = false;
 
-    private int round;
-    
+    private int round=0;
+
+
+    private void Awake()
+    {
+        characterInitiativeList = new List<CharacterInitiative>();
+        if (!listInitialized) InitializeCharacterList();
+    }
+
     private void OnEnable()
     {
         CharacterCombat.OnAnyActionFinished += ActionFinished;
         CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied; 
         CharacterHealth.OnAnyPCDied += Remove_Character;
         CharacterHealth.OnAnyEnemyDied += Remove_Character;
-    }
-
-    private void Start()
-    {
-        if(!listInitialized) InitializeCharacterList();
-
-        nextActor=FindNextActor();
-        round = 1;
-        OnNewRoundStarted.Invoke(round);
+        CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
     }
 
     private void Update()
     {
+        if(!nextActor)
+            nextActor = FindNextActor();
+
         if (OngoingAction)
             return;
 
@@ -53,11 +55,11 @@ public class ActionSequencer : MonoBehaviour
 
         if(actionTime>round)
         {
-            ++round;
-            OnNewRoundStarted.Invoke(round);
-            
+            StartNewRound();
         }
     }
+
+    
 
     private void OnDisable()
     {
@@ -65,6 +67,7 @@ public class ActionSequencer : MonoBehaviour
         CharacterInitiative.OnAttackReadied -= CharacterInitiative_OnAttackReadied;
         CharacterHealth.OnAnyPCDied -= Remove_Character;
         CharacterHealth.OnAnyEnemyDied -= Remove_Character;
+        CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
     }
 
     public List<CharacterInitiative> GetCharacters()
@@ -77,21 +80,32 @@ public class ActionSequencer : MonoBehaviour
     //         Private Functions
     //-----------------------------------------------------------------
 
+    private void AddCharacter(CharacterInitiative initiative)
+    {
+        //if (!initiative) return;
+
+        
+
+        initiative.InitializeInitiative(actionTime);
+        characterInitiativeList.Add(initiative);
+
+        if (!nextActor ||initiative.nextActionTime < nextActor.nextActionTime)
+            nextActor = initiative;
+    }
+
     private void InitializeCharacterList()
     {
-        characterInitiativeList = new List<CharacterInitiative>();
-        foreach (PCController pcc in characterManager.playerCharacterList)
+       
+        foreach (PCController pcc in characterManager.heroList)
         {
             CharacterInitiative initiative = pcc.GetComponent<CharacterInitiative>();
-            initiative.InitializeInitiative();
-            characterInitiativeList.Add(initiative);
+            AddCharacter(initiative);
 
         }
         foreach (EnemyController ec in characterManager.enemyList)
         {
             CharacterInitiative initiative = ec.GetComponent<CharacterInitiative>();
-            initiative.InitializeInitiative();
-            characterInitiativeList.Add(initiative);
+            AddCharacter(initiative);
 
         }
         listInitialized = true;
@@ -99,7 +113,7 @@ public class ActionSequencer : MonoBehaviour
 
     private void ActionFinished()
     {
-        Debug.Log("Action finished");
+       // Debug.Log("Action finished");
         OngoingAction = false;
         nextActor = FindNextActor();
     }
@@ -108,7 +122,7 @@ public class ActionSequencer : MonoBehaviour
     {
         if (nextActor.readiedAction)
         {
-            Debug.Log("Perform " + nextActor.readiedAction.buttonName);
+            //Debug.Log("Perform " + nextActor.readiedAction.buttonName);           
             nextActor.PerformReadiedAction();
             return;
         }
@@ -136,8 +150,10 @@ public class ActionSequencer : MonoBehaviour
             if (nextActor == null || ci.nextActionTime < nextActor.nextActionTime)
                 nextActor = ci;
         }
-
-        Debug.Log("Next ActionTime " + nextActor.nextActionTime + " Next Actor " + nextActor.name);
+        if (nextActor)
+            Debug.Log("Next ActionTime " + nextActor.nextActionTime + " Next Actor " + nextActor.name);
+        else
+            Debug.Log("No next Actor set");
         return nextActor;
     }
 
@@ -152,5 +168,16 @@ public class ActionSequencer : MonoBehaviour
     {
         if (isReadied)
             ActionFinished();
+    }
+
+    private void CharacterManager_OnCharacterAdded(CharacterInitiative initiative)
+    {
+        AddCharacter(initiative);
+    }
+
+    private void StartNewRound()
+    {
+        ++round;
+        OnNewRoundStarted.Invoke(round);
     }
 }

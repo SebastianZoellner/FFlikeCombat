@@ -21,4 +21,12 @@ MonoBehaviour:
   icon: {fileID: 0}
   setupTime: 0.05
   recoveryTime: 0.5
-  range: 5
+  range: 8
+  attackAnimation: {fileID: 7400000, guid: 1c8bd50fa59b28b4ca2f7e5aa33f0791, type: 2}
+  projectile: {fileID: 374412159218736769, guid: 2c7bcbcb2d737f9489d477ff196f515f,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 2612828321144929153, guid: 3fe0011d9a75066448694ef451f59859, type: 3}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 6e330c08597749743b14967ae1c67596, type: 2}
+  description: 

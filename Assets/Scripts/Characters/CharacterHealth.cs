@@ -7,6 +7,7 @@ public class CharacterHealth : MonoBehaviour
 {
     public static Action<CharacterHealth> OnAnyPCDied=delegate { };
     public static Action<CharacterHealth> OnAnyEnemyDied = delegate { };
+    public static Action<CharacterHealth> OnHeavyHit = delegate { };
 
     public Action OnHealthChanged = delegate { };
 
@@ -17,12 +18,19 @@ public class CharacterHealth : MonoBehaviour
     public float PresentHealth { get; private set; }
 
     public SelectionIndicator selectionIndicator { get; private set; }
+    public bool canBeTarget { get; private set; }
     public CharacterStats Stats { get; private set; }
+
+    private CharacterAnimator animator;
+
+    
 
     private void Awake()
     {
         selectionIndicator = GetComponent<SelectionIndicator>();
         Stats = GetComponent<CharacterStats>();
+        animator = GetComponent<CharacterAnimator>();
+        
     }
 
     private void OnEnable()
@@ -35,6 +43,7 @@ public class CharacterHealth : MonoBehaviour
     private void Start()
     {
         PresentHealth = StartingHealth;
+        canBeTarget = true;
     }
 
 
@@ -47,10 +56,15 @@ public class CharacterHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        Debug.Log("Taking Damage " + damage);
+        //Debug.Log("Taking Damage " + damage);
         damage=GameSystem.Instance.CalculateArmor(Stats.GetAttribute(Attribute.Armor), damage);
-        Debug.Log("After Armor " + damage);
+        if (damage < 0) damage = 0;
+        //Debug.Log("After Armor " + damage);
+        if (damage > StartingHealth / 2)
+            OnHeavyHit.Invoke(this);
+
         ChangeHealth(-damage);
+        
     }
 
     public void SetStartingHealth(float startingHealth)
@@ -64,7 +78,7 @@ public class CharacterHealth : MonoBehaviour
     {
         if (change > 0)
             healPrefab.Spawn(transform.position+2*Vector3.up, change);
-        else
+        if(change<0)
             damagePrefab.Spawn(transform.position+2*Vector3.up, -change);
 
         PresentHealth += change;
@@ -73,12 +87,19 @@ public class CharacterHealth : MonoBehaviour
 
         OnHealthChanged.Invoke();
         if (PresentHealth <= 0)
+        {
             Die();
+            return;
+        }
+
+        if (change < 0)
+            animator.SetHit();
     }
 
     private void ActionSequencer_OnNewRoundStarted(int obj)
     {
         float recoveredHealth = Stats.GetAttribute(Attribute.Hardiness);
+        if(recoveredHealth!=0)
         ChangeHealth(recoveredHealth);
     }
 
@@ -89,6 +110,8 @@ public class CharacterHealth : MonoBehaviour
         else
             OnAnyEnemyDied.Invoke(this);
 
-        Destroy(gameObject);
+        animator.SetDied();
+        canBeTarget = false;
+        //Destroy(gameObject);
     }
 }

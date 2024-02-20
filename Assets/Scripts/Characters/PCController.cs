@@ -23,7 +23,6 @@ public class PCController : MonoBehaviour
 
     private void Awake()
     {
-        //combat = GetComponent<CharacterCombat>();
         stats = GetComponent<CharacterStats>();
         initiative = GetComponent<CharacterInitiative>();
         selectionIndicator = GetComponent<SelectionIndicator>();
@@ -31,14 +30,10 @@ public class PCController : MonoBehaviour
 
     private void OnEnable()
     {
-       // combat.OnAttackFinished += Combat_OnAttackFinished;
+        CharacterHealth.OnAnyEnemyDied += OnAnyEnemyDied;
     }
 
-
-    private void OnDisable()
-    {
-       // combat.OnAttackFinished -= Combat_OnAttackFinished;
-    }
+    
     //---------------------------------------------
     //      Basic Getters
     //-----------------------------------------------
@@ -48,8 +43,6 @@ public class PCController : MonoBehaviour
     //---------------------------------------------
     //      Public Methods
     //----------------------------------------------
-
-    public void StartTurn(int turnNumber) { }
     
     public void SetSelected()
     {
@@ -69,28 +62,42 @@ public class PCController : MonoBehaviour
 
     
 
-    public void StartAttack(int powerId)
+    public void StartAttack(PowerSO power)
     {
-       
-        if (!stats.HasPowerID(powerId - 1))
-            return;
         if (!target)
             return;
 
-        //OnActionStarted.Invoke();
+        
 
-        initiative.ReadyAttack(stats.GetPower(powerId - 1), target);
+        initiative.ReadyAttack(power, target);
     }
 
 
     public void SetTarget(CharacterHealth targetHealth)
     {
+        if (!targetHealth.canBeTarget)
+            return;
+
         if (target)
             target.selectionIndicator.SetDeselected();
+
         target = targetHealth;
         if(target)
         target.selectionIndicator.SetSelected();
         //Debug.Log("Set new target: " + target.name);
+    }
+
+    //---------------------------------------------
+    //      Private Methods
+    //---------------------------------------------
+
+    private void OnAnyEnemyDied(CharacterHealth deadHealth)
+    {
+        if (deadHealth == target)
+        {
+            target = null;
+            deadHealth.selectionIndicator.SetDeselected();
+        }
     }
 
 }

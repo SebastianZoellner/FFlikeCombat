@@ -28,14 +28,6 @@ public class StatusManager : MonoBehaviour
         ActionSequencer.OnNewRoundStarted -= StartTurn;
     }
 
-    public void StartTurn(int turn)
-    {     
-        foreach (BaseStatus bs in activeStatusList)
-        {
-            bs.OnTurnStart();
-        }    
-    }
-
     public void AcivateCharacter()
     {
         foreach (BaseStatus bs in activeStatusList)
@@ -69,6 +61,9 @@ public class StatusManager : MonoBehaviour
             case StatusName.Entangled:
                 newStatus = new EntangleStatus(this, activeStatusList.Count, intensity, duration);
                 break;
+            case StatusName.ShellShocked:
+                newStatus = new ShellShockedStatus(this, activeStatusList.Count, intensity, duration);
+                break;
         }
         if (newStatus == null)
             return;
@@ -85,11 +80,19 @@ public class StatusManager : MonoBehaviour
 
     public string[] GetStatusNames()
     {
-        string[] names = new string[] { };
+        string[] names = new string[activeStatusList.Count];
         for (int i = 0; i < activeStatusList.Count; ++i)
-            names[i] = "activeStatusList[i].GetStatusName()";
+            names[i] = activeStatusList[i].GetStatusName().ToString();
 
         return names;
+    }
+
+    private void StartTurn(int turn)
+    {
+        foreach (BaseStatus bs in activeStatusList)
+        {
+            bs.OnTurnStart();
+        }
     }
 }
 

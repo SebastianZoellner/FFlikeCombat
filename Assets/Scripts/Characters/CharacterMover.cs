@@ -15,12 +15,14 @@ public class CharacterMover : MonoBehaviour
 
     private Quaternion defaultFacing;
     private Vector3 defaultLocation;
-    [SerializeField] private float rotationSpeed = 2;
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float rotationSpeed = 0.1f;
     private float facingTreshold=5;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        agent.speed = movementSpeed;
         defaultFacing = Quaternion.LookRotation(transform.forward, Vector3.up);
         defaultLocation = transform.position;
     }
@@ -30,8 +32,9 @@ public class CharacterMover : MonoBehaviour
         if (!isMoving && !isReturning)
             return;
 
-        Debug.Log(agent.isStopped + " " + agent.remainingDistance);
-        if (agent.remainingDistance <= agent.stoppingDistance)
+        //Debug.Log(agent.stoppingDistance + " stopping, remaining: " + agent.remainingDistance);
+
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
         {
             if (isMoving)
             {
@@ -51,6 +54,7 @@ public class CharacterMover : MonoBehaviour
     }
     public void MoveTo(Vector3 position, float distance)
     {
+        //Debug.Log("Mover input parameters: position " + position + " distance" + distance);
         agent.stoppingDistance = distance;
         agent.SetDestination(position);
         isMoving = true;
@@ -58,6 +62,7 @@ public class CharacterMover : MonoBehaviour
 
     public void MoveHome()
     {
+        //Debug.Log("Moving Home");
         agent.stoppingDistance = 0;
         agent.SetDestination(defaultLocation);
         isReturning = true;

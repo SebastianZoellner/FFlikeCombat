@@ -1,18 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 using TMPro;
-using System;
+using UnityEngine.UI;
+
 
 public class UIInfoScreen : MonoBehaviour
 {
 
     [SerializeField] GameObject infoScreen;
+    [SerializeField] Image Icon;
     [SerializeField] TMP_Text characterName;
     [SerializeField] TMP_Text blurb;
     [SerializeField] TMP_Text attributes;
     [SerializeField] TMP_Text otherAttributes;
     [SerializeField] TMP_Text healthScore;
+    [SerializeField] TMP_Text defense;
     [SerializeField] TMP_Text statuses;
     private void OnEnable()
     {
@@ -35,6 +37,7 @@ public class UIInfoScreen : MonoBehaviour
         infoScreen.SetActive(true);
 
         characterName.text = entity.Stats.GetName();
+        Icon.sprite = entity.Stats.GetIcon();
         SetHealthParameters(entity.Health);
         SetAttributes(entity.Health.Stats);
         SetStatuses(entity.StatusManager);
@@ -55,11 +58,19 @@ public class UIInfoScreen : MonoBehaviour
         otherAttributes.text += "Hardiness  " + Mathf.RoundToInt(stats.GetAttribute(Attribute.Hardiness)) + "\n";
         otherAttributes.text += "Recovery  " + Mathf.RoundToInt(stats.GetAttribute(Attribute.Recovery)) + "\n";
 
+        defense.text = DisplayFloat( stats.GetDefenseValue());
+
+    }
+
+    private string DisplayFloat(float v)
+    {
+        return (Mathf.RoundToInt(v + 0.5f)).ToString();
     }
 
     private void SetStatuses(StatusManager statusManager)
     {
         string[] statusArray = statusManager.GetStatusNames();
+        Debug.Log(statusArray);
 
         statuses.text = "";
 
@@ -71,8 +82,7 @@ public class UIInfoScreen : MonoBehaviour
 
     private void SetHealthParameters(CharacterHealth health)
     {
-        int maxHealth = Mathf.RoundToInt(health.StartingHealth + 0.5f);
-        int presentHealth = Mathf.RoundToInt(health.PresentHealth + 0.5f);
-        healthScore.text = presentHealth + "/" + maxHealth;
+        
+        healthScore.text = DisplayFloat(health.PresentHealth) + "/" + DisplayFloat(health.StartingHealth);
     }
 }

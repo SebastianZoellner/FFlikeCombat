@@ -13,12 +13,12 @@ public class GameSystem : MonoBehaviour
     [SerializeField] float minimumHitChance = 0.1f;
     private float[] SuccessLevelArray = new float[] { 0.25f, 0.5f, 0.75f, 1 };
 
-    float attackFactor = 2;
-    float defenseFactor = 2;
-    float damageFactor = 10;
-    float armorDeflection = 10;
-    float speedFactor = 50;
-    float inititativeFactor = 50;
+    readonly float attackFactor = 2;
+    readonly float defenseFactor = 2;
+    readonly float damageFactor = 10;
+    readonly float armorDeflection = 10;
+    readonly float speedFactor = 50;
+    readonly float inititativeFactor = 50;
 
 
     private void Awake()
@@ -30,7 +30,7 @@ public class GameSystem : MonoBehaviour
     {
         float hitProbability = CalculateHitChance(attack,defense);
         float randomNumber = Random.Range(0f, 1f);
-        Debug.Log("Random Number " + randomNumber);
+        Debug.Log("Random Number " + randomNumber+", hit probability "+hitProbability);
         if (randomNumber > hitProbability||randomNumber>maximumHitChance)
             return 0;
 

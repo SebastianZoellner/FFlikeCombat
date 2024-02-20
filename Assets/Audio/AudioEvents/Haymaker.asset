@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Haymaker
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
+  - {fileID: 8300000, guid: b16ab8f4ea8112b448f7f74e762fd771, type: 3}
+  - {fileID: 8300000, guid: 06d99a6124d47fa4390a14ab234d46a7, type: 3}
+  - {fileID: 8300000, guid: c798ade4ccbc9b145bb77e88ceb91066, type: 3}
+  - {fileID: 8300000, guid: 0e4d7ee7cf3112a4d8ed34506f9b6670, type: 3}
+  - {fileID: 8300000, guid: 66343dc37464c2e4c90671dc9a24aa3b, type: 3}
+  volumeRange: {x: 0.98257536, y: 1}
+  pitchRange: {x: 0.93361217, y: 1.1008887}
+  distance: {x: 1, y: 442.4116}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

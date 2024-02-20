@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shoot
   m_EditorClassIdentifier: 
   minDamage: 2
-  maxDamage: 3
+  maxDamage: 4
   attack: 0
   defense: 0
   successEffectArray:
@@ -33,4 +33,12 @@ MonoBehaviour:
   icon: {fileID: 0}
   setupTime: 0.01
   recoveryTime: 0.5
-  range: 4
+  range: 6
+  attackAnimation: {fileID: 7400000, guid: fda41f5767b8e5745b037ffad7279095, type: 2}
+  projectile: {fileID: 253583978609944524, guid: 015614b05374d1b4a84be000f45e75c2,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 0}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: a834f1140d67b4a4195da68cf9c1db68, type: 2}
+  description: 

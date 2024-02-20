@@ -4,5 +4,6 @@ public enum StatusName
     Poisoned,
     Entangled,
     Damage,
+    ShellShocked,
     None
 }

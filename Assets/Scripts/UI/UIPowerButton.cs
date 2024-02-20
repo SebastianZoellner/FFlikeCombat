@@ -8,14 +8,14 @@ public class UIPowerButton : MonoBehaviour
     [SerializeField] TMP_Text powerName;
     [SerializeField] Image icon;
 
-    private int powerID;
+    
     private CharacterManager characterManager;
 
-    public void Setup (PowerSO power, CharacterManager characterManager,int powerID)
+    public void Setup (PowerSO power, CharacterManager characterManager)
     {
         this.power = power;
         this.characterManager = characterManager;
-        this.powerID = powerID;
+        
 
         powerName.text = power.buttonName;
         icon.sprite = power.icon;
@@ -23,7 +23,7 @@ public class UIPowerButton : MonoBehaviour
 
     public void PowerButtonPressed()
     {
-        Debug.Log("Calling power " + powerID);
-        characterManager.PressAttackButton(powerID);
+        //Debug.Log("Calling power " + powerID);
+        characterManager.PressAttackButton(power);
     }
 }

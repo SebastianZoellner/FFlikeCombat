@@ -18,7 +18,14 @@ MonoBehaviour:
   defense: 10
   successEffectArray: []
   buttonName: Punch
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: dfe039e2f46a22e4088b0c7ea2940038, type: 3}
   setupTime: 0.1
   recoveryTime: 0.4
   range: 2
+  attackAnimation: {fileID: 7400000, guid: 24ef91afb158bbb4498c02c2f8015412, type: 2}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 5688621020241137862, guid: 2f5ce8a3fb89a8947867f6c90b20e807, type: 3}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 55a9ca1ccb1d812408f58c94c526e320, type: 2}
+  description: 

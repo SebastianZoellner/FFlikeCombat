@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 
 [CreateAssetMenu(fileName = "New Character", menuName = "Game Elements/Characters")]
@@ -11,7 +12,15 @@ public class CharacterSO : ScriptableObject
     public float startingHealth;
     [SerializeField] AttributeValue[] attributeArray;
     private Dictionary<Attribute, float> baseAttribute = null;
+    [PreviewField(75)]
     public Sprite icon;
+
+    public AnimatorOverrideController animatorController;
+    [PreviewField(100)]
+    [SerializeField] GameObject characterToon;
+    [Range(0,10)]
+    public int level;
+    public float StartingEndurance;
 
     public float GetBaseAttribute(Attribute attribute)
     {
@@ -19,10 +28,7 @@ public class CharacterSO : ScriptableObject
             InitializeBaseAttribute();
 
         return baseAttribute[attribute];
-
     }
-
-   
 
     public bool HasPowerID(int powerId)
     {
@@ -36,7 +42,12 @@ public class CharacterSO : ScriptableObject
         else 
             return null;
     } 
-    
+    public GameObject Spawn(Transform spawnPoint)
+    {
+        return Instantiate(characterToon, spawnPoint);
+    }
+
+
     private void InitializeBaseAttribute()
     {
         baseAttribute = new Dictionary<Attribute, float>();

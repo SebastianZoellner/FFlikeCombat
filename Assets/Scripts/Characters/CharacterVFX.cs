@@ -6,13 +6,15 @@ public class CharacterVFX : MonoBehaviour
 {
     public void AttackingEffect(GameObject effect, Transform target)
     {
+        GameObject newEffect;
         Vector3 targetPosition = target.position + Vector3.up;
         Ray ray = new Ray(transform.position, targetPosition - transform.position);
         RaycastHit hit;
 
         if (Physics.Raycast(ray,out hit))
         {
-            Instantiate(effect, hit.point, Quaternion.identity);
+            newEffect=Instantiate(effect, hit.point, Quaternion.identity);
+            Destroy(newEffect, 2);
         }
     }
 }

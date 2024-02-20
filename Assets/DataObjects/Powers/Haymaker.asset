@@ -18,11 +18,11 @@ MonoBehaviour:
   defense: 0
   successEffectArray:
   - level: 3
-    status: 2
+    status: 3
     intensity: 5
     duration: 0
   - level: 4
-    status: 2
+    status: 3
     intensity: 10
     duration: 0
   buttonName: Haymaker
@@ -30,3 +30,16 @@ MonoBehaviour:
   setupTime: 0.2
   recoveryTime: 0.7
   range: 2
+  attackAnimation: {fileID: 7400000, guid: 1af7c9594c5fe40429fc7320e7f97a7f, type: 2}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 3186374112381091485, guid: 793a35b39c01c0a4d88cc2270d7cb797, type: 3}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 77e60e1aadb00734aab95cfa338a3a2a, type: 2}
+  description: 
+  momentumEffect: 1
+  momentumCost: 1
+  momentumChange: 0
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 0

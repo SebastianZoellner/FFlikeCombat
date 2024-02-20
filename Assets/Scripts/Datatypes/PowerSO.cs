@@ -1,22 +1,67 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 [CreateAssetMenu(fileName = "New Power", menuName = "Game Elements/Powers")]
 
 public class PowerSO : ScriptableObject
 {
+    [Header("Attack Parameters")]
     [SerializeField] float minDamage;
     [SerializeField] float maxDamage;
     public float attack;
     public float defense;
     [SerializeField] SuccessEffect[] successEffectArray;
+
+    [Header("UI Presentation")]
     public string buttonName;
     public Sprite icon;
+
+    //this should go under the top header
     public float setupTime;
     public float recoveryTime;
     public float range;
+
+    [Header("Animation")]
+    public AnimationClip attackAnimation;
+
+    
+   [SerializeField] private GameObject projectile;
+    
+    [BoxGroup("VFX")]
+    public GameObject attackVFX;
+    [BoxGroup("VFX")]
+    public GameObject hitVFX;
+
+    [BoxGroup("SFX")]
+    [SerializeField]private SimpleAudioEventSO attackSound;
+    [BoxGroup("SFX")]
+    [SerializeField]private SimpleAudioEventSO hitSound;
+
+
+    [TextArea]
+    public string description;
+
+    [BoxGroup("Momentum")]
+    public bool momentumEffect;
+    [BoxGroup("Momentum"),ShowIf("momentumEffect")]
+    public float momentumCost=0;
+    [BoxGroup("Momentum"), ShowIf("momentumEffect")]
+    public float momentumChange=0;
+    [BoxGroup("Momentum"), ShowIf("momentumEffect")]
+    public float minMomentum=-100;
+    [BoxGroup("Momentum"), ShowIf("momentumEffect")]
+    public float maxMomentum=100;
+
+    public float enduranceCost;
+
+
+    public bool HasProjectile()
+    {
+        if (projectile)
+            return true;
+        return false;
+    }
 
     public float GetDamage()
     {
@@ -31,6 +76,26 @@ public class PowerSO : ScriptableObject
                 return (se.status, se.intensity,se.duration);
         }
         return (StatusName.None, 0,0);
+    }
+
+    public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker,CharacterHealth targetHealth, int successLevel)
+    {
+       GameObject projectileInstance = Instantiate(projectile, launchPosition, Quaternion.identity);
+        projectileInstance.GetComponent<Projectile>().Setup(attacker,targetHealth, range, this, successLevel);
+    }
+
+    public void PlayAttackSound(AudioSource source)
+    {
+        if (!attackSound) return;
+        
+        attackSound.Play(source);
+    }
+
+    public void PlayHitSound(AudioSource source)
+    {
+        if (!hitSound) return;
+        
+        hitSound.Play(source);
     }
 }
 

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Explosion
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 1fd31868d68903d4f9e2c4a3b7ef98f3, type: 3}
+  - {fileID: 8300000, guid: 88e5db817011bfa478d80e9c692c7fc2, type: 3}
+  - {fileID: 8300000, guid: 5a761236cc43ac048a5d84cc2ac59818, type: 3}
+  volumeRange: {x: 1, y: 1.5539293}
+  pitchRange: {x: 0.96232814, y: 1.0976766}
+  distance: {x: 1, y: 1000}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1
