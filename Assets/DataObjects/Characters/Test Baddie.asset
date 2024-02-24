@@ -22,8 +22,11 @@ MonoBehaviour:
     value: 10
   - attribute: 5
     value: 10
+  - attribute: 0
+    value: 10
   icon: {fileID: 21300000, guid: 8979d342b97e7fb45a9d254250a80b1e, type: 3}
   animatorController: {fileID: 22100000, guid: 73f3559634acf6046949ac763136e8bf, type: 2}
   characterToon: {fileID: 6122651234110397474, guid: 2ae639995c571664a95200870116e8b6,
     type: 3}
   level: 1
+  StartingEndurance: 0

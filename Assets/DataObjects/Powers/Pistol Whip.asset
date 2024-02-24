@@ -40,6 +40,7 @@ MonoBehaviour:
   hitVFX: {fileID: 5286328772216621839, guid: 3bbf7e996e9d4004981ad9b327a6a00a, type: 3}
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: c638ea1d0ac4c5140bad620fa9f3f93f, type: 2}
+  missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
   description: 
   momentumEffect: 0
   momentumCost: 0

@@ -1,20 +1,29 @@
 
+using UnityEngine;
+
 public class EntangleStatus : BaseStatus
 {
     int turnCounter;
+    GameObject activeVFX;
 
-    public EntangleStatus(StatusManager statusManager, int statusIndex, float intensity, int duration) : base(statusManager, statusIndex, intensity, duration)
+    public EntangleStatus(StatusManager statusManager, int statusIndex, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, statusIndex, intensity, damageModifier, duration, statusVFX)
     {
     }
 
     public override void BeginStatus()
     {
         statusName = StatusName.Entangled;
+        if (statusVFX)
+        {
+            Debug.Log("Entangled animation started");
+            activeVFX = statusManager.InitializeStatusVFX(statusVFX);
+        }
     }
 
     public override void EndStatus()
     {
-     //remove fx   
+        Debug.Log("Entangle status FX destoyed?");
+        GameObject.Destroy(activeVFX);
     }
 
     public override float GetAttributeEffect(Attribute attribute)
@@ -33,14 +42,16 @@ public class EntangleStatus : BaseStatus
 
     public override void OnActivation()
     {
-        
+       
     }
 
-    public override void OnTurnStart()
+    public override bool OnTurnStart()
     {
         ++turnCounter;
         if (turnCounter > duration)
-            statusManager.LoseStatus(statusIndex);
+            return true; ;
+
+        return false;
     }
 
     

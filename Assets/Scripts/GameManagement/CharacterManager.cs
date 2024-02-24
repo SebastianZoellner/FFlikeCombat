@@ -11,6 +11,8 @@ public class CharacterManager : MonoBehaviour
     public static event Action OnAllHeroesDead = delegate { };
     public static event Action OnAllEnemiesDead = delegate { };
 
+    public event Action OnWaveDefeated = delegate { };
+
     public List<PCController> heroList;
     public List<EnemyController> enemyList;
 
@@ -188,7 +190,7 @@ public class CharacterManager : MonoBehaviour
                 OnAllEnemiesDead.Invoke();
             else
             {
-                //we need some way to skip player actions
+                OnWaveDefeated.Invoke();
             }
 
         }

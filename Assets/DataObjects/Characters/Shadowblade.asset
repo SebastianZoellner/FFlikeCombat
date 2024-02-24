@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5807afadd574aa9438c13f40201b7fe3, type: 3}
+  m_Name: Shadowblade
+  m_EditorClassIdentifier: 
+  CharacterName: Nyxfury
+  powerArray:
+  - {fileID: 11400000, guid: dd6d5295bc8f07744b54d9830a0acc9e, type: 2}
+  - {fileID: 11400000, guid: a64acd0eb242a2d478c8cd326004f768, type: 2}
+  - {fileID: 11400000, guid: 0c470263263845e4587062f45e0bd1ab, type: 2}
+  - {fileID: 11400000, guid: efc7be4020f74434393d202f68e8e95c, type: 2}
+  - {fileID: 11400000, guid: 0c470263263845e4587062f45e0bd1ab, type: 2}
+  - {fileID: 11400000, guid: 84562222fa4bf8846b89b4a918db12b6, type: 2}
+  startingHealth: 35
+  attributeArray:
+  - attribute: 0
+    value: 50
+  - attribute: 2
+    value: 50
+  - attribute: 4
+    value: 40
+  - attribute: 5
+    value: 30
+  icon: {fileID: 0}
+  animatorController: {fileID: 22100000, guid: b87def1b7a12d7543849e695d364bd86, type: 2}
+  characterToon: {fileID: 5769878388494613830, guid: 16b662d1e0db77344b968288a7d28f6e,
+    type: 3}
+  level: 4
+  StartingEndurance: 0

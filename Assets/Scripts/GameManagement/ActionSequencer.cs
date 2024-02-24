@@ -12,6 +12,7 @@ public class ActionSequencer : MonoBehaviour
 
     [SerializeField] CharacterManager characterManager;
     [SerializeField] float actionSpeed = 0.02f;
+
     public float actionTime { get; private set; }
     private CharacterInitiative nextActor;
     public bool OngoingAction { get; private set; }
@@ -35,7 +36,10 @@ public class ActionSequencer : MonoBehaviour
         CharacterHealth.OnAnyPCDied += Remove_Character;
         CharacterHealth.OnAnyEnemyDied += Remove_Character;
         CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
+        characterManager.OnWaveDefeated += CharacterManager_OnWaveDefeated;
     }
+
+   
 
     private void Update()
     {
@@ -68,6 +72,7 @@ public class ActionSequencer : MonoBehaviour
         CharacterHealth.OnAnyPCDied -= Remove_Character;
         CharacterHealth.OnAnyEnemyDied -= Remove_Character;
         CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
+        characterManager.OnWaveDefeated -= CharacterManager_OnWaveDefeated;
     }
 
     public List<CharacterInitiative> GetCharacters()
@@ -82,11 +87,8 @@ public class ActionSequencer : MonoBehaviour
 
     private void AddCharacter(CharacterInitiative initiative)
     {
-        //if (!initiative) return;
-
-        
-
-        initiative.InitializeInitiative(actionTime);
+        //if (!initiative) return;       
+          initiative.InitializeInitiative(actionTime);
         characterInitiativeList.Add(initiative);
 
         if (!nextActor ||initiative.nextActionTime < nextActor.nextActionTime)
@@ -175,9 +177,21 @@ public class ActionSequencer : MonoBehaviour
         AddCharacter(initiative);
     }
 
+    
+
+    private void CharacterManager_OnWaveDefeated()
+    {
+        foreach(CharacterInitiative ci in characterInitiativeList)
+        {
+            if (ci.nextActionTime < round)
+                ci.SetNextActionTime(round + ci.nextActionTime / 100);
+        }
+    }
+
     private void StartNewRound()
     {
         ++round;
+        Debug.Log("New Round " + round);
         OnNewRoundStarted.Invoke(round);
     }
 }

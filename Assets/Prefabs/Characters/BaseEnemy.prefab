@@ -73,6 +73,28 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 38f8b6ff032f06740ab45e353b015b43, type: 2}
+    - target: {fileID: 2864090611352597515, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: statusEffectArray.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864090611352597515, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: statusEffectArray.Array.data[1].name
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2864090611352597515, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: statusEffectArray.Array.data[0].effect
+      value: 
+      objectReference: {fileID: 8163684771574148739, guid: c16ce2b852a9d3c45b5390b4e0585436,
+        type: 3}
+    - target: {fileID: 2864090611352597515, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: statusEffectArray.Array.data[1].effect
+      value: 
+      objectReference: {fileID: 481947888716730270, guid: 6237d8946d21dfe429978c55b3deb598,
+        type: 3}
     - target: {fileID: 4406790374327832200, guid: 041924f1a292f154598d5203164c7d52,
         type: 3}
       propertyPath: selectedMaterial

@@ -29,7 +29,13 @@ public class EnemyController : MonoBehaviour
     public void SetNextAction()
     {
         target = AIBrain.Instance.SelectWeakestTarget();
+        if (!target)
+            Debug.LogWarning("No target Selected");
+
         selectedPower = AIBrain.Instance.SelectPower(stats);
+        if (!selectedPower)
+            Debug.LogWarning("No power Selected");
+       
         Debug.Log("Setting Attack " + selectedPower.buttonName + " against " + target.name);
         initiative.ReadyAttack(selectedPower,target);
     }

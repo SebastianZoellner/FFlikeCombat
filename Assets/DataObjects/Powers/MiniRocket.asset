@@ -30,17 +30,18 @@ MonoBehaviour:
     intensity: 3
     duration: 4
   buttonName: MicroRocket
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 1c99027ea2fa42b4a99834ca60887f0f, type: 3}
   setupTime: 0.3
   recoveryTime: 0.5
   range: 10
   attackAnimation: {fileID: 7400000, guid: 1c8bd50fa59b28b4ca2f7e5aa33f0791, type: 2}
-  projectile: {fileID: 547147954105677325, guid: ffaeae479d4238e479cb5a085f9ea596,
+  projectile: {fileID: 2039520221526181666, guid: ffaeae479d4238e479cb5a085f9ea596,
     type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 61f1352fcbc1e0d44be9512c61a21808, type: 2}
+  missSound: {fileID: 0}
   description: 
   momentumEffect: 1
   momentumCost: 0

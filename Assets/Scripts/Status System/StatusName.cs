@@ -5,5 +5,7 @@ public enum StatusName
     Entangled,
     Damage,
     ShellShocked,
+    Blinded,
+    Disadvantaged,
     None
 }

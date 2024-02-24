@@ -27,7 +27,7 @@ public class LevelSO : ScriptableObject
         foreach (SpawnGroup sg in waveArray[turn].spawnGroupArray)
         {
             int number = Random.Range(sg.minNumber, sg.maxNumber + 1);
-            Debug.Log("Spawning " + number);
+            //Debug.Log("Spawning " + number);
             for (int i = 0; i < number; ++i)
             {
                 Transform newSpawnPoint = spawnPointController.GetEmptySpawnPoint(SpawnPointType.Enemy);

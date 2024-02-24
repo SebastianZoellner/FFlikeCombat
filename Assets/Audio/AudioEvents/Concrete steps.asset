@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Concrete steps
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: e51f4873e347be846a1747814a18fd38, type: 3}
+  - {fileID: 8300000, guid: 69eef6343c3ad364e9d8820ade62af06, type: 3}
+  - {fileID: 8300000, guid: 51ac0c23aa718c34c8fa518a70b479d7, type: 3}
+  - {fileID: 8300000, guid: 0c59f9848ec3edc4193c4e1afcca3e65, type: 3}
+  - {fileID: 8300000, guid: d5c137e30b064294d90d5c688be14ec6, type: 3}
+  - {fileID: 8300000, guid: f7238f96f76b6d34aaa9cf06358bb39d, type: 3}
+  - {fileID: 8300000, guid: a7849e51f6e31d247a550d7d19328104, type: 3}
+  - {fileID: 8300000, guid: 8a84ad6785877d947a97df6ae7468b6c, type: 3}
+  - {fileID: 8300000, guid: 565e1d5d20f87014cbd13fc108759df9, type: 3}
+  - {fileID: 8300000, guid: 11cd8833cbbb7e7438157f8e9bdb3593, type: 3}
+  volumeRange: {x: 1.378938, y: 1.9009901}
+  pitchRange: {x: 0.9, y: 1.1}
+  distance: {x: 1, y: 1000}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

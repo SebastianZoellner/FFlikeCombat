@@ -18,15 +18,22 @@ MonoBehaviour:
   defense: 0
   successEffectArray: []
   buttonName: Blast
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 99325f387212d7e4f97439d016abff83, type: 3}
   setupTime: 0.05
   recoveryTime: 0.5
   range: 8
-  attackAnimation: {fileID: 7400000, guid: 1c8bd50fa59b28b4ca2f7e5aa33f0791, type: 2}
-  projectile: {fileID: 374412159218736769, guid: 2c7bcbcb2d737f9489d477ff196f515f,
+  attackAnimation: {fileID: 7400000, guid: fc0671af77193984eb4de7e5d7542d16, type: 2}
+  projectile: {fileID: 2227070833989676974, guid: 2c7bcbcb2d737f9489d477ff196f515f,
     type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 2612828321144929153, guid: 3fe0011d9a75066448694ef451f59859, type: 3}
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 6e330c08597749743b14967ae1c67596, type: 2}
+  missSound: {fileID: 0}
   description: 
+  momentumEffect: 0
+  momentumCost: 0
+  momentumChange: 0
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 0

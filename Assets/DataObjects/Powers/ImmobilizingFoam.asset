@@ -34,16 +34,18 @@ MonoBehaviour:
     intensity: 4
     duration: 4
   buttonName: Entangle
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: f3ec6b593e23b374eb9142fc11f0d4c4, type: 3}
   setupTime: 0.2
   recoveryTime: 0.6
   range: 5
   attackAnimation: {fileID: 7400000, guid: 1c8bd50fa59b28b4ca2f7e5aa33f0791, type: 2}
-  projectile: {fileID: 0}
+  projectile: {fileID: 7037852181789672172, guid: efaedb0ef48fbe241961a24bf5cfefad,
+    type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}
   attackSound: {fileID: 0}
-  hitSound: {fileID: 11400000, guid: 054d05be7d822354895c22b7d58dbc6f, type: 2}
+  hitSound: {fileID: 0}
+  missSound: {fileID: 0}
   description: 
   momentumEffect: 1
   momentumCost: 0

@@ -8,7 +8,7 @@ public class LevelSetup : MonoBehaviour
     [SerializeField] LevelSO level;
     private List<GameObject> spawnedEnemies;
     [SerializeField] CharacterManager characterManager;
-    [SerializeField] CharacterSO[] heroArray;
+    [SerializeField] HeroTeamSO heroTeam;
 
     private AudioManager audioManager;
 
@@ -37,7 +37,7 @@ public class LevelSetup : MonoBehaviour
 
     private void SpawnHeroes()
     {
-        foreach (CharacterSO ch in heroArray)
+        foreach (CharacterSO ch in heroTeam.characterList)
         {
             Transform spawnPoint = SpawnPointController.Instance.GetEmptySpawnPoint(SpawnPointType.Hero);
             GameObject newHero=ch.Spawn(spawnPoint);
@@ -61,6 +61,8 @@ public class LevelSetup : MonoBehaviour
     private void NextWave(int round)
     {
         Debug.Log("Spawning Wave " + round);
+
+        SpawnPointController.Instance.RemoveFallenEnemies();
 
         spawnedEnemies =level.SpawnWave(round-1, SpawnPointController.Instance);
       

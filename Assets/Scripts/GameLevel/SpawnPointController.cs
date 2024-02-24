@@ -36,6 +36,7 @@ public class SpawnPointController : MonoBehaviour
 
     public Transform GetEmptySpawnPoint(SpawnPointType type)
     {
+        
         if (type == SpawnPointType.Enemy)
             return GetPoint(ref emptyEnemySpawnPoints, ref fullEnemySpawnPoints);
         return GetPoint(ref emptyHeroSpawnPoints, ref fullHeroSpawnPoints);
@@ -63,7 +64,7 @@ public class SpawnPointController : MonoBehaviour
 
     private void ActionSequencer_OnNewRoundStarted(int obj)
     {
-        RemoveFallenEnemies();
+        //RemoveFallenEnemies();
     }
 
     private void InitializeSpawnPointLists()
@@ -114,13 +115,16 @@ public class SpawnPointController : MonoBehaviour
         fullList.Remove(spawnPoint);
     }
 
-    private void RemoveFallenEnemies()
+    public void RemoveFallenEnemies()
     {
         foreach (SpawnPoint sp in emptyEnemySpawnPoints)
         {
             if (sp.transform.childCount > 0)
+            {
+                Debug.Log("Clearing Spawn point " + sp.name);
                 foreach (Transform tr in sp.transform)
                     Destroy(tr.gameObject);
+            }
         }
     }
 

@@ -20,6 +20,7 @@ public class MomentumManager : MonoBehaviour
         CharacterHealth.OnHeavyHit += CharacterHealth_OnHeavyHit;
         CharacterCombat.OnMomentumModified += CharacterCombat_OnMomentumModified;
         CharacterInitiative.OnMomentumCostPayed += CharacterInitiative_OnMomentumCostPayed;
+        StatusManager.OnChangeMomentum += StatusManager_OnChangeMomentum;
     }
 
     
@@ -35,6 +36,8 @@ public class MomentumManager : MonoBehaviour
         CharacterHealth.OnAnyPCDied -= HeroDied;
         CharacterCombat.OnMomentumModified -= CharacterCombat_OnMomentumModified; 
         CharacterInitiative.OnMomentumCostPayed -= CharacterInitiative_OnMomentumCostPayed;
+        StatusManager.OnChangeMomentum -= StatusManager_OnChangeMomentum;
+        
     }
 
     public static float GetMomentum() => momentum;
@@ -71,6 +74,11 @@ public class MomentumManager : MonoBehaviour
     private void EnemyDied(CharacterHealth enemy)
     {
         ModifyMomentum(enemy.Stats.GetLevel() * deathMultiplier);
+    }
+
+    private void StatusManager_OnChangeMomentum(float change)
+    {
+        ModifyMomentum(change);
     }
 
     private void ModifyMomentum(float change)

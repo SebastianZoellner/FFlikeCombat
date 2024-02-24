@@ -17,16 +17,19 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ebc094e2a96718a4090724af3d163630, type: 2}
   - {fileID: 11400000, guid: c8b973288db0483479bb6858dd83b6ef, type: 2}
   - {fileID: 11400000, guid: 32fce817e672e184abf2de6498ddcf74, type: 2}
-  startingHealth: 40
+  startingHealth: 28
   attributeArray:
   - attribute: 2
-    value: 20
+    value: 40
   - attribute: 0
     value: 40
   - attribute: 5
     value: 10
+  - attribute: 7
+    value: 15
   icon: {fileID: 21300000, guid: bc88b19e5c89ab44384adeb0d188b68c, type: 3}
   animatorController: {fileID: 22100000, guid: 8c9eabcbe6408924f9be0e4ab2a93d04, type: 2}
   characterToon: {fileID: 1365169128966107575, guid: 88c3738bda3228b49b9c82b62b3f8c17,
     type: 3}
-  level: 2
+  level: 3
+  StartingEndurance: 0

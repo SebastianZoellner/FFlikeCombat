@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShellShockedStatus : BaseStatus
 {
     int turnCounter = 0;
-    public ShellShockedStatus(StatusManager statusManager, int statusIndex, float intensity, int duration) : base(statusManager, statusIndex, intensity, duration)
+
+    public ShellShockedStatus(StatusManager statusManager, int statusIndex, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, statusIndex, intensity, damageModifier, duration, statusVFX)
     {
     }
 
@@ -42,11 +41,12 @@ public class ShellShockedStatus : BaseStatus
         
     }
 
-    public override void OnTurnStart()
+    public override bool OnTurnStart()
     {
         ++turnCounter;
         if (turnCounter > duration)
-            statusManager.LoseStatus(statusIndex);
+            return true;
+        return false;
 
     }
 }

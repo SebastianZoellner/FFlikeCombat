@@ -70,7 +70,7 @@ public class UIInfoScreen : MonoBehaviour
     private void SetStatuses(StatusManager statusManager)
     {
         string[] statusArray = statusManager.GetStatusNames();
-        Debug.Log(statusArray);
+       
 
         statuses.text = "";
 

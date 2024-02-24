@@ -132,7 +132,7 @@ public class Projectile : MonoBehaviour
         }
         if(impactSFX)
         {
-            targetHealth.GetComponent<CharacterAudio>().PlayMissileHitSound(impactSFX);
+            targetHealth.GetComponent<CharacterAudio>().PlayHitSound(impactSFX);
         }
 
     }

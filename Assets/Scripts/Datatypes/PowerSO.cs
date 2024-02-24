@@ -26,7 +26,7 @@ public class PowerSO : ScriptableObject
     public AnimationClip attackAnimation;
 
     
-   [SerializeField] private GameObject projectile;
+   [SerializeField] private Projectile projectile;
     
     [BoxGroup("VFX")]
     public GameObject attackVFX;
@@ -36,8 +36,9 @@ public class PowerSO : ScriptableObject
     [BoxGroup("SFX")]
     [SerializeField]private SimpleAudioEventSO attackSound;
     [BoxGroup("SFX")]
-    [SerializeField]private SimpleAudioEventSO hitSound;
-
+    public SimpleAudioEventSO hitSound;
+    [BoxGroup("SFX")]
+    public SimpleAudioEventSO missSound;
 
     [TextArea]
     public string description;
@@ -80,7 +81,7 @@ public class PowerSO : ScriptableObject
 
     public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker,CharacterHealth targetHealth, int successLevel)
     {
-       GameObject projectileInstance = Instantiate(projectile, launchPosition, Quaternion.identity);
+       GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition, Quaternion.identity);
         projectileInstance.GetComponent<Projectile>().Setup(attacker,targetHealth, range, this, successLevel);
     }
 
@@ -91,12 +92,13 @@ public class PowerSO : ScriptableObject
         attackSound.Play(source);
     }
 
-    public void PlayHitSound(AudioSource source)
+   /* public void PlayHitSound(AudioSource source)
     {
         if (!hitSound) return;
         
         hitSound.Play(source);
     }
+   */
 }
 
 

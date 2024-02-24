@@ -8,6 +8,7 @@ public class CharacterHealth : MonoBehaviour
     public static Action<CharacterHealth> OnAnyPCDied=delegate { };
     public static Action<CharacterHealth> OnAnyEnemyDied = delegate { };
     public static Action<CharacterHealth> OnHeavyHit = delegate { };
+    public event Action OnDied = delegate { }; 
 
     public Action OnHealthChanged = delegate { };
 
@@ -110,8 +111,10 @@ public class CharacterHealth : MonoBehaviour
         else
             OnAnyEnemyDied.Invoke(this);
 
+        OnDied.Invoke();
         animator.SetDied();
         canBeTarget = false;
-        //Destroy(gameObject);
+
+        GetComponentInChildren<CapsuleCollider>().enabled = false;
     }
 }

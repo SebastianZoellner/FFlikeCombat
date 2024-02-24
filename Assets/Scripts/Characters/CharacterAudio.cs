@@ -7,29 +7,47 @@ public class CharacterAudio : MonoBehaviour
 {
     [SerializeField] AudioSource attackAudioSource;
     [SerializeField] AudioSource hitAudioSource;
+    [SerializeField] AudioSource stepAudioSource;
+    
+    [SerializeField] SimpleAudioEventSO step;
+    [SerializeField] SimpleAudioEventSO dropSound;
 
     public void SetHitSound(PowerSO attackPower, CharacterHealth target)
     {
-        target.GetComponent<CharacterAudio>().PlayHitSound(attackPower);
+        target.GetComponent<CharacterAudio>().PlayHitSound(attackPower.hitSound);
     }
 
-    public void PlayHitSound(PowerSO attackPower)
-    {
-        attackPower.PlayHitSound(hitAudioSource);
-    }
+    
 
     public void PlayAttackSound(PowerSO attackPower)
     {
         attackPower.PlayAttackSound(attackAudioSource);
     }
 
-    public void PlayShootSound(PowerSO attackPower)
+    public void PlayShootSound(SimpleAudioEventSO shootSFX)
     {
-        attackPower.PlayHitSound(attackAudioSource);
+        if (!shootSFX)
+            return;
+
+        shootSFX.Play(attackAudioSource);
     }
 
-    public void PlayMissileHitSound(SimpleAudioEventSO impactSFX)
+    public void PlayHitSound(SimpleAudioEventSO hitSFX)
     {
-        impactSFX.Play(hitAudioSource);
+        if (!hitSFX)
+            return;
+        hitSFX.Play(hitAudioSource);
     }
+
+    private void Step()
+    {
+        if(step)
+        step.Play(stepAudioSource);
+    }
+
+   private void Drop()
+    {
+        if(dropSound)
+        dropSound.Play(stepAudioSource);
+    }        
 }

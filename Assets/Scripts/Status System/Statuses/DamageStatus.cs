@@ -1,19 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DamageStatus : BaseStatus
 {
-    public DamageStatus(StatusManager statusManager, int statusIndex, float intensity, int duration) : base(statusManager, statusIndex, intensity, duration)
+    public DamageStatus(StatusManager statusManager, int statusIndex, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, statusIndex, intensity, damageModifier, duration, statusVFX)
     {
     }
 
     public override void BeginStatus()
     {
         statusName = StatusName.Damage;
-        statusManager.Health.TakeDamage(intensity);
-        Debug.Log("Removing Status Index " + statusIndex);
-        statusManager.LoseStatus(statusIndex);
+        statusManager.Health.TakeDamage(intensity*damageModifier);     
+        statusManager.LoseStatus(this);
     }
 
 
@@ -21,7 +18,7 @@ public class DamageStatus : BaseStatus
     public override void OnActivation() { }
 
 
-    public override void OnTurnStart() { }
+    public override bool OnTurnStart() { return false; }
     
     
     public override void EndStatus()

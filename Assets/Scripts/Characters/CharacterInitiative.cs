@@ -59,6 +59,14 @@ public class CharacterInitiative : MonoBehaviour
 
     public void PerformReadiedAction()
     { 
+        if(!targetHealth||!targetHealth.canBeTarget)
+        {
+            nextActionTime += 0.01f;
+            readiedAction = null;
+            targetHealth = null;
+            return;
+        }
+
         nextActionTime += GameSystem.Instance.CalculateWaitTime(
             stats.GetAttribute(Attribute.Speed),
             readiedAction.recoveryTime+GetRandomNoise()
@@ -68,6 +76,11 @@ public class CharacterInitiative : MonoBehaviour
         //Debug.Log(name + " NextActionTime changed to " + nextActionTime);
         combat.StartAttack(readiedAction, targetHealth);     
         readiedAction = null;
+    }
+
+    public void SetNextActionTime(float time)
+    {
+        nextActionTime = time;
     }
 
     private float GetRandomNoise()

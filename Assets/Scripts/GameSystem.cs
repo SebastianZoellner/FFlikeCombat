@@ -13,12 +13,12 @@ public class GameSystem : MonoBehaviour
     [SerializeField] float minimumHitChance = 0.1f;
     private float[] SuccessLevelArray = new float[] { 0.25f, 0.5f, 0.75f, 1 };
 
-    readonly float attackFactor = 2;
-    readonly float defenseFactor = 2;
-    readonly float damageFactor = 10;
+    readonly float attackFactor = 1;
+    readonly float defenseFactor = 1;
+    readonly float damageFactor = 20;
     readonly float armorDeflection = 10;
-    readonly float speedFactor = 50;
-    readonly float inititativeFactor = 50;
+    readonly float speedFactor = 20;
+    readonly float inititativeFactor = 20;
 
 
     private void Awake()
@@ -58,10 +58,7 @@ public class GameSystem : MonoBehaviour
 
     public float CalculateDamage(float power, float baseDamage)
     {
-        if (power > 0)
-            return baseDamage * (1 + power / damageFactor);
-        else
-            return baseDamage / (1 - power / damageFactor);
+        return baseDamage *Mathf.Pow(2,power / damageFactor);
     }
 
     public float CalculateArmor(float armor, float damage)
@@ -73,7 +70,16 @@ public class GameSystem : MonoBehaviour
           
         float randomNumber = Random.Range(0f, 100f);
         if (randomNumber < Mathf.Min(armor,95))
-            return damage / 2;
+        {
+            if (randomNumber > armor * 0.75f)
+                return damage * 0.75f;
+            if (randomNumber > armor * 0.5f)
+                return damage / 2;
+            if (randomNumber > armor / 4)
+                return damage / 4;
+            return 0;
+        }
+            
 
         return damage;
     }

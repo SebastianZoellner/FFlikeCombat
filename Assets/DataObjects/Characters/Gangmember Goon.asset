@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5807afadd574aa9438c13f40201b7fe3, type: 3}
+  m_Name: Gangmember Goon
+  m_EditorClassIdentifier: 
+  CharacterName: Goon
+  powerArray:
+  - {fileID: 11400000, guid: 1a8ee74e2db8344479dd860b6a887a6f, type: 2}
+  - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}
+  startingHealth: 12
+  attributeArray: []
+  icon: {fileID: 21300000, guid: 20400e604c7a4db469b26f930bed353e, type: 3}
+  animatorController: {fileID: 22100000, guid: 25af2e513aef8544dba2a336f648aeb6, type: 2}
+  characterToon: {fileID: 2897639189330400868, guid: d1bf8f26e87256040aa056e9b71475d1,
+    type: 3}
+  level: 0
+  StartingEndurance: 0

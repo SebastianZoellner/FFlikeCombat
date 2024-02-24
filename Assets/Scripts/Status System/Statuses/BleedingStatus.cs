@@ -1,17 +1,25 @@
+
+
 using UnityEngine;
 
 public class BleedingStatus : BaseStatus
 {
     int turnCounter = 0;
+    
+    private GameObject activeVFX;
 
-    public BleedingStatus(StatusManager statusManager, int statusIndex, float intensity, int duration) : base(statusManager, statusIndex, intensity, duration)
+    public BleedingStatus(StatusManager statusManager, int statusIndex, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, statusIndex, intensity, damageModifier, duration, statusVFX)
     {
     }
 
     public override void BeginStatus()
     {
         statusName = StatusName.Bleeding;
-        //set up bleeding FX
+        if (statusVFX)
+        {
+            Debug.Log("Bleedin animation started");
+            activeVFX = statusManager.InitializeStatusVFX(statusVFX);
+        }
     }  
 
     public override void OnActivation()
@@ -19,19 +27,22 @@ public class BleedingStatus : BaseStatus
         
     }
 
-    public override void OnTurnStart()
+    public override bool OnTurnStart()
     {
-        ++turnCounter;
-        if (turnCounter > duration)
-            statusManager.LoseStatus(statusIndex);
-
-        statusManager.Health.TakeDamage(intensity);
         Debug.Log("Bleeding");
+        statusManager.Health.TakeDamage(intensity * damageModifier);
+        ++turnCounter;
+
+        if (turnCounter > duration)
+            return true;
+
+        return false;    
     }
     
     public override void EndStatus()
     {
-        //remove bleeding FX
+        if(activeVFX)
+        GameObject.Destroy(activeVFX);
     }
 
     public override float GetAttributeEffect(Attribute attribute)

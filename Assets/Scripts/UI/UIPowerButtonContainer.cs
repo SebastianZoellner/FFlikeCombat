@@ -25,6 +25,7 @@ public class UIPowerButtonContainer : MonoBehaviour
     private void OnDisable()
     {
         CharacterManager.OnPlayerSelectedChanged -= CharacterManager_OnPlayerSelectedChanged;
+        CharacterInitiative.OnAttackReadied -= CharacterInitiative_OnAttackReadied;
     }
 
     private void CharacterManager_OnPlayerSelectedChanged(CharacterHealth health)

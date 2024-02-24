@@ -21,7 +21,10 @@ public class CharacterCombat : MonoBehaviour
     private PowerSO attackPower;
     private CharacterHealth target;
     private int successLevel;
+    private bool hasAttacked;
+    private bool isHero;
 
+    
     
 
     private void Awake()
@@ -31,6 +34,8 @@ public class CharacterCombat : MonoBehaviour
         mover = GetComponent<CharacterMover>();
         animator = GetComponent<CharacterAnimator>();
         sound = GetComponent<CharacterAudio>();
+        if (GetComponent<PCController>())
+            isHero = true;
     }
 
     private void OnEnable()
@@ -41,11 +46,16 @@ public class CharacterCombat : MonoBehaviour
 
     public  void StartAttack(PowerSO attackPower, CharacterHealth target)
     {
-        
+        if (!target)
+            return;
+
         this.attackPower = attackPower;
         this.target = target;
-        Debug.Log("Starting attack");
+        Debug.Log("Starting attack against "+target.name);
         animator.SetMove(true);
+        hasAttacked = false;
+        if(isHero)
+        FeelManager.Instance.StartAttack(this.transform, attackPower);
         mover.MoveTo(target.transform.position, attackPower.range);
     }
 
@@ -69,10 +79,11 @@ public class CharacterCombat : MonoBehaviour
         damage = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), damage);
         target.TakeDamage(damage);
 
+        float damageModifier= GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
         (StatusName status,float intensity,int duration)=attackPower.GetStatusEffect(successLevel);
-
+        
         if (status != StatusName.None)
-            target.GetComponent<StatusManager>().GainStatus(status, intensity,duration);
+            target.GetComponent<StatusManager>().GainStatus(status, intensity,duration,damageModifier);
 
        if(attackPower.momentumEffect)
         {
@@ -83,7 +94,7 @@ public class CharacterCombat : MonoBehaviour
     private void Mover_OnMovementFinished()
     {
         
-        if ( target && Vector3.Distance(transform.position, target.transform.position) < attackPower.range)
+        if ( !hasAttacked)
         {          
             PerformAttack();
         }
@@ -97,11 +108,13 @@ public class CharacterCombat : MonoBehaviour
 
     private void Animator_OnAttackAnimationFinished()
     {
+        FeelManager.Instance.EndAttack();
         mover.MoveHome();
     }
 
     private void PerformAttack()
     {
+        hasAttacked = true;
         //Debug.Log("Starting attack animation");
         animator.SetAttack(attackPower.attackAnimation);
         //start beginning attack FX
@@ -132,13 +145,13 @@ public class CharacterCombat : MonoBehaviour
                 }
             }
 
-            sound.PlayShootSound(attackPower);
+            sound.PlayShootSound(attackPower.hitSound);
 
             attackPower.LaunchProjectile(attackOrigin.position, this, target,successLevel);
             return;
         }
 
-       // Debug.Log("No projectile");
+       //Debug.Log("No projectile");
         if (successLevel > 0)
         {
             Debug.Log("Hit, success level " + successLevel);
@@ -146,6 +159,7 @@ public class CharacterCombat : MonoBehaviour
             effects.AttackingEffect(attackPower.hitVFX, target.transform);
 
             sound.SetHitSound(attackPower,target);
+            FeelManager.Instance.HitEffect();
 
             ManageHit();
         }
@@ -153,6 +167,7 @@ public class CharacterCombat : MonoBehaviour
         {
             Debug.Log("Missed");
             effects.AttackingEffect(missEffect, target.transform);
+            sound.PlayHitSound(attackPower.missSound);
         }     
     }
 

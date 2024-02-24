@@ -79,7 +79,7 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
             return;
         }
 
-        Debug.Log("Explore button down");
+        //Debug.Log("Explore button down");
         Entity entity = GetTarget<Entity>();
 
         if (entity)
