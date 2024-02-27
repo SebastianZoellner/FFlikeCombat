@@ -36,7 +36,7 @@ public class EnemyController : MonoBehaviour
         if (!selectedPower)
             Debug.LogWarning("No power Selected");
        
-        Debug.Log("Setting Attack " + selectedPower.buttonName + " against " + target.name);
+        //Debug.Log("Setting Attack " + selectedPower.buttonName + " against " + target.name);
         initiative.ReadyAttack(selectedPower,target);
     }
 }

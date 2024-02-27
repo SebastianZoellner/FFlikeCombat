@@ -15,7 +15,7 @@ public class DamageStatus : BaseStatus
 
 
 
-    public override void OnActivation() { }
+    public override bool OnActivation() { return false; }
 
 
     public override bool OnTurnStart() { return false; }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5807afadd574aa9438c13f40201b7fe3, type: 3}
   m_Name: StrongMan
   m_EditorClassIdentifier: 
-  CharacterName: The StrongMan
+  CharacterName: Strongman
   powerArray:
   - {fileID: 11400000, guid: d6d4fe3199707d1498812864f69392bf, type: 2}
   - {fileID: 11400000, guid: 99054659b0f16f047b6fab2c1266e5f8, type: 2}
@@ -29,7 +29,7 @@ MonoBehaviour:
     value: 5
   - attribute: 0
     value: 10
-  icon: {fileID: 21300000, guid: 6586132054421884ab19d382d13dec07, type: 3}
+  icon: {fileID: 21300000, guid: e06df6066ec8f884faef82d131660f0a, type: 3}
   animatorController: {fileID: 22100000, guid: ffcbf9d412d57534e898e30bfd3350f1, type: 2}
   characterToon: {fileID: 6910464345339074373, guid: ccace65814773a3418cd5c6ea59a5db3,
     type: 3}

@@ -15,9 +15,9 @@ public class EntangleStatus : BaseStatus
         statusName = StatusName.Entangled;
         if (statusVFX)
         {
-            Debug.Log("Entangled animation started");
             activeVFX = statusManager.InitializeStatusVFX(statusVFX);
         }
+        statusManager.ModifyNextActionTime(intensity * 0.1f);
     }
 
     public override void EndStatus()
@@ -31,18 +31,18 @@ public class EntangleStatus : BaseStatus
         switch (attribute)
             {
             case Attribute.Initiative:
-                return -intensity * 30;
+                return -intensity * 15;
                 
             case Attribute.Speed:
-                return -intensity * 20;
+                return -intensity * 10;
             default:
                 return 0;
         }
     }
 
-    public override void OnActivation()
+    public override bool OnActivation()
     {
-       
+        return false;
     }
 
     public override bool OnTurnStart()

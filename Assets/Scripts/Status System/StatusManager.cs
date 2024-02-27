@@ -16,6 +16,7 @@ public class StatusManager : MonoBehaviour
     
     private CharacterStats stats;
     private CharacterVFX effects;
+    private CharacterInitiative initiative;
 
     private Dictionary<StatusName, GameObject> statusEffectDictionary;
     private bool isHero = false;
@@ -25,6 +26,7 @@ public class StatusManager : MonoBehaviour
         Health = GetComponent<CharacterHealth>();
         stats = GetComponent<CharacterStats>();
         effects = GetComponent<CharacterVFX>();
+        initiative = GetComponent<CharacterInitiative>();
 
         isHero = GetComponent<PCController>();
         activeStatusList = new List<BaseStatus>();
@@ -38,6 +40,7 @@ public class StatusManager : MonoBehaviour
     {
         ActionSequencer.OnNewRoundStarted += StartTurn;
         Health.OnDied += Health_OnDied;
+        initiative.OnActionStarted += ActionStarted;
     }
 
    
@@ -45,15 +48,13 @@ public class StatusManager : MonoBehaviour
     private void OnDisable()
     {
         ActionSequencer.OnNewRoundStarted -= StartTurn;
+        Health.OnDied -= Health_OnDied;
+        initiative.OnActionStarted -= ActionStarted;
+
     }
-    
-    public void AcivateCharacter()
-    {
-        foreach (BaseStatus bs in activeStatusList)
-        {
-            bs.OnActivation();
-        }
-    }
+    //----------------------------------------------------------
+    //              Public functions
+    //----------------------------------------------------------
 
     public float GetAttributeModifiers(Attribute attribute)
     {
@@ -65,12 +66,11 @@ public class StatusManager : MonoBehaviour
         return modifiers;
     }
 
-    public void GainStatus(StatusName newStatusName, float intensity, int duration, float damageModifier)
+    public void GainStatus(StatusName newStatusName, float intensity, int duration,float damageModifier)
     {
-
         BaseStatus newStatus = null;
-
         GameObject vfx = null;
+
         if (statusEffectDictionary.ContainsKey(newStatusName))
             vfx = statusEffectDictionary[newStatusName];
 
@@ -94,6 +94,10 @@ public class StatusManager : MonoBehaviour
             case StatusName.Disadvantaged:
                 newStatus=new DisadvantagedStatus(this, activeStatusList.Count, intensity, damageModifier, duration, vfx);
                 break;
+            case StatusName.Shocked:
+                newStatus = new ShockedStatus(this, activeStatusList.Count, intensity, damageModifier, duration, vfx);
+                break;
+
         }
         if (newStatus == null)
             return;
@@ -130,6 +134,10 @@ public class StatusManager : MonoBehaviour
             OnChangeMomentum.Invoke(-change);
     }
 
+    public void ModifyNextActionTime(float change)
+    {
+        initiative.ChangeActionTime(change);
+    }
 
     private void initializeDictionary()
     {
@@ -143,7 +151,7 @@ public class StatusManager : MonoBehaviour
 
     private void Health_OnDied()
     {
-
+        Debug.Log("Ending statuses");
         foreach (BaseStatus bs in activeStatusList)
             bs.EndStatus();
         activeStatusList.Clear();
@@ -163,6 +171,18 @@ public class StatusManager : MonoBehaviour
             activeStatusList.Remove(bs);
     }
 
+    private void ActionStarted()
+    {
+        List<BaseStatus> endedStatusList = new List<BaseStatus>();
+        foreach (BaseStatus bs in activeStatusList)
+        {
+            if(bs.OnActivation())
+                endedStatusList.Add(bs);
+        }
+
+        foreach (BaseStatus bs in endedStatusList)
+            activeStatusList.Remove(bs);
+    }
 }
 
 [System.Serializable]

@@ -55,7 +55,7 @@ public class CharacterManager : MonoBehaviour
             return false;
        
        // Debug.Log("Starting attack " + attackID);
-        activeCharacter.StartAttack(power);
+        activeCharacter.SetPower(power);
         return true;
     }
 
@@ -97,7 +97,7 @@ public class CharacterManager : MonoBehaviour
         if (attackId < availablePowers.Length)
         {
             //Debug.Log("Starting attack " + attackId);
-            activeCharacter.StartAttack(availablePowers[attackId]);
+            activeCharacter.SetPower(availablePowers[attackId]);
         }
     }
 
@@ -153,7 +153,7 @@ public class CharacterManager : MonoBehaviour
             activeCharacter.OnActionEnded -= ActiveCharacter_OnActionEnded;
             activeCharacter.SetDeselected();
         }
-        Debug.Log("New Character Selected " + newCharacter.stats.GetName());
+        Debug.Log("New Hero Character Selected " + newCharacter.stats.GetName());
         activeCharacter = newCharacter;
         activeCharacter.OnActionStarted += ActiveCharacter_OnActionStarted;
         activeCharacter.OnActionEnded += ActiveCharacter_OnActionEnded;

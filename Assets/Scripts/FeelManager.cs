@@ -33,4 +33,6 @@ public class FeelManager : MonoBehaviour
     {
         hitFeedback.PlayFeedbacks();
     }
+
+    public void BuffEffect() { }
 }

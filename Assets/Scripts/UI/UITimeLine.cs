@@ -40,7 +40,7 @@ public class UITimeLine : MonoBehaviour
         if (actionSequencer.OngoingAction)
             return;
 
-        baseTime = actionSequencer.actionTime;
+        baseTime = ActionSequencer.actionTime;
 
         foreach(PlacedIcons pi in placedIconsList)
         {

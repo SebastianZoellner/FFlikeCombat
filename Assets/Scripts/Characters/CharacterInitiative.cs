@@ -6,7 +6,8 @@ public class CharacterInitiative : MonoBehaviour
     public static event Action<bool,CharacterInitiative>  OnAttackReadied = delegate { };
     //This updates the timeline UI, removes the buttons and lets Actionsequencer know that the player has chosen an action
     public static event Action<CharacterInitiative,float> OnMomentumCostPayed = delegate { };
-
+    public static event Action OnActionTimeChanged = delegate { };
+    public event Action OnActionStarted = delegate { };
 
     [field:SerializeField] public float nextActionTime { get; private set; }
     public PowerSO readiedAction;
@@ -24,8 +25,7 @@ public class CharacterInitiative : MonoBehaviour
     }
 
     public void InitializeInitiative(float actionTime)
-    {
-        
+    {       
         nextActionTime =actionTime+GameSystem.Instance.CalculateReadytime(
             GetComponent<CharacterStats>().GetAttribute(Attribute.Initiative),
             UnityEngine.Random.Range(0f, 1f)           
@@ -73,6 +73,8 @@ public class CharacterInitiative : MonoBehaviour
             );
 
         OnAttackReadied.Invoke(false, this);
+        OnActionStarted.Invoke();
+        
         //Debug.Log(name + " NextActionTime changed to " + nextActionTime);
         combat.StartAttack(readiedAction, targetHealth);     
         readiedAction = null;
@@ -81,6 +83,15 @@ public class CharacterInitiative : MonoBehaviour
     public void SetNextActionTime(float time)
     {
         nextActionTime = time;
+    }
+
+    public void ChangeActionTime(float delta)
+    {
+        nextActionTime += delta;
+        if (nextActionTime < ActionSequencer.actionTime)
+            nextActionTime = ActionSequencer.actionTime;
+
+        OnActionTimeChanged.Invoke();
     }
 
     private float GetRandomNoise()

@@ -12,23 +12,35 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Defensive Strike
   m_EditorClassIdentifier: 
-  minDamage: 0
-  maxDamage: 0
+  minDamage: 2.5
+  maxDamage: 4
   attack: 0
-  defense: 0
-  successEffectArray: []
-  buttonName: 
-  icon: {fileID: 0}
-  setupTime: 0
-  recoveryTime: 0
-  range: 0
+  defense: 10
+  successEffectArray:
+  - level: 2
+    status: 6
+    intensity: 2
+    duration: 0
+  - level: 3
+    status: 6
+    intensity: 4
+    duration: 0
+  - level: 4
+    status: 6
+    intensity: 8
+    duration: 0
+  buttonName: Def Strike
+  icon: {fileID: 21300000, guid: 9e7266396fac1704f9d5f4788de2df03, type: 3}
+  setupTime: 0.1
+  recoveryTime: 0.7
+  range: 1.8
   attackAnimation: {fileID: 7400000, guid: 112477cb61d601544be3a2ad7f2aacb0, type: 2}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}
   attackSound: {fileID: 0}
-  hitSound: {fileID: 0}
-  missSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
+  missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
   description: 
   momentumEffect: 0
   momentumCost: 0

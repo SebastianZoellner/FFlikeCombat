@@ -22,12 +22,7 @@ public class BleedingStatus : BaseStatus
         }
     }  
 
-    public override void OnActivation()
-    {
-        
-    }
-
-    public override bool OnTurnStart()
+    public override bool OnActivation()
     {
         Debug.Log("Bleeding");
         statusManager.Health.TakeDamage(intensity * damageModifier);
@@ -36,6 +31,11 @@ public class BleedingStatus : BaseStatus
         if (turnCounter > duration)
             return true;
 
+        return false;
+    }
+
+    public override bool OnTurnStart()
+    {
         return false;    
     }
     

@@ -9,11 +9,14 @@ public class ActionSequencer : MonoBehaviour
     public event Action<CharacterInitiative> OnCharacterRemoved = delegate { };
     public event Action<CharacterInitiative> OncharacterAdded = delegate { };//no use for this right now, but maybe later
     public static event Action <int> OnNewRoundStarted=delegate{}; //Fires UI, Spawns new Wave, removes fallen enemies
+   
+    public static float actionTime { get; private set; }
+
 
     [SerializeField] CharacterManager characterManager;
     [SerializeField] float actionSpeed = 0.02f;
 
-    public float actionTime { get; private set; }
+    
     private CharacterInitiative nextActor;
     public bool OngoingAction { get; private set; }
 
@@ -32,7 +35,8 @@ public class ActionSequencer : MonoBehaviour
     private void OnEnable()
     {
         CharacterCombat.OnAnyActionFinished += ActionFinished;
-        CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied; 
+        CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied;
+        CharacterInitiative.OnActionTimeChanged += CharacterInitiative_OnActionTimeChanged;
         CharacterHealth.OnAnyPCDied += Remove_Character;
         CharacterHealth.OnAnyEnemyDied += Remove_Character;
         CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
@@ -69,11 +73,14 @@ public class ActionSequencer : MonoBehaviour
     {
         CharacterCombat.OnAnyActionFinished -= ActionFinished;
         CharacterInitiative.OnAttackReadied -= CharacterInitiative_OnAttackReadied;
+        CharacterInitiative.OnActionTimeChanged -= CharacterInitiative_OnActionTimeChanged;
         CharacterHealth.OnAnyPCDied -= Remove_Character;
         CharacterHealth.OnAnyEnemyDied -= Remove_Character;
         CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
         characterManager.OnWaveDefeated -= CharacterManager_OnWaveDefeated;
     }
+
+   
 
     public List<CharacterInitiative> GetCharacters()
     {
@@ -87,7 +94,8 @@ public class ActionSequencer : MonoBehaviour
 
     private void AddCharacter(CharacterInitiative initiative)
     {
-        //if (!initiative) return;       
+       // Debug.Log("Adding " + initiative.name);
+
           initiative.InitializeInitiative(actionTime);
         characterInitiativeList.Add(initiative);
 
@@ -177,7 +185,10 @@ public class ActionSequencer : MonoBehaviour
         AddCharacter(initiative);
     }
 
-    
+    private void CharacterInitiative_OnActionTimeChanged()
+    {
+        FindNextActor();
+    }
 
     private void CharacterManager_OnWaveDefeated()
     {
@@ -192,6 +203,11 @@ public class ActionSequencer : MonoBehaviour
     {
         ++round;
         Debug.Log("New Round " + round);
+       
         OnNewRoundStarted.Invoke(round);
+
+       foreach(CharacterInitiative ci in characterInitiativeList)      
+            Debug.Log(ci.name + " " + ci.nextActionTime);
+        
     }
 }

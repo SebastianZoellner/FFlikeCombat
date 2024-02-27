@@ -59,8 +59,8 @@ public class CharacterStats : MonoBehaviour
             //Debug.Log("Passed endurance");
             if (pow.momentumEffect)
             {
-                if (pow.momentumCost > momentum) continue;
-                //Debug.Log("Passed momentum cost");
+                if (pow.momentumCost>0 && pow.momentumCost > momentum) continue;
+               // Debug.Log("Passed momentum cost");
                 if (pow.maxMomentum < momentum) continue;
                 //Debug.Log("Passed maximum momentum");
                 if (pow.minMomentum >= momentum) continue;

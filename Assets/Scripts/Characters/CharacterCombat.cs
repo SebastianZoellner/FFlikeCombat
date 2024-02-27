@@ -21,7 +21,7 @@ public class CharacterCombat : MonoBehaviour
     private PowerSO attackPower;
     private CharacterHealth target;
     private int successLevel;
-    private bool hasAttacked;
+    private bool hasActed;
     private bool isHero;
 
     
@@ -41,22 +41,34 @@ public class CharacterCombat : MonoBehaviour
     private void OnEnable()
     {
         mover.OnMovementFinished += Mover_OnMovementFinished;
-        animator.OnAttackAnimationFinished += Animator_OnAttackAnimationFinished;
+        animator.OnActionAnimationFinished += Animator_OnActionAnimationFinished;
     }
 
     public  void StartAttack(PowerSO attackPower, CharacterHealth target)
     {
-        if (!target)
+        if (!GetComponent<CharacterHealth>().canBeTarget)
             return;
 
         this.attackPower = attackPower;
         this.target = target;
-        Debug.Log("Starting attack against "+target.name);
-        animator.SetMove(true);
-        hasAttacked = false;
-        if(isHero)
-        FeelManager.Instance.StartAttack(this.transform, attackPower);
-        mover.MoveTo(target.transform.position, attackPower.range);
+
+        switch (attackPower.target)
+            {
+            case TargetType.Enemy:
+                if (!target) return;
+                Debug.Log("Starting attack against " + target.name);
+                animator.SetMove(true);
+                hasActed = false;
+                if (isHero)
+                    FeelManager.Instance.StartAttack(this.transform, attackPower);
+                mover.MoveTo(target.transform.position, attackPower.range);
+                break;
+            case TargetType.Self:
+                animator.SetBuff();
+                hasActed = false;
+                break;
+        }
+        
     }
 
     private void RollAttack(PowerSO attackPower, CharacterHealth target)
@@ -91,10 +103,12 @@ public class CharacterCombat : MonoBehaviour
         }
     }
 
+    
+
     private void Mover_OnMovementFinished()
     {
         
-        if ( !hasAttacked)
+        if ( !hasActed)
         {          
             PerformAttack();
         }
@@ -106,15 +120,28 @@ public class CharacterCombat : MonoBehaviour
         }
     }
 
-    private void Animator_OnAttackAnimationFinished()
+    private void Animator_OnActionAnimationFinished()
     {
         FeelManager.Instance.EndAttack();
-        mover.MoveHome();
+
+        if (!mover.IsHome())
+        {
+            Debug.Log("Switching to Move");
+            mover.MoveHome();
+            animator.SetMove(true);
+        }
+        else
+        {
+            Debug.Log("Switching to Idle");
+            animator.SetIdle();
+            OnAttackFinished.Invoke(true);
+            OnAnyActionFinished.Invoke();
+        }
     }
 
     private void PerformAttack()
     {
-        hasAttacked = true;
+        hasActed = true;
         //Debug.Log("Starting attack animation");
         animator.SetAttack(attackPower.attackAnimation);
         //start beginning attack FX
@@ -123,7 +150,7 @@ public class CharacterCombat : MonoBehaviour
         RollAttack(attackPower, target);
     }
 
-    private void Impact() 
+    private void Impact() //Triggered from animations
         //This manages all the FX of the hit and the lauch of projectiles
     {
         if (attackPower.HasProjectile())
@@ -170,6 +197,38 @@ public class CharacterCombat : MonoBehaviour
             sound.PlayHitSound(attackPower.missSound);
         }     
     }
+    private void Buff()//Triggered from animations
+    {
+        Debug.Log("Buff applied ");
+        if (attackPower.hitVFX)
+            effects.AttackingEffect(attackPower.hitVFX, target.transform);
 
-    
+        sound.SetHitSound(attackPower, target);
+        FeelManager.Instance.BuffEffect();
+
+        ManageBuff();
+    }
+
+    public void ManageBuff()
+    //This manages all the rules effects of a buff
+    //Right now this is a static effect, we may want to add a random effect later.
+    {
+        float heal = attackPower.GetDamage();
+        heal = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), heal);
+        target.Heal(heal);
+     
+        (StatusName status, float intensity, int duration) = attackPower.GetStatusEffect(0);
+
+        if (status != StatusName.None)
+        {
+            float damageModifier = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
+            target.GetComponent<StatusManager>().GainStatus(status, intensity, duration, damageModifier);
+        }
+
+        if (attackPower.momentumEffect)
+        {
+            OnMomentumModified.Invoke(this, attackPower.momentumChange);
+        }
+    }
+
 }

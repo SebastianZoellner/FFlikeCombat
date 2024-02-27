@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: SwordHit
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: f6f90bb892fd3489b8f6f141d71dd92a, type: 3}
+  - {fileID: 8300000, guid: 5f393099250cf4184a6ae0dca28d1d18, type: 3}
+  - {fileID: 8300000, guid: 151ced2663f014402bf22c7fd905a488, type: 3}
+  - {fileID: 8300000, guid: 65fca058a982a9e40a63b20da39a91dd, type: 3}
+  volumeRange: {x: 0.9, y: 1.1}
+  pitchRange: {x: 0.9, y: 1.1}
+  distance: {x: 1, y: 1000}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

@@ -7,15 +7,14 @@ public class PCController : MonoBehaviour
     public event Action OnActionEnded = delegate { };
     public event Action OnHasActed = delegate { };
 
-
-    [SerializeField] private CharacterHealth target;
-
-    //private CharacterCombat combat;
-    private CharacterInitiative initiative;
     public CharacterStats stats { get; private set; }
-    private SelectionIndicator selectionIndicator;// { get; private set; }
+     
+    private CharacterInitiative initiative;
+    private CharacterHealth health;
+    private SelectionIndicator selectionIndicator;
 
-    //private bool hasActed;
+    private CharacterHealth target;
+    private PowerSO selectedPower;
 
     //---------------------------------------------
     //      Lifecycle Functions
@@ -25,6 +24,7 @@ public class PCController : MonoBehaviour
     {
         stats = GetComponent<CharacterStats>();
         initiative = GetComponent<CharacterInitiative>();
+        health = GetComponent<CharacterHealth>();
         selectionIndicator = GetComponent<SelectionIndicator>();
     }
 
@@ -32,8 +32,11 @@ public class PCController : MonoBehaviour
     {
         CharacterHealth.OnAnyEnemyDied += OnAnyEnemyDied;
     }
+    private void OnDisable()
+    {
+        CharacterHealth.OnAnyEnemyDied -= OnAnyEnemyDied;
+    }
 
-    
     //---------------------------------------------
     //      Basic Getters
     //-----------------------------------------------
@@ -46,6 +49,7 @@ public class PCController : MonoBehaviour
     
     public void SetSelected()
     {
+        selectedPower = null;
         if (target)
             target.selectionIndicator.SetSelected();
 
@@ -60,31 +64,79 @@ public class PCController : MonoBehaviour
         selectionIndicator.SetDeselected();
     }
 
-    
-
-    public void StartAttack(PowerSO power)
+    public void SetPower(PowerSO power)
     {
-        if (!target)
-            return;
+        selectedPower = power;
 
-        
+        if (target && selectedPower.target == TargetType.Enemy && target.IsHero)
+        {
+            target.selectionIndicator.SetDeselected();
+            target = null;
+        }
 
-        initiative.ReadyAttack(power, target);
+        if (target && selectedPower.target == TargetType.Friend && !target.IsHero)
+        {
+            target.selectionIndicator.SetDeselected();
+            target = null;
+        }
+
+        if (selectedPower.target == TargetType.Self)
+        {
+            target = health;          
+        }
+
+        if(target!=null)
+            StartPower();
     }
 
-
+    
     public void SetTarget(CharacterHealth targetHealth)
     {
+        if (!targetHealth)
+            return;
+
         if (!targetHealth.canBeTarget)
             return;
+
+        if(selectedPower)
+        {
+            if (selectedPower.target == TargetType.Enemy && targetHealth.IsHero)
+                return;
+            if (selectedPower.target == TargetType.Friend && !targetHealth.IsHero)
+                return;
+        }
+
 
         if (target)
             target.selectionIndicator.SetDeselected();
 
         target = targetHealth;
-        if(target)
+        
         target.selectionIndicator.SetSelected();
         //Debug.Log("Set new target: " + target.name);
+
+        if (target && selectedPower)
+            StartPower();
+    }
+
+
+    private void StartPower()
+    {
+        if (selectedPower.target == TargetType.Enemy)
+            if (!target || target.IsHero)
+            {
+                Debug.LogWarning("Target for single enemy power not set or not enemy");
+                return;
+            }
+
+        if (selectedPower.target == TargetType.Friend)
+            if (!target || !target.IsHero)
+            {
+                Debug.LogWarning("Target for single hero power not set or not hero");
+                return;
+            }
+
+        initiative.ReadyAttack(selectedPower, target);
     }
 
     //---------------------------------------------

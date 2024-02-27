@@ -16,6 +16,9 @@ MonoBehaviour:
   maxDamage: 4
   attack: 0
   defense: 0
+  setupTime: 0.1
+  recoveryTime: 0.9
+  target: 0
   successEffectArray:
   - level: 2
     status: 3
@@ -29,19 +32,17 @@ MonoBehaviour:
     status: 3
     intensity: 5
     duration: 0
-  buttonName: Club
   icon: {fileID: 0}
-  setupTime: 0.1
-  recoveryTime: 0.9
+  buttonName: Club
+  description: 
   range: 1.9
-  attackAnimation: {fileID: 7400000, guid: dc5652207182d104982f0ef2bfd10476, type: 2}
+  attackAnimation: {fileID: 7400000, guid: 8d6575095340f6341b98f1892df3b096, type: 2}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 5286328772216621839, guid: 3bbf7e996e9d4004981ad9b327a6a00a, type: 3}
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: c638ea1d0ac4c5140bad620fa9f3f93f, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  description: 
   momentumEffect: 0
   momentumCost: 0
   momentumChange: 0

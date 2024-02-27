@@ -25,9 +25,9 @@ public class DisadvantagedStatus : BaseStatus
         return 0;
     }
 
-    public override void OnActivation()
+    public override bool OnActivation()
     {
-       
+        return false;
     }
 
     public override bool OnTurnStart()

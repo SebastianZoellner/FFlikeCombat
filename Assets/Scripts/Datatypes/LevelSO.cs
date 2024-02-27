@@ -31,6 +31,11 @@ public class LevelSO : ScriptableObject
             for (int i = 0; i < number; ++i)
             {
                 Transform newSpawnPoint = spawnPointController.GetEmptySpawnPoint(SpawnPointType.Enemy);
+                if (newSpawnPoint.childCount > 0)
+                {
+                    Debug.LogWarning("Returned empty spawn point not empty");
+                    continue;
+                }
                 GameObject spawnedEnemy = sg.enemy.Spawn(newSpawnPoint);
                 if (!spawnedEnemy)
                     Debug.LogError("Spawn Failed");

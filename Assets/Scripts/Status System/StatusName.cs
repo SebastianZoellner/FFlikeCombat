@@ -7,5 +7,6 @@ public enum StatusName
     ShellShocked,
     Blinded,
     Disadvantaged,
+    Shocked,
     None
 }

@@ -34,7 +34,7 @@ public abstract class BaseStatus
     public abstract void BeginStatus();
 
 
-    public abstract void OnActivation();
+    public abstract bool OnActivation();
 
 
     public abstract bool OnTurnStart();

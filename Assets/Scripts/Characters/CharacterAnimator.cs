@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour
 {
-    public event Action OnAttackAnimationFinished = delegate { };
+    public event Action OnActionAnimationFinished = delegate { };
 
     [SerializeField] bool isAnimated = false;
     private Animator animator;
@@ -15,10 +15,13 @@ public class CharacterAnimator : MonoBehaviour
     private readonly int downAnimationHash = Animator.StringToHash("Down");
     private readonly int diedAnimationHash = Animator.StringToHash("Died");
     private readonly int hitAnimationHash = Animator.StringToHash("Hit");
+    private readonly int buffAnimationHash = Animator.StringToHash("Buff");
     private readonly int moveStateNameHash = Animator.StringToHash("Base Layer.Moving");
+    private readonly int idleTriggerHash = Animator.StringToHash("Idle");
 
     private AnimatorOverrideController overrideController;
     private bool isAttacking;
+    private bool isBuffing;
     private float checkAttackingtimer;
 
     private void Awake()
@@ -31,6 +34,12 @@ public class CharacterAnimator : MonoBehaviour
 
     private void Update()
     {
+        if (isBuffing)
+        {
+            CheckBuffingAnimation();
+            return;
+        }
+
         if (!isAttacking)
             return;
 
@@ -41,17 +50,18 @@ public class CharacterAnimator : MonoBehaviour
         AnimatorStateInfo info= animator.GetCurrentAnimatorStateInfo(0);
 
         //Debug.Log("Checking Attack "+checkAttackingtimer);
-        if(!info.IsName("Base Layer.Attacking"))
+        if(!info.IsName("Base.Attacking"))
             {
             //Debug.Log("AttackFinished");
             isAttacking = false;
-            OnAttackAnimationFinished.Invoke();
+            OnActionAnimationFinished.Invoke();
         }
     }
 
+    
+
     public void SetMove(bool move)
     {
-        //Debug.Log("Move animation: " + move);
         animator.SetBool(moveAnimationHash, move);
     }
 
@@ -62,7 +72,7 @@ public class CharacterAnimator : MonoBehaviour
 
         if (!isAnimated)
         {
-            OnAttackAnimationFinished.Invoke();
+            OnActionAnimationFinished.Invoke();
             return;
         }
         //Debug.Log("Starting attack animation");
@@ -74,6 +84,15 @@ public class CharacterAnimator : MonoBehaviour
         animator.SetTrigger(attackAnimationHash);
         isAttacking = true;
         checkAttackingtimer = 0;
+    }
+
+    internal void SetBuff()
+    {
+        if (!isAnimated)
+            return;
+
+        animator.SetTrigger(buffAnimationHash);
+        isBuffing = true;
     }
 
     public void SetHit()
@@ -98,5 +117,31 @@ public class CharacterAnimator : MonoBehaviour
             return;
 
         animator.SetTrigger(diedAnimationHash);
+    }
+
+    public void SetIdle()
+    {
+        {
+            if (!isAnimated)
+                return;
+
+            animator.SetTrigger(idleTriggerHash);
+        }
+
+    }
+
+    private void CheckBuffingAnimation()
+    {
+        AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
+        if (info.IsName("Base.Buffing"))
+            Debug.Log("In Base.Buffing " + info.normalizedTime);
+
+        if (info.IsName("Base.Buffing") && info.normalizedTime >= 0.95f)
+        {
+            isBuffing = false;
+            OnActionAnimationFinished.Invoke();
+        }
+
+
     }
 }

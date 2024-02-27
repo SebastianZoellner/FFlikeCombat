@@ -21,6 +21,7 @@ public class CharacterHealth : MonoBehaviour
     public SelectionIndicator selectionIndicator { get; private set; }
     public bool canBeTarget { get; private set; }
     public CharacterStats Stats { get; private set; }
+    public bool IsHero{ get; private set; }
 
     private CharacterAnimator animator;
 
@@ -31,7 +32,7 @@ public class CharacterHealth : MonoBehaviour
         selectionIndicator = GetComponent<SelectionIndicator>();
         Stats = GetComponent<CharacterStats>();
         animator = GetComponent<CharacterAnimator>();
-        
+        IsHero = GetComponent<PCController>();    
     }
 
     private void OnEnable()
@@ -53,7 +54,9 @@ public class CharacterHealth : MonoBehaviour
         ActionSequencer.OnNewRoundStarted -= ActionSequencer_OnNewRoundStarted;
     }
 
-
+    //-----------------------------------------------------------------------------------
+    //                    Public functions
+    //-----------------------------------------------------------------------------------
 
     public void TakeDamage(float damage)
     {
@@ -68,11 +71,19 @@ public class CharacterHealth : MonoBehaviour
         
     }
 
+    public void Heal(float healAmount)
+    {
+        ChangeHealth(healAmount);
+    }
+
     public void SetStartingHealth(float startingHealth)
     {
         this.StartingHealth = startingHealth;
     }
 
+    //------------------------------------------------------------------------
+    //                  Private functions
+    //------------------------------------------------------------------------
 
 
     private void ChangeHealth(float change)

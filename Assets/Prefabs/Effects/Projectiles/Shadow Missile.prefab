@@ -65,6 +65,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5108506120720094068, guid: 19a2767abcec4584db3c813e60c4f34b,
         type: 3}
+      propertyPath: impactSFX
+      value: 
+      objectReference: {fileID: 11400000, guid: 1aa4ad20ce4620949864ec4cb01899d8,
+        type: 2}
+    - target: {fileID: 5108506120720094068, guid: 19a2767abcec4584db3c813e60c4f34b,
+        type: 3}
       propertyPath: impactVfx
       value: 
       objectReference: {fileID: 7705123086510269978, guid: 35c365fa490a25c4793cc65aaacb52ec,

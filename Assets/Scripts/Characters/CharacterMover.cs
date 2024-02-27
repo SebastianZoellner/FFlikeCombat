@@ -18,13 +18,18 @@ public class CharacterMover : MonoBehaviour
     [SerializeField] private float movementSpeed;
     [SerializeField] private float rotationSpeed = 0.1f;
     private float facingTreshold=5;
+    private float distanceThreshold = 0.1f;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = movementSpeed;
-        defaultFacing = Quaternion.LookRotation(transform.forward, Vector3.up);
-        defaultLocation = transform.position;
+        agent.speed = movementSpeed;  
+    }
+    private void Start()
+    {
+        SpawnPoint spawnPoint = GetComponentInParent<SpawnPoint>();
+        defaultLocation =spawnPoint.transform.position;
+        defaultFacing = Quaternion.LookRotation(spawnPoint.transform.forward, Vector3.up);
     }
 
     private void Update()
@@ -34,7 +39,7 @@ public class CharacterMover : MonoBehaviour
 
         //Debug.Log(agent.stoppingDistance + " stopping, remaining: " + agent.remainingDistance);
 
-        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance)
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance+distanceThreshold)
         {
             if (isMoving)
             {
@@ -66,6 +71,12 @@ public class CharacterMover : MonoBehaviour
         agent.stoppingDistance = 0;
         agent.SetDestination(defaultLocation);
         isReturning = true;
+    }
+
+    public bool IsHome()
+    {
+        Debug.Log(Quaternion.Angle(transform.rotation, defaultFacing) + " " + Vector3.Distance(transform.position, defaultLocation));
+        return (Quaternion.Angle(transform.rotation, defaultFacing) < facingTreshold && Vector3.Distance(transform.position, defaultLocation) < distanceThreshold);
     }
 
 }

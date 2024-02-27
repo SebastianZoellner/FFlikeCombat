@@ -11,18 +11,29 @@ public class PowerSO : ScriptableObject
     [SerializeField] float maxDamage;
     public float attack;
     public float defense;
-    [SerializeField] SuccessEffect[] successEffectArray;
-
-    [Header("UI Presentation")]
-    public string buttonName;
-    public Sprite icon;
-
-    //this should go under the top header
     public float setupTime;
     public float recoveryTime;
-    public float range;
+    public TargetType target;
+
+    [SerializeField] SuccessEffect[] successEffectArray;
+
+   // [Header("UI Presentation")]
+    //[BoxGroup("UI Presentation")]
+
+    [HorizontalGroup("Display", 100)]
+    [PreviewField(75)]
+    [HideLabel]
+    public Sprite icon;
+   // [BoxGroup("UI Presentation")]
+    [VerticalGroup("Display/Text")]
+    public string buttonName;
+   // [BoxGroup("UI Presentation")]
+    [VerticalGroup("Display/Text")]
+    [TextArea]
+    public string description;
 
     [Header("Animation")]
+    public float range=2;
     public AnimationClip attackAnimation;
 
     
@@ -40,8 +51,7 @@ public class PowerSO : ScriptableObject
     [BoxGroup("SFX")]
     public SimpleAudioEventSO missSound;
 
-    [TextArea]
-    public string description;
+    
 
     [BoxGroup("Momentum")]
     public bool momentumEffect;
@@ -81,6 +91,7 @@ public class PowerSO : ScriptableObject
 
     public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker,CharacterHealth targetHealth, int successLevel)
     {
+        Debug.Log("Launching projectile " + projectile.name);
        GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition, Quaternion.identity);
         projectileInstance.GetComponent<Projectile>().Setup(attacker,targetHealth, range, this, successLevel);
     }
@@ -110,4 +121,13 @@ public struct SuccessEffect
     public float intensity;
     public int duration;
 
+}
+
+public enum TargetType
+{
+    Enemy,
+    AllEnemies,
+    Self,
+    Friend,
+    AllFriends
 }
