@@ -3,8 +3,9 @@ using UnityEngine;
 public class ShellShockedStatus : BaseStatus
 {
     int turnCounter = 0;
+    GameObject activeVFX;
 
-    public ShellShockedStatus(StatusManager statusManager, int statusIndex, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, statusIndex, intensity, damageModifier, duration, statusVFX)
+    public ShellShockedStatus(StatusManager statusManager, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, intensity, damageModifier, duration, statusVFX)
     {
     }
 
@@ -12,12 +13,17 @@ public class ShellShockedStatus : BaseStatus
     {
         statusName = StatusName.ShellShocked;
         statusManager.Health.TakeDamage(intensity*3);
+        if (statusVFX)
+        {
+            activeVFX = statusManager.InitializeStatusVFX(statusVFX);
+        }
 
     }
 
     public override void EndStatus()
     {
-        
+        if (activeVFX)
+            GameObject.Destroy(activeVFX);
     }
 
     public override float GetAttributeEffect(Attribute attribute)

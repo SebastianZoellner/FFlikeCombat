@@ -6,7 +6,7 @@ public class EntangleStatus : BaseStatus
     int turnCounter;
     GameObject activeVFX;
 
-    public EntangleStatus(StatusManager statusManager, int statusIndex, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, statusIndex, intensity, damageModifier, duration, statusVFX)
+    public EntangleStatus(StatusManager statusManager, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, intensity, damageModifier, duration, statusVFX)
     {
     }
 

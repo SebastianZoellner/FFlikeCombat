@@ -14,6 +14,7 @@ public class PowerSO : ScriptableObject
     public float setupTime;
     public float recoveryTime;
     public TargetType target;
+    public float radius;
 
     [SerializeField] SuccessEffect[] successEffectArray;
 
@@ -74,9 +75,9 @@ public class PowerSO : ScriptableObject
         return false;
     }
 
-    public float GetDamage()
+    public float GetDamage(float highHitModifier)
     {
-        return UnityEngine.Random.Range(minDamage, maxDamage);
+        return UnityEngine.Random.Range(minDamage, maxDamage)*highHitModifier;
     }
 
     public (StatusName,float,int) GetStatusEffect(int successLevel)
@@ -89,11 +90,11 @@ public class PowerSO : ScriptableObject
         return (StatusName.None, 0,0);
     }
 
-    public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker,CharacterHealth targetHealth, int successLevel)
+    public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker,CharacterHealth targetHealth)
     {
-        Debug.Log("Launching projectile " + projectile.name);
+       //Debug.Log("Launching projectile " + projectile.name+" at "+targetHealth.transform.position);
        GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition, Quaternion.identity);
-        projectileInstance.GetComponent<Projectile>().Setup(attacker,targetHealth, range, this, successLevel);
+        projectileInstance.GetComponent<Projectile>().Setup(attacker,targetHealth, range, this);
     }
 
     public void PlayAttackSound(AudioSource source)
@@ -129,5 +130,6 @@ public enum TargetType
     AllEnemies,
     Self,
     Friend,
-    AllFriends
+    AllFriends,
+    AreaEnemies
 }

@@ -12,6 +12,7 @@ public class CharacterCombat : MonoBehaviour
     private CharacterVFX effects;
     private CharacterAnimator animator;
     private CharacterAudio sound;
+    private CharacterHealth health;
     
 
     [SerializeField] GameObject hitEffect;
@@ -19,13 +20,16 @@ public class CharacterCombat : MonoBehaviour
     [SerializeField] Transform attackOrigin;
 
     private PowerSO attackPower;
-    private CharacterHealth target;
-    private int successLevel;
+    //private CharacterHealth target;
+    private CharacterHealth[] targetArray;
+    //private int successLevel;
     private bool hasActed;
     private bool isHero;
+   // private float highHitDamage=1; //Damage modifier for hit chance >100%
 
-    
-    
+//-------------------------------------------------------------
+//                 Lifecycle Functions
+//-------------------------------------------------------------
 
     private void Awake()
     {
@@ -34,6 +38,7 @@ public class CharacterCombat : MonoBehaviour
         mover = GetComponent<CharacterMover>();
         animator = GetComponent<CharacterAnimator>();
         sound = GetComponent<CharacterAudio>();
+        health = GetComponent<CharacterHealth>();
         if (GetComponent<PCController>())
             isHero = true;
     }
@@ -44,52 +49,97 @@ public class CharacterCombat : MonoBehaviour
         animator.OnActionAnimationFinished += Animator_OnActionAnimationFinished;
     }
 
+    //--------------------------------------------------------------------
+    //                    Public Functions
+    //--------------------------------------------------------------------
+
     public  void StartAttack(PowerSO attackPower, CharacterHealth target)
     {
-        if (!GetComponent<CharacterHealth>().canBeTarget)
+        if (!health.canBeTarget)
             return;
 
         this.attackPower = attackPower;
-        this.target = target;
+
+        Vector3 moveToPosition=new Vector3();
+        float range=0;
 
         switch (attackPower.target)
             {
             case TargetType.Enemy:
                 if (!target) return;
-                Debug.Log("Starting attack against " + target.name);
-                animator.SetMove(true);
+                //Debug.Log("Starting attack "+attackPower.name+" against " + target.name);            
                 hasActed = false;
-                if (isHero)
+                targetArray = new CharacterHealth[1];
+                targetArray[0] = target;
+
+                moveToPosition = target.transform.position;
+                range = attackPower.range;
+
+                if (isHero && FeelManager.Instance)
                     FeelManager.Instance.StartAttack(this.transform, attackPower);
-                mover.MoveTo(target.transform.position, attackPower.range);
+               
                 break;
-            case TargetType.Self:
-                animator.SetBuff();
+
+            case TargetType.AllEnemies:
                 hasActed = false;
+                if(isHero)
+                targetArray = SpawnPointController.Instance.GetAllFraction(true).ToArray();
+                else
+                    targetArray= SpawnPointController.Instance.GetAllFraction(false).ToArray();
+                Debug.Log("All Enemy attack with " + targetArray.Length + " targets");
+
+                moveToPosition = transform.position + transform.forward;
+                range = 0;
+
+                if (isHero)
+                    FeelManager.Instance.StartAllAttack(this.transform, attackPower);
+                break;
+
+            case TargetType.Self:
+            
+                hasActed = false;
+                targetArray = new CharacterHealth[1];
+                targetArray[0] = health;
+
+                moveToPosition = transform.position + transform.forward;
+                range = 0;
                 break;
         }
-        
+
+        animator.SetMove(true);
+        mover.MoveTo(moveToPosition, range);
+        //Debug.Log("Moving to " + target.transform.position);
     }
 
-    private void RollAttack(PowerSO attackPower, CharacterHealth target)
+    public void StartMoveHome()
     {
-        float attackValue = attackPower.attack;
-        attackValue = GameSystem.Instance.CalculateAttack(stats.GetAttribute(Attribute.Combat), attackValue);
-
-        float defenseValue = target.Stats.GetDefenseValue();
-        float critModifier = 0;
-
-        Debug.Log(name + " Attacking " + target.Stats.GetName() + " with " + attackPower.name);
-        successLevel = GameSystem.Instance.TestAttack(attackValue, defenseValue, critModifier);
-        
+        hasActed = true;
+        animator.SetMove(true);
+        mover.MoveHome();
     }
+   
 
-    public void ManageHit()
-        //This manages all the rules effects of a hit 
+    public bool ManageHit(CharacterHealth target)
+        //This manages all the rules effects of a hit, called from the projectile function 
     {
-        float damage = attackPower.GetDamage();
+        int successLevel = 0;
+        float highHitDamage = 1;
+
+        (successLevel, highHitDamage) = RollAttack(attackPower, target);
+        if (successLevel == 0)
+            return false;
+
+        float damage = attackPower.GetDamage(highHitDamage);
         damage = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), damage);
         target.TakeDamage(damage);
+
+        if (attackPower.momentumEffect)
+        {
+            OnMomentumModified.Invoke(this, attackPower.momentumChange);
+        }
+
+        if (!target.canBeTarget) //Target died
+            return true;
 
         float damageModifier= GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
         (StatusName status,float intensity,int duration)=attackPower.GetStatusEffect(successLevel);
@@ -97,20 +147,33 @@ public class CharacterCombat : MonoBehaviour
         if (status != StatusName.None)
             target.GetComponent<StatusManager>().GainStatus(status, intensity,duration,damageModifier);
 
-       if(attackPower.momentumEffect)
-        {
-            OnMomentumModified.Invoke(this,attackPower.momentumChange);
-        }
+        return true; ;
     }
 
-    
+    //----------------------------------------------------------------------------------
+    //            Private Functions
+    //----------------------------------------------------------------------------------
+
+
+    private (int,float) RollAttack(PowerSO attackPower, CharacterHealth target)
+    {
+        float attackValue = attackPower.attack;
+        attackValue = GameSystem.Instance.CalculateAttack(stats.GetAttribute(Attribute.Combat), attackValue);
+
+        float defenseValue = target.Stats.GetDefenseValue();
+        float critModifier = 0;
+
+        //Debug.Log(name + " Attacking " + target.Stats.GetName() + " with " + attackPower.name);
+        return GameSystem.Instance.TestAttack(attackValue, defenseValue, critModifier);
+
+    }
 
     private void Mover_OnMovementFinished()
     {
         
         if ( !hasActed)
         {          
-            PerformAttack();
+            PerformAction();
         }
         else
         {          
@@ -126,7 +189,7 @@ public class CharacterCombat : MonoBehaviour
 
         if (!mover.IsHome())
         {
-            Debug.Log("Switching to Move");
+            //Debug.Log("Switching to Move");
             mover.MoveHome();
             animator.SetMove(true);
         }
@@ -139,15 +202,17 @@ public class CharacterCombat : MonoBehaviour
         }
     }
 
-    private void PerformAttack()
+    private void PerformAction()
+        //Starts the Action after the Movement
+        //All action effects are generated from Animation Events
     {
         hasActed = true;
-        //Debug.Log("Starting attack animation");
+        //Debug.Log("Starting action animation");
         animator.SetAttack(attackPower.attackAnimation);
         //start beginning attack FX
 
         sound.PlayAttackSound(attackPower);
-        RollAttack(attackPower, target);
+       
     }
 
     private void Impact() //Triggered from animations
@@ -173,47 +238,57 @@ public class CharacterCombat : MonoBehaviour
             }
 
             sound.PlayShootSound(attackPower.hitSound);
-
-            attackPower.LaunchProjectile(attackOrigin.position, this, target,successLevel);
+            foreach (CharacterHealth target in targetArray)
+            {             
+                attackPower.LaunchProjectile(attackOrigin.position, this, target);
+            }
             return;
         }
 
-       //Debug.Log("No projectile");
-        if (successLevel > 0)
+        //Debug.Log("No projectile");
+
+        foreach (CharacterHealth target in targetArray)
         {
-            Debug.Log("Hit, success level " + successLevel);
-            if(attackPower.hitVFX)
-            effects.AttackingEffect(attackPower.hitVFX, target.transform);
+            bool hasHit = ManageHit(target);
+            if (hasHit)
+            {
+                // Debug.Log("Hit, success level " + successLevel);
+                if (attackPower.hitVFX)
+                    effects.AttackingEffect(attackPower.hitVFX, target.transform);
 
-            sound.SetHitSound(attackPower,target);
-            FeelManager.Instance.HitEffect();
-
-            ManageHit();
+                sound.SetHitSound(attackPower, target);
+                FeelManager.Instance.HitEffect();
+            }
+            else
+            {
+                //Debug.Log("Missed");
+                effects.AttackingEffect(missEffect, target.transform);
+                sound.PlayHitSound(attackPower.missSound);
+            }
         }
-        else
-        {
-            Debug.Log("Missed");
-            effects.AttackingEffect(missEffect, target.transform);
-            sound.PlayHitSound(attackPower.missSound);
-        }     
     }
+
     private void Buff()//Triggered from animations
     {
         Debug.Log("Buff applied ");
-        if (attackPower.hitVFX)
-            effects.AttackingEffect(attackPower.hitVFX, target.transform);
+        foreach (CharacterHealth target in targetArray)
+        {
 
-        sound.SetHitSound(attackPower, target);
-        FeelManager.Instance.BuffEffect();
+            if (attackPower.hitVFX)
+                effects.AttackingEffect(attackPower.hitVFX, target.transform);
 
-        ManageBuff();
+            sound.SetHitSound(attackPower, target);
+            FeelManager.Instance.BuffEffect();
+
+            ManageBuff(target);
+        }
     }
 
-    public void ManageBuff()
+    public void ManageBuff(CharacterHealth target)
     //This manages all the rules effects of a buff
     //Right now this is a static effect, we may want to add a random effect later.
     {
-        float heal = attackPower.GetDamage();
+        float heal = attackPower.GetDamage(1);
         heal = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), heal);
         target.Heal(heal);
      

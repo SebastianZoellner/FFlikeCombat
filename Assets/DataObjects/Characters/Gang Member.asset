@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5807afadd574aa9438c13f40201b7fe3, type: 3}
+  m_Name: Gang Member
+  m_EditorClassIdentifier: 
+  CharacterName: Gang Member
+  LabelName: 
+  powerArray:
+  - {fileID: 11400000, guid: 1d41959b5bf364f4586fd29c3fb274a5, type: 2}
+  - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}
+  startingHealth: 18
+  attributeArray:
+  - attribute: 0
+    value: 20
+  - attribute: 2
+    value: 18
+  - attribute: 4
+    value: 10
+  - attribute: 5
+    value: 7
+  - attribute: 7
+    value: 5
+  icon: {fileID: 21300000, guid: d198e52868f3b25418ba2bd2e4d30273, type: 3}
+  shortBlurb: A tough life on the street has made her even tougher.
+  animatorController: {fileID: 22100000, guid: 9a95febdb27c6ca48acfe2fc6062c70c, type: 2}
+  characterToon: {fileID: 8973485430670085023, guid: 0cd02968f7406e14ba5755f70c562fde,
+    type: 3}
+  level: 1
+  StartingEndurance: 0

@@ -15,7 +15,6 @@ public class Projectile : MonoBehaviour
     private CharacterHealth targetHealth = null;
     private float range = 0;
     private Vector3 target;
-    private int successLevel;
 
     private Vector3 startPosition;
 
@@ -49,13 +48,13 @@ public class Projectile : MonoBehaviour
         transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
     }
 
-    public void Setup(CharacterCombat attacker, CharacterHealth target, float range, PowerSO power, int successLevel)
+    public void Setup(CharacterCombat attacker, CharacterHealth target, float range, PowerSO power)
     {
         attackPower = power;
         this.attacker = attacker;
         this.targetHealth = target;
         this.range = range;
-        this.successLevel = successLevel;
+      
 
     }
 
@@ -79,7 +78,7 @@ public class Projectile : MonoBehaviour
         projectileSpeed = 0;
 
 
-        //Debug.Log(name+"Colliding with " + other.name);
+        Debug.Log(name+"Colliding with " + other.name);
 
         //Vector3 hitPosition = other.ClosestPoint(transform.position);
         /*
@@ -107,7 +106,7 @@ public class Projectile : MonoBehaviour
 
     private void Impact(Collider other)
     {
-        attacker.ManageHit();
+        attacker.ManageHit(targetHealth);
         Vector3 pointOfContact = other.ClosestPoint(transform.position);
         Vector3 collisionNormal = (pointOfContact - transform.position).normalized;
         Quaternion rot = Quaternion.FromToRotation(Vector3.up, collisionNormal);

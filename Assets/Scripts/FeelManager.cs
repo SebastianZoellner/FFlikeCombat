@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
-
+using System;
 
 public class FeelManager : MonoBehaviour
 {
@@ -11,6 +11,7 @@ public class FeelManager : MonoBehaviour
     [SerializeField] MMFeedbacks startAttackFeedback;
     [SerializeField] MMFeedbacks resetFeedbacks;
     [SerializeField] MMFeedbacks hitFeedback;
+    [SerializeField] MMFeedbacks startAllAttackFeedback;
 
    [SerializeField] ActionCameraController actionCamera;
 
@@ -35,4 +36,9 @@ public class FeelManager : MonoBehaviour
     }
 
     public void BuffEffect() { }
+
+    public void StartAllAttack(Transform transform, PowerSO attackPower)
+    {
+        startAllAttackFeedback.PlayFeedbacks();
+    }
 }

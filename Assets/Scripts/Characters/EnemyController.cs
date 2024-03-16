@@ -20,7 +20,8 @@ public class EnemyController : MonoBehaviour
 
     public void TakeTurn()
     {
-        target = AIBrain.Instance.SelectWeakestTarget();
+        //target = AIBrain.Instance.SelectWeakestTarget();
+        target = AIBrain.Instance.SelectRandomTarget();
         selectedPower = AIBrain.Instance.SelectPower(stats);
         combat.StartAttack(selectedPower, target);
         OnTurnFinished.Invoke();
@@ -28,11 +29,13 @@ public class EnemyController : MonoBehaviour
 
     public void SetNextAction()
     {
-        target = AIBrain.Instance.SelectWeakestTarget();
+        //target = AIBrain.Instance.SelectWeakestTarget();
+        target = AIBrain.Instance.SelectRandomTarget();
         if (!target)
             Debug.LogWarning("No target Selected");
 
         selectedPower = AIBrain.Instance.SelectPower(stats);
+
         if (!selectedPower)
             Debug.LogWarning("No power Selected");
        

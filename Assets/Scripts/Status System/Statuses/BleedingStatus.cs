@@ -8,7 +8,7 @@ public class BleedingStatus : BaseStatus
     
     private GameObject activeVFX;
 
-    public BleedingStatus(StatusManager statusManager, int statusIndex, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, statusIndex, intensity, damageModifier, duration, statusVFX)
+    public BleedingStatus(StatusManager statusManager, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, intensity, damageModifier, duration, statusVFX)
     {
     }
 
@@ -17,14 +17,14 @@ public class BleedingStatus : BaseStatus
         statusName = StatusName.Bleeding;
         if (statusVFX)
         {
-            Debug.Log("Bleedin animation started");
+            //Debug.Log("Bleedin animation started");
             activeVFX = statusManager.InitializeStatusVFX(statusVFX);
         }
     }  
 
     public override bool OnActivation()
     {
-        Debug.Log("Bleeding");
+        //Debug.Log("Bleeding");
         statusManager.Health.TakeDamage(intensity * damageModifier);
         ++turnCounter;
 
@@ -38,11 +38,11 @@ public class BleedingStatus : BaseStatus
     {
         return false;    
     }
-    
+
     public override void EndStatus()
     {
-        if(activeVFX)
-        GameObject.Destroy(activeVFX);
+        if (activeVFX)
+            GameObject.Destroy(activeVFX);
     }
 
     public override float GetAttributeEffect(Attribute attribute)

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5807afadd574aa9438c13f40201b7fe3, type: 3}
   m_Name: Test Baddie
   m_EditorClassIdentifier: 
-  CharacterName: 
+  CharacterName: Test Baddie
+  LabelName: 
   powerArray:
   - {fileID: 11400000, guid: ace88d9688e42b24f8125b6f6782779c, type: 2}
   - {fileID: 11400000, guid: 307dbe79fc3df9046a4810d07d7ac1e6, type: 2}

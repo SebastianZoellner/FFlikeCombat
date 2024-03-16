@@ -50,6 +50,7 @@ public class PCController : MonoBehaviour
     public void SetSelected()
     {
         selectedPower = null;
+        target = null;
         if (target)
             target.selectionIndicator.SetSelected();
 

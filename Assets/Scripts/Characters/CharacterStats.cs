@@ -20,7 +20,8 @@ public class CharacterStats : MonoBehaviour
 
     }
 
-    public string GetName() => character.name;
+    public string GetName() => character.CharacterName;
+    public string GetBlurb() => character.shortBlurb;
     public Sprite GetIcon() => character.icon;
     public PowerSO GetPower(int index) => character.GetPower(index);
     public bool HasPowerID(int index) => character.HasPowerID(index);

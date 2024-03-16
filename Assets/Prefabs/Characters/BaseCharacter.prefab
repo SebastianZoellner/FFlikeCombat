@@ -197,6 +197,8 @@ MonoBehaviour:
       type: 3}
   - name: 2
     effect: {fileID: 481947888716730270, guid: 6237d8946d21dfe429978c55b3deb598, type: 3}
+  - name: 5
+    effect: {fileID: 526442615249922012, guid: 71b408165392a3a43ba4b2ac3702dc5d, type: 3}
 --- !u!114 &2001193888194310338
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Shotgun Blast
+  m_EditorClassIdentifier: 
+  minDamage: 1
+  maxDamage: 4
+  attack: 10
+  defense: 0
+  setupTime: 0.1
+  recoveryTime: 0.8
+  target: 0
+  successEffectArray:
+  - level: 3
+    status: 3
+    intensity: 3
+    duration: 0
+  - level: 4
+    status: 4
+    intensity: 1
+    duration: 2
+  icon: {fileID: 0}
+  buttonName: 
+  description: 
+  range: 5
+  attackAnimation: {fileID: 7400000, guid: 43b348acaa2148f40b1dca7ea5bb873e, type: 2}
+  projectile: {fileID: 7124448449439260488, guid: 1430ec27f5e0c4d49a1856c3ab09bb4b,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 157586, guid: 2574ca206a571a342a7fab69fdfb87aa, type: 3}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 71696d0629bef8e4db1b9fb0e1fda684, type: 2}
+  missSound: {fileID: 0}
+  momentumEffect: 1
+  momentumCost: 0
+  momentumChange: 2
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 0

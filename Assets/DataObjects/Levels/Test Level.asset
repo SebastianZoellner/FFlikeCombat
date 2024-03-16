@@ -12,27 +12,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c78e2e690edca74e9c2167bfcf33612, type: 3}
   m_Name: Test Level
   m_EditorClassIdentifier: 
-  waveArray:
-  - spawnGroupArray:
-    - enemy: {fileID: 11400000, guid: 851129b6e0bbee64ab60d370a15442eb, type: 2}
-      minNumber: 1
-      maxNumber: 2
-    - enemy: {fileID: 11400000, guid: ae99a249e9da0b74497ac95f14343226, type: 2}
-      minNumber: 1
-      maxNumber: 1
-  - spawnGroupArray:
-    - enemy: {fileID: 11400000, guid: 29fe07d02b8afdf41a7096f037d50593, type: 2}
-      minNumber: 1
-      maxNumber: 2
-  - spawnGroupArray:
-    - enemy: {fileID: 11400000, guid: 851129b6e0bbee64ab60d370a15442eb, type: 2}
-      minNumber: 0
-      maxNumber: 2
-    - enemy: {fileID: 11400000, guid: ae99a249e9da0b74497ac95f14343226, type: 2}
-      minNumber: 2
-      maxNumber: 2
-  lastWave: 2
-  ambience: {fileID: 8300000, guid: 4cf46afed0091d046a3cc336afcf7a57, type: 3}
-  musicArray:
-  - {fileID: 8300000, guid: a8b2a898d72205343860dfe1dc45044f, type: 3}
-  - {fileID: 8300000, guid: 9e8baac49dd3d384c91be023c3a281c9, type: 3}
+  missionBriefing: 'Objective: Disrupt a major drug deal between the notorious "Black
+    Fang" cartel and a rival syndicate, "Crimson Claw," to dismantle their operations
+    and prevent the distribution of illegal substances in our city.
+
+
+
+    Location:
+    Abandoned warehouse at the outskirts of the city.
+
+
+
+    Threat Assessment:
+
+
+
+    Black
+    Fang Cartel: Ruthless and heavily armed, known for their violent tactics and
+    extensive network.
+
+    Crimson Claw Syndicate: Competing syndicate vying for
+    control of the drug trade, equally dangerous and unpredictable.
+
+    Possible
+    Civilians: Innocent bystanders may be present; minimize collateral damage.'
+  missionVisual: {fileID: 21300000, guid: 208e600f34a3116448e2b2e08dfbbe9f, type: 3}
+  stages:
+  - waveArray:
+    - {fileID: 11400000, guid: efb6a988225cf8e4c8c429bfabe80586, type: 2}
+    ambience: {fileID: 8300000, guid: 4cf46afed0091d046a3cc336afcf7a57, type: 3}
+    musicArray:
+    - {fileID: 8300000, guid: a8b2a898d72205343860dfe1dc45044f, type: 3}
+    - {fileID: 8300000, guid: 9e8baac49dd3d384c91be023c3a281c9, type: 3}
+  - waveArray:
+    - {fileID: 11400000, guid: 73c11a207bd243b47b2227852a386e5b, type: 2}
+    - {fileID: 11400000, guid: efb6a988225cf8e4c8c429bfabe80586, type: 2}
+    ambience: {fileID: 8300000, guid: 53bd19e618dd7a647ae8dc5446a0923d, type: 3}
+    musicArray:
+    - {fileID: 8300000, guid: bec777e0fa848432aaa3b9eac85b6f70, type: 3}

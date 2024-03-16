@@ -14,6 +14,7 @@ public class ActionSequencer : MonoBehaviour
 
 
     [SerializeField] CharacterManager characterManager;
+    
     [SerializeField] float actionSpeed = 0.02f;
 
     
@@ -24,7 +25,8 @@ public class ActionSequencer : MonoBehaviour
     private bool listInitialized = false;
 
     private int round=0;
-
+    
+    private bool isWaiting=false;
 
     private void Awake()
     {
@@ -34,20 +36,25 @@ public class ActionSequencer : MonoBehaviour
 
     private void OnEnable()
     {
+        LevelSetup.OnNewStage += LevelSetup_OnNewStage;
         CharacterCombat.OnAnyActionFinished += ActionFinished;
         CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied;
         CharacterInitiative.OnActionTimeChanged += CharacterInitiative_OnActionTimeChanged;
         CharacterHealth.OnAnyPCDied += Remove_Character;
         CharacterHealth.OnAnyEnemyDied += Remove_Character;
         CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
-        characterManager.OnWaveDefeated += CharacterManager_OnWaveDefeated;
+        characterManager.OnEnemiesDead += CharacterManager_OnWaveDefeated;
     }
 
-   
+    
 
     private void Update()
     {
-        if(!nextActor)
+        if (isWaiting)
+            return;
+
+       
+        if (!nextActor)
             nextActor = FindNextActor();
 
         if (OngoingAction)
@@ -56,7 +63,7 @@ public class ActionSequencer : MonoBehaviour
         actionTime += Time.deltaTime * actionSpeed;
         if (actionTime > nextActor.nextActionTime)
         {
-            Debug.Log("New Actor starting " + nextActor.name);
+            //Debug.Log("New Actor starting " + nextActor.name);
             OngoingAction = true;
             TakeAction(nextActor);           
         }
@@ -64,10 +71,9 @@ public class ActionSequencer : MonoBehaviour
         if(actionTime>round)
         {
             StartNewRound();
+            
         }
     }
-
-    
 
     private void OnDisable()
     {
@@ -77,7 +83,7 @@ public class ActionSequencer : MonoBehaviour
         CharacterHealth.OnAnyPCDied -= Remove_Character;
         CharacterHealth.OnAnyEnemyDied -= Remove_Character;
         CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
-        characterManager.OnWaveDefeated -= CharacterManager_OnWaveDefeated;
+        characterManager.OnEnemiesDead -= CharacterManager_OnWaveDefeated;
     }
 
    
@@ -133,7 +139,9 @@ public class ActionSequencer : MonoBehaviour
         if (nextActor.readiedAction)
         {
             //Debug.Log("Perform " + nextActor.readiedAction.buttonName);           
-            nextActor.PerformReadiedAction();
+            if (!nextActor.PerformReadiedAction())
+                ActionFinished();
+
             return;
         }
 
@@ -160,10 +168,10 @@ public class ActionSequencer : MonoBehaviour
             if (nextActor == null || ci.nextActionTime < nextActor.nextActionTime)
                 nextActor = ci;
         }
-        if (nextActor)
+       /* if (nextActor)
             Debug.Log("Next ActionTime " + nextActor.nextActionTime + " Next Actor " + nextActor.name);
         else
-            Debug.Log("No next Actor set");
+            Debug.Log("No next Actor set");*/
         return nextActor;
     }
 
@@ -203,11 +211,26 @@ public class ActionSequencer : MonoBehaviour
     {
         ++round;
         Debug.Log("New Round " + round);
-       
+        StartCoroutine(Wait(2));
         OnNewRoundStarted.Invoke(round);
 
        foreach(CharacterInitiative ci in characterInitiativeList)      
             Debug.Log(ci.name + " " + ci.nextActionTime);
         
+    }
+
+    private void LevelSetup_OnNewStage(int obj)
+    {
+        StartCoroutine(Wait(2));
+        round = 0;
+        actionTime = 0;
+        InitializeCharacterList();
+    }
+
+    private IEnumerator Wait(float waitTime)
+    {
+        isWaiting = true;
+        yield return new WaitForSeconds(waitTime);
+        isWaiting = false;
     }
 }

@@ -11,7 +11,8 @@ public class CharacterManager : MonoBehaviour
     public static event Action OnAllHeroesDead = delegate { };
     public static event Action OnAllEnemiesDead = delegate { };
 
-    public event Action OnWaveDefeated = delegate { };
+    
+    public event Action OnEnemiesDead = delegate { };
 
     public List<PCController> heroList;
     public List<EnemyController> enemyList;
@@ -21,7 +22,7 @@ public class CharacterManager : MonoBehaviour
     private PCController activeCharacter;
 
     private bool actionOngoing;
-    private bool allEnemiesSpawned = false;
+    
 
 
     //-----------------------------------------
@@ -35,7 +36,10 @@ public class CharacterManager : MonoBehaviour
         input.OnDeselected += Input_OnDeselected;
         CharacterHealth.OnAnyPCDied += CharacterHealth_OnAnyPCDied;
         CharacterHealth.OnAnyEnemyDied+= CharacterHealth_OnAnyEnemyDied;
+        LevelSetup.OnNewStage += LevelSetup_OnNewStage;
     }
+
+    
 
     private void OnDisable()
     {
@@ -44,6 +48,7 @@ public class CharacterManager : MonoBehaviour
         input.OnDeselected -= Input_OnDeselected;
         CharacterHealth.OnAnyPCDied -= CharacterHealth_OnAnyPCDied;
         CharacterHealth.OnAnyEnemyDied -= CharacterHealth_OnAnyEnemyDied;
+        LevelSetup.OnNewStage -= LevelSetup_OnNewStage;
     } 
     //-----------------------------------------
     //      Public Methods
@@ -63,6 +68,7 @@ public class CharacterManager : MonoBehaviour
     {
         SelectNewCharacter(selectedPlayer);
     }
+
     public void AddEnemy(EnemyController enemy)
     {
         if (enemy)
@@ -71,6 +77,7 @@ public class CharacterManager : MonoBehaviour
             OnCharacterAdded.Invoke(enemy.GetComponent<CharacterInitiative>());
         }
     }
+
     public void AddHero(PCController hero)
     {
         if (hero)
@@ -80,10 +87,6 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    public void SetAllEnemiesSpawned()
-    {
-        allEnemiesSpawned = true ;
-    }
 
     //-----------------------------------------
     //      Private Methods
@@ -153,7 +156,7 @@ public class CharacterManager : MonoBehaviour
             activeCharacter.OnActionEnded -= ActiveCharacter_OnActionEnded;
             activeCharacter.SetDeselected();
         }
-        Debug.Log("New Hero Character Selected " + newCharacter.stats.GetName());
+        //Debug.Log("New Hero Character Selected " + newCharacter.stats.GetName());
         activeCharacter = newCharacter;
         activeCharacter.OnActionStarted += ActiveCharacter_OnActionStarted;
         activeCharacter.OnActionEnded += ActiveCharacter_OnActionEnded;
@@ -184,15 +187,23 @@ public class CharacterManager : MonoBehaviour
         EnemyController deadEnemy = deadEnemyHealth.GetComponent<EnemyController>();
         enemyList.Remove(deadEnemy);
 
-        if(enemyList.Count==0)
+        if (enemyList.Count == 0)
         {
-            if (allEnemiesSpawned)
-                OnAllEnemiesDead.Invoke();
-            else
-            {
-                OnWaveDefeated.Invoke();
-            }
+            OnEnemiesDead.Invoke();
+            Debug.Log("All enemies dead");
+        }
+    }
+
+    private void LevelSetup_OnNewStage(int obj)
+    {
+        foreach(PCController pcc in heroList)
+        {
+            //End all stauses
+            pcc.GetComponent<StatusManager>().EndAll();
+
+            //heal some proportion of health
 
         }
+                
     }
 }

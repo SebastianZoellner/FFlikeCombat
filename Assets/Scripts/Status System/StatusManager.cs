@@ -1,15 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class StatusManager : MonoBehaviour
-{
-
+{ 
     public static Action<float> OnChangeMomentum;
     
-    [SerializeField] StatusEffect[] statusEffectArray;
-
     private List<BaseStatus> activeStatusList;
 
     public CharacterHealth Health { get; private set; }
@@ -17,12 +13,13 @@ public class StatusManager : MonoBehaviour
     private CharacterStats stats;
     private CharacterVFX effects;
     private CharacterInitiative initiative;
+    private StatusController statusController;
 
-    private Dictionary<StatusName, GameObject> statusEffectDictionary;
     private bool isHero = false;
 
     private void Awake()
     {
+        statusController = FindObjectOfType<StatusController>();
         Health = GetComponent<CharacterHealth>();
         stats = GetComponent<CharacterStats>();
         effects = GetComponent<CharacterVFX>();
@@ -30,8 +27,6 @@ public class StatusManager : MonoBehaviour
 
         isHero = GetComponent<PCController>();
         activeStatusList = new List<BaseStatus>();
-        initializeDictionary();
-
     }
 
     
@@ -68,37 +63,8 @@ public class StatusManager : MonoBehaviour
 
     public void GainStatus(StatusName newStatusName, float intensity, int duration,float damageModifier)
     {
-        BaseStatus newStatus = null;
-        GameObject vfx = null;
-
-        if (statusEffectDictionary.ContainsKey(newStatusName))
-            vfx = statusEffectDictionary[newStatusName];
-
-        switch (newStatusName)
-        {
-            case StatusName.Bleeding:                
-                newStatus = new BleedingStatus(this, activeStatusList.Count, intensity, damageModifier,duration,vfx);
-                break;
-            case StatusName.Damage:
-                newStatus = new DamageStatus(this, activeStatusList.Count, intensity, damageModifier,0,vfx);
-                break;
-            case StatusName.Entangled:
-                newStatus = new EntangleStatus(this, activeStatusList.Count, intensity, damageModifier, duration,vfx);
-                break;
-            case StatusName.ShellShocked:
-                newStatus = new ShellShockedStatus(this, activeStatusList.Count, intensity, damageModifier, duration,vfx);
-                break;
-            case StatusName.Blinded:
-                newStatus = new BlindedStatus(this, activeStatusList.Count, intensity, damageModifier, duration, vfx);
-                break;
-            case StatusName.Disadvantaged:
-                newStatus=new DisadvantagedStatus(this, activeStatusList.Count, intensity, damageModifier, duration, vfx);
-                break;
-            case StatusName.Shocked:
-                newStatus = new ShockedStatus(this, activeStatusList.Count, intensity, damageModifier, duration, vfx);
-                break;
-
-        }
+        BaseStatus newStatus = statusController.GetNewStatus(this,newStatusName,intensity,duration,damageModifier);
+       
         if (newStatus == null)
             return;
 
@@ -139,22 +105,29 @@ public class StatusManager : MonoBehaviour
         initiative.ChangeActionTime(change);
     }
 
-    private void initializeDictionary()
-    {
-        statusEffectDictionary = new Dictionary<StatusName, GameObject>();
+    public void EndAll()
+    { 
+        Debug.Log("Ending all statuses");
+        List<BaseStatus> endedStatusList = new List<BaseStatus>();
 
-        foreach(StatusEffect se in statusEffectArray)
+        foreach (BaseStatus bs in activeStatusList)
         {
-            statusEffectDictionary[se.name] = se.effect;
+                endedStatusList.Add(bs);
         }
+
+        foreach (BaseStatus bs in endedStatusList)
+            activeStatusList.Remove(bs);
+
+        activeStatusList.Clear();
     }
+
+    //-----------------------------------------------------------------
+    //                  Private Functions
+    //-----------------------------------------------------------------
 
     private void Health_OnDied()
     {
-        Debug.Log("Ending statuses");
-        foreach (BaseStatus bs in activeStatusList)
-            bs.EndStatus();
-        activeStatusList.Clear();
+        EndAll();
     }
 
     private void StartTurn(int turn)
@@ -174,10 +147,13 @@ public class StatusManager : MonoBehaviour
     private void ActionStarted()
     {
         List<BaseStatus> endedStatusList = new List<BaseStatus>();
+
         foreach (BaseStatus bs in activeStatusList)
         {
             if(bs.OnActivation())
                 endedStatusList.Add(bs);
+            if (activeStatusList.Count == 0)  //Activation may have killed the character, in which case this list is now empty
+                return;
         }
 
         foreach (BaseStatus bs in endedStatusList)
@@ -185,10 +161,5 @@ public class StatusManager : MonoBehaviour
     }
 }
 
-[System.Serializable]
-struct StatusEffect
-{
-    public StatusName name;
-    public GameObject effect;
-}
+
 

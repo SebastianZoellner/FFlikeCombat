@@ -6,6 +6,8 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource ambienceSource;
 
+    private Coroutine musicCoroutine;
+
     private int currentIndex = 0;
 
     public void PlayAmbiance(AudioClip ambience)
@@ -18,7 +20,13 @@ public class AudioManager : MonoBehaviour
 
     public void PlayMusic(AudioClip[] musicArray)
     {
-        StartCoroutine(PlaySequentialClips(musicArray));
+        musicCoroutine=StartCoroutine(PlaySequentialClips(musicArray));
+    }
+    public void StopAll()
+    {
+        ambienceSource.Stop();
+        StopCoroutine(musicCoroutine);
+        musicSource.Stop();
     }
 
     IEnumerator PlaySequentialClips(AudioClip[] audioClips)

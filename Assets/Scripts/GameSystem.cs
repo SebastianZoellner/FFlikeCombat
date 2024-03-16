@@ -26,13 +26,14 @@ public class GameSystem : MonoBehaviour
         Instance = this;
     }
 
-    public int TestAttack(float attack, float defense,float critModifier)
+    public (int,float) TestAttack(float attack, float defense,float critModifier)
     {
         float hitProbability = CalculateHitChance(attack,defense);
+        float highHitModifier = CalculateHighHitModifier(hitProbability);
         float randomNumber = Random.Range(0f, 1f);
-        Debug.Log("Random Number " + randomNumber+", hit probability "+hitProbability);
+        //Debug.Log("Random Number " + randomNumber+", hit probability "+hitProbability);
         if (randomNumber > hitProbability||randomNumber>maximumHitChance)
-            return 0;
+            return (0,highHitModifier);
 
         randomNumber = randomNumber / hitProbability;
 
@@ -41,9 +42,18 @@ public class GameSystem : MonoBehaviour
             float critLevelCutoff = SuccessLevelArray[i] + (i+1) * critModifier;
 
             if (randomNumber < critLevelCutoff)
-                return SuccessLevelArray.Length - i;
+                return (SuccessLevelArray.Length - i,highHitModifier);
         }
-        return 1;
+        return (1,highHitModifier);
+    }
+
+    private float CalculateHighHitModifier(float hitProbability)
+    {
+        if (hitProbability < 1)
+            return 1;
+        else
+            return
+                hitProbability;
     }
 
     public float CalculateAttack(float combat, float baseAttack)

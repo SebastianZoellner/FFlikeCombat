@@ -8,6 +8,8 @@ public class UIPowerButtonContainer : MonoBehaviour
     private CharacterManager characterManager;
     [SerializeField] GameObject powerButtonContainer;
     [SerializeField] GameObject powerButtonObject;
+
+    private UIPowerButton selectedPower=null;
     
     private void Awake()
     {
@@ -45,8 +47,16 @@ public class UIPowerButtonContainer : MonoBehaviour
         {
             GameObject newButton=Instantiate(powerButtonObject, powerButtonContainer.transform);
 
-            newButton.GetComponent<UIPowerButton>().Setup(pow,characterManager);
+            newButton.GetComponent<UIPowerButton>().Setup(pow,characterManager,this);
         }
+    }
+
+    public void SetSelectedPower(UIPowerButton power)
+    {
+        if (selectedPower)
+            selectedPower.DeselectPower();
+
+        selectedPower = power;
     }
 
     private void ClearPowers()

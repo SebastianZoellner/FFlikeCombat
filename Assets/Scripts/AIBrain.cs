@@ -26,6 +26,13 @@ public class AIBrain : MonoBehaviour
         return target;
     }
 
+    public CharacterHealth SelectRandomTarget()
+    {
+        int selectedIndex = Random.Range(0, characterManager.heroList.Count);
+        //Debug.Log("Target selected " + selectedIndex);
+        return characterManager.heroList[selectedIndex].GetComponent<CharacterHealth>();
+    }
+
     public PowerSO SelectPower(CharacterStats stats)
     {
         int selectedIndex=Random.Range(0,stats.GetNumbeOfPowers());

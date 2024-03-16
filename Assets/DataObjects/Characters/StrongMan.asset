@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: StrongMan
   m_EditorClassIdentifier: 
   CharacterName: Strongman
+  LabelName: 
   powerArray:
   - {fileID: 11400000, guid: d6d4fe3199707d1498812864f69392bf, type: 2}
   - {fileID: 11400000, guid: 99054659b0f16f047b6fab2c1266e5f8, type: 2}
   - {fileID: 11400000, guid: 0422b7c583f86df41a35c8c96229111d, type: 2}
+  - {fileID: 11400000, guid: 069258d7526357a4db88fc0d4b140aa0, type: 2}
   startingHealth: 45
   attributeArray:
   - attribute: 2

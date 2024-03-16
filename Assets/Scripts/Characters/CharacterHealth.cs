@@ -117,15 +117,16 @@ public class CharacterHealth : MonoBehaviour
 
     private void Die()
     {
+        canBeTarget = false;
+        animator.SetDied();
+       // Debug.Log(name + " died");
         if (GetComponent<PCController>())
             OnAnyPCDied.Invoke(this);
         else
             OnAnyEnemyDied.Invoke(this);
 
         OnDied.Invoke();
-        animator.SetDied();
-        canBeTarget = false;
-
+              
         GetComponentInChildren<CapsuleCollider>().enabled = false;
     }
 }

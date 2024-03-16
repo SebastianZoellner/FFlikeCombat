@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Pistol Whip
+  m_EditorClassIdentifier: 
+  minDamage: 3
+  maxDamage: 5
+  attack: 0
+  defense: 5
+  setupTime: 0.1
+  recoveryTime: 0.7
+  target: 0
+  successEffectArray:
+  - level: 4
+    status: 4
+    intensity: 1
+    duration: 3
+  icon: {fileID: 0}
+  buttonName: Pistol Whip
+  description: 
+  range: 2
+  attackAnimation: {fileID: 7400000, guid: c45f7f66987172d4d987ef1c714262e7, type: 2}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 5286328772216621839, guid: 3bbf7e996e9d4004981ad9b327a6a00a, type: 3}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: c638ea1d0ac4c5140bad620fa9f3f93f, type: 2}
+  missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
+  momentumEffect: 1
+  momentumCost: 0
+  momentumChange: 1
+  minMomentum: 0
+  maxMomentum: 0
+  enduranceCost: 0

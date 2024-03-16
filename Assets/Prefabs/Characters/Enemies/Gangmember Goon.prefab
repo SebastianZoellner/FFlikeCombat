@@ -4288,6 +4288,11 @@ PrefabInstance:
       propertyPath: isAnimated
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4874981723550843265, guid: 8678638650932ce4d80671e6f2b5825e,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 8027847408203126861, guid: 8678638650932ce4d80671e6f2b5825e,
         type: 3}
       propertyPath: character

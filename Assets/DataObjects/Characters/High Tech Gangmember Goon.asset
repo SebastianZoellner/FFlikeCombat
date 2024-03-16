@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: High Tech Gangmember Goon
   m_EditorClassIdentifier: 
   CharacterName: Power Ganger
+  LabelName: Power Ganger
   powerArray:
   - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}
   - {fileID: 11400000, guid: e8599c9c6388fff468bb839c17d522b1, type: 2}

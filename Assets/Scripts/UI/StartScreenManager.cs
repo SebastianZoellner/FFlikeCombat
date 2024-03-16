@@ -1,16 +1,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class StartScreenManager : MonoBehaviour
 {
     [SerializeField] private HeroTeamSO availableHeros;
     [SerializeField] private HeroTeamSO chosenTeam;
+    [SerializeField] private Slider progressBar;
+    [SerializeField] private UIFader fader;
+
     private int maxHeroes=2;
+
+    bool isLoading = false;
+    AsyncOperation loadingOperation;
 
     private void Awake()
     {
         chosenTeam.characterList = new List<CharacterSO>();
+    }
+
+    private void Update()
+    {
+        if (!isLoading)
+            return;
+        //Debug.Log("Loading progress " + loadingOperation.progress);
+        progressBar.value = Mathf.Clamp01(loadingOperation.progress / 0.9f);
     }
 
     public CharacterSO[] GetAvailableHeroes()
@@ -36,9 +51,15 @@ public class StartScreenManager : MonoBehaviour
 
     public void StartGame()
     {
-        Debug.Log("Starting Game");
+        
         if (chosenTeam.characterList.Count > 0)
-            SceneManager.LoadScene(1);
+        {
+            Debug.Log("Starting Game");
+            fader.FadeOut();
+            loadingOperation = SceneManager.LoadSceneAsync(1);
+            isLoading = true;
+        }
+
 
     }
 }

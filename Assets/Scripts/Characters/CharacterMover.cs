@@ -27,9 +27,7 @@ public class CharacterMover : MonoBehaviour
     }
     private void Start()
     {
-        SpawnPoint spawnPoint = GetComponentInParent<SpawnPoint>();
-        defaultLocation =spawnPoint.transform.position;
-        defaultFacing = Quaternion.LookRotation(spawnPoint.transform.forward, Vector3.up);
+        SetNewCombatLocation();
     }
 
     private void Update()
@@ -57,6 +55,16 @@ public class CharacterMover : MonoBehaviour
 
 
     }
+
+    public void SetNewCombatLocation()
+    {
+        SpawnPoint spawnPoint = GetComponentInParent<SpawnPoint>();
+        if (!spawnPoint)
+            Debug.LogWarning(name + " does not have a spawn point");
+        defaultLocation = spawnPoint.GetCombatLocation().position;
+        defaultFacing = Quaternion.LookRotation(spawnPoint.GetCombatLocation().forward, Vector3.up);
+    }
+
     public void MoveTo(Vector3 position, float distance)
     {
         //Debug.Log("Mover input parameters: position " + position + " distance" + distance);
@@ -75,7 +83,7 @@ public class CharacterMover : MonoBehaviour
 
     public bool IsHome()
     {
-        Debug.Log(Quaternion.Angle(transform.rotation, defaultFacing) + " " + Vector3.Distance(transform.position, defaultLocation));
+       // Debug.Log(Quaternion.Angle(transform.rotation, defaultFacing) + " " + Vector3.Distance(transform.position, defaultLocation));
         return (Quaternion.Angle(transform.rotation, defaultFacing) < facingTreshold && Vector3.Distance(transform.position, defaultLocation) < distanceThreshold);
     }
 

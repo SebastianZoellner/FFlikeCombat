@@ -7,6 +7,7 @@ public class CharacterInitiative : MonoBehaviour
     //This updates the timeline UI, removes the buttons and lets Actionsequencer know that the player has chosen an action
     public static event Action<CharacterInitiative,float> OnMomentumCostPayed = delegate { };
     public static event Action OnActionTimeChanged = delegate { };
+    
     public event Action OnActionStarted = delegate { };
 
     [field:SerializeField] public float nextActionTime { get; private set; }
@@ -14,6 +15,7 @@ public class CharacterInitiative : MonoBehaviour
     private CharacterHealth targetHealth;
     private CharacterStats stats;
     private CharacterCombat combat;
+    private CharacterHealth health;
     private float noiseRange=0.1f;
 
     private bool isReadying = false;
@@ -22,6 +24,7 @@ public class CharacterInitiative : MonoBehaviour
     {
         combat = GetComponent<CharacterCombat>();
         stats = GetComponent<CharacterStats>();
+        health = GetComponent<CharacterHealth>();
     }
 
     public void InitializeInitiative(float actionTime)
@@ -30,7 +33,7 @@ public class CharacterInitiative : MonoBehaviour
             GetComponent<CharacterStats>().GetAttribute(Attribute.Initiative),
             UnityEngine.Random.Range(0f, 1f)           
             );
-        Debug.Log(name + " First action: " + nextActionTime);
+        //Debug.Log(name + " First action: " + nextActionTime);
     }
 
     public bool ReadyAttack(PowerSO readiedAction, CharacterHealth targetHealth)
@@ -57,14 +60,21 @@ public class CharacterInitiative : MonoBehaviour
         return true;
     }
 
-    public void PerformReadiedAction()
+    public bool PerformReadiedAction()
+        //rv indicates if the action has been successfully initialized
     { 
         if(!targetHealth||!targetHealth.canBeTarget)
         {
             nextActionTime += 0.01f;
             readiedAction = null;
             targetHealth = null;
-            return;
+            return false;
+        }
+        OnActionStarted.Invoke(); //Tells the status manager
+
+        if (!health.canBeTarget)
+        {
+            return false;
         }
 
         nextActionTime += GameSystem.Instance.CalculateWaitTime(
@@ -73,11 +83,16 @@ public class CharacterInitiative : MonoBehaviour
             );
 
         OnAttackReadied.Invoke(false, this);
-        OnActionStarted.Invoke();
         
-        //Debug.Log(name + " NextActionTime changed to " + nextActionTime);
+
+       // Debug.Log(name + " Action started; NextActionTime changed to " + nextActionTime);
+
+       
+       
         combat.StartAttack(readiedAction, targetHealth);     
         readiedAction = null;
+        targetHealth = null;
+        return true;
     }
 
     public void SetNextActionTime(float time)

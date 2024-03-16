@@ -8,13 +8,15 @@ using Sirenix.OdinInspector;
 public class CharacterSO : ScriptableObject
 {
     public string CharacterName;
+    public string LabelName;
    public PowerSO[] powerArray;
     public float startingHealth;
     [SerializeField] AttributeValue[] attributeArray;
     private Dictionary<Attribute, float> baseAttribute = null;
     [PreviewField(75)]
     public Sprite icon;
-
+    [TextArea]
+    public string shortBlurb;
     public AnimatorOverrideController animatorController;
     [PreviewField(100)]
     [SerializeField] GameObject characterToon;

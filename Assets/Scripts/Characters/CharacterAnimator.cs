@@ -7,7 +7,7 @@ public class CharacterAnimator : MonoBehaviour
 {
     public event Action OnActionAnimationFinished = delegate { };
 
-    [SerializeField] bool isAnimated = false;
+    [SerializeField] bool isAnimated = true;
     private Animator animator;
 
     private readonly int moveAnimationHash = Animator.StringToHash("Move");
@@ -50,9 +50,10 @@ public class CharacterAnimator : MonoBehaviour
         AnimatorStateInfo info= animator.GetCurrentAnimatorStateInfo(0);
 
         //Debug.Log("Checking Attack "+checkAttackingtimer);
+
         if(!info.IsName("Base.Attacking"))
             {
-            //Debug.Log("AttackFinished");
+            //Debug.Log("Attack Finished");
             isAttacking = false;
             OnActionAnimationFinished.Invoke();
         }
@@ -62,6 +63,7 @@ public class CharacterAnimator : MonoBehaviour
 
     public void SetMove(bool move)
     {
+        animator.ResetTrigger(hitAnimationHash);
         animator.SetBool(moveAnimationHash, move);
     }
 
@@ -78,6 +80,7 @@ public class CharacterAnimator : MonoBehaviour
         //Debug.Log("Starting attack animation");
         if (attackAnimation)
         {
+            //Debug.Log("Setting new attack animation attack animation");
             overrideController["Attack"] = attackAnimation;
             animator.runtimeAnimatorController = overrideController;
         }
@@ -86,7 +89,7 @@ public class CharacterAnimator : MonoBehaviour
         checkAttackingtimer = 0;
     }
 
-    internal void SetBuff()
+   public void SetBuff()
     {
         if (!isAnimated)
             return;

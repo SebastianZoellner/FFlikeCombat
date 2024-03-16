@@ -160,7 +160,7 @@ PrefabInstance:
     - target: {fileID: 6719097688298201691, guid: 19a2767abcec4584db3c813e60c4f34b,
         type: 3}
       propertyPath: m_Name
-      value: Enegy Blast
+      value: Energy Blast
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

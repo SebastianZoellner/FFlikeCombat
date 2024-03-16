@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cb3eecbf44b9544488099e7cc9d0ce07
+guid: 54f6d6f02b2ff7c4f89af30518e1cbc7
 ModelImporter:
   serializedVersion: 19301
   internalIDToNameTable:
@@ -20,7 +20,7 @@ ModelImporter:
     second: //RootNode
   - first:
       43: 4300000
-    second: Cylinder001
+    second: slash01
   externalObjects: {}
   materials:
     materialImportMode: 0
@@ -57,7 +57,7 @@ ModelImporter:
     addColliders: 0
     useSRGBMaterialColor: 1
     sortHierarchyByName: 1
-    importVisibility: 1
+    importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
     importLights: 0

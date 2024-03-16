@@ -10,13 +10,13 @@ public class UIWinLoseScreen : MonoBehaviour
 
     private void OnEnable()
     {
-        CharacterManager.OnAllEnemiesDead += CharacterManager_OnAllEnemiesDead;
+        LevelSetup.LevelWon += LevelSetup_LevelWon;
         CharacterManager.OnAllHeroesDead += CharacterManager_OnAllHeroesDead;
     }
 
     private void OnDisable()
     {
-        CharacterManager.OnAllEnemiesDead -= CharacterManager_OnAllEnemiesDead;
+        LevelSetup.LevelWon -= LevelSetup_LevelWon;
         CharacterManager.OnAllHeroesDead -= CharacterManager_OnAllHeroesDead;
     }
 
@@ -25,11 +25,7 @@ public class UIWinLoseScreen : MonoBehaviour
         StartCoroutine(DelayedActivate(LoseScreen));
     }
 
-    private void CharacterManager_OnAllEnemiesDead()
-    {
-        StartCoroutine(DelayedActivate(WinScreen));
-    }
-
+    
     private void StopGame()
     {
         Time.timeScale = 0f;
@@ -42,5 +38,10 @@ public class UIWinLoseScreen : MonoBehaviour
         screen.SetActive(true);
         StopGame();
 
+    }
+
+    private void LevelSetup_LevelWon()
+    {
+        StartCoroutine(DelayedActivate(WinScreen));
     }
 }

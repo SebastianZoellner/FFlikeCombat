@@ -16,19 +16,26 @@ MonoBehaviour:
   maxDamage: 2
   attack: 0
   defense: 0
+  setupTime: 0.03
+  recoveryTime: 0.5
+  target: 0
   successEffectArray:
-  - level: 4
+  - level: 2
     status: 0
-    intensity: 2
-    duration: 3
+    intensity: 1
+    duration: 2
   - level: 3
     status: 0
     intensity: 1
     duration: 3
-  buttonName: Swift  Cut
+  - level: 4
+    status: 0
+    intensity: 2
+    duration: 3
   icon: {fileID: 21300000, guid: 5041d00c18763ad45baf5382ad001ac1, type: 3}
-  setupTime: 0.03
-  recoveryTime: 0.5
+  buttonName: Swift  Cut
+  description: A quick attack that does little damage but has a high chance of inflicting
+    bleeding.
   range: 1.8
   attackAnimation: {fileID: 7400000, guid: 2606f15baa6bd5041bee1f862886c792, type: 2}
   projectile: {fileID: 0}
@@ -37,7 +44,6 @@ MonoBehaviour:
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  description: 
   momentumEffect: 0
   momentumCost: 0
   momentumChange: 0

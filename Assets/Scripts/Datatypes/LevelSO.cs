@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,56 +8,29 @@ using UnityEngine;
 
 public class LevelSO : ScriptableObject
 {
-    [SerializeField] Wave[] waveArray;
-    public int lastWave;
+    [HorizontalGroup("Display", 300)]
+    [TextArea]
+    public string missionBriefing;
+    [VerticalGroup("Display/Image")]
+    [PreviewField(125)]
+    public Sprite missionVisual;
 
-    [BoxGroup("Audio")]
+    [SerializeField] private Stage[] stages;
+
+    public List<GameObject> SpawnWave(int stage, int round, SpawnPointController spawnPointController) => stages[stage].waveArray[round].SpawnWave(spawnPointController);
+    public int GetNumberOfWaves(int stage)=> stages[stage].waveArray.Length;
+    public int GetNumberOfStages() => stages.Length;
+    public AudioClip GetAmbience(int stage) => stages[stage].ambience;
+    public AudioClip[] GetMusic(int stage) => stages[stage].musicArray;
+    
+}
+
+
+
+[System.Serializable]
+public struct Stage
+{
+    public EnemyWaveSO[] waveArray;
     public AudioClip ambience;
-    [BoxGroup("Audio")]
     public AudioClip[] musicArray;
-
-
-
-
-    public List<GameObject> SpawnWave(int turn, SpawnPointController spawnPointController)
-    {
-        List<GameObject> newEnemies = new List<GameObject>();
-        //Debug.Log("New Wave, number of Spawn Groups: " + waveArray[turn].spawnGroupArray.Length);
-
-
-        foreach (SpawnGroup sg in waveArray[turn].spawnGroupArray)
-        {
-            int number = Random.Range(sg.minNumber, sg.maxNumber + 1);
-            //Debug.Log("Spawning " + number);
-            for (int i = 0; i < number; ++i)
-            {
-                Transform newSpawnPoint = spawnPointController.GetEmptySpawnPoint(SpawnPointType.Enemy);
-                if (newSpawnPoint.childCount > 0)
-                {
-                    Debug.LogWarning("Returned empty spawn point not empty");
-                    continue;
-                }
-                GameObject spawnedEnemy = sg.enemy.Spawn(newSpawnPoint);
-                if (!spawnedEnemy)
-                    Debug.LogError("Spawn Failed");
-                newEnemies.Add(spawnedEnemy);
-            }
-        }
-        return newEnemies;
-    }
-
-    public int GetNumberOfWaves()=> waveArray.Length;
-}
-[System.Serializable]
-public struct Wave
-{
-    public SpawnGroup[] spawnGroupArray;
-}
-
-[System.Serializable]
-public struct SpawnGroup
-{
-    public CharacterSO enemy;
-    public int minNumber;
-    public int maxNumber;
 }

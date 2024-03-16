@@ -38,6 +38,8 @@ public class UIInfoScreen : MonoBehaviour
 
         characterName.text = entity.Stats.GetName();
         Icon.sprite = entity.Stats.GetIcon();
+        if (entity.Stats.GetBlurb() != "")
+            blurb.text = entity.Stats.GetBlurb();
         SetHealthParameters(entity.Health);
         SetAttributes(entity.Health.Stats);
         SetStatuses(entity.StatusManager);

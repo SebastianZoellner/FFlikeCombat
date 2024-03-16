@@ -19,12 +19,13 @@ MonoBehaviour:
   setupTime: 0.01
   recoveryTime: 0.5
   target: 2
+  radius: 0
   successEffectArray: []
   icon: {fileID: 21300000, guid: 27b13e0667b3ec04ca1a80c9f8eb31e2, type: 3}
   buttonName: Dodge
   description: 
   range: 2
-  attackAnimation: {fileID: 0}
+  attackAnimation: {fileID: 7400000, guid: a40d8e9a4d3e692409cbd6e7dc3699e6, type: 2}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}
