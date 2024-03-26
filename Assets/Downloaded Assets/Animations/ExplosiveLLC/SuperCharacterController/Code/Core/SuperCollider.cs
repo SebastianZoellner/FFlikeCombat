@@ -16,10 +16,6 @@ public static class SuperCollider
 			closestPointOnSurface = SuperCollider.ClosestPointOnSurface(( CapsuleCollider )collider, to);
 			return true;
 		}
-		else if (collider is TerrainCollider) {
-			closestPointOnSurface = SuperCollider.ClosestPointOnSurface(( TerrainCollider )collider, to, radius, false);
-			return true;
-		}
 		else if (collider is MeshCollider) {
 
 			BSPTree bspTree = collider.GetComponent<BSPTree>();
@@ -29,9 +25,16 @@ public static class SuperCollider
 				return true;
 			}
 
-			Debug.LogError(string.Format("'{0}' is missing BSPTree script.", collider.gameObject.name));
-			closestPointOnSurface = Vector3.zero;
-			return false;
+			BruteForceMesh bfm = collider.GetComponent<BruteForceMesh>();
+
+			if (bfm != null) {
+				closestPointOnSurface = bfm.ClosestPointOn(to);
+				return true;
+			}
+		}
+		else if (collider is TerrainCollider) {
+			closestPointOnSurface = SuperCollider.ClosestPointOnSurface(( TerrainCollider )collider, to, radius, false);
+			return true;
 		}
 
 		Debug.LogError(string.Format("{0} does not have an implementation for ClosestPointOnSurface; GameObject.Name='{1}'", collider.GetType(), collider.gameObject.name));
@@ -90,6 +93,7 @@ public static class SuperCollider
 		return ct.TransformPoint(localNorm);
 	}
 
+	// Courtesy of Moodie.
 	public static Vector3 ClosestPointOnSurface(CapsuleCollider collider, Vector3 to)
 	{
 		// Transform of the collider.
@@ -222,7 +226,6 @@ public static class SuperCollider
 					shortestDistance = distance;
 					shortestPoint = nearest;
 				}
-
 				BSPTree.ClosestPointOnTriangleToPoint(ref a, ref b, ref d, ref local, out nearest);
 
 				distance = (local - nearest).sqrMagnitude;
@@ -231,14 +234,12 @@ public static class SuperCollider
 					shortestDistance = distance;
 					shortestPoint = nearest;
 				}
-
 				if (debug) {
 					DebugDraw.DrawTriangle(a, d, c, Color.cyan);
 					DebugDraw.DrawTriangle(a, b, d, Color.red);
 				}
 			}
 		}
-
 		return collider.transform.TransformPoint(shortestPoint);
 	}
 }

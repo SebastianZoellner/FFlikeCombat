@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Block
+  m_EditorClassIdentifier: 
+  minDamage: 0
+  maxDamage: 0
+  attack: 0
+  defense: 0
+  setupTime: 0.01
+  recoveryTime: 0.5
+  target: 2
+  radius: 0
+  successEffectArray:
+  - level: 0
+    status: 9
+    intensity: 0
+    duration: 0
+  icon: {fileID: 21300000, guid: 80153f509d0b231408e02c07754b8d24, type: 3}
+  buttonName: Block
+  description: 
+  range: 2
+  attackAnimation: {fileID: 7400000, guid: 701e6768fa8084a4bbce789ed134d154, type: 2}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 7600427495753292919, guid: b7d6f9ac51418ab4296468712a4daca0, type: 3}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 0}
+  missSound: {fileID: 0}
+  momentumEffect: 0
+  momentumCost: 0
+  momentumChange: 0
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 0

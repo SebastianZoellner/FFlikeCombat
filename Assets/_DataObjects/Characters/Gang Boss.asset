@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5807afadd574aa9438c13f40201b7fe3, type: 3}
+  m_Name: Gang Boss
+  m_EditorClassIdentifier: 
+  CharacterName: Gang Boss
+  LabelName: 
+  powerArray:
+  - {fileID: 11400000, guid: 4e4bf6de9594b0247bfaeb3e27ec8c0a, type: 2}
+  - {fileID: 11400000, guid: a84c4b81e4e352640946c4e35c1161d1, type: 2}
+  - {fileID: 11400000, guid: 6842b878755a91e4986e222a3661aef9, type: 2}
+  startingHealth: 35
+  attributeArray:
+  - attribute: 0
+    value: 20
+  - attribute: 2
+    value: 20
+  - attribute: 7
+    value: 10
+  - attribute: 5
+    value: 20
+  icon: {fileID: 21300000, guid: daba5c37a9f42d04d816e4eca47e2cb8, type: 3}
+  shortBlurb: 
+  animatorController: {fileID: 22100000, guid: 3566b6e624e2c264da473edca6d6f98e, type: 2}
+  characterToon: {fileID: 7291014174536126344, guid: b91553e2f12d1fe47b7f27c5f18f68ed,
+    type: 3}
+  level: 3
+  StartingEndurance: 0

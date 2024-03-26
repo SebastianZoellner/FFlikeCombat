@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿/*
+ * Example implementation of the SuperStateMachine and SuperCharacterController.
+ */
+using UnityEngine;
 
 [RequireComponent(typeof(SuperCharacterController))]
 [RequireComponent(typeof(PlayerInputController))]

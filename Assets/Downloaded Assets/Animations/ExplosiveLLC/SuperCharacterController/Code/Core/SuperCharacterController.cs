@@ -31,6 +31,31 @@ public partial class SuperCharacterController:MonoBehaviour
 	[SerializeField]
 	private bool debugPushbackMesssages = true;
 
+	/// <summary>
+	/// Describes the Transform of the object we are standing on as well as it's CollisionType, as well
+	/// as how far the ground is below us and what angle it is in relation to the controller.
+	/// </summary>
+	[SerializeField]
+	public struct Ground
+	{
+		public RaycastHit hit { get; set; }
+		public RaycastHit nearHit { get; set; }
+		public RaycastHit farHit { get; set; }
+		public RaycastHit secondaryHit { get; set; }
+		public SuperCollisionType collisionType { get; set; }
+		public Transform transform { get; set; }
+
+		public Ground(RaycastHit hit, RaycastHit nearHit, RaycastHit farHit, RaycastHit secondaryHit, SuperCollisionType superCollisionType, Transform hitTransform)
+		{
+			this.hit = hit;
+			this.nearHit = nearHit;
+			this.farHit = farHit;
+			this.secondaryHit = secondaryHit;
+			collisionType = superCollisionType;
+			transform = hitTransform;
+		}
+	}
+
 	[SerializeField]
 	private CollisionSphere[] spheres =
 		new CollisionSphere[3] {
@@ -77,8 +102,8 @@ public partial class SuperCharacterController:MonoBehaviour
 	private List<Collider> ignoredColliders;
 	private List<IgnoredCollider> ignoredColliderStack;
 
-	private const float Tolerance = 0.1f;
-	private const float TinyTolerance = 0.02f;
+	private const float Tolerance = 0.05f;
+	private const float TinyTolerance = 0.01f;
 	private const string TemporaryLayer = "TempCast";
 	private const int MaxPushbackIterations = 2;
 	private int TemporaryLayerIndex;
@@ -164,6 +189,13 @@ public partial class SuperCharacterController:MonoBehaviour
 
 	private void SingleUpdate()
 	{
+		// Check if we are clamped to an object implicity or explicity.
+		//bool isClamping = clamping || currentlyClampedTo != null;
+		//Transform clampedTo = currentlyClampedTo != null ? currentlyClampedTo : currentGround.transform;
+
+		//if (clampToMovingGround && isClamping && clampedTo != null && clampedTo.position - lastGroundPosition != Vector3.zero)
+		//{ transform.position += clampedTo.position - lastGroundPosition; }
+
 		initialPosition = transform.position;
 
 		ProbeGround(1);
@@ -354,7 +386,6 @@ public partial class SuperCharacterController:MonoBehaviour
 			IgnoredCollider ic = ignoredColliderStack[i];
 			ic.collider.gameObject.layer = ic.layer;
 		}
-
 		ignoredColliderStack.Clear();
 	}
 

@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Double Shot
+  m_EditorClassIdentifier: 
+  minDamage: 2
+  maxDamage: 5
+  attack: -10
+  defense: 0
+  setupTime: 0.02
+  recoveryTime: 0.8
+  target: 0
+  radius: 0
+  successEffectArray:
+  - level: 3
+    status: 3
+    intensity: 3.5
+    duration: 0
+  - level: 4
+    status: 3
+    intensity: 3.5
+    duration: 0
+  icon: {fileID: 0}
+  buttonName: 
+  description: 
+  range: 6
+  attackAnimation: {fileID: 7400000, guid: 9a33a44b0acaf67469aaac1125db8c1d, type: 2}
+  projectile: {fileID: 1756089082116642531, guid: 2c076cc59666bd14b96e05c1cbe29449,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 157586, guid: c1a7b64f08ab3224f9bf42d084d15f0c, type: 3}
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: a834f1140d67b4a4195da68cf9c1db68, type: 2}
+  missSound: {fileID: 0}
+  momentumEffect: 0
+  momentumCost: 0
+  momentumChange: 0
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 0

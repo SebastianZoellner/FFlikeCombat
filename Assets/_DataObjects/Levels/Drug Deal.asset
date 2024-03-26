@@ -1,0 +1,54 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c78e2e690edca74e9c2167bfcf33612, type: 3}
+  m_Name: Drug Deal
+  m_EditorClassIdentifier: 
+  missionBriefing: 'Objective: Disrupt a major drug deal between the notorious "Black
+    Fang" cartel and a rival syndicate, "Crimson Claw," to dismantle their operations
+    and prevent the distribution of illegal substances in our city.
+
+
+
+    Location:
+    Abandoned warehouse at the outskirts of the city.
+
+
+
+    Threat Assessment:
+
+
+
+    Black
+    Fang Cartel: Ruthless and heavily armed, known for their violent tactics and
+    extensive network.
+
+    Crimson Claw Syndicate: Competing syndicate vying for
+    control of the drug trade, equally dangerous and unpredictable.
+
+    Possible
+    Civilians: Innocent bystanders may be present; minimize collateral damage.'
+  missionVisual: {fileID: 21300000, guid: 208e600f34a3116448e2b2e08dfbbe9f, type: 3}
+  stages:
+  - waveArray:
+    - {fileID: 11400000, guid: 49f5348bfc8e4f146bd22961620f7fcc, type: 2}
+    - {fileID: 11400000, guid: 082b302ee72cab049ae55aab99af41a8, type: 2}
+    - {fileID: 11400000, guid: 6fee0678351d5ef478cd5ac9b01a8cac, type: 2}
+    ambience: {fileID: 8300000, guid: 4cf46afed0091d046a3cc336afcf7a57, type: 3}
+    musicArray:
+    - {fileID: 8300000, guid: a8b2a898d72205343860dfe1dc45044f, type: 3}
+    - {fileID: 8300000, guid: 9e8baac49dd3d384c91be023c3a281c9, type: 3}
+  - waveArray:
+    - {fileID: 11400000, guid: 73c11a207bd243b47b2227852a386e5b, type: 2}
+    - {fileID: 11400000, guid: f599fa32754f1384b8356a34ee1224c8, type: 2}
+    ambience: {fileID: 8300000, guid: 53bd19e618dd7a647ae8dc5446a0923d, type: 3}
+    musicArray:
+    - {fileID: 8300000, guid: bec777e0fa848432aaa3b9eac85b6f70, type: 3}
