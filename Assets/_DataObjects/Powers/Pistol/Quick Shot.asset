@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minDamage: 1
   maxDamage: 3
-  attack: 0
+  attack: -5
   defense: 0
   setupTime: 0.01
   recoveryTime: 0.5
   target: 0
+  radius: 0
   successEffectArray:
   - level: 4
     status: 0
@@ -33,12 +34,13 @@ MonoBehaviour:
     type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 157586, guid: 2574ca206a571a342a7fab69fdfb87aa, type: 3}
+  attackOriginArray: 
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: a834f1140d67b4a4195da68cf9c1db68, type: 2}
   missSound: {fileID: 0}
-  momentumEffect: 0
+  momentumEffect: 1
   momentumCost: 0
-  momentumChange: 0
+  momentumChange: 0.4
   minMomentum: -100
   maxMomentum: 100
-  enduranceCost: 0
+  enduranceCost: 25

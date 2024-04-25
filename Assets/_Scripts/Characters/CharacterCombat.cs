@@ -7,6 +7,8 @@ public class CharacterCombat : MonoBehaviour
     public event Action <bool> OnAttackFinished=delegate{};
     public static event Action <CharacterCombat,float> OnMomentumModified=delegate{};
 
+    public bool Initialized { get; private set; } = false;
+
     private CharacterStats stats;
     private CharacterMover mover;
     private CharacterVFX effects;
@@ -24,7 +26,8 @@ public class CharacterCombat : MonoBehaviour
     private CharacterHealth[] targetArray;
     //private int successLevel;
     private bool hasActed;
-    private bool isHero;
+    public bool IsHero { get; private set; }
+
    // private float highHitDamage=1; //Damage modifier for hit chance >100%
 
 //-------------------------------------------------------------
@@ -40,8 +43,9 @@ public class CharacterCombat : MonoBehaviour
         sound = GetComponent<CharacterAudio>();
         health = GetComponent<CharacterHealth>();
         if (GetComponent<PCController>())
-            isHero = true;
+            IsHero = true;
         //Debug.Log(name + " Past Awake");
+        Initialized = true;
     }
 
     private void OnEnable()
@@ -83,14 +87,14 @@ public class CharacterCombat : MonoBehaviour
                 moveToPosition = target.transform.position;
                 range = attackPower.range;
 
-                if (isHero)
+                if (IsHero)
                     FeelManager.Instance.StartAttack(this.transform, attackPower);
                
                 break;
 
             case TargetType.AllEnemies:
                 hasActed = false;
-                if(isHero)
+                if(IsHero)
                 targetArray = SpawnPointController.Instance.GetAllFraction(Fraction.Enemy).ToArray();
                 else
                     targetArray= SpawnPointController.Instance.GetAllFraction(Fraction.Hero).ToArray();
@@ -99,7 +103,7 @@ public class CharacterCombat : MonoBehaviour
                 moveToPosition = transform.position + transform.forward;
                 range = 0;
 
-                if (isHero)
+                if (IsHero)
                     FeelManager.Instance.StartAllAttack(this.transform, attackPower);
                 break;
 
@@ -115,7 +119,7 @@ public class CharacterCombat : MonoBehaviour
 
             case TargetType.AllFriends:
                 hasActed = false;
-                if (isHero)
+                if (IsHero)
                     targetArray = SpawnPointController.Instance.GetAllFraction(Fraction.Hero).ToArray();
                 else
                     targetArray = SpawnPointController.Instance.GetAllFraction(Fraction.Enemy).ToArray();
@@ -125,6 +129,18 @@ public class CharacterCombat : MonoBehaviour
                 moveToPosition = transform.position + transform.forward;
                 range = 0;
                 break;
+            case TargetType.AreaEnemies:
+                hasActed = false;
+                if (IsHero)
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(target,attackPower.radius,Fraction.Enemy).ToArray();
+                else
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(target, attackPower.radius, Fraction.Hero).ToArray();
+
+                moveToPosition = target.transform.position;
+                range = attackPower.range;
+
+                break;
+
         }
 
         animator.SetMove(true);
@@ -134,7 +150,7 @@ public class CharacterCombat : MonoBehaviour
 
     public void StartMoveHome()
     {
-        hasActed = true;
+        hasActed = true;     
         animator.SetMove(true);
         mover.MoveHome();
     }
@@ -150,8 +166,11 @@ public class CharacterCombat : MonoBehaviour
         if (successLevel == 0)
             return false;
 
+        
         float damage = attackPower.GetDamage(highHitDamage);
+       
         damage = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), damage);
+       
         target.TakeDamage(damage);
 
         if (attackPower.momentumEffect)
@@ -162,11 +181,15 @@ public class CharacterCombat : MonoBehaviour
         if (!target.canBeTarget) //Target died
             return true;
 
+        
         float damageModifier= GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
         (StatusName status,float intensity,int duration)=attackPower.GetStatusEffect(successLevel);
-        
+
         if (status != StatusName.None)
-            target.GetComponent<StatusManager>().GainStatus(status, intensity,duration,damageModifier);
+        {
+            Debug.Log("Applying Status effects");
+            target.GetComponent<StatusManager>().GainStatus(status, intensity, duration, damageModifier);
+        }
 
         return true; ;
     }
@@ -207,6 +230,7 @@ public class CharacterCombat : MonoBehaviour
     private void Animator_OnActionAnimationFinished()
     {
         FeelManager.Instance.EndAttack();
+        effects.EndAttack();
 
         if (!mover.IsHome())
         {
@@ -230,10 +254,11 @@ public class CharacterCombat : MonoBehaviour
         hasActed = true;
         //Debug.Log("Starting action animation");
         health.SpendEndurance(attackPower.enduranceCost);
-        animator.SetAttack(attackPower.attackAnimation);
+        animator.SetAttack(attackPower);
+        effects.StartAttack(attackPower.HasProjectile(),attackPower.attackOriginArray);
         //start beginning attack FX
 
-        sound.PlayAttackSound(attackPower);
+        sound.SetAttack(attackPower);
        
     }
 
@@ -246,20 +271,11 @@ public class CharacterCombat : MonoBehaviour
             if (attackPower.hitVFX)
             {
                 GameObject muzzleVFX = Instantiate(attackPower.hitVFX, attackOrigin.position, Quaternion.Euler(attackOrigin.forward));
-               // Debug.Log("Instantiating muzzle vfx");
+               
                 muzzleVFX.transform.forward = gameObject.transform.forward;
                 var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
                 Destroy(muzzleVFX, 2);
-                /*if (psMuzzle != null)
-                {
-                    Destroy(muzzleVFX, psMuzzle.main.duration);
-                }
-                else
-                {
-                    var psChild = muzzleVFX.transform.GetChild(0).GetComponent<ParticleSystem>();
-                    Destroy(muzzleVFX, psChild.main.duration);
-                }
-                */
+                
             }
 
             sound.PlayShootSound(attackPower.hitSound);

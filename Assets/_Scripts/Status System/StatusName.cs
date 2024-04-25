@@ -11,5 +11,6 @@ public enum StatusName
     Boosted,
     Blocking,
     TacticalAdvantage,
+    Resting,
     None
 }

@@ -73,16 +73,17 @@ public class LevelSetup : MonoBehaviour
             SpawnPoint spawnPoint = SpawnPointController.Instance.GetEmptySpawnPoint(SpawnPointType.Hero);
             if (!spawnPoint)
                 Debug.LogWarning("No Hero Spawn Point Found");
-            Debug.Log(spawnPoint.name);
+            //Debug.Log(spawnPoint.name);
 
             GameObject newHero=ch.Spawn(spawnPoint.transform);
 
             if (!newHero)
                 Debug.LogError("Spawn Failed: "+ch.name);
+
             PCController hero = newHero.GetComponent<PCController>();
             characterManager.AddHero(hero);
-            hero.GetComponent<CharacterMover>().SetNewCombatLocation();
-            hero.GetComponent<CharacterCombat>().StartMoveHome();
+            StartCoroutine(SendToStart(hero.GetComponent<CharacterCombat>()));
+           
         }
     }
 
@@ -102,8 +103,9 @@ public class LevelSetup : MonoBehaviour
         {
             EnemyController enemy = go.GetComponent<EnemyController>();
             characterManager.AddEnemy(enemy);
-            enemy.GetComponent<CharacterMover>().SetNewCombatLocation();
-            enemy.GetComponent<CharacterCombat>().StartMoveHome();
+
+            StartCoroutine(SendToStart(enemy.GetComponent<CharacterCombat>()));
+            
         }
 
         Debug.Log("Spawning Wave " + round);
@@ -162,6 +164,19 @@ public class LevelSetup : MonoBehaviour
             StartCoroutine(SwitchStage(stage));            
         }
         
+    }
+
+    private IEnumerator SendToStart(CharacterCombat character)
+    {
+
+        CharacterMover mover = character.GetComponent<CharacterMover>();
+        yield return null; 
+
+        while(!character.Initialized || !mover.Initialized || !character.GetComponent<CharacterAnimator>().Initialized)
+            yield return null;
+
+        mover.SetNewCombatLocation();
+        character.StartMoveHome();
     }
 
     private IEnumerator SwitchStage(int newStage)

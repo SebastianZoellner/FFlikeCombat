@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: MurderStab
+  m_EditorClassIdentifier: 
+  minDamage: 4
+  maxDamage: 5
+  attack: 0
+  defense: 0
+  setupTime: 0.6
+  recoveryTime: 0.6
+  target: 0
+  radius: 0
+  successEffectArray:
+  - level: 3
+    status: 0
+    intensity: 1
+    duration: 3
+  - level: 4
+    status: 0
+    intensity: 2
+    duration: 3
+  icon: {fileID: 0}
+  buttonName: 
+  description: 
+  range: 1.6
+  attackAnimation: {fileID: 7400000, guid: 44d66421fed48eb4c8e60bea84df5f36, type: 2}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 8781331233716584084, guid: e48bb5898f7e7a347aa4ffb1f06b9b11, type: 3}
+  attackOriginArray: 00000000
+  attackSound: {fileID: 11400000, guid: f7fbf4728da7d0944bb4fb2067357594, type: 2}
+  hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
+  missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
+  momentumEffect: 1
+  momentumCost: 0
+  momentumChange: 1.2
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 60

@@ -18,6 +18,10 @@ public class UIInfoScreen : MonoBehaviour
     [SerializeField] TMP_Text defense;
     [SerializeField] TMP_Text statuses;
 
+    private CharacterHealth health;
+    private StatusManager statusManager;
+    private CharacterStats stats;
+
     private void OnEnable()
     {
         InputReader.OnSelectedEntityChanged += InputReader_OnSelectedEntityChanged;
@@ -26,6 +30,7 @@ public class UIInfoScreen : MonoBehaviour
     private void OnDisable()
     {
         InputReader.OnSelectedEntityChanged -= InputReader_OnSelectedEntityChanged;
+        Unbind();
     }
 
     private void InputReader_OnSelectedEntityChanged(Entity entity)
@@ -42,13 +47,17 @@ public class UIInfoScreen : MonoBehaviour
         Icon.sprite = entity.Stats.GetIcon();
         if (entity.Stats.GetBlurb() != "")
             blurb.text = entity.Stats.GetBlurb();
-        SetHealthParameters(entity.Health);
-        SetAttributes(entity.Health.Stats);
-        SetStatuses(entity.StatusManager);
+        health = entity.Health;
+        statusManager = entity.StatusManager;
+        stats = entity.Health.Stats;
+        SetHealthParameters();
+        SetAttributes();
+        SetStatuses();
 
+        Bind();
     }
 
-    private void SetAttributes(CharacterStats stats)
+    private void SetAttributes()
     {
         attributes.text = "";
         attributes.text += "Combat  " + Mathf.RoundToInt(stats.GetAttribute(Attribute.Combat))+"\n";
@@ -71,11 +80,10 @@ public class UIInfoScreen : MonoBehaviour
         return (Mathf.RoundToInt(v + 0.5f)).ToString();
     }
 
-    private void SetStatuses(StatusManager statusManager)
+    private void SetStatuses()
     {
         string[] statusArray = statusManager.GetStatusNames();
        
-
         statuses.text = "";
 
         for (int i = 0; i < statusArray.Length; ++i)
@@ -84,10 +92,30 @@ public class UIInfoScreen : MonoBehaviour
         }
     }
 
-    private void SetHealthParameters(CharacterHealth health)
+    private void SetHealthParameters()
     {
       
         healthScore.text = DisplayFloat(health.PresentHealth) + "/" + DisplayFloat(health.StartingHealth);
         enduranceScore.text = DisplayFloat(health.PresentEndurance) + "/" + DisplayFloat(health.StartingEndurance);
+    }
+
+    private void Bind()
+    {
+        health.OnHealthChanged += SetHealthParameters;
+        statusManager.OnStatusChanged += StatusManager_OnStatusChanged;
+    }
+
+    private void StatusManager_OnStatusChanged()
+    {
+        SetAttributes();
+        SetStatuses();
+    }
+
+    private void Unbind()
+    {
+        if(health)
+        health.OnHealthChanged -= SetHealthParameters;
+        if(statusManager)
+        statusManager.OnStatusChanged -= StatusManager_OnStatusChanged;
     }
 }

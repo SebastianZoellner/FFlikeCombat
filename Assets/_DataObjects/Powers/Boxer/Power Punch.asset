@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Power Punch
+  m_EditorClassIdentifier: 
+  minDamage: 5
+  maxDamage: 10
+  attack: 0
+  defense: 0
+  setupTime: 0.75
+  recoveryTime: 0.75
+  target: 0
+  radius: 0
+  successEffectArray: []
+  icon: {fileID: 21300000, guid: 9914550f369670f47bd71ad893302c79, type: 3}
+  buttonName: Power Punch
+  description: Slow attack that does a lot of damage.
+  range: 1.8
+  attackAnimation: {fileID: 7400000, guid: 502d072179a02bd42ae576fc656e1969, type: 2}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 0}
+  attackOriginArray: 0000000001000000
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 55a9ca1ccb1d812408f58c94c526e320, type: 2}
+  missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
+  momentumEffect: 1
+  momentumCost: 5
+  momentumChange: 1.5
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 55

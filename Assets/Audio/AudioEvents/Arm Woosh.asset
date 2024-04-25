@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Arm Woosh
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 5f609929eb1dcc54495eb2049d56e479, type: 3}
+  - {fileID: 8300000, guid: c2cdf34ef6bb6584ba35888671c28094, type: 3}
+  - {fileID: 8300000, guid: 63f3ebe9d27738647b1894365d055842, type: 3}
+  - {fileID: 8300000, guid: ef2112807f62e2644bd97217c0dad5e0, type: 3}
+  - {fileID: 8300000, guid: 93ee255ce5cc6cd4299da71807f2aaa7, type: 3}
+  - {fileID: 8300000, guid: bb5ed2c547a11ba42989c2ea3f8aa0ac, type: 3}
+  - {fileID: 8300000, guid: ac5d0f840c85fbe4bab94d5442adff85, type: 3}
+  - {fileID: 8300000, guid: fe8169a13b2c01e4b8876070f3b9868f, type: 3}
+  volumeRange: {x: 0.9, y: 1.1}
+  pitchRange: {x: 0.9, y: 1.1}
+  distance: {x: 1, y: 1000}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

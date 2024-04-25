@@ -12,40 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: MiniRocket
   m_EditorClassIdentifier: 
-  minDamage: 5
-  maxDamage: 10
+  minDamage: 0
+  maxDamage: 2
   attack: 0
   defense: -20
-  successEffectArray:
-  - level: 2
-    status: 3
-    intensity: 5
-    duration: 0
-  - level: 0
-    status: 4
-    intensity: 2
-    duration: 2
-  - level: 0
-    status: 4
-    intensity: 3
-    duration: 4
-  buttonName: MicroRocket
-  icon: {fileID: 21300000, guid: 1c99027ea2fa42b4a99834ca60887f0f, type: 3}
-  setupTime: 0.3
+  setupTime: 0.5
   recoveryTime: 0.5
+  target: 0
+  radius: 0
+  successEffectArray:
+  - level: 3
+    status: 4
+    intensity: 1
+    duration: 2
+  - level: 4
+    status: 4
+    intensity: 1
+    duration: 4
+  icon: {fileID: 21300000, guid: 1c99027ea2fa42b4a99834ca60887f0f, type: 3}
+  buttonName: MicroRocket
+  description: 
   range: 10
   attackAnimation: {fileID: 7400000, guid: 1c8bd50fa59b28b4ca2f7e5aa33f0791, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 2039520221526181666, guid: ffaeae479d4238e479cb5a085f9ea596,
     type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}
+  attackOriginArray: 
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 61f1352fcbc1e0d44be9512c61a21808, type: 2}
   missSound: {fileID: 0}
-  description: 
   momentumEffect: 1
   momentumCost: 0
   momentumChange: 0
   minMomentum: -100
   maxMomentum: 80
-  enduranceCost: 0
+  enduranceCost: 50

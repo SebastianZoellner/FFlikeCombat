@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Fast Swipe
   m_EditorClassIdentifier: 
   minDamage: 0
-  maxDamage: 2
+  maxDamage: 1
   attack: 0
   defense: 0
-  setupTime: 0.03
-  recoveryTime: 0.5
+  setupTime: 0.25
+  recoveryTime: 0.25
   target: 0
   radius: 0
   successEffectArray:
@@ -39,15 +39,17 @@ MonoBehaviour:
     bleeding.
   range: 1.8
   attackAnimation: {fileID: 7400000, guid: 2606f15baa6bd5041bee1f862886c792, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
-  hitVFX: {fileID: 0}
-  attackSound: {fileID: 0}
+  hitVFX: {fileID: 6936232475657237404, guid: 5de528df336a71c40aae35edaa0fc558, type: 3}
+  attackOriginArray: 05000000
+  attackSound: {fileID: 11400000, guid: fdba71c18cc0d6e41aa629b7169e0159, type: 2}
   hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 0
+  momentumEffect: 1
   momentumCost: 0
-  momentumChange: 0
+  momentumChange: 0.5
   minMomentum: -100
   maxMomentum: 100
-  enduranceCost: 12
+  enduranceCost: 20

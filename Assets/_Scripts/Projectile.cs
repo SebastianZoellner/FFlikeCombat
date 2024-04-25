@@ -9,6 +9,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] GameObject impactVfx;
     [SerializeField] GameObject[] destroyOnHit = null;
     [SerializeField] SimpleAudioEventSO impactSFX;
+    [SerializeField] float radius;
 
     public event EventHandler OnImpact;
     private PowerSO attackPower;
@@ -34,16 +35,18 @@ public class Projectile : MonoBehaviour
 
     private void Update()
     {
-        /*
-            if (isHoming && !targetHealth.GetIsDead())
+        
+            if (isHoming && targetHealth.canBeTarget)
                 transform.LookAt(GetAimLocation());
-        */
+            //Here we could have a slower turn;
+        
 
         if (Vector3.Distance(transform.position, startPosition) > 2 * range)
             Destroy(gameObject);
 
         if (target == null) return;
 
+        //Here could be a test if the projectile will hit next turn 
 
         transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
     }
@@ -75,16 +78,12 @@ public class Projectile : MonoBehaviour
         if (other == attacker.GetComponentInChildren<CapsuleCollider>())
             return;
 
-        
-        
-
         Impact(other);
-
-
     }
 
     private void Impact(Collider other)
     {
+        
         if (attacker.ManageHit(targetHealth))
         {
             projectileSpeed = 0;
@@ -113,6 +112,25 @@ public class Projectile : MonoBehaviour
             if (impactSFX)
             {
                 targetHealth.GetComponent<CharacterAudio>().PlayHitSound(impactSFX);
+            }
+
+            if(radius>0)
+            {
+                CharacterHealth[] targetArray;
+                if (attacker.IsHero)
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(targetHealth, radius, Fraction.Enemy).ToArray();
+                else
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(targetHealth, radius, Fraction.Hero).ToArray();
+
+                Debug.Log(targetArray.Length + "Explosion Targets");
+
+                foreach(CharacterHealth ch in targetArray)
+                {
+                    if (ch == targetHealth) continue;
+                    Debug.Log("Explosion also hitting " + ch.name);
+                    attacker.ManageHit(ch);
+                }
+
             }
             return;
         }

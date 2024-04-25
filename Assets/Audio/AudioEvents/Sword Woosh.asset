@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Sword Woosh
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 6b9a7caf1ed0c3a4d8edf3e357badd79, type: 3}
+  - {fileID: 8300000, guid: 2de9b8cf8c2f1824099e28963e0acf04, type: 3}
+  - {fileID: 8300000, guid: a8825b39f089f6346bdb6088adc9d5a2, type: 3}
+  - {fileID: 8300000, guid: 3d1b9222824225e40ac5c3af03be8656, type: 3}
+  - {fileID: 8300000, guid: fd45eb5d467cea047b0fd220118deac6, type: 3}
+  - {fileID: 8300000, guid: 14bb3a07ceb0ac04a85e9a63959e1eb9, type: 3}
+  - {fileID: 8300000, guid: d9a4473e8b9dabf46b215bd77a2fab31, type: 3}
+  - {fileID: 8300000, guid: 9663f496b9ead3b4c9210542ac177dbc, type: 3}
+  - {fileID: 8300000, guid: c1e887f33100ef24cb7b0452ac0db3fc, type: 3}
+  - {fileID: 8300000, guid: 95a614b09e19c7c469f42f3e682453be, type: 3}
+  - {fileID: 8300000, guid: 233b3f51fe6fb004893db4969e49d4db, type: 3}
+  - {fileID: 8300000, guid: 5db1693df8cf35a49bee4eb253cf9e9e, type: 3}
+  - {fileID: 8300000, guid: 29e168773acb07b4ea97b3435002e497, type: 3}
+  volumeRange: {x: 0.9, y: 1.1}
+  pitchRange: {x: 0.9, y: 1.1}
+  distance: {x: 1, y: 1000}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

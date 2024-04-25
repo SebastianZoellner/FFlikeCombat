@@ -16,6 +16,7 @@ public class UIMomentumBar : MonoBehaviour
     [SerializeField] MMProgressBar positiveMBar;
     [SerializeField] TextMeshProUGUI numberDisplay;
 
+    public float Momentum { get; private set; }
     //Test stuff
     [Range(-100, 100)]
     public float value;
@@ -50,6 +51,7 @@ public class UIMomentumBar : MonoBehaviour
 
     private void MomentumManager_OnMomentumChanged(float momentum)
     {
+        Momentum = momentum;
         numberDisplay.text = "[" + Mathf.RoundToInt(momentum).ToString() + "]";
         if (momentum < 0)
         {

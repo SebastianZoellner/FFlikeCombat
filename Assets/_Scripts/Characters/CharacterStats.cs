@@ -23,7 +23,7 @@ public class CharacterStats : MonoBehaviour
     public PowerSO GetPower(int index) => character.GetPower(index);
     public bool HasPowerID(int index) => character.HasPowerID(index);
     public int GetNumbeOfPowers() => character.powerArray.Length;
-    public float GetLevel() => character.level;
+    public int GetLevel() => character.level;
     
 
     public AnimatorOverrideController GetAnimatorOverrideController() => character.animatorController;
@@ -46,23 +46,35 @@ public class CharacterStats : MonoBehaviour
         return (character.GetBaseAttribute(attribute)+statusModifiers);
     }
 
-    public PowerSO[] GetAvailablePowers()
+    public PowerSO[] GetAvailablePowers(bool hero)
     {
         List<PowerSO> availablePowerList = new List<PowerSO>();
         float momentum = MomentumManager.GetMomentum();
         foreach(PowerSO pow in character.powerArray)
         {
-            //Debug.Log("Available power; considering " + pow.name);
+            Debug.Log("Available power; considering " + pow.name);
             if (pow.enduranceCost >health.PresentEndurance ) continue;
-            //Debug.Log("Passed endurance");
+            Debug.Log("Passed endurance");
             if (pow.momentumEffect)
             {
-                if (pow.momentumCost>0 && pow.momentumCost > momentum) continue;
-               // Debug.Log("Passed momentum cost");
-                if (pow.maxMomentum < momentum) continue;
-                //Debug.Log("Passed maximum momentum");
-                if (pow.minMomentum >= momentum) continue;
-                //Debug.Log("Passed min momentum");
+                if (hero)
+                {
+                    if (pow.momentumCost > 0 && pow.momentumCost > momentum) continue;
+                    // Debug.Log("Passed momentum cost");
+                    if (pow.maxMomentum < momentum) continue;
+                    //Debug.Log("Passed maximum momentum");
+                    if (pow.minMomentum >= momentum) continue;
+                    //Debug.Log("Passed min momentum");
+                }
+                if(!hero)
+                {
+                    if (pow.momentumCost > 0 && pow.momentumCost <- momentum) continue;
+                    Debug.Log("Passed momentum cost");
+                    if (-pow.maxMomentum > momentum) continue;
+                    Debug.Log("Passed maximum momentum");
+                    if (-pow.minMomentum <= momentum) continue;
+                    Debug.Log("Passed min momentum");
+                }
             }
             availablePowerList.Add(pow);
         }

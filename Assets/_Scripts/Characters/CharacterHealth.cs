@@ -12,13 +12,14 @@ public class CharacterHealth : MonoBehaviour
     public event Action OnDied = delegate { }; 
 
     public Action OnHealthChanged = delegate { };
+   
     public Action OnInvigorate = delegate { };
 
     [SerializeField] DamageNumber damagePrefab;
     [SerializeField] DamageNumber healPrefab;
 
     public float StartingHealth { get; private set; }
-    public float PresentHealth { get; private set; }
+    public float PresentHealth;// { get; private set; }
 
     public float StartingEndurance { get; private set; }
     public float PresentEndurance { get; private set; }
@@ -66,7 +67,7 @@ public class CharacterHealth : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        //Debug.Log("Taking Damage " + damage);
+        Debug.Log(name+"Taking Damage " + damage);
         damage=GameSystem.Instance.CalculateArmor(Stats.GetAttribute(Attribute.Armor), damage);
         if (damage < 0) damage = 0;
         //Debug.Log("After Armor " + damage);
@@ -113,6 +114,12 @@ public class CharacterHealth : MonoBehaviour
         PresentEndurance = StartingEndurance;
     }
 
+    public void NewStage()
+    {
+        ChangeEndurance(StartingEndurance / 4);
+        ChangeHealth((StartingHealth-PresentHealth) / 3);
+    }
+
     //------------------------------------------------------------------------
     //                  Private functions
     //------------------------------------------------------------------------
@@ -150,6 +157,7 @@ public class CharacterHealth : MonoBehaviour
             PresentEndurance = 0;
 
         OnHealthChanged.Invoke();
+
     }
 
     private void ActionSequencer_OnNewRoundStarted(int obj)
@@ -175,4 +183,6 @@ public class CharacterHealth : MonoBehaviour
         if(!IsHero)
         GetComponentInChildren<CapsuleCollider>().enabled = false;
     }
+
+    
 }

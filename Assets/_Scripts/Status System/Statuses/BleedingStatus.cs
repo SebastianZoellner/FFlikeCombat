@@ -42,7 +42,10 @@ public class BleedingStatus : BaseStatus
     public override void EndStatus()
     {
         if (activeVFX)
+        {
+            Debug.Log("Destroying Bleeding VFX");
             GameObject.Destroy(activeVFX);
+        }
     }
 
     public override float GetAttributeEffect(Attribute attribute)

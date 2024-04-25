@@ -71,6 +71,7 @@ public class SpawnPointController : MonoBehaviour
         }
     }
 
+    /*
     public List<CharacterHealth> FindNearby(float radius)
     {
         List<CharacterHealth> foundList = new List<CharacterHealth>();
@@ -83,6 +84,7 @@ public class SpawnPointController : MonoBehaviour
         }
         return foundList;
     }
+    */
 
     public List<CharacterHealth> GetAllFraction(Fraction fraction)
     {
@@ -104,9 +106,42 @@ public class SpawnPointController : MonoBehaviour
             }
 
         return foundList;
-    } 
+    }
 
+    public List<CharacterHealth> GetAllInRadius(CharacterHealth target, float radius, Fraction fraction)
+    {
+        List<CharacterHealth> foundList = new List<CharacterHealth>();
 
+        SpawnPoint targetSpawnPoint = target.GetComponentInParent<SpawnPoint>();
+
+        if (fraction == Fraction.Enemy)
+            foreach (SpawnPoint sp in fullEnemySpawnPoints)
+            {
+                Debug.Log("Distance "+SpawnPointDistance(sp, targetSpawnPoint)+" radius "+radius);
+                if (SpawnPointDistance(sp, targetSpawnPoint) < radius)
+                {
+                    CharacterHealth ch = sp.GetComponentInChildren<CharacterHealth>();
+                    if (ch)
+                    {
+                        foundList.Add(ch);
+                        Debug.Log("Added "+ch.name);
+                    }
+                }
+            }
+        else
+            foreach (SpawnPoint sp in fullHeroSpawnPoints)
+            {
+                if (SpawnPointDistance(sp, targetSpawnPoint) < radius)
+                {
+                    CharacterHealth ch = sp.GetComponentInChildren<CharacterHealth>();
+                    if (ch)
+                        foundList.Add(ch);
+                }
+            }
+        return foundList;
+    }
+
+    
 
     //-------------------------------------------------------------------------------
     //                       Private Functions
@@ -162,7 +197,7 @@ public class SpawnPointController : MonoBehaviour
         //   Debug.Log(sp.name + " at position " + sp.transform.position);
     }
 
-    
+   
 
     private SpawnPoint GetPoint(ref List<SpawnPoint> emptyList, ref List<SpawnPoint> fullList)
     {
@@ -172,6 +207,8 @@ public class SpawnPointController : MonoBehaviour
             return null;
         }
         SpawnPoint spawnPoint = emptyList[Random.Range(0, emptyList.Count)];
+        if (!spawnPoint)
+            Debug.LogWarning("No empty spawnpoint found");
         emptyList.Remove(spawnPoint);//Here we are putting alot of trust in the other programs to work
         fullList.Add(spawnPoint);
 
@@ -185,10 +222,10 @@ public class SpawnPointController : MonoBehaviour
         fullList.Remove(spawnPoint);
     }
 
-    
-
-
-   
+    private float SpawnPointDistance(SpawnPoint sp1, SpawnPoint sp2)
+    {
+        return (sp1.GetCombatLocation().position - sp2.GetCombatLocation().position).magnitude;
+    }
 
 }
 

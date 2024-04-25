@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class StatusManager : MonoBehaviour
-{ 
-    public static Action<float> OnChangeMomentum;
+{
+    public static Action<float> OnChangeMomentum = delegate { };
+    public event Action OnStatusChanged=delegate { };
     
     private List<BaseStatus> activeStatusList;
 
@@ -59,7 +60,11 @@ public class StatusManager : MonoBehaviour
 
     public float GetAttributeModifiers(Attribute attribute)
     {
+        if (activeStatusList == null)
+            return 0;
+
         float modifiers = 0;
+        
         foreach (BaseStatus bs in activeStatusList)
         {
             modifiers+=bs.GetAttributeEffect(attribute);
@@ -78,12 +83,14 @@ public class StatusManager : MonoBehaviour
 
         activeStatusList.Add(newStatus);
         newStatus.BeginStatus();
+        OnStatusChanged.Invoke();
     }
 
     public void LoseStatus(BaseStatus status)
     {
         status.EndStatus();
         activeStatusList.Remove(status);
+        OnStatusChanged.Invoke();
     }
 
     public string[] GetStatusNames()
@@ -118,7 +125,7 @@ public class StatusManager : MonoBehaviour
 
     public void EndAll()
     { 
-        Debug.Log("Ending all statuses");
+        //Debug.Log("Ending all statuses");
         List<BaseStatus> endedStatusList = new List<BaseStatus>();
 
         foreach (BaseStatus bs in activeStatusList)
@@ -127,7 +134,11 @@ public class StatusManager : MonoBehaviour
         }
 
         foreach (BaseStatus bs in endedStatusList)
-            activeStatusList.Remove(bs);
+        {
+            LoseStatus(bs);
+            //Debug.Log("Removing " + bs.GetStatusName());
+        }
+        //Debug.Log("All statuses ended");
 
         activeStatusList.Clear();
     }

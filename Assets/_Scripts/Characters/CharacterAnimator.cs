@@ -7,7 +7,10 @@ public class CharacterAnimator : MonoBehaviour
 {
     public event Action OnActionAnimationFinished = delegate { };
 
+    public bool Initialized { get; private set; } = false;
+
     [SerializeField] bool isAnimated = true;
+    [SerializeField] bool isFlying = false;
     private Animator animator;
 
     private readonly int moveAnimationHash = Animator.StringToHash("Move");
@@ -28,9 +31,10 @@ public class CharacterAnimator : MonoBehaviour
     private void Awake()
     {
         animator = GetComponent<Animator>();
-        if (!animator)
-            Debug.LogError(name+" No animator component found");
+        if (!animator)             Debug.LogError(name+" No animator component found");
         overrideController = GetComponent<CharacterStats>().GetAnimatorOverrideController();
+
+        Initialized = true;
     }
 
     private void Update()
@@ -68,7 +72,7 @@ public class CharacterAnimator : MonoBehaviour
         animator.SetBool(moveAnimationHash, move);
     }
 
-    public void SetAttack(AnimationClip attackAnimation)
+    public void SetAttack(PowerSO attack)
     {
         if (isAttacking)
             return;
@@ -79,10 +83,12 @@ public class CharacterAnimator : MonoBehaviour
             return;
         }
         //Debug.Log("Starting attack animation");
-        if (attackAnimation)
+        if (attack.attackAnimation)
         {
-            //Debug.Log("Setting new attack animation attack animation");
-            overrideController["Attack"] = attackAnimation;
+            if (isFlying && attack.flyingAnimation)
+                overrideController["Attack"] = attack.flyingAnimation;
+            else
+            overrideController["Attack"] = attack.attackAnimation;
             animator.runtimeAnimatorController = overrideController;
         }
         animator.SetTrigger(attackAnimationHash);

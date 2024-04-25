@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIPowerButtonContainer : MonoBehaviour
@@ -10,6 +7,7 @@ public class UIPowerButtonContainer : MonoBehaviour
     [SerializeField] GameObject powerButtonObject;
 
     private UIPowerButton selectedPower=null;
+    private CharacterHealth selectedHero;
     
     private void Awake()
     {
@@ -22,8 +20,6 @@ public class UIPowerButtonContainer : MonoBehaviour
         CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied;
     }
 
-   
-
     private void OnDisable()
     {
         CharacterManager.OnPlayerSelectedChanged -= CharacterManager_OnPlayerSelectedChanged;
@@ -32,23 +28,20 @@ public class UIPowerButtonContainer : MonoBehaviour
 
     private void CharacterManager_OnPlayerSelectedChanged(CharacterHealth health)
     {
-        ClearPowers();
+       
         if (!health)
         {
-            powerButtonContainer.SetActive(false);
+            HideDisplay();
             return;
         }
 
+        selectedHero = health;
+
+        Bind();
+
         powerButtonContainer.SetActive(true);
 
-        PowerSO[] availablePowerArray = health.Stats.GetAvailablePowers();
-
-        foreach(PowerSO pow in availablePowerArray)
-        {
-            GameObject newButton=Instantiate(powerButtonObject, powerButtonContainer.transform);
-
-            newButton.GetComponent<UIPowerButton>().Setup(pow,characterManager,this);
-        }
+        SpawnPowerButtons();
     }
 
     public void SetSelectedPower(UIPowerButton power)
@@ -69,6 +62,40 @@ public class UIPowerButtonContainer : MonoBehaviour
 
     private void CharacterInitiative_OnAttackReadied(bool arg1, CharacterInitiative arg2)
     {
+        HideDisplay();
+    }
+
+    private void HideDisplay()
+    {
+        UnBind();
         powerButtonContainer.SetActive(false);
+    }
+
+    private void Bind()
+    {
+        selectedHero.OnHealthChanged += SpawnPowerButtons;
+    }
+
+    private void UnBind()
+    {
+        if (!selectedHero)
+            return;
+
+        selectedHero.OnHealthChanged -= SpawnPowerButtons;
+    }
+
+    private void SpawnPowerButtons()
+    {
+        ClearPowers();
+
+        PowerSO[] availablePowerArray = selectedHero.Stats.GetAvailablePowers(true);
+
+        foreach (PowerSO pow in availablePowerArray)
+        {
+            GameObject newButton = Instantiate(powerButtonObject, powerButtonContainer.transform);
+
+            newButton.GetComponent<UIPowerButton>().Setup(pow, characterManager, this);
+            newButton.GetComponent<PowerHoverTip>().SetPower(pow);
+        }
     }
 }

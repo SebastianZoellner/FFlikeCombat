@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PowerTest : MonoBehaviour
@@ -10,9 +8,10 @@ public class PowerTest : MonoBehaviour
     [SerializeField] CharacterHealth target;
 
     private void Start()
-    {
+    {if(SpawnPointController.Instance)
         SpawnPointController.Instance.SetupStage(1);
     }
+    
 
     public void OnButtonPressed()
     {

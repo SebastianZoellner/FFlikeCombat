@@ -14,7 +14,7 @@ public class UIEnemyAvatar : MonoBehaviour
         CharacterManager.OnEnemySelectedChanged += InputReader_OnEnemySelectedChanged;
     }
 
-    private void DisEnable()
+    private void OnDisable()
     {
         CharacterManager.OnEnemySelectedChanged -= InputReader_OnEnemySelectedChanged;
     }

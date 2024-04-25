@@ -1,9 +1,11 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System;
 
 public class UIMissionBriefing : MonoBehaviour
 {
+    public static event Action<bool> OnBriefingSet;
     [SerializeField] GameObject screen;
     [SerializeField] TextMeshProUGUI missionText;
     [SerializeField] Image missionImage;
@@ -21,12 +23,14 @@ public class UIMissionBriefing : MonoBehaviour
     public void LetsGo()
     {
         screen.SetActive(false);
-        Time.timeScale = 1;
+        OnBriefingSet.Invoke(false);
+        //Time.timeScale = 1;// Maybe instead halt the ActionSequencer
     }
 
     private void LevelSetup_StartMissionBriefing(LevelSO level)
     {
-        Time.timeScale = 0;
+        OnBriefingSet.Invoke(true);
+        //Time.timeScale = 0;
         screen.SetActive(true);
         missionText.text = level.missionBriefing;
         if (level.missionVisual)

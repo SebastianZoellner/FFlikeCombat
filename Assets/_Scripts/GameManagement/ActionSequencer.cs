@@ -21,12 +21,14 @@ public class ActionSequencer : MonoBehaviour
     private CharacterInitiative nextActor;
     public bool OngoingAction { get; private set; }
 
-    private List<CharacterInitiative> characterInitiativeList;
+    public List<CharacterInitiative> characterInitiativeList;
     private bool listInitialized = false;
 
     private int round=0;
     
     private bool isWaiting=false;
+    private bool isStopped = false;
+    private float startStageWait=2f;
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class ActionSequencer : MonoBehaviour
 
     private void OnEnable()
     {
+        UIMissionBriefing.OnBriefingSet += UIMissionBriefing_OnBriefingSet;
         LevelSetup.OnNewStage += LevelSetup_OnNewStage;
         CharacterCombat.OnAnyActionFinished += ActionFinished;
         CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied;
@@ -45,12 +48,13 @@ public class ActionSequencer : MonoBehaviour
         
         CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
         characterManager.OnEnemiesDead += CharacterManager_OnWaveDefeated;
+        LevelSetup.OnGameLost += StopActionSequence;
+        LevelSetup.OnGameWon += StopActionSequence;
     }
-
 
     private void Update()
     {
-        if (isWaiting)
+        if (isWaiting||isStopped)
             return;
 
        
@@ -70,8 +74,7 @@ public class ActionSequencer : MonoBehaviour
 
         if(actionTime>round)
         {
-            StartNewRound();
-            
+            StartNewRound();           
         }
     }
 
@@ -79,6 +82,8 @@ public class ActionSequencer : MonoBehaviour
 
     private void OnDisable()
     {
+        UIMissionBriefing.OnBriefingSet -= UIMissionBriefing_OnBriefingSet;
+        LevelSetup.OnNewStage -= LevelSetup_OnNewStage;
         CharacterCombat.OnAnyActionFinished -= ActionFinished;
         CharacterInitiative.OnAttackReadied -= CharacterInitiative_OnAttackReadied;
         CharacterInitiative.OnActionTimeChanged -= CharacterInitiative_OnActionTimeChanged;
@@ -86,9 +91,12 @@ public class ActionSequencer : MonoBehaviour
         CharacterHealth.OnAnyEnemyDied -= Remove_Character;
         CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
         characterManager.OnEnemiesDead -= CharacterManager_OnWaveDefeated;
+
+        LevelSetup.OnGameLost -= StopActionSequence;
+        LevelSetup.OnGameWon -= StopActionSequence;
     }
 
-    internal void SwitchCharacters(CharacterInitiative characterInitiative1, CharacterInitiative characterInitiative2)
+public void SwitchCharacters(CharacterInitiative characterInitiative1, CharacterInitiative characterInitiative2)
     {
         float timeStore = characterInitiative1.nextActionTime;
         characterInitiative1.SetNextActionTime(characterInitiative2.nextActionTime + 0.001f);
@@ -111,7 +119,7 @@ public class ActionSequencer : MonoBehaviour
 
     private void AddCharacter(CharacterInitiative initiative)
     {
-       // Debug.Log("Adding " + initiative.name);
+       Debug.Log("Adding " + initiative.name);
 
           initiative.InitializeInitiative(actionTime);
         characterInitiativeList.Add(initiative);
@@ -122,6 +130,10 @@ public class ActionSequencer : MonoBehaviour
 
     private void InitializeCharacterList()
     {
+        if (listInitialized)
+            return;
+
+        Debug.Log("Initializing Character List");
        
         foreach (PCController pcc in characterManager.heroList)
         {
@@ -188,6 +200,8 @@ public class ActionSequencer : MonoBehaviour
     {
         CharacterInitiative deadCharacter = health.GetComponent<CharacterInitiative>();
         characterInitiativeList.Remove(deadCharacter);
+        Debug.Log("Removing " + deadCharacter.name);
+        FindNextActor();
         OnCharacterRemoved.Invoke(deadCharacter);
     }
 
@@ -230,15 +244,25 @@ public class ActionSequencer : MonoBehaviour
 
     private void LevelSetup_OnNewStage(int obj)
     {
-        StartCoroutine(Wait(2));
+        StartCoroutine(Wait(startStageWait));
         round = 0;
         actionTime = 0;
-        InitializeCharacterList();
+
+        foreach (PCController pcc in characterManager.heroList)
+            pcc.GetComponent<CharacterInitiative>().InitializeInitiative(actionTime);
+
     }
 
+    private void UIMissionBriefing_OnBriefingSet(bool briefingSet)
+    {
+        isStopped = briefingSet;
+       
+    }
 
-
-
+    private void StopActionSequence()
+    {
+        isStopped = true; ;
+    }
 
     private IEnumerator Wait(float waitTime)
     {

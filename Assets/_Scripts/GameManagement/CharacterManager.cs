@@ -21,8 +21,6 @@ public class CharacterManager : MonoBehaviour
     private PCController activeCharacter;
 
     private bool actionOngoing;
-    
-
 
     //-----------------------------------------
     //      Lifecycle Methods
@@ -103,7 +101,7 @@ public class CharacterManager : MonoBehaviour
     {
         if (actionOngoing)
             return;
-        PowerSO[] availablePowers = activeCharacter.stats.GetAvailablePowers();
+        PowerSO[] availablePowers = activeCharacter.stats.GetAvailablePowers(true);
         if (attackId < availablePowers.Length)
         {
             //Debug.Log("Starting attack " + attackId);
@@ -147,40 +145,26 @@ public class CharacterManager : MonoBehaviour
         if (!activeCharacter) return;
 
         activeCharacter.SetTarget(null);
-       // activeCharacter.SetDeselected();
-
-       // OnPlayerSelectedChanged.Invoke(null);
+       
         OnEnemySelectedChanged.Invoke(null);
 
-        //activeCharacter = null;
+      
     }
 
     private void SelectNewCharacter(PCController newCharacter)
     {
         if (activeCharacter)
         {
-            activeCharacter.OnActionStarted -= ActiveCharacter_OnActionStarted;
-            activeCharacter.OnActionEnded -= ActiveCharacter_OnActionEnded;
+           
             activeCharacter.SetDeselected();
         }
         //Debug.Log("New Hero Character Selected " + newCharacter.stats.GetName());
         activeCharacter = newCharacter;
-        activeCharacter.OnActionStarted += ActiveCharacter_OnActionStarted;
-        activeCharacter.OnActionEnded += ActiveCharacter_OnActionEnded;
+        
         activeCharacter.SetSelected();
         OnPlayerSelectedChanged.Invoke(newCharacter.GetComponent<CharacterHealth>());
     }
-
-    private void ActiveCharacter_OnActionEnded()
-    {
-        actionOngoing = false;
-    }
-
-    private void ActiveCharacter_OnActionStarted()
-    {
-        actionOngoing = true;
-    }
-
+    
     private void CharacterHealth_OnAnyPCDied(CharacterHealth deadPCHealth)
     {
         PCController deadPC = deadPCHealth.GetComponent<PCController>();
@@ -209,7 +193,8 @@ public class CharacterManager : MonoBehaviour
             pcc.GetComponent<StatusManager>().EndAll();
 
             //heal some proportion of health
-
+            //Recover some endurance
+            pcc.GetComponent<CharacterHealth>().NewStage();
         }
                 
     }

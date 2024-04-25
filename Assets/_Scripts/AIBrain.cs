@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AIBrain : MonoBehaviour
@@ -35,8 +36,19 @@ public class AIBrain : MonoBehaviour
 
     public PowerSO SelectPower(CharacterStats stats)
     {
-        int selectedIndex=Random.Range(0,stats.GetNumbeOfPowers());
-        return stats.GetPower(selectedIndex);
+        PowerSO[] powerList = stats.GetAvailablePowers(false);
+
+        Debug.Log(powerList.Length + " powers available");
+
+        //Find power with largest endurance cost
+        PowerSO returnedPower = powerList[0];
+        for(int i = 1; i < powerList.Length; ++i)
+        {
+            if (powerList[i].enduranceCost > returnedPower.enduranceCost)
+                returnedPower = powerList[i];
+        }
+        return returnedPower;
     }
 
+    
 }

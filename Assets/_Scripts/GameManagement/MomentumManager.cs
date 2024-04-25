@@ -59,6 +59,12 @@ public class MomentumManager : MonoBehaviour
 
     private void CharacterCombat_OnMomentumModified(CharacterCombat combat, float change)
     {
+        int level = combat.GetComponent<CharacterStats>().GetLevel();
+        if (level == 0)
+            change = change * 0.5f;
+        else
+            change = change * level;
+
         if (combat.GetComponent<PCController>())
             ModifyMomentum(change);
         else
@@ -95,11 +101,10 @@ public class MomentumManager : MonoBehaviour
         ModifyMomentum(change);
     }
 
-   
-
 
     private void ModifyMomentum(float change)
     {
+        Debug.Log("Momentum changes by " + change.ToString());
         momentum += change;
         OnMomentumChanged.Invoke(momentum);
         if (momentum <= lossMomentum)

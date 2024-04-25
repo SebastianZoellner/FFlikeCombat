@@ -1,11 +1,12 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class UIWinLoseScreen : MonoBehaviour
 {
+   
     [SerializeField] GameObject Screen;
     [SerializeField] private TextMeshProUGUI screenText;
     [SerializeField] float WaitTime=2;
@@ -36,25 +37,22 @@ public class UIWinLoseScreen : MonoBehaviour
         screenText.text = "You Lost!!!";
     }
 
-    
-    private void StopGame()
-    {
-        Time.timeScale = 0f;
-    }
+   
 
     IEnumerator DelayedActivate(GameObject screen)
     {
+
         yield return new WaitForSeconds(WaitTime);
 
         screen.SetActive(true);
-        StopGame();
+        
 
     }
 
     private void LevelSetup_LevelWon()
     {
         StartCoroutine(DelayedActivate(Screen));
-        screenBackground.color = Color.red;
-        screenText.text = "You Lost!!!";
+        screenBackground.color = Color.blue;
+        screenText.text = "You Won!!!";
     }
 }

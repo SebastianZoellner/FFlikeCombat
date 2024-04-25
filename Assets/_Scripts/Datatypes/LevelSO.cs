@@ -21,7 +21,7 @@ public class LevelSO : ScriptableObject
     public int GetNumberOfWaves(int stage)=> stages[stage].waveArray.Length;
     public int GetNumberOfStages() => stages.Length;
     public AudioClip GetAmbience(int stage) => stages[stage].ambience;
-    public AudioClip[] GetMusic(int stage) => stages[stage].musicArray;
+    public WaveMusicSO GetMusic(int stage) => stages[stage].music;
     
 }
 
@@ -32,5 +32,5 @@ public struct Stage
 {
     public EnemyWaveSO[] waveArray;
     public AudioClip ambience;
-    public AudioClip[] musicArray;
+    public WaveMusicSO music;
 }

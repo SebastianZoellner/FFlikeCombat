@@ -21,7 +21,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 069258d7526357a4db88fc0d4b140aa0, type: 2}
   - {fileID: 11400000, guid: a4ee9ce33c5acc845abf3d9ee71068ad, type: 2}
   - {fileID: 11400000, guid: fdc0adf5863e3914b839043cb7635d6c, type: 2}
-  startingHealth: 45
+  - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
+  startingHealth: 35
   attributeArray:
   - attribute: 2
     value: 15

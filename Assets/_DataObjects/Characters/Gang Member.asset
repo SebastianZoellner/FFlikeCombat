@@ -17,6 +17,7 @@ MonoBehaviour:
   powerArray:
   - {fileID: 11400000, guid: 1d41959b5bf364f4586fd29c3fb274a5, type: 2}
   - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}
+  - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
   startingHealth: 18
   attributeArray:
   - attribute: 0
@@ -35,4 +36,4 @@ MonoBehaviour:
   characterToon: {fileID: 8973485430670085023, guid: 0cd02968f7406e14ba5755f70c562fde,
     type: 3}
   level: 1
-  StartingEndurance: 0
+  StartingEndurance: 100

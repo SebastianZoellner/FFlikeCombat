@@ -13,21 +13,21 @@ MonoBehaviour:
   m_Name: Double Shot
   m_EditorClassIdentifier: 
   minDamage: 2
-  maxDamage: 5
+  maxDamage: 4
   attack: -10
   defense: 0
-  setupTime: 0.02
-  recoveryTime: 0.8
+  setupTime: 0.1
+  recoveryTime: 0.7
   target: 0
   radius: 0
   successEffectArray:
   - level: 3
     status: 3
-    intensity: 3.5
+    intensity: 3
     duration: 0
   - level: 4
     status: 3
-    intensity: 3.5
+    intensity: 4
     duration: 0
   icon: {fileID: 0}
   buttonName: 
@@ -38,12 +38,13 @@ MonoBehaviour:
     type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 157586, guid: c1a7b64f08ab3224f9bf42d084d15f0c, type: 3}
+  attackOriginArray: 
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: a834f1140d67b4a4195da68cf9c1db68, type: 2}
   missSound: {fileID: 0}
-  momentumEffect: 0
+  momentumEffect: 1
   momentumCost: 0
-  momentumChange: 0
+  momentumChange: 0.8
   minMomentum: -100
   maxMomentum: 100
-  enduranceCost: 0
+  enduranceCost: 40

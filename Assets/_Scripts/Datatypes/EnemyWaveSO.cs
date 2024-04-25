@@ -21,6 +21,11 @@ public class EnemyWaveSO : ScriptableObject
             for (int i = 0; i < number; ++i)
             {
                 SpawnPoint newSpawnPoint = spawnPointController.GetEmptySpawnPoint(SpawnPointType.Enemy);
+                if (!newSpawnPoint)
+                {
+                    Debug.Log("no new Spawnpoint found");
+                    continue;
+                }
                 if (newSpawnPoint.IsFull())
                 {
                     Debug.LogWarning("Returned empty spawn point not empty");

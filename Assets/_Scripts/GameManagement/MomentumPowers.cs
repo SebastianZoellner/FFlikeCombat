@@ -35,7 +35,10 @@ public class MomentumPowers : MonoBehaviour
     public void AwakeHero(CharacterHealth downedHero)
     {
         if (!momentumManager.PayMomentum(AwakeCost))
+        {
+           
             return;
+        }
 
         downedHero.Raise();      
     }

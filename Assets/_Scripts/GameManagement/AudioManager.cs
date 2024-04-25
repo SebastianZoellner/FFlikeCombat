@@ -3,12 +3,18 @@ using UnityEngine;
 
 public class AudioManager : MonoBehaviour
 {
+    public static AudioSource UIFXSource;
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource ambienceSource;
 
     private Coroutine musicCoroutine;
 
     private int currentIndex = 0;
+
+    private void Awake()
+    {
+        UIFXSource = gameObject.AddComponent<AudioSource>();
+    }
 
     public void PlayAmbiance(AudioClip ambience)
     {
@@ -18,33 +24,39 @@ public class AudioManager : MonoBehaviour
         ambienceSource.Play();
     }
 
-    public void PlayMusic(AudioClip[] musicArray)
+    public void PlayMusic(WaveMusicSO music)
     {
-        musicCoroutine=StartCoroutine(PlaySequentialClips(musicArray));
+        musicCoroutine=StartCoroutine(PlaySequentialClips(music));
     }
     public void StopAll()
     {
-        ambienceSource.Stop();
-        StopCoroutine(musicCoroutine);
+        if(musicCoroutine!=null)
+            StopCoroutine(musicCoroutine);
+
+        ambienceSource.Stop();  
         musicSource.Stop();
     }
 
-    IEnumerator PlaySequentialClips(AudioClip[] audioClips)
+    IEnumerator PlaySequentialClips(WaveMusicSO musicSO)
     {
+        //Debug.Log("Starting Music PlaySequentialClips");
+        currentIndex = 0;
         // Loop indefinitely
         while (true)
         {
             // Set the current audio clip to play
-            musicSource.clip = audioClips[currentIndex];
+            musicSource.clip = musicSO.SongArray[currentIndex].music;
+            musicSource.volume= musicSO.SongArray[currentIndex].volume;
+            //Debug.Log("Playing Clip " + currentIndex);
 
             // Play the current audio clip
             musicSource.Play();
 
             // Wait until the current clip finishes playing
-            yield return new WaitForSeconds(audioClips[currentIndex].length);
+            yield return new WaitForSeconds(musicSO.SongArray[currentIndex].music.length);
 
             // Increment the index for the next clip
-            currentIndex = (currentIndex + 1) % audioClips.Length;
+            currentIndex = (currentIndex + 1) % musicSO.SongArray.Length;
         }
     }
 }

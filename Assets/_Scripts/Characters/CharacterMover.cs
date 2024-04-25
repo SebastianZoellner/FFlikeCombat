@@ -9,6 +9,8 @@ public class CharacterMover : MonoBehaviour
 {
     public event Action OnMovementFinished = delegate { };
 
+    public bool Initialized { get; private set; } = false;
+
     private NavMeshAgent agent;
     private bool isMoving;
     private bool isReturning;
@@ -16,14 +18,15 @@ public class CharacterMover : MonoBehaviour
     private Quaternion defaultFacing;
     private Vector3 defaultLocation;
     [SerializeField] private float movementSpeed;
-    [SerializeField] private float rotationSpeed = 0.1f;
+    [SerializeField] private float rotationSpeed = 400;
     private float facingTreshold=5;
     private float distanceThreshold = 0.1f;
 
     private void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
-        agent.speed = movementSpeed;  
+        agent.speed = movementSpeed;
+        Initialized = true;
     }
     private void Start()
     {
@@ -35,22 +38,33 @@ public class CharacterMover : MonoBehaviour
         if (!isMoving && !isReturning)
             return;
 
-        //Debug.Log(agent.stoppingDistance + " stopping, remaining: " + agent.remainingDistance);
+        float dis = agent.stoppingDistance + distanceThreshold;
+        //Debug.Log(dis + " stopping, remaining: " + agent.remainingDistance + " pending: " + agent.pathPending);
 
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance+distanceThreshold)
         {
+            
             if (isMoving)
             {
                 isMoving = false;
                 OnMovementFinished.Invoke();
                 return;
             }
-            if (Quaternion.Angle(transform.rotation, defaultFacing) < facingTreshold)
+            float angleDifference = Quaternion.Angle(transform.rotation, defaultFacing);
+            if ( angleDifference< facingTreshold)
             {
                 isReturning = false;
                 OnMovementFinished.Invoke();
             }
-            transform.rotation = Quaternion.Slerp(transform.rotation, defaultFacing, rotationSpeed);
+           
+            float step = rotationSpeed * Time.deltaTime; 
+            //Debug.Log("angle: "+ angleDifference+" Step: "+step);
+            if (angleDifference > step)
+                transform.rotation = Quaternion.Slerp(transform.rotation, defaultFacing, step / angleDifference);
+            else
+                transform.rotation = defaultFacing;
+            
+            
         }
 
 
@@ -60,7 +74,10 @@ public class CharacterMover : MonoBehaviour
     {
         SpawnPoint spawnPoint = GetComponentInParent<SpawnPoint>();
         if (!spawnPoint)
-            Debug.LogWarning(name + " does not have a spawn point");
+        {
+            Debug.LogWarning(name + " does not have a spawn point",gameObject);
+            return;
+        }
         defaultLocation = spawnPoint.GetCombatLocation().position;
         defaultFacing = Quaternion.LookRotation(spawnPoint.GetCombatLocation().forward, Vector3.up);
     }

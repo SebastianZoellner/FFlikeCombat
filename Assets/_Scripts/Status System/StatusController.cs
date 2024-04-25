@@ -52,6 +52,9 @@ public class StatusController : MonoBehaviour
             case StatusName.Blocking:
                 newStatus=new BlockingStatus(manager, intensity, damageModifier, duration, vfx);
                 break;
+            case StatusName.Resting:
+                newStatus = new RestingStatus(manager, 0, 0, 0, null);
+                break;
         }
 
         return newStatus;

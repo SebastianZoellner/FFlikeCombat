@@ -6,6 +6,7 @@ public class CharacterInitiative : MonoBehaviour
     public static event Action<bool,CharacterInitiative>  OnAttackReadied = delegate { };
     //This updates the timeline UI, removes the buttons and lets Actionsequencer know that the player has chosen an action
     public static event Action<CharacterInitiative,float> OnMomentumCostPayed = delegate { };
+
     public static event Action OnActionTimeChanged = delegate { };
     
     public event Action OnActionStarted = delegate { };
@@ -107,6 +108,18 @@ public class CharacterInitiative : MonoBehaviour
             nextActionTime = ActionSequencer.actionTime;
 
         OnActionTimeChanged.Invoke();
+    }
+
+    public string GetTimelineTip()
+    {
+        string tip=stats.GetName();
+
+        if (readiedAction)
+        {
+            tip += "\nReadied Attack: " + readiedAction.name;
+            tip += "\nTarget:         " + targetHealth.Stats.GetName();
+        }
+        return tip;
     }
 
     private float GetRandomNoise()

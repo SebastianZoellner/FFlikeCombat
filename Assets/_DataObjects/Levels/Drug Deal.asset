@@ -22,9 +22,7 @@ MonoBehaviour:
     Abandoned warehouse at the outskirts of the city.
 
 
-
     Threat Assessment:
-
 
 
     Black
@@ -43,12 +41,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 082b302ee72cab049ae55aab99af41a8, type: 2}
     - {fileID: 11400000, guid: 6fee0678351d5ef478cd5ac9b01a8cac, type: 2}
     ambience: {fileID: 8300000, guid: 4cf46afed0091d046a3cc336afcf7a57, type: 3}
-    musicArray:
-    - {fileID: 8300000, guid: a8b2a898d72205343860dfe1dc45044f, type: 3}
-    - {fileID: 8300000, guid: 9e8baac49dd3d384c91be023c3a281c9, type: 3}
+    music: {fileID: 11400000, guid: b8735eaf4914c284b98c125b3668e411, type: 2}
   - waveArray:
     - {fileID: 11400000, guid: 73c11a207bd243b47b2227852a386e5b, type: 2}
     - {fileID: 11400000, guid: f599fa32754f1384b8356a34ee1224c8, type: 2}
     ambience: {fileID: 8300000, guid: 53bd19e618dd7a647ae8dc5446a0923d, type: 3}
-    musicArray:
-    - {fileID: 8300000, guid: bec777e0fa848432aaa3b9eac85b6f70, type: 3}
+    music: {fileID: 11400000, guid: 6bddc621c4a595f47a9c98ad9e704eb8, type: 2}

@@ -1,13 +1,26 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TrailsFX;
 using UnityEngine;
 
 public class CharacterVFX : MonoBehaviour
 {
     [SerializeField] private Transform statusEffectTransform;
+    [SerializeField] private TrailPoint[] trailPointArray;
     [SerializeField] private ParticleSystem invigorateEffect;
     [SerializeField] private ParticleSystem tacticalAdvantageEffect;
+
+    TrailOrigin[] attackOrigin;
+
+    private Dictionary<TrailOrigin,TrailEffect> trailEffect;
+
+    private void Awake()
+    {
+        InitializeTrailEffectDictionary();  
+    }
+
+   
 
     private void OnEnable()
     {
@@ -17,6 +30,11 @@ public class CharacterVFX : MonoBehaviour
     private void OnDisable()
     {
         GetComponent<CharacterHealth>().OnInvigorate -= health_OnInvigorate;
+    }
+
+    private void Start()
+    {
+        StopTrail();
     }
 
     public void AttackingEffect(GameObject effect, Transform target)
@@ -45,6 +63,34 @@ public class CharacterVFX : MonoBehaviour
         return Instantiate(statusVFX, statusEffectTransform);
     }
 
+   
+
+    public void StartTacticalAdvantage()
+    {
+        if (tacticalAdvantageEffect)
+            tacticalAdvantageEffect.Play();
+    }
+
+    public void StartAttack(bool ranged, TrailOrigin[] origin)
+    {
+        attackOrigin = origin;
+        //StartTrail();
+    }
+
+    public void EndAttack()
+    {
+        StopTrail();
+    }
+
+    private void InitializeTrailEffectDictionary()
+    {
+        trailEffect = new Dictionary<TrailOrigin, TrailEffect>();
+        foreach(TrailPoint tp in trailPointArray)
+        {
+            trailEffect[tp.origin] = tp.trail;
+        }
+    }
+
     private void CreateEffect(GameObject effect, Vector3 position)
     {
         GameObject newEffect = Instantiate(effect, position, Quaternion.identity);
@@ -53,13 +99,30 @@ public class CharacterVFX : MonoBehaviour
 
     private void health_OnInvigorate()
     {
-        if(invigorateEffect)
-        invigorateEffect.Play();
+        if (invigorateEffect)
+            invigorateEffect.Play();
     }
 
-    public void StartTacticalAdvantage()
+    private void StartTrail() //Called from anmation events
     {
-        if (tacticalAdvantageEffect)
-            tacticalAdvantageEffect.Play();
+        foreach (TrailOrigin to in attackOrigin)
+        {
+            if (trailEffect.ContainsKey(to))
+                trailEffect[to].active = true;
+            else
+                Debug.Log(name + " does not have a trail set for origin "+to, gameObject);
+        }
     }
+    private void StopTrail()
+    {
+        foreach(TrailPoint tp in trailPointArray)      
+        tp.trail.active = false;
+    }
+}
+
+[Serializable]
+public struct TrailPoint
+{
+    public TrailOrigin origin;
+    public TrailEffect trail;
 }

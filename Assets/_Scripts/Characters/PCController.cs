@@ -1,14 +1,9 @@
-using System;
 using UnityEngine;
 
 public class PCController : MonoBehaviour
 {
-    public event Action OnActionStarted = delegate { };
-    public event Action OnActionEnded = delegate { };
-    public event Action OnHasActed = delegate { };
-
     public CharacterStats stats { get; private set; }
-     
+
     private CharacterInitiative initiative;
     private CharacterHealth health;
     private SelectionIndicator selectionIndicator;
@@ -46,7 +41,7 @@ public class PCController : MonoBehaviour
     //---------------------------------------------
     //      Public Methods
     //----------------------------------------------
-    
+
     public void SetSelected()
     {
         selectedPower = null;
@@ -59,8 +54,12 @@ public class PCController : MonoBehaviour
 
     public void SetDeselected()
     {
+        selectedPower = null;
+
         if (target)
             target.selectionIndicator.SetDeselected();
+
+        target = null;
 
         selectionIndicator.SetDeselected();
     }
@@ -83,14 +82,14 @@ public class PCController : MonoBehaviour
 
         if (selectedPower.target == TargetType.Self)
         {
-            target = health;          
+            target = health;
         }
 
-        if(target!=null)
+        if (target != null)
             StartPower();
     }
 
-    
+
     public void SetTarget(CharacterHealth targetHealth)
     {
         if (!targetHealth)
@@ -99,7 +98,7 @@ public class PCController : MonoBehaviour
         if (!targetHealth.canBeTarget)
             return;
 
-        if(selectedPower)
+        if (selectedPower)
         {
             if (selectedPower.target == TargetType.Enemy && targetHealth.IsHero)
                 return;
@@ -112,12 +111,25 @@ public class PCController : MonoBehaviour
             target.selectionIndicator.SetDeselected();
 
         target = targetHealth;
-        
+
         target.selectionIndicator.SetSelected();
         //Debug.Log("Set new target: " + target.name);
 
         if (target && selectedPower)
             StartPower();
+    }
+
+    //---------------------------------------------
+    //      Private Methods
+    //---------------------------------------------
+
+    private void OnAnyEnemyDied(CharacterHealth deadHealth)
+    {
+        if (deadHealth == target)
+        {
+            target = null;
+            deadHealth.selectionIndicator.SetDeselected();
+        }
     }
 
 
@@ -137,20 +149,7 @@ public class PCController : MonoBehaviour
                 return;
             }
 
-        initiative.ReadyAttack(selectedPower, target);
+        if (initiative.ReadyAttack(selectedPower, target))
+            SetDeselected();
     }
-
-    //---------------------------------------------
-    //      Private Methods
-    //---------------------------------------------
-
-    private void OnAnyEnemyDied(CharacterHealth deadHealth)
-    {
-        if (deadHealth == target)
-        {
-            target = null;
-            deadHealth.selectionIndicator.SetDeselected();
-        }
-    }
-
 }

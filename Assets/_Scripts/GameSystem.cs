@@ -28,6 +28,7 @@ public class GameSystem : MonoBehaviour
 
     public (int,float) TestAttack(float attack, float defense,float critModifier)
     {
+        //Debug.Log(attack + " " + defense);
         float hitProbability = CalculateHitChance(attack,defense);
         float highHitModifier = CalculateHighHitModifier(hitProbability);
         float randomNumber = Random.Range(0f, 1f);

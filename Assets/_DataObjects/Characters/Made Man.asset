@@ -18,6 +18,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: ace88d9688e42b24f8125b6f6782779c, type: 2}
   - {fileID: 11400000, guid: 307dbe79fc3df9046a4810d07d7ac1e6, type: 2}
   - {fileID: 11400000, guid: 33448c7fd27d3cd4bbbbc98d7ca5ffcd, type: 2}
+  - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
   startingHealth: 20
   attributeArray:
   - attribute: 0
@@ -27,8 +28,9 @@ MonoBehaviour:
   - attribute: 5
     value: 20
   icon: {fileID: 21300000, guid: 273334bdb0a69164aa873fd34e4178c7, type: 3}
+  shortBlurb: 
   animatorController: {fileID: 22100000, guid: 7dd6a069630b3c74d8878a8658ca0135, type: 2}
   characterToon: {fileID: 3550478117515725222, guid: 1f786a7f00fa4b345a453f5c9ae3143d,
     type: 3}
   level: 1
-  StartingEndurance: 0
+  StartingEndurance: 100

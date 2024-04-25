@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4337738201816944778}
   - component: {fileID: 5827578260088856838}
   - component: {fileID: 4361104087686793275}
+  - component: {fileID: 8830049209643823981}
   m_Layer: 5
   m_Name: Action Button
   m_TagString: Untagged
@@ -36,7 +37,6 @@ RectTransform:
   - {fileID: 7075777417765685463}
   - {fileID: 6211394559174805595}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -154,6 +154,18 @@ MonoBehaviour:
   powerName: {fileID: 1002288485823808783}
   icon: {fileID: 3332962373011758001}
   frame: {fileID: 485462461608758606}
+--- !u!114 &8830049209643823981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441689313787895414}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7e70cb3c315c5f4c83bf980d4301e00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2647074217717048843
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,7 +197,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1887641887426212356}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -261,7 +272,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1887641887426212356}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -397,7 +407,6 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1887641887426212356}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}

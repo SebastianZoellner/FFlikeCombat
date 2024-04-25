@@ -12,28 +12,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Armed Kick
   m_EditorClassIdentifier: 
-  minDamage: 2
-  maxDamage: 5
+  minDamage: 3
+  maxDamage: 4
   attack: -5
   defense: -5
-  setupTime: 0.1
-  recoveryTime: 0.7
+  setupTime: 0.25
+  recoveryTime: 0.4
   target: 0
+  radius: 0
   successEffectArray: []
   icon: {fileID: 0}
   buttonName: Kick
-  description: 
+  description: A quick melee attack that leaves the attacker at a small tactical
+    disadvantage.
   range: 1.8
   attackAnimation: {fileID: 7400000, guid: b65e9a77f0fd63741b5af5c65c012b90, type: 2}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 5688621020241137862, guid: 2f5ce8a3fb89a8947867f6c90b20e807, type: 3}
+  attackOriginArray: 03000000
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 55a9ca1ccb1d812408f58c94c526e320, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 0
+  momentumEffect: 1
   momentumCost: 0
-  momentumChange: 0
+  momentumChange: 0.65
   minMomentum: -100
   maxMomentum: 100
-  enduranceCost: 0
+  enduranceCost: 29
