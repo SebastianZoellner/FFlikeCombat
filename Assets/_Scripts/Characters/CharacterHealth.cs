@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using System;
 using DamageNumbersPro;
 
-public class CharacterHealth : MonoBehaviour
+public class CharacterHealth : MonoBehaviour,IDamageable
 {
     public static Action<CharacterHealth> OnAnyPCDied=delegate { };
     public static Action<CharacterHealth> OnAnyEnemyDied = delegate { };
@@ -19,12 +19,12 @@ public class CharacterHealth : MonoBehaviour
     [SerializeField] DamageNumber healPrefab;
 
     public float StartingHealth { get; private set; }
-    public float PresentHealth;// { get; private set; }
+    public float PresentHealth  { get; private set; }
 
     public float StartingEndurance { get; private set; }
     public float PresentEndurance { get; private set; }
 
-    public SelectionIndicator selectionIndicator { get; private set; }
+   public SelectionIndicator selectionIndicator { get; private set; }
     public bool canBeTarget { get; private set; }
     public CharacterStats Stats { get; private set; }
     public bool IsHero{ get; private set; }
@@ -35,7 +35,7 @@ public class CharacterHealth : MonoBehaviour
 
     private void Awake()
     {
-        selectionIndicator = GetComponent<SelectionIndicator>();
+       selectionIndicator = GetComponent<SelectionIndicator>();
         Stats = GetComponent<CharacterStats>();
         animator = GetComponent<CharacterAnimator>();
         IsHero = GetComponent<PCController>();    
@@ -50,6 +50,9 @@ public class CharacterHealth : MonoBehaviour
 
     private void Start()
     {
+        StartingHealth = Stats.GetStartingHealth();
+        StartingEndurance = Stats.GetStartingEndurance();
+
         PresentHealth = StartingHealth;
         PresentEndurance = StartingEndurance;
         canBeTarget = true;
@@ -64,10 +67,14 @@ public class CharacterHealth : MonoBehaviour
     //-----------------------------------------------------------------------------------
     //                    Public functions
     //-----------------------------------------------------------------------------------
+    public string GetName() => Stats.GetName();
+    public Transform GetTransform() => transform;
+    public float GetDefenseValue() => Stats.GetDefenseValue();
+
 
     public void TakeDamage(float damage)
     {
-        Debug.Log(name+"Taking Damage " + damage);
+       Debug.Log(name+"Taking Damage " + damage);
         damage=GameSystem.Instance.CalculateArmor(Stats.GetAttribute(Attribute.Armor), damage);
         if (damage < 0) damage = 0;
         //Debug.Log("After Armor " + damage);
@@ -172,16 +179,17 @@ public class CharacterHealth : MonoBehaviour
     {
         canBeTarget = false;
         animator.SetDied();
-       Debug.Log(name + " died");
+        Debug.Log(name + " died");
         if (GetComponent<PCController>())
             OnAnyPCDied.Invoke(this);
         else
-            OnAnyEnemyDied.Invoke(this);
-
+            if (GetComponent<EnemyController>())
+                OnAnyEnemyDied.Invoke(this);
+           
         OnDied.Invoke();
-         
-        if(!IsHero)
-        GetComponentInChildren<CapsuleCollider>().enabled = false;
+
+        if (!IsHero)
+            GetComponentInChildren<CapsuleCollider>().enabled = false;
     }
 
     

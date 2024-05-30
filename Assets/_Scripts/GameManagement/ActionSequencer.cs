@@ -9,6 +9,8 @@ public class ActionSequencer : MonoBehaviour
     public event Action<CharacterInitiative> OnCharacterRemoved = delegate { };
     public event Action<CharacterInitiative> OncharacterAdded = delegate { };//no use for this right now, but maybe later
     public static event Action <int> OnNewRoundStarted=delegate{}; //Fires UI, Spawns new Wave, removes fallen enemies
+    public static event Action<CharacterInitiative> OnNextActorStarting = delegate { };//adjusts camera
+    public static event Action OnNoActor = delegate { };
    
     public static float actionTime { get; private set; }
 
@@ -69,6 +71,7 @@ public class ActionSequencer : MonoBehaviour
         {
             //Debug.Log("New Actor starting " + nextActor.name);
             OngoingAction = true;
+            OnNextActorStarting.Invoke(nextActor);
             TakeAction(nextActor);           
         }
 
@@ -102,10 +105,11 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
         characterInitiative1.SetNextActionTime(characterInitiative2.nextActionTime + 0.001f);
         characterInitiative2.SetNextActionTime(timeStore + 0.001f);
 
-        nextActor = FindNextActor();
-        OngoingAction = false;
-        characterManager.DeselectCharacter();
+        ActionFinished();
+        
     }
+
+   
 
     public List<CharacterInitiative> GetCharacters()
     {
@@ -154,12 +158,14 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
     {
        // Debug.Log("Action finished");
         OngoingAction = false;
+        OnNoActor.Invoke();
         nextActor = FindNextActor();
+        characterManager.DeselectCharacter();
     }
 
     private void TakeAction(CharacterInitiative nextActor)
     {
-        if (nextActor.readiedAction)
+        if (nextActor.HasReadiedAction())
         {
             //Debug.Log("Perform " + nextActor.readiedAction.buttonName);           
             if (!nextActor.PerformReadiedAction())
@@ -200,7 +206,7 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
     {
         CharacterInitiative deadCharacter = health.GetComponent<CharacterInitiative>();
         characterInitiativeList.Remove(deadCharacter);
-        Debug.Log("Removing " + deadCharacter.name);
+        //Debug.Log("Removing From Inititiative list" + deadCharacter.name);
         FindNextActor();
         OnCharacterRemoved.Invoke(deadCharacter);
     }
@@ -220,6 +226,8 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
     {
         FindNextActor();
     }
+
+    
 
     private void CharacterManager_OnWaveDefeated()
     {

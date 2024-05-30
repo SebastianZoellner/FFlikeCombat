@@ -1,11 +1,13 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioSource UIFXSource;
     [SerializeField] AudioSource musicSource;
     [SerializeField] AudioSource ambienceSource;
+    [SerializeField] AudioMixer audioMixer;
 
     private Coroutine musicCoroutine;
 
@@ -16,6 +18,7 @@ public class AudioManager : MonoBehaviour
         UIFXSource = gameObject.AddComponent<AudioSource>();
     }
 
+   
     public void PlayAmbiance(AudioClip ambience)
     {
        
@@ -36,6 +39,23 @@ public class AudioManager : MonoBehaviour
         ambienceSource.Stop();  
         musicSource.Stop();
     }
+
+    public void AdjustVolume(float volume, AudioMixerChannel channel) 
+    {
+        switch (channel)
+        {
+            case AudioMixerChannel.Music:
+                audioMixer.SetFloat("MusicVolume", volume);
+                break;
+            case AudioMixerChannel.Background:
+                audioMixer.SetFloat("BackgroundVolume", volume);
+                break;
+            case AudioMixerChannel.SFX:
+                audioMixer.SetFloat("SFXVolume", volume);
+                break;
+        }    
+    }
+
 
     IEnumerator PlaySequentialClips(WaveMusicSO musicSO)
     {
@@ -58,5 +78,12 @@ public class AudioManager : MonoBehaviour
             // Increment the index for the next clip
             currentIndex = (currentIndex + 1) % musicSO.SongArray.Length;
         }
+    }
+
+    public enum AudioMixerChannel
+    {
+        Music,
+        Background,
+        SFX
     }
 }

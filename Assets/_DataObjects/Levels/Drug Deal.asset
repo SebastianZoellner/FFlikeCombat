@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c78e2e690edca74e9c2167bfcf33612, type: 3}
   m_Name: Drug Deal
   m_EditorClassIdentifier: 
+  LevelName: Drug Bust
+  missionIcon: {fileID: 21300000, guid: bdf3f31e31d16174ba5874ea7b2d6088, type: 3}
   missionBriefing: 'Objective: Disrupt a major drug deal between the notorious "Black
     Fang" cartel and a rival syndicate, "Crimson Claw," to dismantle their operations
     and prevent the distribution of illegal substances in our city.
@@ -35,6 +37,7 @@ MonoBehaviour:
     Possible
     Civilians: Innocent bystanders may be present; minimize collateral damage.'
   missionVisual: {fileID: 21300000, guid: 208e600f34a3116448e2b2e08dfbbe9f, type: 3}
+  numberOfHeroes: 2
   stages:
   - waveArray:
     - {fileID: 11400000, guid: 49f5348bfc8e4f146bd22961620f7fcc, type: 2}

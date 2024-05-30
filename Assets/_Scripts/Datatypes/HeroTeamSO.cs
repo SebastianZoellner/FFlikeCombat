@@ -5,7 +5,5 @@ using UnityEngine;
 
 public class HeroTeamSO : ScriptableObject
 {
-    public List<CharacterSO> characterList;
-
-    
+    public List<CharacterSO> characterList;   
 }

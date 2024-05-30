@@ -15,7 +15,7 @@ public class BlindedStatus : BaseStatus
         statusManager.ModifyMomentum(-intensity);
         if (statusVFX)
         {
-            Debug.Log("Starting blinded VFX");
+            //Debug.Log("Starting blinded VFX");
             activeVFX = statusManager.InitializeStatusVFX(statusVFX);
         }
     }

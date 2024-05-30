@@ -93,7 +93,7 @@ public class PowerSO : ScriptableObject
         return (StatusName.None, 0, 0);
     }
 
-    public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker, CharacterHealth targetHealth)
+    public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker, IDamageable targetHealth)
     {
         //Debug.Log("Launching projectile " + projectile.name+" at "+targetHealth.transform.position);
         GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition, Quaternion.identity);

@@ -30,7 +30,8 @@ MonoBehaviour:
   description: Recover half your starting endurance. Incurs a substantial defense
     penalty.
   range: 2
-  attackAnimation: {fileID: 7400000, guid: 8909d1672d7cf8f4288a145ab5d5f82c, type: 2}
+  attackAnimation: {fileID: 7400000, guid: 2a26ea2f6c98acc4f9a5440eaf11f2be, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}

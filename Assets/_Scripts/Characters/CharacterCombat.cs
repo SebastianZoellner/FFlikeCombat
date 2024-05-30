@@ -23,7 +23,7 @@ public class CharacterCombat : MonoBehaviour
 
     private PowerSO attackPower;
     //private CharacterHealth target;
-    private CharacterHealth[] targetArray;
+    private IDamageable[] targetArray;
     //private int successLevel;
     private bool hasActed;
     public bool IsHero { get; private set; }
@@ -63,7 +63,7 @@ public class CharacterCombat : MonoBehaviour
     //                    Public Functions
     //--------------------------------------------------------------------
 
-    public  void StartAttack(PowerSO attackPower, CharacterHealth target)
+    public  void StartAttack(PowerSO attackPower, IDamageable target)
     {
         
 
@@ -78,13 +78,13 @@ public class CharacterCombat : MonoBehaviour
         switch (attackPower.target)
             {
             case TargetType.Enemy:
-                if (!target) return;
-                Debug.Log("Starting attack "+attackPower.name+" against " + target.name);            
+                if (target==null) return;
+               // Debug.Log("Starting attack "+attackPower.name+" against " + target.GetName());            
                 hasActed = false;
-                targetArray = new CharacterHealth[1];
+                targetArray = new IDamageable[1];
                 targetArray[0] = target;
 
-                moveToPosition = target.transform.position;
+                moveToPosition = target.GetTransform().position;
                 range = attackPower.range;
 
                 if (IsHero)
@@ -95,9 +95,9 @@ public class CharacterCombat : MonoBehaviour
             case TargetType.AllEnemies:
                 hasActed = false;
                 if(IsHero)
-                targetArray = SpawnPointController.Instance.GetAllFraction(Fraction.Enemy).ToArray();
+                targetArray = SpawnPointController.Instance.GetAllFraction(Faction.Enemy).ToArray();
                 else
-                    targetArray= SpawnPointController.Instance.GetAllFraction(Fraction.Hero).ToArray();
+                    targetArray= SpawnPointController.Instance.GetAllFraction(Faction.Hero).ToArray();
                 Debug.Log("All Enemy attack with " + targetArray.Length + " targets");
 
                 moveToPosition = transform.position + transform.forward;
@@ -110,7 +110,7 @@ public class CharacterCombat : MonoBehaviour
             case TargetType.Self:
             
                 hasActed = false;
-                targetArray = new CharacterHealth[1];
+                targetArray = new IDamageable[1];
                 targetArray[0] = health;
 
                 moveToPosition = transform.position + transform.forward;
@@ -120,9 +120,9 @@ public class CharacterCombat : MonoBehaviour
             case TargetType.AllFriends:
                 hasActed = false;
                 if (IsHero)
-                    targetArray = SpawnPointController.Instance.GetAllFraction(Fraction.Hero).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllFraction(Faction.Hero).ToArray();
                 else
-                    targetArray = SpawnPointController.Instance.GetAllFraction(Fraction.Enemy).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllFraction(Faction.Enemy).ToArray();
 
                 //Debug.Log("Target array size " + targetArray.Length);
 
@@ -132,11 +132,11 @@ public class CharacterCombat : MonoBehaviour
             case TargetType.AreaEnemies:
                 hasActed = false;
                 if (IsHero)
-                    targetArray = SpawnPointController.Instance.GetAllInRadius(target,attackPower.radius,Fraction.Enemy).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(target.GetTransform(),attackPower.radius,Faction.Enemy).ToArray();
                 else
-                    targetArray = SpawnPointController.Instance.GetAllInRadius(target, attackPower.radius, Fraction.Hero).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(target.GetTransform(), attackPower.radius, Faction.Hero).ToArray();
 
-                moveToPosition = target.transform.position;
+                moveToPosition = target.GetTransform().position;
                 range = attackPower.range;
 
                 break;
@@ -156,7 +156,7 @@ public class CharacterCombat : MonoBehaviour
     }
    
 
-    public bool ManageHit(CharacterHealth target)
+    public bool ManageHit(IDamageable target)
         //This manages all the rules effects of a hit, called from the projectile function 
     {
         int successLevel = 0;
@@ -185,13 +185,14 @@ public class CharacterCombat : MonoBehaviour
         float damageModifier= GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
         (StatusName status,float intensity,int duration)=attackPower.GetStatusEffect(successLevel);
 
-        if (status != StatusName.None)
+        if (status != StatusName.None && target is CharacterHealth)
         {
-            Debug.Log("Applying Status effects");
-            target.GetComponent<StatusManager>().GainStatus(status, intensity, duration, damageModifier);
+            //Debug.Log("Applying Status effects");
+            CharacterHealth targetCharacter = (CharacterHealth)target;
+            targetCharacter.GetComponent<StatusManager>().GainStatus(status, intensity, duration, damageModifier);
         }
 
-        return true; ;
+        return true;
     }
 
     //----------------------------------------------------------------------------------
@@ -199,12 +200,12 @@ public class CharacterCombat : MonoBehaviour
     //----------------------------------------------------------------------------------
 
 
-    private (int,float) RollAttack(PowerSO attackPower, CharacterHealth target)
+    private (int,float) RollAttack(PowerSO attackPower, IDamageable target)
     {
         float attackValue = attackPower.attack;
         attackValue = GameSystem.Instance.CalculateAttack(stats.GetAttribute(Attribute.Combat), attackValue);
 
-        float defenseValue = target.Stats.GetDefenseValue();
+        float defenseValue = target.GetDefenseValue();
         float critModifier = 0;
 
         //Debug.Log(name + " Attacking " + target.Stats.GetName() + " with " + attackPower.name);
@@ -279,7 +280,7 @@ public class CharacterCombat : MonoBehaviour
             }
 
             sound.PlayShootSound(attackPower.hitSound);
-            foreach (CharacterHealth target in targetArray)
+            foreach (IDamageable target in targetArray)
             {             
                 attackPower.LaunchProjectile(attackOrigin.position, this, target);
             }
@@ -288,22 +289,22 @@ public class CharacterCombat : MonoBehaviour
 
         //Debug.Log("No projectile");
 
-        foreach (CharacterHealth target in targetArray)
+        foreach (IDamageable target in targetArray)
         {
             bool hasHit = ManageHit(target);
             if (hasHit)
             {
                 // Debug.Log("Hit, success level " + successLevel);
                 if (attackPower.hitVFX)
-                    effects.AttackingEffect(attackPower.hitVFX, target.transform);
+                    effects.AttackingEffect(attackPower.hitVFX, target.GetTransform());
 
-                sound.SetHitSound(attackPower, target);
+                sound.SetHitSound(attackPower, target.GetTransform());
                 FeelManager.Instance.HitEffect();
             }
             else
             {
                 //Debug.Log("Missed");
-                effects.AttackingEffect(missEffect, target.transform);
+                effects.AttackingEffect(missEffect, target.GetTransform());
                 sound.PlayHitSound(attackPower.missSound);
             }
         }
@@ -326,7 +327,7 @@ public class CharacterCombat : MonoBehaviour
                 
             }
 
-            sound.SetHitSound(attackPower, target);
+            sound.SetHitSound(attackPower, target.GetTransform());
             FeelManager.Instance.BuffEffect();
 
             ManageBuff(target);
@@ -354,5 +355,6 @@ public class CharacterCombat : MonoBehaviour
             OnMomentumModified.Invoke(this, attackPower.momentumChange);
         }
     }
+
 
 }

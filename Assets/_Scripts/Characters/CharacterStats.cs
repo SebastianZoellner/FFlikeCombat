@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterStats : MonoBehaviour
+public class CharacterStats : MonoBehaviour,IStats
 {
     [SerializeField] private CharacterSO character;
 
     private float baseDefense;
     private StatusManager statusManager;
-    private CharacterHealth health;
+   private CharacterHealth health;
 
     private void Awake()
     {
@@ -20,6 +20,10 @@ public class CharacterStats : MonoBehaviour
     public string GetName() => character.CharacterName;
     public string GetBlurb() => character.shortBlurb;
     public Sprite GetIcon() => character.icon;
+    public float GetStartingHealth() => character.startingHealth;
+    public float GetStartingEndurance() => character.StartingEndurance;
+
+
     public PowerSO GetPower(int index) => character.GetPower(index);
     public bool HasPowerID(int index) => character.HasPowerID(index);
     public int GetNumbeOfPowers() => character.powerArray.Length;
@@ -27,6 +31,7 @@ public class CharacterStats : MonoBehaviour
     
 
     public AnimatorOverrideController GetAnimatorOverrideController() => character.animatorController;
+
     public float GetDefenseValue() 
     {
         float statusModifiers = statusManager.GetAttributeModifiers(Attribute.Agillity);
@@ -43,6 +48,8 @@ public class CharacterStats : MonoBehaviour
         if(!statusManager)
             statusManager= GetComponent<StatusManager>();
         float statusModifiers = statusManager.GetAttributeModifiers(attribute);
+        if(ObjectManager.Instance)
+            statusModifiers+=ObjectManager.Instance.GetAttributeModifier(attribute,character.fraction);
         return (character.GetBaseAttribute(attribute)+statusModifiers);
     }
 
@@ -52,9 +59,9 @@ public class CharacterStats : MonoBehaviour
         float momentum = MomentumManager.GetMomentum();
         foreach(PowerSO pow in character.powerArray)
         {
-            Debug.Log("Available power; considering " + pow.name);
+            //Debug.Log("Available power; considering " + pow.name);
             if (pow.enduranceCost >health.PresentEndurance ) continue;
-            Debug.Log("Passed endurance");
+            //Debug.Log("Passed endurance");
             if (pow.momentumEffect)
             {
                 if (hero)
@@ -69,11 +76,11 @@ public class CharacterStats : MonoBehaviour
                 if(!hero)
                 {
                     if (pow.momentumCost > 0 && pow.momentumCost <- momentum) continue;
-                    Debug.Log("Passed momentum cost");
+                    //Debug.Log("Passed momentum cost");
                     if (-pow.maxMomentum > momentum) continue;
-                    Debug.Log("Passed maximum momentum");
+                   // Debug.Log("Passed maximum momentum");
                     if (-pow.minMomentum <= momentum) continue;
-                    Debug.Log("Passed min momentum");
+                    //Debug.Log("Passed min momentum");
                 }
             }
             availablePowerList.Add(pow);

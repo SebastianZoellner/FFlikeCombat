@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Gang Member
   LabelName: 
+  fraction: 1
   powerArray:
   - {fileID: 11400000, guid: 1d41959b5bf364f4586fd29c3fb274a5, type: 2}
   - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}

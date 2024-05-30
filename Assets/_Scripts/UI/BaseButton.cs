@@ -11,12 +11,14 @@ public abstract class BaseButton : MonoBehaviour
     [SerializeField] private float scaleFactor=0.8f;
 
     [SerializeField] private UnityEvent OnButtonPressed;
-    private Vector3 origonalScale;
+    private Vector3 originalScale;
 
 
     protected void Start()
     {
-        origonalScale = button.transform.localScale;
+        if (!button)
+            button = GetComponent<Button>();
+        originalScale = button.transform.localScale;
     }
 
     public void ActivateButton()
@@ -33,7 +35,7 @@ public abstract class BaseButton : MonoBehaviour
         while(timer<actionDelay)
         {
             float t = timer / actionDelay;
-            Vector3 currentScale = Vector3.Lerp(origonalScale, origonalScale * scaleFactor, t);
+            Vector3 currentScale = Vector3.Lerp(originalScale, originalScale * scaleFactor, t);
             button.transform.localScale = currentScale;
             timer += Time.deltaTime;
             yield return null;
@@ -46,12 +48,12 @@ public abstract class BaseButton : MonoBehaviour
         while (timer < actionDelay)
         {
             float t = timer / actionDelay;
-            Vector3 currentScale = Vector3.Lerp(origonalScale*scaleFactor, origonalScale, t);
+            Vector3 currentScale = Vector3.Lerp(originalScale*scaleFactor, originalScale, t);
             button.transform.localScale = currentScale;
             timer += Time.deltaTime;
             yield return new WaitForSecondsRealtime(0);
         }
-        button.transform.localScale = origonalScale;
+        button.transform.localScale = originalScale;
     }
 
     protected abstract void ButtonAction();

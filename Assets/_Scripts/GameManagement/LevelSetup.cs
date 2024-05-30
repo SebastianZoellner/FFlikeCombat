@@ -19,8 +19,7 @@ public class LevelSetup : MonoBehaviour
 
     [SerializeField] CharacterManager characterManager;
     [SerializeField] MomentumManager momentumManager;
-    [SerializeField] HeroTeamSO heroTeam;
-
+    [SerializeField] GameSetupSO levelSetup;
 
     private AudioManager audioManager;
 
@@ -30,9 +29,10 @@ public class LevelSetup : MonoBehaviour
     private void Awake()
     {
         audioManager = GetComponent<AudioManager>();
-        SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-        
+        level = levelSetup.levelList[0];
+        SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive); 
     }
+
     private void OnEnable()
     {
         ActionSequencer.OnNewRoundStarted += ActionSequencer_OnNewRoundStarted;
@@ -43,8 +43,6 @@ public class LevelSetup : MonoBehaviour
         momentumManager.OnMomentumWin += WinGame;
     }
 
-   
-
     private void OnDisable()
     {
         ActionSequencer.OnNewRoundStarted -= ActionSequencer_OnNewRoundStarted;
@@ -53,9 +51,7 @@ public class LevelSetup : MonoBehaviour
         characterManager.OnHeroesDead -= LoseGame;
         momentumManager.OnMomentumLoss -= LoseGame;
         momentumManager.OnMomentumWin -= WinGame;
-    }
-
-    
+    } 
 
     private void Start()
     {
@@ -67,7 +63,7 @@ public class LevelSetup : MonoBehaviour
     //---------------------------------------------------------------------
     private void SpawnHeroes()
     {
-        foreach (CharacterSO ch in heroTeam.characterList)
+        foreach (CharacterSO ch in levelSetup.characterList)
         {
             //Debug.Log("Spawning " + ch.CharacterName);
             SpawnPoint spawnPoint = SpawnPointController.Instance.GetEmptySpawnPoint(SpawnPointType.Hero);
@@ -78,7 +74,9 @@ public class LevelSetup : MonoBehaviour
             GameObject newHero=ch.Spawn(spawnPoint.transform);
 
             if (!newHero)
-                Debug.LogError("Spawn Failed: "+ch.name);
+                Debug.LogError("Spawn Failed: " + ch.name);
+            else
+                SpawnPointController.Instance.AssignSpawnPoint(spawnPoint, SpawnPointType.Hero);
 
             PCController hero = newHero.GetComponent<PCController>();
             characterManager.AddHero(hero);
@@ -89,14 +87,15 @@ public class LevelSetup : MonoBehaviour
 
     private void ActionSequencer_OnNewRoundStarted(int round)
     {
-       if(!allEnemiesSpawned)
+        SpawnPointController.Instance.RemoveFallenEnemies();
+
+        if (!allEnemiesSpawned)
             NextWave(round);
     }
 
     private void NextWave(int round)
-    {     
-        SpawnPointController.Instance.RemoveFallenEnemies();
-
+    {
+        Debug.Log("Spawning stage " + stage + " round(+1) " + round);
         spawnedEnemies =level.SpawnWave(stage,round-1, SpawnPointController.Instance);
       
         foreach(GameObject go in spawnedEnemies)
@@ -185,7 +184,7 @@ public class LevelSetup : MonoBehaviour
         yield return new WaitForSeconds(2);
         allEnemiesSpawned = false;
         audioManager.StopAll();
-        CameraController.Instance.SwitchCamera(newStage);
+        //CameraController.Instance.SwitchCamera(newStage);
         OnNewStage.Invoke(newStage);
         SetupStage(newStage);
     }

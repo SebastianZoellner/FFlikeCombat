@@ -3,20 +3,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterAudio : MonoBehaviour
+public class CharacterAudio : Audio
 {
-    [SerializeField] AudioSource attackAudioSource;
-    [SerializeField] AudioSource hitAudioSource;
-    [SerializeField] AudioSource stepAudioSource;
-    
+    [SerializeField] AudioSource attackAudioSource;  
+    [SerializeField] AudioSource stepAudioSource;  
     [SerializeField] SimpleAudioEventSO step;
     [SerializeField] SimpleAudioEventSO dropSound;
 
     private PowerSO attack;
 
-    public void SetHitSound(PowerSO attackPower, CharacterHealth target)
+    public void SetHitSound(PowerSO attackPower, Transform target)
     {
-        target.GetComponent<CharacterAudio>().PlayHitSound(attackPower.hitSound);
+        Audio audio = target.GetComponent<Audio>();
+        if (!audio)
+            Debug.Log("No Audio component found on " + target.name);
+        target.GetComponent<Audio>().PlayHitSound(attackPower.hitSound);
     }
 
 
@@ -36,13 +37,8 @@ public class CharacterAudio : MonoBehaviour
         shootSFX.Play(attackAudioSource);
     }
 
-    public void PlayHitSound(SimpleAudioEventSO hitSFX)
-    {
-        if (!hitSFX)
-            return;
-        hitSFX.Play(hitAudioSource);
-    }
-
+   
+    //Animation Events
     private void Step()
     {
         if(step)

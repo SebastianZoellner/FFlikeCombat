@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Made Man
   LabelName: 
+  fraction: 1
   powerArray:
   - {fileID: 11400000, guid: ace88d9688e42b24f8125b6f6782779c, type: 2}
   - {fileID: 11400000, guid: 307dbe79fc3df9046a4810d07d7ac1e6, type: 2}

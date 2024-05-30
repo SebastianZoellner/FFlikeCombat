@@ -6,7 +6,7 @@ using UnityEngine;
 public class CharacterManager : MonoBehaviour
 {
     public static event Action<CharacterHealth> OnPlayerSelectedChanged = delegate { };
-    public static event Action<CharacterHealth> OnEnemySelectedChanged = delegate { };
+    public static event Action<IDamageable> OnEnemySelectedChanged = delegate { };
     public static event Action<CharacterInitiative> OnCharacterAdded = delegate { }; 
     public static event Action OnAllEnemiesDead = delegate { };
 
@@ -31,13 +31,15 @@ public class CharacterManager : MonoBehaviour
         InputReader.OnCharacterSelected += Input_OnCharacterSelected;
         input.OnAttackSelected += Input_OnAttackSelected;
         InputReader.OnDeselected += Input_OnDeselected;
+
+        input.OnNextEnemy += Input_OnNextEnemy;
         CharacterHealth.OnAnyPCDied += CharacterHealth_OnAnyPCDied;
         CharacterHealth.OnAnyEnemyDied+= CharacterHealth_OnAnyEnemyDied;
         CharacterHealth.OnHeroResurrected += CharacterHealth_OnHeroResurrected;
         LevelSetup.OnNewStage += LevelSetup_OnNewStage;
     }
 
-    
+   
 
     private void OnDisable()
     {
@@ -47,6 +49,7 @@ public class CharacterManager : MonoBehaviour
         CharacterHealth.OnAnyPCDied -= CharacterHealth_OnAnyPCDied;
         CharacterHealth.OnAnyEnemyDied -= CharacterHealth_OnAnyEnemyDied;
         LevelSetup.OnNewStage -= LevelSetup_OnNewStage;
+        input.OnNextEnemy -= Input_OnNextEnemy;
     }
     //-----------------------------------------
     //      Public Methods
@@ -109,15 +112,15 @@ public class CharacterManager : MonoBehaviour
         }
     }
 
-    private void Input_OnCharacterSelected(CharacterHealth health)
+    private void Input_OnCharacterSelected(IDamageable health)
     {
-        if (!health)
+        if (health==null)
         {
             Input_OnDeselected();
             return;
         }
 
-        PCController selectedPlayer = health.GetComponent<PCController>();
+        PCController selectedPlayer = health.GetTransform().GetComponent<PCController>();
 
         if(!selectedPlayer)//enemy was selected
         {
@@ -128,15 +131,13 @@ public class CharacterManager : MonoBehaviour
         //SelectNewCharacter(selectedPlayer);
     }
 
-    private void SelectEnemy(CharacterHealth health)
+    private void SelectEnemy(IDamageable health)
     {
         if (activeCharacter)
         {
             activeCharacter.SetTarget(health);
             OnEnemySelectedChanged.Invoke(health);
         }
-
-        return;
     }
 
 
@@ -201,5 +202,41 @@ public class CharacterManager : MonoBehaviour
     private void CharacterHealth_OnHeroResurrected(CharacterHealth hero)
     {
         AddHero(hero.GetComponent<PCController>());
+    }
+
+    private void Input_OnNextEnemy()
+    {
+        if (!activeCharacter)
+            return;
+
+        if (enemyList.Count == 0)
+            return;
+
+        IDamageable target = activeCharacter.GetTarget();
+
+        if (target == null)
+        {
+            target = enemyList[0].GetComponent<CharacterHealth>();
+        }
+        else
+        {
+            for (int i = 0; i < enemyList.Count; ++i)
+            {
+                if (enemyList[i].GetComponent<IDamageable>() == target)
+                {
+                    if (i == enemyList.Count - 1)
+                        target = enemyList[0].GetComponent<CharacterHealth>();
+
+                    else
+                        target = enemyList[i + 1].GetComponent<CharacterHealth>();
+
+                    break;
+                }
+            }
+        }
+
+        activeCharacter.SetTarget(target);
+        OnEnemySelectedChanged.Invoke(target);
+
     }
 }

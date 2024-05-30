@@ -3,17 +3,26 @@ using UnityEngine;
 public class SpawnPoint : MonoBehaviour
 {
     [field: SerializeField] public SpawnPointType type { get; private set; } = SpawnPointType.Enemy;
-    [field: SerializeField] public int Stage {get; private set;}
-
+    [field: SerializeField] public int Stage { get; private set; }
 
     [SerializeField] Transform combatLocation;
-    
+
+    private bool isEmptied=false;
 
     public bool IsFull()
     {
-        CharacterHealth character = GetComponentInChildren<CharacterHealth>();
-        if (character)
+        if(isEmptied)
+        {
+            isEmptied = false;
+            return false;
+        }
+
+        IDamageable character = GetComponentInChildren<IDamageable>();
+        if (character != null)
+        {
+            Debug.Log("Spawn point " + name + " holds " + character.GetTransform().name);
             return true;
+        }
 
         return false;
     }
@@ -27,9 +36,12 @@ public class SpawnPoint : MonoBehaviour
     }
     public void EmptyPoint()
     {
-        CharacterHealth character = GetComponentInChildren<CharacterHealth>();
-        if (character)
-            Destroy(character.gameObject);
+        IDamageable character = GetComponentInChildren<IDamageable>();
+        if (character != null)
+        {
+            Destroy(character.GetTransform().gameObject);
+            isEmptied = true;
+        }
     }
     
    

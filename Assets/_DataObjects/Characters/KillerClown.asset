@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: 
   LabelName: 
+  fraction: 1
   powerArray:
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
   - {fileID: 11400000, guid: 77d6c0c644ba4ac498507500270b217a, type: 2}

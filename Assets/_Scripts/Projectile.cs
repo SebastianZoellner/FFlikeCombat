@@ -13,7 +13,7 @@ public class Projectile : MonoBehaviour
 
     public event EventHandler OnImpact;
     private PowerSO attackPower;
-    private CharacterHealth targetHealth = null;
+    private IDamageable targetHealth = null;
     private float range = 0;
     private Vector3 target;
 
@@ -51,7 +51,7 @@ public class Projectile : MonoBehaviour
         transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
     }
 
-    public void Setup(CharacterCombat attacker, CharacterHealth target, float range, PowerSO power)
+    public void Setup(CharacterCombat attacker, IDamageable target, float range, PowerSO power)
     {
         attackPower = power;
         this.attacker = attacker;
@@ -61,16 +61,29 @@ public class Projectile : MonoBehaviour
 
     }
 
-    private Vector3 GetAimLocation()//this assumes all possible targets have a capsule collider
+    private Vector3 GetAimLocation()
     {
         float targetHeight;
-        CapsuleCollider targetCapsule = targetHealth.GetComponentInChildren<CapsuleCollider>();
-        if (targetCapsule != null)
-            targetHeight = targetCapsule.height / 2;
-        else
-            targetHeight = 2f;
+        Transform targetTransform=targetHealth.GetTransform();
 
-        return targetHealth.transform.position + Vector3.up * targetHeight / 0.7f;
+        if (targetHealth is CharacterHealth)
+        {           
+            CapsuleCollider targetCapsule = targetTransform.GetComponentInChildren<CapsuleCollider>();
+            if (targetCapsule != null)
+                targetHeight = targetCapsule.height / 2;
+            else
+                targetHeight = 2f;
+        }
+        else
+        {           
+            BoxCollider targetBox = targetTransform.GetComponentInChildren<BoxCollider>();
+            if (targetBox != null)
+                targetHeight = targetBox.size.y / 2;
+            else
+                targetHeight = 1f;
+        }
+
+        return targetTransform.position + Vector3.up * targetHeight / 0.7f;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -111,24 +124,24 @@ public class Projectile : MonoBehaviour
             }
             if (impactSFX)
             {
-                targetHealth.GetComponent<CharacterAudio>().PlayHitSound(impactSFX);
+                targetHealth.GetTransform().GetComponent<Audio>().PlayHitSound(impactSFX);
             }
 
             if(radius>0)
             {
-                CharacterHealth[] targetArray;
+                IDamageable[] targetArray;
                 if (attacker.IsHero)
-                    targetArray = SpawnPointController.Instance.GetAllInRadius(targetHealth, radius, Fraction.Enemy).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(targetHealth.GetTransform(), radius, Faction.Enemy).ToArray();
                 else
-                    targetArray = SpawnPointController.Instance.GetAllInRadius(targetHealth, radius, Fraction.Hero).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(targetHealth.GetTransform(), radius, Faction.Hero).ToArray();
 
                 Debug.Log(targetArray.Length + "Explosion Targets");
 
-                foreach(CharacterHealth ch in targetArray)
+                foreach(IDamageable id in targetArray)
                 {
-                    if (ch == targetHealth) continue;
-                    Debug.Log("Explosion also hitting " + ch.name);
-                    attacker.ManageHit(ch);
+                    if (id == targetHealth) continue;
+                    Debug.Log("Explosion also hitting " + id.GetTransform().name);
+                    attacker.ManageHit(id);
                 }
 
             }

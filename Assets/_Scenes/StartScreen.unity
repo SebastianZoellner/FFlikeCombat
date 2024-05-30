@@ -674,7 +674,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Name of the Game
+  m_text: The Grandhaven Guardians
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: d7adb32a524de4a4fbe606c0501868c3, type: 2}
   m_sharedMaterial: {fileID: 8293395387792431107, guid: d7adb32a524de4a4fbe606c0501868c3,
@@ -684,8 +684,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278387487
-  m_fontColor: {r: 0.122641504, g: 0.013305449, b: 0.013305449, a: 1}
+    rgba: 4278976502
+  m_fontColor: {r: 0.9652744, g: 1, b: 0.042452812, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -836,8 +836,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3191a6e7503dac3409987d2f2df245b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  availableHeros: {fileID: 11400000, guid: d8e12b26846cfc549ab1c7b361644854, type: 2}
-  chosenTeam: {fileID: 11400000, guid: b6bc27354f6160d41b9b13b393d88f19, type: 2}
+  availableHeros: {fileID: 11400000, guid: 40419288f9d0fa94e8f4e6a225bb52d2, type: 2}
+  chosenTeam: {fileID: 11400000, guid: d9f4abd70cfb84043afd158667ba532f, type: 2}
   progressBar: {fileID: 1188605859}
   fader: {fileID: 230633125}
 --- !u!4 &651241854
@@ -939,6 +939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 866474075}
+  - component: {fileID: 866474076}
   m_Layer: 5
   m_Name: Mission Selector
   m_TagString: Untagged
@@ -960,6 +961,7 @@ RectTransform:
   m_Children:
   - {fileID: 51056594}
   - {fileID: 977720444}
+  - {fileID: 2104945877}
   m_Father: {fileID: 1302240430}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
@@ -967,6 +969,22 @@ RectTransform:
   m_AnchoredPosition: {x: 100, y: 0}
   m_SizeDelta: {x: 700, y: 500}
   m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &866474076
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 866474074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5208e8af49a06c64fb51baed194eecd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startScreen: {fileID: 651241853}
+  missionButtonContainer: {fileID: 2104945876}
+  missionButtonObject: {fileID: 5734579691029081252, guid: a70be7947773bb542b2bae50c74b8413,
+    type: 3}
 --- !u!1 &961739749
 GameObject:
   m_ObjectHideFlags: 0
@@ -1171,8 +1189,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190092
-  m_fontColor: {r: 0.047169805, g: 0, b: 0, a: 1}
+    rgba: 4279041782
+  m_fontColor: {r: 0.96470594, g: 0.9960785, b: 0.04705883, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1854,8 +1872,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190092
-  m_fontColor: {r: 0.047169805, g: 0, b: 0, a: 1}
+    rgba: 4278773212
+  m_fontColor: {r: 0.86274517, g: 0.8980393, b: 0.03137255, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -2163,6 +2181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicSource: {fileID: 78717281}
   ambienceSource: {fileID: 0}
+  audioMixer: {fileID: 0}
 --- !u!4 &2000902244
 Transform:
   m_ObjectHideFlags: 0
@@ -2179,6 +2198,66 @@ Transform:
   - {fileID: 78717282}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2104945876
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2104945877}
+  - component: {fileID: 2104945878}
+  m_Layer: 5
+  m_Name: Mission Container
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2104945877
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104945876}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 866474075}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -50}
+  m_SizeDelta: {x: 550, y: 300}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2104945878
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2104945876}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a8695521f0d02e499659fee002a26c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_StartCorner: 0
+  m_StartAxis: 0
+  m_CellSize: {x: 100, y: 100}
+  m_Spacing: {x: 10, y: 10}
+  m_Constraint: 0
+  m_ConstraintCount: 2
 --- !u!1001 &5452927913776449576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2291,6 +2370,41 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131093103330682128, guid: 4e77b073d35944347ae62552cf7bf380,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.1254902
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131093103330682128, guid: 4e77b073d35944347ae62552cf7bf380,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.21960786
+      objectReference: {fileID: 0}
+    - target: {fileID: 2131093103330682128, guid: 4e77b073d35944347ae62552cf7bf380,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.43137258
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484045935776617111, guid: 4e77b073d35944347ae62552cf7bf380,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.04705883
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484045935776617111, guid: 4e77b073d35944347ae62552cf7bf380,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.9960785
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484045935776617111, guid: 4e77b073d35944347ae62552cf7bf380,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.96470594
+      objectReference: {fileID: 0}
+    - target: {fileID: 3484045935776617111, guid: 4e77b073d35944347ae62552cf7bf380,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4279041782
       objectReference: {fileID: 0}
     - target: {fileID: 4715401984635519602, guid: 4e77b073d35944347ae62552cf7bf380,
         type: 3}

@@ -97,7 +97,7 @@ public class StatusManager : MonoBehaviour
     {
         string[] names = new string[activeStatusList.Count];
         for (int i = 0; i < activeStatusList.Count; ++i)
-            names[i] = activeStatusList[i].GetStatusName().ToString();
+            names[i] = activeStatusList[i].GetStatusOutput();
 
         return names;
     }
@@ -168,7 +168,7 @@ public class StatusManager : MonoBehaviour
         }
 
         foreach (BaseStatus bs in endedStatusList)
-            activeStatusList.Remove(bs);
+            LoseStatus(bs);
     }
 
     private void ActionStarted()
@@ -184,7 +184,9 @@ public class StatusManager : MonoBehaviour
         }
 
         foreach (BaseStatus bs in endedStatusList)
-            activeStatusList.Remove(bs);
+        {
+            LoseStatus(bs);
+        }
     }
 }
 

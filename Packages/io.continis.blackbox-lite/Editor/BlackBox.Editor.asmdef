@@ -1,0 +1,19 @@
+{
+    "name": "BlackBox.Editor",
+    "rootNamespace": "BlackBox",
+    "references": [
+        "GUID:dc5cf5130f6c74728b21650c171432b9",
+        "GUID:49818357e697641afb75d2f8acaf1861"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

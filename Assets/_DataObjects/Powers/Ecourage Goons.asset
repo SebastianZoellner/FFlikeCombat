@@ -30,9 +30,11 @@ MonoBehaviour:
   description: 
   range: 2
   attackAnimation: {fileID: 7400000, guid: 7eb7b1fd581b1914cbaf828239a0b545, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 1979696918565472049, guid: 97cd60f6d617f7e44b46618a763377c8, type: 3}
+  attackOriginArray: 
   attackSound: {fileID: 11400000, guid: 5ab057db39c95954eb7d4989e4f680f5, type: 2}
   hitSound: {fileID: 0}
   missSound: {fileID: 0}
@@ -41,4 +43,4 @@ MonoBehaviour:
   momentumChange: 0
   minMomentum: -100
   maxMomentum: 100
-  enduranceCost: 0
+  enduranceCost: 30

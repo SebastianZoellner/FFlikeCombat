@@ -1,0 +1,7 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.continis.blackbox-lite/UIToolkit/BB_Styles.uss?fileID=7433441132597879392&amp;guid=d44be3474fc224dd28581e25055240cf&amp;type=3#BB_Styles" />
+    <ui:VisualElement name="InitialSpace" />
+    <ui:VisualElement name="Messages" style="flex-direction: row; padding-top: 2px; padding-bottom: 2px;">
+        <ui:Label tabindex="-1" text="Prefab is locked" parse-escape-sequences="false" display-tooltip-when-elided="true" name="LockedMessage" tooltip="Child objects and components are hidden. Enter Prefab Mode to unlock." class="SubtleLabel" />
+    </ui:VisualElement>
+</ui:UXML>

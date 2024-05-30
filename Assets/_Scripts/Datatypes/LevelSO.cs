@@ -1,19 +1,21 @@
 using Sirenix.OdinInspector;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "New Level", menuName = "Game Elements/Levels")]
 
-
 public class LevelSO : ScriptableObject
 {
+    public string LevelName;
+    [PreviewField(75)]
+    public Sprite missionIcon;
     [HorizontalGroup("Display", 300)]
-    [TextArea]
+    [TextArea(5,15)]
     public string missionBriefing;
     [VerticalGroup("Display/Image")]
     [PreviewField(125)]
     public Sprite missionVisual;
+    public int numberOfHeroes;
 
     [SerializeField] private Stage[] stages;
 
@@ -25,12 +27,12 @@ public class LevelSO : ScriptableObject
     
 }
 
-
-
 [System.Serializable]
 public struct Stage
 {
     public EnemyWaveSO[] waveArray;
     public AudioClip ambience;
     public WaveMusicSO music;
+    public int timeLimit;
+    public float timeLimitPenalty;
 }

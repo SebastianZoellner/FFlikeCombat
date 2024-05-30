@@ -89,14 +89,14 @@ public class UIMomentumButtons : MonoBehaviour
         selectTargetScreen.SetActive(select);
     }
 
-    private void InputReader_OnCharacterSelected(CharacterHealth health)
+    private void InputReader_OnCharacterSelected(IDamageable health)
     {
         if (!waitToSelectTarget)
             return;
-        if (!health)
+        if (health==null)
             return;
 
-        selectedHero = health.GetComponent<PCController>();
+        selectedHero = health.GetTransform().GetComponent<PCController>();
 
         if (selectedHero)
             SelectHero(false);

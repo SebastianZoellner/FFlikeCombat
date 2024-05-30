@@ -49,8 +49,8 @@ public class ShellShockedStatus : BaseStatus
 
     public override bool OnTurnStart()
     {
-        ++turnCounter;
-        if (turnCounter > duration)
+        --duration;
+        if (duration <=0)
             return true;
         return false;
 

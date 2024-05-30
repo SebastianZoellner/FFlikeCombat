@@ -26,9 +26,9 @@ public class BleedingStatus : BaseStatus
     {
         //Debug.Log("Bleeding");
         statusManager.Health.TakeDamage(intensity * damageModifier);
-        ++turnCounter;
+        --duration;
 
-        if (turnCounter > duration)
+        if (duration<=0)
             return true;
 
         return false;
@@ -43,7 +43,7 @@ public class BleedingStatus : BaseStatus
     {
         if (activeVFX)
         {
-            Debug.Log("Destroying Bleeding VFX");
+            //Debug.Log("Destroying Bleeding VFX");
             GameObject.Destroy(activeVFX);
         }
     }

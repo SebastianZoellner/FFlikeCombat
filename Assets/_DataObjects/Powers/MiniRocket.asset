@@ -33,7 +33,7 @@ MonoBehaviour:
   buttonName: MicroRocket
   description: 
   range: 10
-  attackAnimation: {fileID: 7400000, guid: 1c8bd50fa59b28b4ca2f7e5aa33f0791, type: 2}
+  attackAnimation: {fileID: 7400000, guid: 81f24fde3ef1a304a9c71c111971e713, type: 2}
   flyingAnimation: {fileID: 0}
   projectile: {fileID: 2039520221526181666, guid: ffaeae479d4238e479cb5a085f9ea596,
     type: 3}

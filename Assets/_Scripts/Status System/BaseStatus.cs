@@ -37,5 +37,11 @@ public abstract class BaseStatus
 
     public StatusName GetStatusName() => statusName;
 
+    public string GetStatusOutput()
+    {
+        string statusOutput = statusName.ToString() + " " + intensity.ToString() + " (" + duration.ToString() + ")";
+        return statusOutput;
+    }
+
 }
 

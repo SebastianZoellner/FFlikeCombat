@@ -14,11 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Gang Boss
   LabelName: 
+  fraction: 1
   powerArray:
   - {fileID: 11400000, guid: 4e4bf6de9594b0247bfaeb3e27ec8c0a, type: 2}
   - {fileID: 11400000, guid: a84c4b81e4e352640946c4e35c1161d1, type: 2}
   - {fileID: 11400000, guid: 6842b878755a91e4986e222a3661aef9, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
   startingHealth: 35
   attributeArray:
   - attribute: 0

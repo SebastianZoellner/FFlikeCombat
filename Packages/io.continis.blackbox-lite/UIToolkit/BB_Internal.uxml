@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <Style src="project://database/Packages/io.continis.blackbox-lite/UIToolkit/BB_Styles.uss?fileID=7433441132597879392&amp;guid=d44be3474fc224dd28581e25055240cf&amp;type=3#BB_Styles" />
+    <ui:VisualElement name="InitialSpace" />
+    <uie:PropertyField binding-path="_locked" label="Locked" name="LockedProperty" tooltip="Locks the Prefab, so that child GameObjects and root components are hidden. To modify those, you need to enter Prefab Mode." />
+    <uie:PropertyField binding-path="_selectionType" label="Selection Type" name="SelectionTypeProperty" tooltip="What method to use for sub-object selection in the Scene view. Use Root Object uses the root GameObject, but requires it to have a mesh or an icon. Use 3D Meshes uses a combined mesh of all sub-objects, which is precise but can be expensive for objects with high-detail geometry. Use Bounding Boxes simplifies the selection to the bounding boxes containing the sub-meshes. This is the default." />
+</ui:UXML>

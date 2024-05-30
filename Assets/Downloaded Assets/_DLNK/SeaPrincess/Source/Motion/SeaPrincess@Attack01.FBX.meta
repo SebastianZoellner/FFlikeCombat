@@ -1,0 +1,1227 @@
+fileFormatVersion: 2
+guid: 19afe9cba9687474db513496fdb4e3bd
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: RIGMahia
+    100002: RIGMahiaFootFinger
+    100004: RIGMahiaFootFinger 1
+    100006: RIGMahiaHead
+    100008: RIGMahiaHub002
+    100010: RIGMahiaIndex1
+    100012: RIGMahiaIndex1 1
+    100014: RIGMahiaIndex2
+    100016: RIGMahiaIndex2 1
+    100018: RIGMahiaIndex3
+    100020: RIGMahiaIndex3 1
+    100022: RIGMahiaLArm1
+    100024: RIGMahiaLArm2
+    100026: RIGMahiaLArmCollarbone
+    100028: RIGMahiaLArmIKTarget
+    100030: RIGMahiaLArmPalm
+    100032: RIGMahiaLEar1
+    100034: RIGMahiaLEar2
+    100036: RIGMahiaLEar3
+    100038: RIGMahiaLEar4
+    100040: RIGMahiaLEar5
+    100042: RIGMahiaLittlefinger1
+    100044: RIGMahiaLittlefinger1 1
+    100046: RIGMahiaLittlefinger2
+    100048: RIGMahiaLittlefinger2 1
+    100050: RIGMahiaLittlefinger3
+    100052: RIGMahiaLittlefinger3 1
+    100054: RIGMahiaLLeg1
+    100056: RIGMahiaLLeg2
+    100058: RIGMahiaLLegAnkle
+    100060: RIGMahiaLLegPlatform
+    100062: RIGMahiaMiddlefinger1
+    100064: RIGMahiaMiddlefinger1 1
+    100066: RIGMahiaMiddlefinger2
+    100068: RIGMahiaMiddlefinger2 1
+    100070: RIGMahiaMiddlefinger3
+    100072: RIGMahiaMiddlefinger3 1
+    100074: RIGMahiaNeck1
+    100076: RIGMahiaNeck2
+    100078: RIGMahiaPelvis
+    100080: RIGMahiaRArm1
+    100082: RIGMahiaRArm2
+    100084: RIGMahiaRArmCollarbone
+    100086: RIGMahiaRArmPalm
+    100088: RIGMahiaREar1
+    100090: RIGMahiaREar2
+    100092: RIGMahiaREar3
+    100094: RIGMahiaREar4
+    100096: RIGMahiaREar5
+    100098: RIGMahiaRingfinger1
+    100100: RIGMahiaRingfinger1 1
+    100102: RIGMahiaRingfinger2
+    100104: RIGMahiaRingfinger2 1
+    100106: RIGMahiaRingfinger3
+    100108: RIGMahiaRingfinger3 1
+    100110: RIGMahiaRLeg1
+    100112: RIGMahiaRLeg2
+    100114: RIGMahiaRLegAnkle
+    100116: RIGMahiaRLegPlatform
+    100118: RIGMahiaSpineAbs
+    100120: RIGMahiaSpineBelly
+    100122: RIGMahiaSpineChest
+    100124: RIGMahiaThumb1
+    100126: RIGMahiaThumb1 1
+    100128: RIGMahiaThumb2
+    100130: RIGMahiaThumb2 1
+    100132: //RootNode
+    400000: RIGMahia
+    400002: RIGMahiaFootFinger
+    400004: RIGMahiaFootFinger 1
+    400006: RIGMahiaHead
+    400008: RIGMahiaHub002
+    400010: RIGMahiaIndex1
+    400012: RIGMahiaIndex1 1
+    400014: RIGMahiaIndex2
+    400016: RIGMahiaIndex2 1
+    400018: RIGMahiaIndex3
+    400020: RIGMahiaIndex3 1
+    400022: RIGMahiaLArm1
+    400024: RIGMahiaLArm2
+    400026: RIGMahiaLArmCollarbone
+    400028: RIGMahiaLArmIKTarget
+    400030: RIGMahiaLArmPalm
+    400032: RIGMahiaLEar1
+    400034: RIGMahiaLEar2
+    400036: RIGMahiaLEar3
+    400038: RIGMahiaLEar4
+    400040: RIGMahiaLEar5
+    400042: RIGMahiaLittlefinger1
+    400044: RIGMahiaLittlefinger1 1
+    400046: RIGMahiaLittlefinger2
+    400048: RIGMahiaLittlefinger2 1
+    400050: RIGMahiaLittlefinger3
+    400052: RIGMahiaLittlefinger3 1
+    400054: RIGMahiaLLeg1
+    400056: RIGMahiaLLeg2
+    400058: RIGMahiaLLegAnkle
+    400060: RIGMahiaLLegPlatform
+    400062: RIGMahiaMiddlefinger1
+    400064: RIGMahiaMiddlefinger1 1
+    400066: RIGMahiaMiddlefinger2
+    400068: RIGMahiaMiddlefinger2 1
+    400070: RIGMahiaMiddlefinger3
+    400072: RIGMahiaMiddlefinger3 1
+    400074: RIGMahiaNeck1
+    400076: RIGMahiaNeck2
+    400078: RIGMahiaPelvis
+    400080: RIGMahiaRArm1
+    400082: RIGMahiaRArm2
+    400084: RIGMahiaRArmCollarbone
+    400086: RIGMahiaRArmPalm
+    400088: RIGMahiaREar1
+    400090: RIGMahiaREar2
+    400092: RIGMahiaREar3
+    400094: RIGMahiaREar4
+    400096: RIGMahiaREar5
+    400098: RIGMahiaRingfinger1
+    400100: RIGMahiaRingfinger1 1
+    400102: RIGMahiaRingfinger2
+    400104: RIGMahiaRingfinger2 1
+    400106: RIGMahiaRingfinger3
+    400108: RIGMahiaRingfinger3 1
+    400110: RIGMahiaRLeg1
+    400112: RIGMahiaRLeg2
+    400114: RIGMahiaRLegAnkle
+    400116: RIGMahiaRLegPlatform
+    400118: RIGMahiaSpineAbs
+    400120: RIGMahiaSpineBelly
+    400122: RIGMahiaSpineChest
+    400124: RIGMahiaThumb1
+    400126: RIGMahiaThumb1 1
+    400128: RIGMahiaThumb2
+    400130: RIGMahiaThumb2 1
+    400132: //RootNode
+    7400000: Attack01
+    9500000: //RootNode
+  externalObjects: {}
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: "Copied Avatar Rig Configuration mis-match. Inbetween bone
+      rotation in copied configuration does not match rotation in animation file:\n\t'RIGMahiaSpineBelly'
+      : rotation error = 18.685928 deg\n\t'RIGMahiaHub002' : rotation error = 14.567962
+      deg\n\t'RIGMahiaNeck2' : rotation error = 3.436443 deg\n"
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'RIGMahiaLLegAnkle' has scale animation that
+      will be discarded.\n\t'RIGMahiaSpineBelly' is inbetween humanoid transforms
+      and has rotation animation that will be discarded.\n\t'RIGMahiaHub002' is inbetween
+      humanoid transforms and has rotation animation that will be discarded.\n\t'RIGMahiaNeck2'
+      is inbetween humanoid transforms and has rotation animation that will be discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Attack01
+      takeName: Take 001
+      firstFrame: 0
+      lastFrame: 30
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask:
+      - path: 
+        weight: 1
+      - path: RIGMahia
+        weight: 0
+      - path: RIGMahiaLLegPlatform
+        weight: 0
+      - path: RIGMahiaPelvis
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaLLeg1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaLLeg1/RIGMahiaLLeg2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaLLeg1/RIGMahiaLLeg2/RIGMahiaLLegAnkle
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaLLeg1/RIGMahiaLLeg2/RIGMahiaLLegAnkle/RIGMahiaFootFinger
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaRLeg1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaRLeg1/RIGMahiaRLeg2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaRLeg1/RIGMahiaRLeg2/RIGMahiaRLegAnkle
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaRLeg1/RIGMahiaRLeg2/RIGMahiaRLegAnkle/RIGMahiaFootFinger
+          1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaIndex1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaIndex1/RIGMahiaIndex2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaIndex1/RIGMahiaIndex2/RIGMahiaIndex3
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaLittlefinger1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaLittlefinger1/RIGMahiaLittlefinger2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaLittlefinger1/RIGMahiaLittlefinger2/RIGMahiaLittlefinger3
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaMiddlefinger1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaMiddlefinger1/RIGMahiaMiddlefinger2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaMiddlefinger1/RIGMahiaMiddlefinger2/RIGMahiaMiddlefinger3
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaRingfinger1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaRingfinger1/RIGMahiaRingfinger2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaRingfinger1/RIGMahiaRingfinger2/RIGMahiaRingfinger3
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaThumb1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaLArmCollarbone/RIGMahiaLArm1/RIGMahiaLArm2/RIGMahiaLArmPalm/RIGMahiaThumb1/RIGMahiaThumb2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaLEar1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaLEar1/RIGMahiaLEar2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaLEar1/RIGMahiaLEar2/RIGMahiaLEar3
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaLEar1/RIGMahiaLEar2/RIGMahiaLEar3/RIGMahiaLEar4
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaLEar1/RIGMahiaLEar2/RIGMahiaLEar3/RIGMahiaLEar4/RIGMahiaLEar5
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaREar1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaREar1/RIGMahiaREar2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaREar1/RIGMahiaREar2/RIGMahiaREar3
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaREar1/RIGMahiaREar2/RIGMahiaREar3/RIGMahiaREar4
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaNeck1/RIGMahiaNeck2/RIGMahiaHead/RIGMahiaREar1/RIGMahiaREar2/RIGMahiaREar3/RIGMahiaREar4/RIGMahiaREar5
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaIndex1
+          1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaIndex1
+          1/RIGMahiaIndex2 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaIndex1
+          1/RIGMahiaIndex2 1/RIGMahiaIndex3 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaLArmIKTarget
+        weight: 0
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaLittlefinger1
+          1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaLittlefinger1
+          1/RIGMahiaLittlefinger2 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaLittlefinger1
+          1/RIGMahiaLittlefinger2 1/RIGMahiaLittlefinger3 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaMiddlefinger1
+          1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaMiddlefinger1
+          1/RIGMahiaMiddlefinger2 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaMiddlefinger1
+          1/RIGMahiaMiddlefinger2 1/RIGMahiaMiddlefinger3 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaRingfinger1
+          1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaRingfinger1
+          1/RIGMahiaRingfinger2 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaRingfinger1
+          1/RIGMahiaRingfinger2 1/RIGMahiaRingfinger3 1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaThumb1
+          1
+        weight: 1
+      - path: RIGMahiaPelvis/RIGMahiaSpineBelly/RIGMahiaSpineAbs/RIGMahiaSpineChest/RIGMahiaHub002/RIGMahiaRArmCollarbone/RIGMahiaRArm1/RIGMahiaRArm2/RIGMahiaRArmPalm/RIGMahiaThumb1
+          1/RIGMahiaThumb2 1
+        weight: 1
+      - path: RIGMahiaRLegPlatform
+        weight: 0
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.014
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+    normalCalculationMode: 0
+  importAnimation: 1
+  copyAvatar: 1
+  humanDescription:
+    serializedVersion: 2
+    human:
+    - boneName: RIGMahiaPelvis
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLLeg1
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRLeg1
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLLeg2
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRLeg2
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLLegAnkle
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRLegAnkle
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaSpineAbs
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaSpineChest
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaNeck1
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaHead
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLArmCollarbone
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRArmCollarbone
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLArm1
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRArm1
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLArm2
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRArm2
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLArmPalm
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRArmPalm
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaFootFinger
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaFootFinger 1
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaThumb1
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaThumb2
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaIndex1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaIndex2
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaIndex3
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaMiddlefinger1
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaMiddlefinger2
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaMiddlefinger3
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRingfinger1
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRingfinger2
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRingfinger3
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLittlefinger1
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLittlefinger2
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLittlefinger3
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaThumb1 1
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaThumb2 1
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaIndex1 1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaIndex2 1
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaIndex3 1
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaMiddlefinger1 1
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaMiddlefinger2 1
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaMiddlefinger3 1
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRingfinger1 1
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRingfinger2 1
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaRingfinger3 1
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLittlefinger1 1
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLittlefinger2 1
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: RIGMahiaLittlefinger3 1
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: SeaPrincess(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mahia_body
+      parentName: SeaPrincess(Clone)
+      position: {x: 0.00323952, y: 1.2800096, z: -0.0380144}
+      rotation: {x: -0.49889365, y: 0.50110394, z: 0.50110394, w: 0.49889365}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mahia_Bra
+      parentName: SeaPrincess(Clone)
+      position: {x: 0.00323952, y: 1.2800096, z: -0.0380144}
+      rotation: {x: -0.49889368, y: 0.5011039, z: 0.5011039, w: 0.49889368}
+      scale: {x: 1, y: 1, z: 1}
+    - name: mahia_cap
+      parentName: SeaPrincess(Clone)
+      position: {x: -0.080673665, y: 1.7076406, z: 0.22675312}
+      rotation: {x: 0.04116355, y: 0.8491687, z: 0.41549134, w: -0.32339606}
+      scale: {x: 0.9999999, y: 1.0000005, z: 0.9999998}
+    - name: Mahia_Cloth
+      parentName: SeaPrincess(Clone)
+      position: {x: 0.00323952, y: 1.2800096, z: -0.0380144}
+      rotation: {x: -0.49889368, y: 0.5011039, z: 0.5011039, w: 0.49889368}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Mahia_LOD_Scan001
+      parentName: SeaPrincess(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RIGMahia
+      parentName: SeaPrincess(Clone)
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0.5, y: -0.50000006, z: -0.49999994, w: 0.5}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RIGMahiaLLegPlatform
+      parentName: SeaPrincess(Clone)
+      position: {x: -0.10551649, y: -0.000000012290234, z: 0.0831164}
+      rotation: {x: 0.49999994, y: -0.49999994, z: -0.50000006, w: 0.50000006}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RIGMahiaPelvis
+      parentName: SeaPrincess(Clone)
+      position: {x: 4.5361047e-14, y: 1.3341981, z: 0.08270253}
+      rotation: {x: -0.50000006, y: 0.5000001, z: 0.49999997, w: -0.49999997}
+      scale: {x: 0.9999999, y: 0.9999999, z: 1}
+    - name: RIGMahiaLLeg1
+      parentName: RIGMahiaPelvis
+      position: {x: 0.07737384, y: 0.030658323, z: 0.1362134}
+      rotation: {x: 0.031085998, y: -0.9990492, z: 0.0032914728, w: 0.03038935}
+      scale: {x: 1.0000021, y: 0.99999756, z: 1.0000005}
+    - name: RIGMahiaLLeg2
+      parentName: RIGMahiaLLeg1
+      position: {x: -0.56115484, y: 0.000009018898, z: -0.000002910614}
+      rotation: {x: 0.002905205, y: -0.030845981, z: 0.06224699, w: 0.99757975}
+      scale: {x: 1.0000172, y: 0.999977, z: 1.0000045}
+    - name: RIGMahiaLLegAnkle
+      parentName: RIGMahiaLLeg2
+      position: {x: -0.6376562, y: -0.00000000667572, z: 0}
+      rotation: {x: -0.0056695635, y: -0.0044261464, z: -0.72065836, w: 0.6932531}
+      scale: {x: 1.0000448, y: 0.9999549, z: 0.9999999}
+    - name: RIGMahiaFootFinger
+      parentName: RIGMahiaLLegAnkle
+      position: {x: -0.14605944, y: -0.021374423, z: -0.00008860683}
+      rotation: {x: 0.000000012107191, y: -1.3824317e-10, z: 0.00000010710207, w: 1}
+      scale: {x: 1, y: 1, z: 0.99999964}
+    - name: RIGMahiaRLeg1
+      parentName: RIGMahiaPelvis
+      position: {x: 0.077374056, y: 0.030658245, z: -0.1362134}
+      rotation: {x: 0.03104506, y: -0.99904674, z: -0.0034202184, w: -0.030498978}
+      scale: {x: 1.0000032, y: 0.9999982, z: 0.9999998}
+    - name: RIGMahiaRLeg2
+      parentName: RIGMahiaRLeg1
+      position: {x: -0.5611542, y: 0.000009085655, z: 0.0000029039381}
+      rotation: {x: -0.0026689318, y: 0.031071704, z: 0.062196456, w: 0.9975766}
+      scale: {x: 0.99999404, y: 1.0000076, z: 0.99999815}
+    - name: RIGMahiaRLegAnkle
+      parentName: RIGMahiaRLeg2
+      position: {x: -0.6376324, y: -0.00000001335144, z: 0.00000000667572}
+      rotation: {x: 0.0056737657, y: 0.004267317, z: -0.72065353, w: 0.69325906}
+      scale: {x: 0.9999916, y: 1.0000086, z: 1}
+    - name: RIGMahiaFootFinger 1
+      parentName: RIGMahiaRLegAnkle
+      position: {x: -0.14605626, y: -0.021375066, z: 0.00008859348}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1.0000004, y: 1.0000002, z: 1.0000001}
+    - name: RIGMahiaSpineBelly
+      parentName: RIGMahiaPelvis
+      position: {x: -0.05858441, y: 0.034070283, z: -0.000000005144428}
+      rotation: {x: -0.0000033378599, y: -0.00000011920928, z: -0.070777684, w: 0.99749213}
+      scale: {x: 0.99999994, y: 1, z: 0.9999999}
+    - name: RIGMahiaSpineAbs
+      parentName: RIGMahiaSpineBelly
+      position: {x: -0.1732924, y: 0, z: 0}
+      rotation: {x: 0.00012990831, y: 0.000009357928, z: -0.078118406, w: -0.9969441}
+      scale: {x: 1.0000002, y: 0.9999998, z: 1.0000004}
+    - name: RIGMahiaSpineChest
+      parentName: RIGMahiaSpineAbs
+      position: {x: -0.14930435, y: -0.00000001335144, z: 0}
+      rotation: {x: 0.00012463331, y: -0.00003245473, z: 0.23510444, w: 0.97197014}
+      scale: {x: 0.9999994, y: 0.9999994, z: 0.9999999}
+    - name: RIGMahiaHub002
+      parentName: RIGMahiaSpineChest
+      position: {x: -0.20147836, y: -0.00000010681152, z: 0}
+      rotation: {x: -0.000000014901159, y: -0.000000029802319, z: 0.14742605, w: 0.9890731}
+      scale: {x: 0.9999998, y: 1.0000002, z: 0.9999998}
+    - name: RIGMahiaLArmCollarbone
+      parentName: RIGMahiaHub002
+      position: {x: -0.04112158, y: 0.04112115, z: 0.10442392}
+      rotation: {x: 0.08098783, y: 0.77716243, z: 0.08229145, w: 0.61861765}
+      scale: {x: 0.9999996, y: 1.0000002, z: 0.99999964}
+    - name: Box01
+      parentName: RIGMahiaLArmCollarbone
+      position: {x: -0.06209402, y: 0.0041590272, z: -0.038012404}
+      rotation: {x: 0.9634268, y: -0.04750517, z: 0.101296574, w: -0.24349754}
+      scale: {x: 0.59621394, y: 0.5962144, z: 0.5962141}
+    - name: Object004
+      parentName: RIGMahiaLArmCollarbone
+      position: {x: -0.15055773, y: 0.048309356, z: -0.036707807}
+      rotation: {x: 0.892148, y: -0.102399796, z: 0.2372837, w: -0.3705168}
+      scale: {x: 1, y: 1.0000002, z: 0.9999998}
+    - name: RIGMahiaLArm1
+      parentName: RIGMahiaLArmCollarbone
+      position: {x: -0.09420514, y: 0, z: -0.00000010681152}
+      rotation: {x: 0.93144375, y: -0.12494703, z: 0.059537284, w: 0.33653554}
+      scale: {x: 0.9999993, y: 1.0000008, z: 0.9999995}
+    - name: RIGMahiaLArm2
+      parentName: RIGMahiaLArm1
+      position: {x: -0.28723574, y: 0.00000005340576, z: 0}
+      rotation: {x: 0.0005745645, y: -0.005818209, z: 0.028353, w: 0.99958086}
+      scale: {x: 1.0000012, y: 0.9999999, z: 1.0000027}
+    - name: RIGMahiaLArmPalm
+      parentName: RIGMahiaLArm2
+      position: {x: -0.27466646, y: 0, z: 0}
+      rotation: {x: -0.009337593, y: -0.030578142, z: 0.040058155, w: 0.9986857}
+      scale: {x: 0.9999979, y: 1.0000011, z: 0.9999983}
+    - name: RIGMahiaIndex1
+      parentName: RIGMahiaLArmPalm
+      position: {x: -0.10791584, y: 0.0050370176, z: -0.034473952}
+      rotation: {x: 0.00000009662468, y: -0.043619476, z: -0.00000011920925, w: 0.99904823}
+      scale: {x: 0.999999, y: 1.0000007, z: 1.0000001}
+    - name: RIGMahiaIndex2
+      parentName: RIGMahiaIndex1
+      position: {x: -0.045785934, y: -0.00000002670288, z: 0}
+      rotation: {x: 0.00000008288768, y: -0.000000003725289, z: 0.00000014901156,
+        w: 1}
+      scale: {x: 0.9999997, y: 1.0000007, z: 1.0000008}
+    - name: RIGMahiaIndex3
+      parentName: RIGMahiaIndex2
+      position: {x: -0.027929502, y: 0, z: 0}
+      rotation: {x: 0.00000008102504, y: -0.000000029802315, z: 0.000000029802315,
+        w: 1}
+      scale: {x: 0.9999984, y: 1.0000002, z: 0.99999964}
+    - name: RIGMahiaLittlefinger1
+      parentName: RIGMahiaLArmPalm
+      position: {x: -0.10300967, y: -0.006481323, z: 0.045023136}
+      rotation: {x: 0.0013416286, y: 0.06601782, z: 0.010188528, w: 0.99776554}
+      scale: {x: 0.9999988, y: 1.0000006, z: 1.0000007}
+    - name: RIGMahiaLittlefinger2
+      parentName: RIGMahiaLittlefinger1
+      position: {x: -0.042660095, y: 0.00000002670288, z: 0}
+      rotation: {x: -0.000000011175867, y: 0.00000004470347, z: 0, w: 1}
+      scale: {x: 0.99999887, y: 1.0000007, z: 1.0000005}
+    - name: RIGMahiaLittlefinger3
+      parentName: RIGMahiaLittlefinger2
+      position: {x: -0.020476837, y: -0.00000002670288, z: 0}
+      rotation: {x: 0.000000011175867, y: 0, z: -0.00000014901156, w: 1}
+      scale: {x: 0.9999988, y: 1.0000007, z: 1.0000005}
+    - name: RIGMahiaMiddlefinger1
+      parentName: RIGMahiaLArmPalm
+      position: {x: -0.106399976, y: -0.004793541, z: -0.0027745892}
+      rotation: {x: 0.00000014342362, y: -0.00000006798653, z: -0.00000008940694,
+        w: 1}
+      scale: {x: 0.9999991, y: 1.0000006, z: 0.99999994}
+    - name: RIGMahiaMiddlefinger2
+      parentName: RIGMahiaMiddlefinger1
+      position: {x: -0.05018838, y: 0, z: 0.00000005340576}
+      rotation: {x: 0.00000005005857, y: 0.00000010430809, z: 0.04144125, w: 0.99914104}
+      scale: {x: 0.999999, y: 1.0000011, z: 1.000001}
+    - name: RIGMahiaMiddlefinger3
+      parentName: RIGMahiaMiddlefinger2
+      position: {x: -0.03636035, y: 0, z: -0.00000005340576}
+      rotation: {x: -0.00000015716064, y: 0.00000014388931, z: -0.000000029802315,
+        w: 1}
+      scale: {x: 0.99999875, y: 1.0000002, z: 0.9999998}
+    - name: RIGMahiaRingfinger1
+      parentName: RIGMahiaLArmPalm
+      position: {x: -0.1055583, y: -0.0051558455, z: 0.02153865}
+      rotation: {x: 0.00040406245, y: 0.07084912, z: 0.0029649902, w: 0.9974826}
+      scale: {x: 0.99999934, y: 1.0000008, z: 1.000001}
+    - name: RIGMahiaRingfinger2
+      parentName: RIGMahiaRingfinger1
+      position: {x: -0.051728178, y: -0.0005095177, z: -0.00029704283}
+      rotation: {x: 0, y: 0.000000141561, z: 0.043619324, w: 0.99904823}
+      scale: {x: 0.99999887, y: 1.0000006, z: 1.0000006}
+    - name: RIGMahiaRingfinger3
+      parentName: RIGMahiaRingfinger2
+      position: {x: -0.028607437, y: -0.00000002670288, z: 0}
+      rotation: {x: -0.000000009313225, y: 0.0000000074505797, z: 0.000000119209275,
+        w: 1}
+      scale: {x: 0.9999983, y: 1.0000008, z: 1.0000004}
+    - name: RIGMahiaThumb1
+      parentName: RIGMahiaLArmPalm
+      position: {x: -0.02925322, y: 0.025054885, z: -0.034186736}
+      rotation: {x: -0.014538542, y: -0.34451833, z: -0.0154535305, w: 0.9385398}
+      scale: {x: 1.0000014, y: 0.9999991, z: 1.000001}
+    - name: RIGMahiaThumb2
+      parentName: RIGMahiaThumb1
+      position: {x: -0.07220085, y: -0.00000002670288, z: -0.00000010681152}
+      rotation: {x: 0, y: 0.000000029802312, z: 0, w: 1}
+      scale: {x: 0.99999833, y: 1.0000005, z: 0.99999964}
+    - name: RIGMahiaNeck1
+      parentName: RIGMahiaHub002
+      position: {x: 0.00007241821, y: 0.00008854675, z: -0.00000000843131}
+      rotation: {x: 0.00000008940696, y: -0.00000013411044, z: -0.32311127, w: 0.946361}
+      scale: {x: 0.99999934, y: 1.0000005, z: 1}
+    - name: RIGMahiaNeck2
+      parentName: RIGMahiaNeck1
+      position: {x: -0.13346848, y: 0.00000005340576, z: 0}
+      rotation: {x: -0.00000008940696, y: 0, z: -0.17795755, w: 0.98403823}
+      scale: {x: 1.0000011, y: 0.9999996, z: 1.0000002}
+    - name: RIGMahiaHead
+      parentName: RIGMahiaNeck2
+      position: {x: -0.16424386, y: 0.00000005340576, z: 8.149072e-13}
+      rotation: {x: -0.00000002980232, y: 0.00000002980232, z: 0.11497169, w: 0.9933688}
+      scale: {x: 0.9999995, y: 0.99999976, z: 0.99999976}
+    - name: mahia_crown
+      parentName: RIGMahiaHead
+      position: {x: -0.08743036, y: 0.0036005096, z: 0.04056445}
+      rotation: {x: 0.49890995, y: -0.5010898, z: -0.498893, w: 0.5011024}
+      scale: {x: 1.0000004, y: 0.99999964, z: 1}
+    - name: mahia_eye_l
+      parentName: RIGMahiaHead
+      position: {x: 0.0019089355, y: 0.08277769, z: 0.027455902}
+      rotation: {x: 0.49890953, y: -0.5010902, z: -0.49889317, w: 0.5011022}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1}
+    - name: mahia_eye_r
+      parentName: RIGMahiaHead
+      position: {x: 0.0019102172, y: 0.082509875, z: -0.03355612}
+      rotation: {x: 0.49890953, y: -0.5010902, z: -0.49889317, w: 0.5011022}
+      scale: {x: 1.0000001, y: 0.9999999, z: 1}
+    - name: Object002
+      parentName: RIGMahiaHead
+      position: {x: -0.053611692, y: -0.070900604, z: -0.0016848448}
+      rotation: {x: 0.7071068, y: 0.000000052683564, z: -0.7071068, w: 0.000000052683564}
+      scale: {x: 1, y: 1, z: 1}
+    - name: RIGMahiaLEar1
+      parentName: RIGMahiaHead
+      position: {x: -0.032157958, y: -0.0055491785, z: 0.084455594}
+      rotation: {x: 0.049990416, y: 0.81603485, z: 0.07139375, w: 0.5713939}
+      scale: {x: 0.9999998, y: 1.0000004, z: 1}
+    - name: RIGMahiaLEar2
+      parentName: RIGMahiaLEar1
+      position: {x: -0.092170656, y: -0.000016128539, z: 0.011591453}
+      rotation: {x: 0.000000026077027, y: -0.000000029802315, z: 0.000000018626448,
+        w: 1}
+      scale: {x: 1.0000004, y: 0.9999995, z: 1.0000001}
+    - name: RIGMahiaLEar3
+      parentName: RIGMahiaLEar2
+      position: {x: -0.093937635, y: 0.0005614013, z: 0.006865898}
+      rotation: {x: 0.0149187, y: 0.00000006705521, z: -0.040988818, w: 0.9990483}
+      scale: {x: 1.0000002, y: 1.0000002, z: 0.9999999}
+    - name: RIGMahiaLEar4
+      parentName: RIGMahiaLEar3
+      position: {x: -0.09336501, y: 0.0005388641, z: 0.0056693684}
+      rotation: {x: -0.014221663, y: -0.08583151, z: -0.0051762667, w: 0.9961948}
+      scale: {x: 0.99999976, y: 1.0000002, z: 1.0000005}
+    - name: RIGMahiaLEar5
+      parentName: RIGMahiaLEar4
+      position: {x: -0.07832766, y: 0.0011839656, z: 0.0020390453}
+      rotation: {x: 0.000000082189175, y: -0.00000023096788, z: -0.000000018626443,
+        w: 1}
+      scale: {x: 1, y: 0.99999994, z: 0.9999996}
+    - name: RIGMahiaREar1
+      parentName: RIGMahiaHead
+      position: {x: -0.024604676, y: -0.022906331, z: -0.10047457}
+      rotation: {x: 0.07547906, y: 0.816035, z: 0.043577544, w: -0.57139385}
+      scale: {x: 1.0000008, y: 1.0000004, z: 0.99999905}
+    - name: RIGMahiaREar2
+      parentName: RIGMahiaREar1
+      position: {x: -0.09213263, y: -0.008363662, z: -0.013567826}
+      rotation: {x: -0.00000017881389, y: 0.00000007450579, z: 0.000000044703473,
+        w: 1}
+      scale: {x: 0.9999992, y: 1, z: 1.0000002}
+    - name: RIGMahiaREar3
+      parentName: RIGMahiaREar2
+      position: {x: -0.08804965, y: -0.00000005340576, z: 0}
+      rotation: {x: 0.00000017881393, y: -0.000000014901161, z: -0.000000022351742,
+        w: 1}
+      scale: {x: 1.0000004, y: 1.0000004, z: 1.0000004}
+    - name: RIGMahiaREar4
+      parentName: RIGMahiaREar3
+      position: {x: -0.08804965, y: 0, z: -0.00000002670288}
+      rotation: {x: -0.00000020861621, y: 0, z: 0.000000052154054, w: 1}
+      scale: {x: 1.0000005, y: 1.0000005, z: 0.99999976}
+    - name: RIGMahiaREar5
+      parentName: RIGMahiaREar4
+      position: {x: -0.08804986, y: 0, z: -0.00000002670288}
+      rotation: {x: 0.00000011920929, y: 0, z: -0.000000029802322, w: 1}
+      scale: {x: 0.99999917, y: 1.0000004, z: 1}
+    - name: RIGMahiaRArmCollarbone
+      parentName: RIGMahiaHub002
+      position: {x: -0.041121475, y: 0.04112094, z: -0.10442392}
+      rotation: {x: 0.080984734, y: 0.7771617, z: -0.08228923, w: -0.6186192}
+      scale: {x: 0.99999994, y: 0.99999976, z: 1.0000002}
+    - name: Box02
+      parentName: RIGMahiaRArmCollarbone
+      position: {x: -0.07104007, y: 0.0048869476, z: 0.044668794}
+      rotation: {x: 0.047699794, y: 0.96338165, z: -0.2436079, w: -0.101369195}
+      scale: {x: -0.59621376, y: -0.5962141, z: -0.59621406}
+    - name: Object001
+      parentName: RIGMahiaRArmCollarbone
+      position: {x: -0.16345131, y: 0.053645123, z: 0.041879408}
+      rotation: {x: 0.23728372, y: 0.37051678, z: 0.892148, w: 0.10239973}
+      scale: {x: 0.99999994, y: 1.0000005, z: 0.9999996}
+    - name: RIGMahiaRArm1
+      parentName: RIGMahiaRArmCollarbone
+      position: {x: -0.09420514, y: 0, z: 0}
+      rotation: {x: -0.9314435, y: 0.1249475, z: 0.05953403, w: 0.33653656}
+      scale: {x: 1.0000005, y: 1.0000012, z: 1.0000006}
+    - name: RIGMahiaRArm2
+      parentName: RIGMahiaRArm1
+      position: {x: -0.28723508, y: 0, z: 0}
+      rotation: {x: -0.00057480857, y: 0.005818216, z: 0.028353246, w: 0.9995809}
+      scale: {x: 0.9999997, y: 1.0000005, z: 1.0000005}
+    - name: RIGMahiaRArmPalm
+      parentName: RIGMahiaRArm2
+      position: {x: -0.27466583, y: 0, z: -0.00000000333786}
+      rotation: {x: 0.009337767, y: 0.030578129, z: 0.040058006, w: 0.9986858}
+      scale: {x: 0.9999997, y: 0.9999975, z: 0.9999983}
+    - name: mahia_lance
+      parentName: RIGMahiaRArmPalm
+      position: {x: -0.07562053, y: 0.017255615, z: -0.10581432}
+      rotation: {x: 0.073404804, y: 0.68334055, z: -0.08034448, w: 0.7219433}
+      scale: {x: 0.9999995, y: 1.0000002, z: 0.9999983}
+    - name: Plane002
+      parentName: RIGMahiaRArmPalm
+      position: {x: -0.07562064, y: 0.017255507, z: -0.10581443}
+      rotation: {x: 0.07340259, y: 0.6833407, z: -0.08034207, w: 0.7219437}
+      scale: {x: 1.0000006, y: 1.0000001, z: 0.9999999}
+    - name: RIGMahiaIndex1 1
+      parentName: RIGMahiaRArmPalm
+      position: {x: -0.107915945, y: 0.0050368574, z: 0.03447379}
+      rotation: {x: -0.000000054482353, y: 0.043619312, z: 0.0000000048894417, w: 0.99904823}
+      scale: {x: 1.0000012, y: 0.99999946, z: 1.0000004}
+    - name: RIGMahiaIndex2 1
+      parentName: RIGMahiaIndex1 1
+      position: {x: -0.045785986, y: 0, z: -0.00000002670288}
+      rotation: {x: -0.000000009313222, y: 0.000000018626444, z: 0.00000011942025,
+        w: 1}
+      scale: {x: 1.0000017, y: 0.9999994, z: 1.0000006}
+    - name: RIGMahiaIndex3 1
+      parentName: RIGMahiaIndex2 1
+      position: {x: -0.027929502, y: 0, z: -0.00000005340576}
+      rotation: {x: -0.000000007217749, y: 0.000000029802319, z: -0.00000008917413,
+        w: 1}
+      scale: {x: 1.0000007, y: 0.99999946, z: 1.0000004}
+    - name: RIGMahiaLArmIKTarget
+      parentName: RIGMahiaRArmPalm
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: -0.000000003725291, y: 0.000000014901161, z: -0.0000000037252903,
+        w: 1}
+      scale: {x: 1, y: 0.99999976, z: 0.99999946}
+    - name: RIGMahiaLittlefinger1 1
+      parentName: RIGMahiaRArmPalm
+      position: {x: -0.10300989, y: -0.0064814836, z: -0.045023136}
+      rotation: {x: -0.0013413383, y: -0.06601896, z: 0.010189187, w: 0.9977655}
+      scale: {x: 0.9999994, y: 1.0000014, z: 1.0000002}
+    - name: RIGMahiaLittlefinger2 1
+      parentName: RIGMahiaLittlefinger1 1
+      position: {x: -0.042660095, y: -0.00000010681152, z: 0.00000005340576}
+      rotation: {x: -0.000000037252896, y: 0.000000089406946, z: -0.00000014621762,
+        w: 1}
+      scale: {x: 1.0000011, y: 0.9999988, z: 1.0000004}
+    - name: RIGMahiaLittlefinger3 1
+      parentName: RIGMahiaLittlefinger2 1
+      position: {x: -0.020476943, y: 0, z: 0}
+      rotation: {x: -0.000000059604638, y: 0.00000009685753, z: 0.00000001117587,
+        w: 1}
+      scale: {x: 1.0000006, y: 0.9999987, z: 1}
+    - name: RIGMahiaMiddlefinger1 1
+      parentName: RIGMahiaRArmPalm
+      position: {x: -0.10640008, y: -0.0047938614, z: 0.0027745892}
+      rotation: {x: 0.000000044703462, y: -0.00000012712547, z: 0.000000026899203,
+        w: 1}
+      scale: {x: 1.0000015, y: 0.9999995, z: 1.0000007}
+    - name: RIGMahiaMiddlefinger2 1
+      parentName: RIGMahiaMiddlefinger1 1
+      position: {x: -0.05018838, y: -0.00000005340576, z: 0}
+      rotation: {x: -0.00000007450576, y: 0.000000014901151, z: 0.041438803, w: 0.9991411}
+      scale: {x: 1.0000013, y: 0.9999992, z: 0.99999994}
+    - name: RIGMahiaMiddlefinger3 1
+      parentName: RIGMahiaMiddlefinger2 1
+      position: {x: -0.03636019, y: -0.00000010681152, z: 0.00000005340576}
+      rotation: {x: 0.000000035390244, y: 0.0000001448206, z: 0.000000061962034, w: 1}
+      scale: {x: 1.000001, y: 0.9999985, z: 1.0000002}
+    - name: RIGMahiaRingfinger1 1
+      parentName: RIGMahiaRArmPalm
+      position: {x: -0.1055584, y: -0.005156059, z: -0.02153865}
+      rotation: {x: -0.00040380264, y: -0.070848234, z: 0.0029652957, w: 0.99748266}
+      scale: {x: 1.0000012, y: 0.9999995, z: 0.9999999}
+    - name: RIGMahiaRingfinger2 1
+      parentName: RIGMahiaRingfinger1 1
+      position: {x: -0.051727913, y: -0.0005096512, z: 0.00029693602}
+      rotation: {x: -0.00000019744034, y: 0.00000007450579, z: 0.043619413, w: 0.9990483}
+      scale: {x: 1.0000019, y: 0.9999989, z: 1.0000007}
+    - name: RIGMahiaRingfinger3 1
+      parentName: RIGMahiaRingfinger2 1
+      position: {x: -0.028607331, y: 0, z: 0}
+      rotation: {x: 0.000000048428756, y: 0.00000004470347, z: -0.000000003725289,
+        w: 1}
+      scale: {x: 1.0000004, y: 0.99999875, z: 1.0000005}
+    - name: RIGMahiaThumb1 1
+      parentName: RIGMahiaRArmPalm
+      position: {x: -0.02925322, y: 0.025054645, z: 0.034186684}
+      rotation: {x: 0.01453735, y: 0.3445182, z: -0.015454206, w: 0.93853986}
+      scale: {x: 0.9999995, y: 1.0000014, z: 1}
+    - name: RIGMahiaThumb2 1
+      parentName: RIGMahiaThumb1 1
+      position: {x: -0.07220085, y: 0, z: 0}
+      rotation: {x: -0.000000055879333, y: 0.00000008940694, z: 0.00000011920925,
+        w: 1}
+      scale: {x: 0.9999987, y: 1.000001, z: 1.0000007}
+    - name: RIGMahiaRLegPlatform
+      parentName: SeaPrincess(Clone)
+      position: {x: 0.10551647, y: -0.00000001229024, z: 0.08311643}
+      rotation: {x: 0.49999994, y: -0.49999994, z: -0.50000006, w: 0.50000006}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: 50c561459ed778a4ba81abad6e604ec0,
+    type: 3}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -8,7 +8,7 @@ public class PCController : MonoBehaviour
     private CharacterHealth health;
     private SelectionIndicator selectionIndicator;
 
-    private CharacterHealth target;
+    private IDamageable target;
     private PowerSO selectedPower;
 
     //---------------------------------------------
@@ -37,6 +37,7 @@ public class PCController : MonoBehaviour
     //-----------------------------------------------
 
     public string GetName() => stats.GetName();
+    public IDamageable GetTarget() => target;
 
     //---------------------------------------------
     //      Public Methods
@@ -46,7 +47,7 @@ public class PCController : MonoBehaviour
     {
         selectedPower = null;
         target = null;
-        if (target)
+        if (target!=null)
             target.selectionIndicator.SetSelected();
 
         selectionIndicator.SetSelected();
@@ -56,7 +57,7 @@ public class PCController : MonoBehaviour
     {
         selectedPower = null;
 
-        if (target)
+        if (target!=null)
             target.selectionIndicator.SetDeselected();
 
         target = null;
@@ -68,13 +69,13 @@ public class PCController : MonoBehaviour
     {
         selectedPower = power;
 
-        if (target && selectedPower.target == TargetType.Enemy && target.IsHero)
+        if (target!=null && selectedPower.target == TargetType.Enemy && target.IsHero)
         {
             target.selectionIndicator.SetDeselected();
             target = null;
         }
 
-        if (target && selectedPower.target == TargetType.Friend && !target.IsHero)
+        if (target!=null && selectedPower.target == TargetType.Friend && !target.IsHero)
         {
             target.selectionIndicator.SetDeselected();
             target = null;
@@ -84,15 +85,15 @@ public class PCController : MonoBehaviour
         {
             target = health;
         }
-
+        //Debug.Log("Set new power: " + selectedPower.name);
         if (target != null)
             StartPower();
     }
 
 
-    public void SetTarget(CharacterHealth targetHealth)
+    public void SetTarget(IDamageable targetHealth)
     {
-        if (!targetHealth)
+        if (targetHealth==null)
             return;
 
         if (!targetHealth.canBeTarget)
@@ -107,15 +108,15 @@ public class PCController : MonoBehaviour
         }
 
 
-        if (target)
+        if (target != null)
             target.selectionIndicator.SetDeselected();
 
         target = targetHealth;
 
         target.selectionIndicator.SetSelected();
-        //Debug.Log("Set new target: " + target.name);
+        //Debug.Log("Set new target: " + target.GetTransform().name);
 
-        if (target && selectedPower)
+        if (target!=null && selectedPower)
             StartPower();
     }
 
@@ -123,7 +124,7 @@ public class PCController : MonoBehaviour
     //      Private Methods
     //---------------------------------------------
 
-    private void OnAnyEnemyDied(CharacterHealth deadHealth)
+    private void OnAnyEnemyDied(IDamageable deadHealth)
     {
         if (deadHealth == target)
         {
@@ -136,19 +137,20 @@ public class PCController : MonoBehaviour
     private void StartPower()
     {
         if (selectedPower.target == TargetType.Enemy)
-            if (!target || target.IsHero)
+            if (target==null || target.IsHero)
             {
                 Debug.LogWarning("Target for single enemy power not set or not enemy");
                 return;
             }
 
         if (selectedPower.target == TargetType.Friend)
-            if (!target || !target.IsHero)
+            if (target==null || !target.IsHero)
             {
                 Debug.LogWarning("Target for single hero power not set or not hero");
                 return;
             }
 
+        
         if (initiative.ReadyAttack(selectedPower, target))
             SetDeselected();
     }

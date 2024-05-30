@@ -160,6 +160,62 @@ MonoBehaviour:
   - {fileID: 4296227982608259434}
   - {fileID: -4225511714513840707}
   - {fileID: 4150177024423671888}
+  - {fileID: 856412192843007269}
+--- !u!114 &856412192843007269
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d468b943de483f641a8eb80fcd52e584, type: 3}
+  m_Name: SSCC
+  m_EditorClassIdentifier: 
+  active: 0
+  effectIntensity:
+    m_OverrideState: 1
+    m_Value: 1
+  distanceFade:
+    m_OverrideState: 1
+    m_Value: 0
+  curvaturePixelRadius:
+    m_OverrideState: 1
+    m_Value: 2
+  curvatureBrights:
+    m_OverrideState: 1
+    m_Value: 2.42
+  curvatureDarks:
+    m_OverrideState: 0
+    m_Value: 3
+  cavitySamples:
+    m_OverrideState: 0
+    m_Value: 2
+  saturateCavity:
+    m_OverrideState: 0
+    m_Value: 1
+  cavityRadius:
+    m_OverrideState: 0
+    m_Value: 0.25
+  cavityBrights:
+    m_OverrideState: 0
+    m_Value: 3
+  cavityDarks:
+    m_OverrideState: 0
+    m_Value: 2
+  cavityResolution:
+    m_OverrideState: 0
+    m_Value: 0
+  normalsSource:
+    m_OverrideState: 0
+    m_Value: 1
+  debugMode:
+    m_OverrideState: 1
+    m_Value: 0
+  output:
+    m_OverrideState: 1
+    m_Value: 0
 --- !u!114 &4150177024423671888
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -271,10 +327,10 @@ MonoBehaviour:
     m_Value: 0
   stripBeautifyNightVision:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   stripBeautifyThermalVision:
     m_OverrideState: 1
-    m_Value: 1
+    m_Value: 0
   stripBeautifyFrame:
     m_OverrideState: 1
     m_Value: 0
@@ -318,7 +374,7 @@ MonoBehaviour:
     m_Value: 0
   sharpenRelaxation:
     m_OverrideState: 0
-    m_Value: 0.08
+    m_Value: 0.0477
   sharpenClamp:
     m_OverrideState: 0
     m_Value: 0.45
@@ -333,7 +389,7 @@ MonoBehaviour:
     m_Value: 0
   antialiasDepthThreshold:
     m_OverrideState: 0
-    m_Value: 0.000001
+    m_Value: 0
   antialiasSpread:
     m_OverrideState: 0
     m_Value: 3
@@ -353,13 +409,13 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 1
   saturate:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 1.5
   brightness:
-    m_OverrideState: 0
-    m_Value: 1
+    m_OverrideState: 1
+    m_Value: 1.5
   contrast:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 1
   daltonize:
     m_OverrideState: 0
@@ -377,8 +433,8 @@ MonoBehaviour:
     m_OverrideState: 0
     m_Value: 0
   lut:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 1
   lutIntensity:
     m_OverrideState: 0
     m_Value: 0
@@ -839,20 +895,20 @@ MonoBehaviour:
     m_Value: {fileID: 0}
     dimension: 1
   outline:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0
   outlineColor:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: {r: 0, g: 0, b: 0, a: 0.8}
   outlineThreshold:
-    m_OverrideState: 0
+    m_OverrideState: 1
     m_Value: 0.2
   outlineMinDepthThreshold:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 0.005
   outlineCustomize:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 1
   outlineLayerMask:
     m_OverrideState: 0
     m_Value:
@@ -1002,7 +1058,7 @@ MonoBehaviour:
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.393
+    m_Value: 0.5
   smoothness:
     m_OverrideState: 0
     m_Value: 0.2

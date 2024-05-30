@@ -5,13 +5,16 @@ public class PowerTest : MonoBehaviour
 
     [SerializeField] CharacterCombat testCombat;
     [SerializeField] PowerSO testPower;
+    [SerializeField] bool targetObject;
     [SerializeField] CharacterHealth target;
+    [SerializeField] ObjectHealth objectHealth;
+
 
     private void Start()
     {if(SpawnPointController.Instance)
         SpawnPointController.Instance.SetupStage(1);
     }
-    
+
 
     public void OnButtonPressed()
     {
@@ -19,7 +22,9 @@ public class PowerTest : MonoBehaviour
             Debug.LogError("No character Set");
         if (!testPower)
             Debug.Log("No power set");
-
-        testCombat.StartAttack(testPower, target);
+        if (targetObject)
+            testCombat.StartAttack(testPower, objectHealth);
+        else
+            testCombat.StartAttack(testPower, target);
     }
 }

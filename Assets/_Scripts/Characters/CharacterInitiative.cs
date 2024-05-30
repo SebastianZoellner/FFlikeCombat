@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -11,15 +12,14 @@ public class CharacterInitiative : MonoBehaviour
     
     public event Action OnActionStarted = delegate { };
 
-    [field:SerializeField] public float nextActionTime { get; private set; }
-    public PowerSO readiedAction;
-    private CharacterHealth targetHealth;
+    [field:ShowInInspector,ReadOnly] public float nextActionTime { get; private set; }
+    [ShowInInspector,ReadOnly] private PowerSO readiedAction;
+
+    private IDamageable targetHealth;
     private CharacterStats stats;
     private CharacterCombat combat;
     private CharacterHealth health;
     private float noiseRange=0.1f;
-
-    private bool isReadying = false;
     
     private void Awake()
     {
@@ -27,6 +27,16 @@ public class CharacterInitiative : MonoBehaviour
         stats = GetComponent<CharacterStats>();
         health = GetComponent<CharacterHealth>();
     }
+    private void OnEnable()
+    {
+        LevelSetup.OnNewStage += LevelSetup_OnNewStage;
+    }
+    private void OnDisable()
+    {
+        LevelSetup.OnNewStage += LevelSetup_OnNewStage;
+    }
+
+    public bool HasReadiedAction() => readiedAction!=null;
 
     public void InitializeInitiative(float actionTime)
     {       
@@ -37,9 +47,9 @@ public class CharacterInitiative : MonoBehaviour
         //Debug.Log(name + " First action: " + nextActionTime);
     }
 
-    public bool ReadyAttack(PowerSO readiedAction, CharacterHealth targetHealth)
+    public bool ReadyAttack(PowerSO readiedAction, IDamageable targetHealth)
     {
-        if (!readiedAction || !targetHealth)
+        if (!readiedAction || targetHealth==null)
             return false;
 
         this.readiedAction = readiedAction;
@@ -64,7 +74,7 @@ public class CharacterInitiative : MonoBehaviour
     public bool PerformReadiedAction()
         //rv indicates if the action has been successfully initialized
     { 
-        if(!targetHealth||!targetHealth.canBeTarget)
+        if(targetHealth==null||!targetHealth.canBeTarget)
         {
             nextActionTime += 0.01f;
             readiedAction = null;
@@ -88,8 +98,6 @@ public class CharacterInitiative : MonoBehaviour
 
        // Debug.Log(name + " Action started; NextActionTime changed to " + nextActionTime);
 
-       
-       
         combat.StartAttack(readiedAction, targetHealth);     
         readiedAction = null;
         targetHealth = null;
@@ -117,7 +125,7 @@ public class CharacterInitiative : MonoBehaviour
         if (readiedAction)
         {
             tip += "\nReadied Attack: " + readiedAction.name;
-            tip += "\nTarget:         " + targetHealth.Stats.GetName();
+            tip += "\nTarget:         " + targetHealth.GetName();
         }
         return tip;
     }
@@ -125,5 +133,15 @@ public class CharacterInitiative : MonoBehaviour
     private float GetRandomNoise()
     {
         return UnityEngine.Random.Range(-noiseRange, noiseRange);
+    }
+
+    private void LevelSetup_OnNewStage(int obj)
+    {
+        if (readiedAction)
+        {
+            readiedAction = null;
+            targetHealth = null;
+            OnAttackReadied.Invoke(false, this);
+        }
     }
 }

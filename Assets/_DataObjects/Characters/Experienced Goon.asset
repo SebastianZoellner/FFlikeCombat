@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Senior Goon
   LabelName: 
+  fraction: 1
   powerArray:
   - {fileID: 11400000, guid: 1a8ee74e2db8344479dd860b6a887a6f, type: 2}
   - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}
@@ -30,7 +31,7 @@ MonoBehaviour:
   - attribute: 7
     value: 5
   icon: {fileID: 21300000, guid: 20400e604c7a4db469b26f930bed353e, type: 3}
-  shortBlurb: 
+  shortBlurb: No stranger to violence.
   animatorController: {fileID: 22100000, guid: 25af2e513aef8544dba2a336f648aeb6, type: 2}
   characterToon: {fileID: 6007762270387321630, guid: e3fcfc02a2e82a8459c10e293fc87ac1,
     type: 3}

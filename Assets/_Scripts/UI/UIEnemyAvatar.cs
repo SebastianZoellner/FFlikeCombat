@@ -19,8 +19,9 @@ public class UIEnemyAvatar : MonoBehaviour
         CharacterManager.OnEnemySelectedChanged -= InputReader_OnEnemySelectedChanged;
     }
 
-    private void InputReader_OnEnemySelectedChanged(CharacterHealth health)
+    private void InputReader_OnEnemySelectedChanged(IDamageable health)
     {
-        setDisplay.SetAvatar(health);
+        if(health is CharacterHealth)
+            setDisplay.SetAvatar((CharacterHealth)health);
     }
 }

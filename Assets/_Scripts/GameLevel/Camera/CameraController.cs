@@ -3,12 +3,12 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    public static CameraController Instance;
     float moveSpeed = 10f;
     float rotationSpeed = 80f;
 
     [SerializeField] CinemachineVirtualCamera[] mainCameraArray;
     [SerializeField] CinemachineVirtualCamera[] overheadCameraArray;
+    [SerializeField] CameraTarget[] cameraTargetArray;
     int activeCameraId;
     CinemachineTransposer cinemachineTransposer;
     Vector3 targetFollowOffset;
@@ -22,15 +22,9 @@ public class CameraController : MonoBehaviour
     private float zoomSpeed = 5f;
 
 
-    private void Awake()
+    private void OnEnable()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        else
-            Instance = this;
+        LevelSetup.OnNewStage += SwitchCamera;
     }
 
     private void Start()
@@ -38,7 +32,13 @@ public class CameraController : MonoBehaviour
         SwitchCamera(0);
     }
 
-    public void SwitchCamera(int cameraId)
+    private void OnDisable()
+    {
+        LevelSetup.OnNewStage -= SwitchCamera;
+    }
+
+
+    private void SwitchCamera(int cameraId)
     {
         if(cameraId>=mainCameraArray.Length)
         {
@@ -52,8 +52,13 @@ public class CameraController : MonoBehaviour
         foreach (CinemachineVirtualCamera cvc in overheadCameraArray)
             cvc.gameObject.SetActive(false);
 
+        foreach (CameraTarget ct in cameraTargetArray)
+            ct.gameObject.SetActive(false);
+
         mainCameraArray[cameraId].gameObject.SetActive(true);
         overheadCameraArray[cameraId].gameObject.SetActive(true);
+        cameraTargetArray[cameraId].gameObject.SetActive(true);
+
         activeCameraId = cameraId;
     }
 

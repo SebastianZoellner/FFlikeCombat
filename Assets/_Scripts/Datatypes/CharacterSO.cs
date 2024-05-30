@@ -9,6 +9,7 @@ public class CharacterSO : ScriptableObject
 {
     public string CharacterName;
     public string LabelName;
+    public Faction fraction;
    public PowerSO[] powerArray;
     public float startingHealth;
     [SerializeField] AttributeValue[] attributeArray;

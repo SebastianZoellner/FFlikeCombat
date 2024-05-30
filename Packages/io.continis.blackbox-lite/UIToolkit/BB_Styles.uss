@@ -1,0 +1,65 @@
+.unity-foldout__content {
+    margin-left: 0;
+}
+
+#RevealedPropertiesLabel {
+    -unity-font-style: bold;
+    flex-grow: 1;
+}
+
+#RevealedPropertiesHeader {
+    flex-grow: 0;
+    flex-direction: row;
+    margin-top: 8px;
+    align-items: center;
+    height: 19px;
+}
+
+.GOName {
+    margin-top: 8px;
+    padding: 4px;
+    background-color: var(--unity-colors-inspector_titlebar-border_accent);
+}
+
+.RevealedGO {
+    margin-bottom: 2px;
+    padding-left: 8px;
+    color: var(--unity-colors-highlight-background-hover-lighter);
+}
+
+.FoldoutGO {
+    margin-top: 2px;
+    -unity-font-style: bold;
+}
+
+#InitialSpace {
+    height: 5px;
+}
+
+#HideShowButton {
+    height: 24px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    margin-left: 1px;
+    margin-right: 1px;
+}
+
+.SubtleLabel {
+    padding-top: 0;
+    padding-bottom: 0;
+    color: var(--unity-colors-highlight-background-hover-lighter);
+    padding-right: 0;
+    padding-left: 0;
+}
+
+#RevealedProperties {
+    margin-top: -4px;
+}
+
+.blackbox-override {
+    border-left-color: rgb(5, 147, 224);
+    border-left-width: 2px;
+    margin-left: -15px;
+    padding-left: 15px;
+    -unity-font-style: bold;
+}

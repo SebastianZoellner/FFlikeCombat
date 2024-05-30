@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Goon
   LabelName: Goon
+  fraction: 1
   powerArray:
   - {fileID: 11400000, guid: 1a8ee74e2db8344479dd860b6a887a6f, type: 2}
   - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}

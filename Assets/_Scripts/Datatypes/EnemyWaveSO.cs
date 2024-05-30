@@ -12,31 +12,41 @@ public class EnemyWaveSO : ScriptableObject
     {
         List<GameObject> newEnemies = new List<GameObject>();
         //Debug.Log("New Wave, number of Spawn Groups: " + waveArray[turn].spawnGroupArray.Length);
-
+        int testcount=0;
 
         foreach (SpawnGroup sg in spawnGroupArray)
         {
             int number = Random.Range(sg.minNumber, sg.maxNumber + 1);
-            //Debug.Log("Spawning " + number);
+            testcount += number;
+            Debug.Log("Spawning " + number+" "+sg.enemy.name);
             for (int i = 0; i < number; ++i)
             {
                 SpawnPoint newSpawnPoint = spawnPointController.GetEmptySpawnPoint(SpawnPointType.Enemy);
+                
                 if (!newSpawnPoint)
                 {
-                    Debug.Log("no new Spawnpoint found");
+                    Debug.Log("No new Spawnpoint found");
                     continue;
                 }
+
                 if (newSpawnPoint.IsFull())
                 {
-                    Debug.LogWarning("Returned empty spawn point not empty");
+                    Debug.LogWarning("Returned empty spawn point not empty: "+newSpawnPoint.name);
                     continue;
                 }
+                Debug.Log("Targeting Spawn point " + newSpawnPoint.name);
                 GameObject spawnedEnemy = sg.enemy.Spawn(newSpawnPoint.transform);
                 if (!spawnedEnemy)
                     Debug.LogError("Spawn Failed");
+                else
+                {
+                    spawnPointController.AssignSpawnPoint(newSpawnPoint, SpawnPointType.Enemy);
+                    Debug.Log("Spawn succeeded; spawn point " + newSpawnPoint.name);
+                }
                 newEnemies.Add(spawnedEnemy);
             }
         }
+        //Debug.Log("Number of spawns attempted: " + testcount);
         return newEnemies;
     }
 }

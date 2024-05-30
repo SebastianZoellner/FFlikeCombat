@@ -10,7 +10,7 @@ public class MomentumManager : MonoBehaviour
     public Action OnMomentumWin = delegate { };
 
 
-    private static float momentum = 20;
+    private static float momentum = 0;
     private const float lossMomentum = -100;
     private const float winMomentum = 100;
     private const float deathMultiplier= 4;
@@ -104,7 +104,7 @@ public class MomentumManager : MonoBehaviour
 
     private void ModifyMomentum(float change)
     {
-        Debug.Log("Momentum changes by " + change.ToString());
+        //Debug.Log("Momentum changes by " + change.ToString());
         momentum += change;
         OnMomentumChanged.Invoke(momentum);
         if (momentum <= lossMomentum)

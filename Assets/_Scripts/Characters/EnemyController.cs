@@ -1,40 +1,26 @@
-using System;
 using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    public event Action OnTurnFinished = delegate { };
-    CharacterHealth target;
+    IDamageable target;
     PowerSO selectedPower;
-
-    CharacterCombat combat;
-    CharacterStats stats;
+  
     CharacterInitiative initiative;
+    BaseAI aiBrain;
 
     private void Awake()
     {
-        combat = GetComponent<CharacterCombat>();
-        stats = GetComponent<CharacterStats>();
         initiative = GetComponent<CharacterInitiative>();
+        aiBrain = GetComponent<BaseAI>();
     }
-
-    public void TakeTurn()
-    {
-        //target = AIBrain.Instance.SelectWeakestTarget();
-        target = AIBrain.Instance.SelectRandomTarget();
-        selectedPower = AIBrain.Instance.SelectPower(stats);
-        combat.StartAttack(selectedPower, target);
-        OnTurnFinished.Invoke();
-    }
-
+    
     public void SetNextAction()
     {
-        //target = AIBrain.Instance.SelectWeakestTarget();
-        target = AIBrain.Instance.SelectRandomTarget();
-        if (!target)
+        target = aiBrain.SelectTarget();
+        if (target==null)
             Debug.LogWarning("No target Selected");
 
-        selectedPower = AIBrain.Instance.SelectPower(stats);
+        selectedPower = aiBrain.SelectPower();
 
         if (!selectedPower)
             Debug.LogWarning("No power Selected");

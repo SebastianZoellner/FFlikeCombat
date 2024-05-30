@@ -1,0 +1,22 @@
+{
+  "name": "io.continis.blackbox-lite",
+  "version": "1.0.0",
+  "displayName": "BlackBox (Lite)",
+  "description": "Blackboxing and encapsulation for Prefabs and Prefab Variants.\n\nThis package is a free evaluation version, and doesn't contain all the functionality of the full release. It does includes Prefab locking (\"encapsulation\"), but doesn't include Property Revealing and Disable Apply.",
+  "keywords": [
+    "prefab",
+    "box",
+    "black"
+  ],
+  "author": {
+    "name": "Ciro Continisio",
+    "email": "buoybase@gmail.com",
+    "url": "https://tools.continis.io/"
+  },
+  "unity": "2022.3",
+  "type": "tool",
+  "dependencies": {
+    "com.unity.settings-manager": "2.0.1"
+  },
+  "documentationUrl": "https://tools.continis.io/v/black-box/"
+}

@@ -9,9 +9,9 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
     public static event Action<Entity> OnSelectedEntityChanged = delegate { };
     
     public static Entity SelectedEntity { get; private set; }
-
+    public event Action OnNextEnemy = delegate { };
     public event Action<int> OnAttackSelected = delegate { };
-    public static event Action<CharacterHealth> OnCharacterSelected = delegate { };
+    public static event Action<IDamageable> OnCharacterSelected = delegate { };
     public static event Action OnDeselected = delegate { };
 
     [SerializeField] private LayerMask SelectableLayerMask;
@@ -59,9 +59,9 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
 
        // Debug.Log("Select Button Down");
 
-        CharacterHealth targetHealth = GetTarget<CharacterHealth>();
+        IDamageable targetHealth = GetTarget<IDamageable>();
 
-        if (targetHealth)
+        if (targetHealth!=null)
         {
             OnCharacterSelected.Invoke(targetHealth);
         }
@@ -146,5 +146,9 @@ public class InputReader : MonoBehaviour, Controls.IPlayerActions
         }
     }
 
-
+    public void OnNextTarget(InputAction.CallbackContext context)
+    {
+        if (!context.performed) return;
+        OnNextEnemy.Invoke();
+    }
 }

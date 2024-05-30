@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6076c065684224f488f7f05160c75171, type: 3}
+  m_Name: Showdown in the Yard
+  m_EditorClassIdentifier: 
+  SongArray:
+  - music: {fileID: 8300000, guid: 9cd4c6a110f316f49bd8d6dc298fcb86, type: 3}
+    volume: 50
+  - music: {fileID: 8300000, guid: a136fab976696ed41b9a666d9c7f3478, type: 3}
+    volume: 50

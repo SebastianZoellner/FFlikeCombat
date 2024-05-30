@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class UIInfoScreen : MonoBehaviour
 {
 
-    [SerializeField] GameObject infoScreen;
+    [SerializeField] GameObject characterInfoScreen;
     [SerializeField] Image Icon;
     [SerializeField] TMP_Text characterName;
     [SerializeField] TMP_Text blurb;
@@ -18,18 +18,22 @@ public class UIInfoScreen : MonoBehaviour
     [SerializeField] TMP_Text defense;
     [SerializeField] TMP_Text statuses;
 
+    [SerializeField] GameObject objectInfoScreen;
+    
+
     private CharacterHealth health;
     private StatusManager statusManager;
     private CharacterStats stats;
 
     private void OnEnable()
     {
-        InputReader.OnSelectedEntityChanged += InputReader_OnSelectedEntityChanged;
+        InputReader.OnSelectedEntityChanged += InputReader_OnSelectedEntityChanged;      
     }
 
     private void OnDisable()
     {
         InputReader.OnSelectedEntityChanged -= InputReader_OnSelectedEntityChanged;
+
         Unbind();
     }
 
@@ -37,24 +41,34 @@ public class UIInfoScreen : MonoBehaviour
     {
         if (!entity)
         {
-            infoScreen.SetActive(false);
+            characterInfoScreen.SetActive(false);
+            objectInfoScreen.SetActive(false);
+            Unbind();
             return;
         }
 
-        infoScreen.SetActive(true);
+        if (entity.type == EntityType.Character)
+        {
+            characterInfoScreen.SetActive(true);
 
-        characterName.text = entity.Stats.GetName();
-        Icon.sprite = entity.Stats.GetIcon();
-        if (entity.Stats.GetBlurb() != "")
-            blurb.text = entity.Stats.GetBlurb();
-        health = entity.Health;
-        statusManager = entity.StatusManager;
-        stats = entity.Health.Stats;
-        SetHealthParameters();
-        SetAttributes();
-        SetStatuses();
-
-        Bind();
+            characterName.text = entity.Stats.GetName();
+            Icon.sprite = entity.Stats.GetIcon();
+            if (entity.Stats.GetBlurb() != "")
+                blurb.text = entity.Stats.GetBlurb();
+            health = entity.Health;
+            statusManager = entity.StatusManager;
+            stats = entity.Health.Stats;
+            SetHealthParameters();
+            SetAttributes();
+            SetStatuses();
+            Bind();
+            return;
+        }
+        if (entity.type == EntityType.Object)
+        {
+            objectInfoScreen.SetActive(true);
+            objectInfoScreen.GetComponent<UIObjectInfoScreen>().SetupScreen(entity);
+        }
     }
 
     private void SetAttributes()
@@ -103,6 +117,14 @@ public class UIInfoScreen : MonoBehaviour
     {
         health.OnHealthChanged += SetHealthParameters;
         statusManager.OnStatusChanged += StatusManager_OnStatusChanged;
+        health.OnDied += Health_OnDied;
+    }
+
+    private void Health_OnDied()
+    {
+        characterInfoScreen.SetActive(false);
+        objectInfoScreen.SetActive(false);
+        Unbind();
     }
 
     private void StatusManager_OnStatusChanged()
@@ -113,9 +135,16 @@ public class UIInfoScreen : MonoBehaviour
 
     private void Unbind()
     {
-        if(health)
-        health.OnHealthChanged -= SetHealthParameters;
-        if(statusManager)
-        statusManager.OnStatusChanged -= StatusManager_OnStatusChanged;
+        if (health)
+        {
+            health.OnHealthChanged -= SetHealthParameters;
+            health.OnDied -= Health_OnDied;
+        }
+        if (statusManager)
+            statusManager.OnStatusChanged -= StatusManager_OnStatusChanged;
     }
+
+   
+
+    
 }
