@@ -28,15 +28,9 @@ public class ActionSequencer : MonoBehaviour
 
     private int round=0;
     
-    private bool isWaiting=false;
+    private bool isWaiting=true;
     private bool isStopped = false;
     private float startStageWait=2f;
-
-    private void Awake()
-    {
-        characterInitiativeList = new List<CharacterInitiative>();
-        if (!listInitialized) InitializeCharacterList();
-    }
 
     private void OnEnable()
     {
@@ -50,9 +44,12 @@ public class ActionSequencer : MonoBehaviour
         
         CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
         characterManager.OnEnemiesDead += CharacterManager_OnWaveDefeated;
-        LevelSetup.OnGameLost += StopActionSequence;
-        LevelSetup.OnGameWon += StopActionSequence;
+        GameEnd.OnGameLost += StopActionSequence;
+        GameEnd.OnGameWon += StopActionSequence;
+        LevelSetup.OnGameInitialized += LevelSetup_OnGameInitialized;
     }
+
+   
 
     private void Update()
     {
@@ -95,8 +92,9 @@ public class ActionSequencer : MonoBehaviour
         CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
         characterManager.OnEnemiesDead -= CharacterManager_OnWaveDefeated;
 
-        LevelSetup.OnGameLost -= StopActionSequence;
-        LevelSetup.OnGameWon -= StopActionSequence;
+        GameEnd.OnGameLost -= StopActionSequence;
+        GameEnd.OnGameWon -= StopActionSequence;
+        LevelSetup.OnGameInitialized -= LevelSetup_OnGameInitialized;
     }
 
 public void SwitchCharacters(CharacterInitiative characterInitiative1, CharacterInitiative characterInitiative2)
@@ -120,6 +118,16 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
     //-----------------------------------------------------------------
     //         Private Functions
     //-----------------------------------------------------------------
+
+    private void LevelSetup_OnGameInitialized()
+    {
+        isWaiting = false;
+        listInitialized = false;
+        round = 0;
+        actionTime = 0;
+        characterInitiativeList = new List<CharacterInitiative>();
+        //InitializeCharacterList();
+    }
 
     private void AddCharacter(CharacterInitiative initiative)
     {
@@ -246,7 +254,7 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
         OnNewRoundStarted.Invoke(round);
 
        foreach(CharacterInitiative ci in characterInitiativeList)      
-            Debug.Log(ci.name + " " + ci.nextActionTime);
+            Debug.Log(ci.name + " next Action time: " + ci.nextActionTime);
         
     }
 

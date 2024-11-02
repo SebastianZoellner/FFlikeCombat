@@ -16,7 +16,7 @@ MonoBehaviour:
   - enemy: {fileID: 11400000, guid: 71935ff919f1915489e628260878877c, type: 2}
     minNumber: 1
     maxNumber: 1
-  - enemy: {fileID: 11400000, guid: f68bf7676a6a3a94ca43a583b2c4f980, type: 2}
+  - enemy: {fileID: 11400000, guid: 84158ce5e9c737a4caff006e920475db, type: 2}
     minNumber: 1
     maxNumber: 1
   - enemy: {fileID: 11400000, guid: 851129b6e0bbee64ab60d370a15442eb, type: 2}

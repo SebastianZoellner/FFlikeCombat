@@ -51,6 +51,12 @@ public class Projectile : MonoBehaviour
         transform.Translate(Vector3.forward * projectileSpeed * Time.deltaTime);
     }
 
+    //------------------------------------------
+    //---------Public Methods----------------
+    //------------------------------------------
+
+
+
     public void Setup(CharacterCombat attacker, IDamageable target, float range, PowerSO power)
     {
         attackPower = power;
@@ -60,6 +66,11 @@ public class Projectile : MonoBehaviour
       
 
     }
+
+    //------------------------------------------
+    //---------Private Methods----------------
+    //------------------------------------------
+
 
     private Vector3 GetAimLocation()
     {
@@ -148,7 +159,7 @@ public class Projectile : MonoBehaviour
             return;
         }
         
-        Debug.Log("Miss");
+        Debug.Log("Projectile Miss");
         
     }
 

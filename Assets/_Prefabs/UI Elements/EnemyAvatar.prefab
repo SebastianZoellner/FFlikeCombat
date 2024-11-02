@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2961525609090321642}
   - component: {fileID: 8121618457326038288}
-  - component: {fileID: 4155670354430531384}
+  - component: {fileID: 8643738949599424177}
   m_Layer: 5
   m_Name: EnemyAvatar
   m_TagString: Untagged
@@ -25,14 +25,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4591590437472066615}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2811216935320848264}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -55,10 +54,10 @@ MonoBehaviour:
   playerName: {fileID: 3038038952546572112}
   level: {fileID: 5344469513177669156}
   healthBar: {fileID: 5014265185625170790}
-  experienceBar: {fileID: 138210570963181983}
-  enduranceBar: {fileID: 5743297321119708637}
+  experienceBar: {fileID: 5743297321119708637}
+  enduranceBar: {fileID: 138210570963181983}
   avatar: {fileID: 1834944998330182680}
---- !u!114 &4155670354430531384
+--- !u!114 &8643738949599424177
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -67,9 +66,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 4591590437472066615}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e901317cd85094469d132e7b9a456d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 41b11bad2bbeb2945a926534898a69b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerAvatar: 0
 --- !u!1001 &7327670921242173230
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -78,6 +78,53 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2961525609090321642}
     m_Modifications:
+    - target: {fileID: 176420813982377741, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_Name
+      value: Energy Fill
+      objectReference: {fileID: 0}
+    - target: {fileID: 992841468614526205, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_Name
+      value: Health Fill
+      objectReference: {fileID: 0}
+    - target: {fileID: 2224355066042323559, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_Name
+      value: Energy Fill Area
+      objectReference: {fileID: 0}
+    - target: {fileID: 2554180119663556610, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_Name
+      value: Fill Area
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701649922650635711, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_Name
+      value: Exp Fill
+      objectReference: {fileID: 0}
+    - target: {fileID: 3090176481925532517, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_Name
+      value: Expereince fill Area
+      objectReference: {fileID: 0}
+    - target: {fileID: 3430128101471109386, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 2f490f72b6ed6ae4d8b31cee2cac3de7,
+        type: 2}
+    - target: {fileID: 3430128101471109386, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -6263097307693789204, guid: 2f490f72b6ed6ae4d8b31cee2cac3de7,
+        type: 2}
+    - target: {fileID: 3430128101471109386, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_Pivot.x
@@ -96,22 +143,22 @@ PrefabInstance:
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
@@ -161,12 +208,12 @@ PrefabInstance:
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 213.92102
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 27.226318
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4806025839282346150, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
@@ -183,10 +230,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5735428364954486910, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b71a27ad61c8774b8a26a49db9bb273,
+        type: 2}
+    - target: {fileID: 5735428364954486910, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735428364954486910, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -976379066588271947, guid: 6b71a27ad61c8774b8a26a49db9bb273,
+        type: 2}
+    - target: {fileID: 5735428364954486910, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7939494246945155291, guid: c8c152d612019484c960b1ab2253647b,
         type: 3}
       propertyPath: m_Name
       value: Enemy Avatar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7939494246945155291, guid: c8c152d612019484c960b1ab2253647b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

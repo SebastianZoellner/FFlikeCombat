@@ -38,10 +38,10 @@ MonoBehaviour:
     Downsample: 0
     AfterOpaque: 0
     Source: 1
-    NormalSamples: 1
-    Intensity: 0.5
-    DirectLightingStrength: 0.25
-    Radius: 0.25
+    NormalSamples: 2
+    Intensity: 1
+    DirectLightingStrength: 0.5
+    Radius: 0.5
     Samples: 0
     BlurQuality: 0
     Falloff: 100
@@ -73,9 +73,8 @@ MonoBehaviour:
     hdrDebugViewPS: {fileID: 4800000, guid: 573620ae32aec764abd4d728906d2587, type: 3}
   m_RendererFeatures:
   - {fileID: -1878332245247344467}
-  - {fileID: 4276022221088780464}
   - {fileID: -8985045595587814907}
-  m_RendererFeatureMap: adc0de57c6d2eee5b070ac038e7b573b05da4cb8a2b44e83
+  m_RendererFeatureMap: adc0de57c6d2eee505da4cb8a2b44e83
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}

@@ -1,13 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using MoreMountains.Feedbacks;
-using System;
 
 public class FeelManager : MonoBehaviour
 {
-    public static FeelManager Instance;
-
     [SerializeField] MMFeedbacks startAttackFeedback;
     [SerializeField] MMFeedbacks resetFeedbacks;
     [SerializeField] MMFeedbacks hitFeedback;
@@ -16,28 +11,53 @@ public class FeelManager : MonoBehaviour
    [SerializeField] ActionCameraController actionCamera;
 
 
-    private void Awake()
+    private void OnEnable()
     {
-        Instance = this;
+        CharacterCombat.OnAnyAttackStarted += CharacterCombat_OnAnyAttackStarted;
+        CharacterCombat.OnAnyAttackEnded += EndAttack;
+        CharacterCombat.OnAnyPowerHit += HitEffect;
     }
 
-    public void StartAttack(Transform attackerTransform, PowerSO attackPower)
+    private void OnDisable()
+    {
+        CharacterCombat.OnAnyAttackStarted -= CharacterCombat_OnAnyAttackStarted;
+        CharacterCombat.OnAnyAttackEnded -= EndAttack;
+        CharacterCombat.OnAnyPowerHit -= HitEffect;
+    }
+
+    private void CharacterCombat_OnAnyAttackStarted(CharacterHealth attacker, CharacterHealth target, PowerSO power)
+    {
+        if (!attacker.GetComponent<PCController>())
+            return;
+
+        switch (power.target)
+        {
+            case TargetType.Enemy:
+                StartAttack(attacker.transform, power);
+                break;
+            case TargetType.AllEnemies:
+                StartAllAttack(attacker.transform, power);
+                break;
+        }
+    }
+
+    private void StartAttack(Transform attackerTransform, PowerSO attackPower)
     {
         actionCamera.SetCameraFocus(attackerTransform);
         startAttackFeedback.PlayFeedbacks();
     }
-    public void EndAttack()
+
+    private void EndAttack()
     {
         resetFeedbacks.PlayFeedbacks();
     }
-    public void HitEffect()
+
+    private void HitEffect()
     {
         hitFeedback.PlayFeedbacks();
     }
 
-    public void BuffEffect() { }
-
-    public void StartAllAttack(Transform transform, PowerSO attackPower)
+    private void StartAllAttack(Transform transform, PowerSO attackPower)
     {
         startAllAttackFeedback.PlayFeedbacks();
     }

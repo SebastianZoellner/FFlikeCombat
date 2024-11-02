@@ -6,12 +6,12 @@ using System;
 
 public class UIWinLoseScreen : MonoBehaviour
 {
-   
+
     [SerializeField] GameObject Screen;
     [SerializeField] private TextMeshProUGUI screenText;
-    [SerializeField] float WaitTime=2;
+    [SerializeField] float WaitTime = 2;
     private Image screenBackground;
-    
+
 
     private void Awake()
     {
@@ -20,24 +20,24 @@ public class UIWinLoseScreen : MonoBehaviour
 
     private void OnEnable()
     {
-        LevelSetup.LevelWon += LevelSetup_LevelWon;
-        LevelSetup.OnGameLost += LevelSetup_OnGameLost;
+        GameEnd.OnGameWon += GameEnd_OnGameWon;
+        GameEnd.OnGameLost += GameEnd_OnGameLost;
     }
 
     private void OnDisable()
     {
-        LevelSetup.LevelWon -= LevelSetup_LevelWon;
-        LevelSetup.OnGameLost -= LevelSetup_OnGameLost;
+        GameEnd.OnGameWon -= GameEnd_OnGameWon;
+        GameEnd.OnGameLost -= GameEnd_OnGameLost;
     }
 
-    private void LevelSetup_OnGameLost()
+    private void GameEnd_OnGameLost()
     {
         StartCoroutine(DelayedActivate(Screen));
         screenBackground.color = Color.red;
         screenText.text = "You Lost!!!";
     }
 
-   
+
 
     IEnumerator DelayedActivate(GameObject screen)
     {
@@ -45,11 +45,11 @@ public class UIWinLoseScreen : MonoBehaviour
         yield return new WaitForSeconds(WaitTime);
 
         screen.SetActive(true);
-        
+
 
     }
 
-    private void LevelSetup_LevelWon()
+    private void GameEnd_OnGameWon()
     {
         StartCoroutine(DelayedActivate(Screen));
         screenBackground.color = Color.blue;

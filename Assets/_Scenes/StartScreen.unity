@@ -817,6 +817,7 @@ GameObject:
   m_Component:
   - component: {fileID: 651241854}
   - component: {fileID: 651241853}
+  - component: {fileID: 651241855}
   m_Layer: 0
   m_Name: StartScreenManager
   m_TagString: Untagged
@@ -855,6 +856,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &651241855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651241852}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfc6ef03c7a92ed4abb03e113ee095db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &840812740
 GameObject:
   m_ObjectHideFlags: 0

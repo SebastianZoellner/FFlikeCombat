@@ -16,11 +16,13 @@ MonoBehaviour:
   LabelName: Trashcan Cover
   StartingHealth: 15
   BaseDefense: 0
+  Armor: 0
   modifierArray:
   - attribute: 0
     modifier: 10
     affectedFraction: 1
   icon: {fileID: 0}
   shortBlurb: Better than no cover!
-  itemToon: {fileID: 0}
+  itemToon: {fileID: 2407351405829211932, guid: 1d3489640f4eadb4fb3e7f4cae1a599f,
+    type: 3}
   level: 1

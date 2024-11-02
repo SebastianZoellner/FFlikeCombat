@@ -2,6 +2,7 @@ using Sirenix.OdinInspector;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [CreateAssetMenu(fileName = "New Level", menuName = "Game Elements/Levels")]
 
 public class LevelSO : ScriptableObject
@@ -17,6 +18,7 @@ public class LevelSO : ScriptableObject
     public Sprite missionVisual;
     public int numberOfHeroes;
 
+    public string sceneName;
     [SerializeField] private Stage[] stages;
 
     public List<GameObject> SpawnWave(int stage, int round, SpawnPointController spawnPointController) => stages[stage].waveArray[round].SpawnWave(spawnPointController);

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cfc8d3abbb89545a156b421a79d41b, type: 3}
+  m_Name: Buildings
+  m_EditorClassIdentifier: 
+  _root: {fileID: 0}
+  _parent: {fileID: 0}
+  _parentID:
+    _serializedGuid: 5168b257b9fb59499bd2994c0b2629a4
+  _subcollections: []
+  _subcollectionIDs: []
+  _collectionName: Buildings
+  _id:
+    _serializedGuid: e4e3d6afbd83e143a7d7ff3bc4503dc0
+  _icon: {fileID: 0}
+  _rules:
+    _rules: []
+  _items:
+    _hashSetList:
+    - 43cecf02ca9a29341aa80150e36f4c3d
+    - 0cee5f343e1618e4d9b4cdf0cea994c9
+    - 17a15b619ec1ddc4696479f73759de7c
+    - 3cadbc2079e210144b233760a219b095
+    - e84635c9579383a409db6da3477e581d
+    - 2fc01610ec566294893d91f8d8b04a32
+    - 8e8c31f8740134d4086fec064d4245d2
+    - d4ecf54e1ea1911499271cb18852e93c
+    - f4bb022ab0d2a5c46b6af300deb95be5
+    - bb91bd02237ba1e4fbeaf696ffe8fa38
+  _itemDisplaySize: 100
+  _viewStyle: 0
+  _useCollectionViewSettings: 0
+  references:
+    version: 2
+    RefIds: []

@@ -6,6 +6,10 @@ public class CharacterCombat : MonoBehaviour
     public static Action OnAnyActionFinished = delegate { };
     public event Action <bool> OnAttackFinished=delegate{};
     public static event Action <CharacterCombat,float> OnMomentumModified=delegate{};
+    public static event Action<CharacterHealth, CharacterHealth,PowerSO> OnAnyAttackStarted = delegate { };//Updates avatar and calls feelmanager
+    public static event Action OnAnyAttackEnded = delegate { };//used by feelmanager
+    public static event Action OnAnyPowerHit = delegate { };//used by feel manager
+
 
     public bool Initialized { get; private set; } = false;
 
@@ -65,14 +69,13 @@ public class CharacterCombat : MonoBehaviour
 
     public  void StartAttack(PowerSO attackPower, IDamageable target)
     {
-        
-
         if (!health.canBeTarget)
             return;
 
         this.attackPower = attackPower;
 
         Vector3 moveToPosition=new Vector3();
+
         float range=0;
 
         switch (attackPower.target)
@@ -87,9 +90,10 @@ public class CharacterCombat : MonoBehaviour
                 moveToPosition = target.GetTransform().position;
                 range = attackPower.range;
 
-                if (IsHero)
-                    FeelManager.Instance.StartAttack(this.transform, attackPower);
-               
+               if(target is CharacterHealth targetHealth)
+                OnAnyAttackStarted(health, targetHealth,attackPower);//Eventually we need an avatar for items, but that's for later.
+
+                             
                 break;
 
             case TargetType.AllEnemies:
@@ -103,8 +107,8 @@ public class CharacterCombat : MonoBehaviour
                 moveToPosition = transform.position + transform.forward;
                 range = 0;
 
-                if (IsHero)
-                    FeelManager.Instance.StartAllAttack(this.transform, attackPower);
+                OnAnyAttackStarted(health, null,attackPower);
+
                 break;
 
             case TargetType.Self:
@@ -115,6 +119,8 @@ public class CharacterCombat : MonoBehaviour
 
                 moveToPosition = transform.position + transform.forward;
                 range = 0;
+
+                OnAnyAttackStarted(health, null,attackPower);
                 break;
 
             case TargetType.AllFriends:
@@ -128,7 +134,10 @@ public class CharacterCombat : MonoBehaviour
 
                 moveToPosition = transform.position + transform.forward;
                 range = 0;
+
+                OnAnyAttackStarted(health, null, attackPower);
                 break;
+
             case TargetType.AreaEnemies:
                 hasActed = false;
                 if (IsHero)
@@ -138,7 +147,7 @@ public class CharacterCombat : MonoBehaviour
 
                 moveToPosition = target.GetTransform().position;
                 range = attackPower.range;
-
+                OnAnyAttackStarted(health, null, attackPower);
                 break;
 
         }
@@ -230,7 +239,8 @@ public class CharacterCombat : MonoBehaviour
 
     private void Animator_OnActionAnimationFinished()
     {
-        FeelManager.Instance.EndAttack();
+        OnAnyAttackEnded.Invoke();
+        //FeelManager.Instance.EndAttack();
         effects.EndAttack();
 
         if (!mover.IsHome())
@@ -241,7 +251,7 @@ public class CharacterCombat : MonoBehaviour
         }
         else
         {
-            Debug.Log("Switching to Idle");
+            //Debug.Log("Switching to Idle");
             animator.SetIdle();
             OnAttackFinished.Invoke(true);
             OnAnyActionFinished.Invoke();
@@ -299,7 +309,7 @@ public class CharacterCombat : MonoBehaviour
                     effects.AttackingEffect(attackPower.hitVFX, target.GetTransform());
 
                 sound.SetHitSound(attackPower, target.GetTransform());
-                FeelManager.Instance.HitEffect();
+                OnAnyPowerHit.Invoke();
             }
             else
             {
@@ -328,7 +338,7 @@ public class CharacterCombat : MonoBehaviour
             }
 
             sound.SetHitSound(attackPower, target.GetTransform());
-            FeelManager.Instance.BuffEffect();
+            //FeelManager.Instance.BuffEffect();
 
             ManageBuff(target);
         }

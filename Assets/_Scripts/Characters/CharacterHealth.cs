@@ -46,8 +46,6 @@ public class CharacterHealth : MonoBehaviour,IDamageable
         ActionSequencer.OnNewRoundStarted += ActionSequencer_OnNewRoundStarted;
     }
 
-   
-
     private void Start()
     {
         StartingHealth = Stats.GetStartingHealth();
@@ -67,6 +65,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     //-----------------------------------------------------------------------------------
     //                    Public functions
     //-----------------------------------------------------------------------------------
+
     public string GetName() => Stats.GetName();
     public Transform GetTransform() => transform;
     public float GetDefenseValue() => Stats.GetDefenseValue();
@@ -78,7 +77,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
         damage=GameSystem.Instance.CalculateArmor(Stats.GetAttribute(Attribute.Armor), damage);
         if (damage < 0) damage = 0;
         //Debug.Log("After Armor " + damage);
-        if (damage > StartingHealth / 2)
+        if (damage > HealthGameSystem.Instance.HeavyHitThreshold(StartingHealth))
             OnHeavyHit.Invoke(this);
 
         ChangeHealth(-damage);
@@ -99,7 +98,11 @@ public class CharacterHealth : MonoBehaviour,IDamageable
 
     public void Envigorate()
     {
-        ChangeEndurance(StartingEndurance / 2);
+        float recoveredHealth = HealthGameSystem.Instance.RestHealthBonus(StartingHealth, Stats.GetAttribute(Attribute.Hardiness));
+        if (recoveredHealth != 0)
+            ChangeHealth(recoveredHealth);
+
+        ChangeEndurance(HealthGameSystem.Instance.RestEnduranceBonus(StartingEndurance));
         OnInvigorate.Invoke();
     }
 
@@ -107,8 +110,10 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     {
         canBeTarget = true;
         animator.SetRaised();
-        PresentEndurance = StartingEndurance / 2;
-        PresentHealth = StartingHealth / 2;
+
+        PresentEndurance = HealthGameSystem.Instance.EnduranceAfterRaise(StartingEndurance);
+        PresentHealth = HealthGameSystem.Instance.HealthAfterRaise(StartingHealth);
+
         OnHeroResurrected.Invoke(this);
     }
 
@@ -123,8 +128,9 @@ public class CharacterHealth : MonoBehaviour,IDamageable
 
     public void NewStage()
     {
-        ChangeEndurance(StartingEndurance / 4);
-        ChangeHealth((StartingHealth-PresentHealth) / 3);
+        ChangeEndurance(HealthGameSystem.Instance.NewStageEndurance( StartingEndurance));
+        ChangeHealth(HealthGameSystem.Instance.NewStageHeal(StartingHealth - PresentHealth));
+            
     }
 
     //------------------------------------------------------------------------
@@ -169,10 +175,10 @@ public class CharacterHealth : MonoBehaviour,IDamageable
 
     private void ActionSequencer_OnNewRoundStarted(int obj)
     {
-        float recoveredHealth = Stats.GetAttribute(Attribute.Hardiness);
+        float recoveredHealth = HealthGameSystem.Instance.NewRoundHealthBonus(StartingHealth, Stats.GetAttribute(Attribute.Hardiness));
         if(recoveredHealth!=0)
         ChangeHealth(recoveredHealth);
-        ChangeEndurance(StartingEndurance / 8);
+        ChangeEndurance(HealthGameSystem.Instance.NewRoundEnduranceBonus(StartingEndurance));
     }
 
     private void Die()
@@ -190,7 +196,5 @@ public class CharacterHealth : MonoBehaviour,IDamageable
 
         if (!IsHero)
             GetComponentInChildren<CapsuleCollider>().enabled = false;
-    }
-
-    
+    } 
 }

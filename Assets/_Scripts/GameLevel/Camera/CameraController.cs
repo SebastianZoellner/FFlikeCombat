@@ -3,12 +3,12 @@ using Cinemachine;
 
 public class CameraController : MonoBehaviour
 {
-    float moveSpeed = 10f;
-    float rotationSpeed = 80f;
-
     [SerializeField] CinemachineVirtualCamera[] mainCameraArray;
     [SerializeField] CinemachineVirtualCamera[] overheadCameraArray;
     [SerializeField] CameraTarget[] cameraTargetArray;
+
+
+    //Uused varaibles for commented out stuff
     int activeCameraId;
     CinemachineTransposer cinemachineTransposer;
     Vector3 targetFollowOffset;
@@ -20,7 +20,8 @@ public class CameraController : MonoBehaviour
     private float minZFollowOffset = 5f;
     private float maxZFollowOffset = 15f;
     private float zoomSpeed = 5f;
-
+    float moveSpeed = 10f;
+    float rotationSpeed = 80f;
 
     private void OnEnable()
     {

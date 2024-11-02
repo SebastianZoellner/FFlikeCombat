@@ -8,12 +8,21 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_Scenes/StartScreen.unity
     guid: 9776977e1ff16d749af00ced581f5cc4
-  - enabled: 1
-    path: Assets/_Scenes/Sandbox.unity
+  - enabled: 0
+    path: Assets/_Scenes/Development/Sandbox.unity
     guid: 99c9720ab356a0642a771bea13969a05
   - enabled: 1
     path: Assets/_Scenes/UI.unity
     guid: 68af51f4b983f8640b7ef2a160873401
+  - enabled: 1
+    path: Assets/_Scenes/GameScene.unity
+    guid: 48955bb8a49d68845bd32c32935b79c2
+  - enabled: 1
+    path: Assets/_Scenes/Battle Scenes/DrugDeal.unity
+    guid: c43bfbc6193b54c43bd69381567abd76
+  - enabled: 1
+    path: Assets/_Scenes/Battle Scenes/CaptureBoss.unity
+    guid: cd521216242419d4692031c34a3fe7d7
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d3116c1fda2310e4d95f6461c2d83323,
       type: 2}

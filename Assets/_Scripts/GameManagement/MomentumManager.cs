@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MomentumManager : MonoBehaviour
@@ -9,14 +7,11 @@ public class MomentumManager : MonoBehaviour
     public Action OnMomentumLoss = delegate { };
     public Action OnMomentumWin = delegate { };
 
+    [SerializeField] MomentumGameSystem gameSystem;
 
     private static float momentum = 0;
     private const float lossMomentum = -100;
     private const float winMomentum = 100;
-    private const float deathMultiplier= 4;
-    private const float heavyHitMultiplier = 1;
-
-   
     
 
     private void OnEnable()
@@ -60,10 +55,8 @@ public class MomentumManager : MonoBehaviour
     private void CharacterCombat_OnMomentumModified(CharacterCombat combat, float change)
     {
         int level = combat.GetComponent<CharacterStats>().GetLevel();
-        if (level == 0)
-            change = change * 0.5f;
-        else
-            change = change * level;
+
+        change = gameSystem.AttackMomentumChange(change, level);
 
         if (combat.GetComponent<PCController>())
             ModifyMomentum(change);
@@ -80,20 +73,22 @@ public class MomentumManager : MonoBehaviour
     }
     private void CharacterHealth_OnHeavyHit(CharacterHealth health)
     {
+        float momentumEffect = gameSystem.HeavyHitMomentum(health.Stats.GetLevel());
+
         if (health.GetComponent<PCController>())
-            ModifyMomentum(health.Stats.GetLevel()*heavyHitMultiplier);
+            ModifyMomentum(momentumEffect);
         else
-            ModifyMomentum(-health.Stats.GetLevel() * heavyHitMultiplier);
+            ModifyMomentum(-momentumEffect);
     }
 
     private void HeroDied(CharacterHealth hero)
     {
-        ModifyMomentum(-hero.Stats.GetLevel() * deathMultiplier);
+        ModifyMomentum(-gameSystem.DeathMomentum(hero.Stats.GetLevel()));
     }
 
     private void EnemyDied(CharacterHealth enemy)
     {
-        ModifyMomentum(enemy.Stats.GetLevel() * deathMultiplier);
+        ModifyMomentum(gameSystem.DeathMomentum(enemy.Stats.GetLevel()));
     }
 
     private void StatusManager_OnChangeMomentum(float change)

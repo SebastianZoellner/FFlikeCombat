@@ -122,9 +122,9 @@ public class UIInfoScreen : MonoBehaviour
 
     private void Health_OnDied()
     {
-        characterInfoScreen.SetActive(false);
-        objectInfoScreen.SetActive(false);
         Unbind();
+        characterInfoScreen.SetActive(false);
+        objectInfoScreen.SetActive(false);       
     }
 
     private void StatusManager_OnStatusChanged()

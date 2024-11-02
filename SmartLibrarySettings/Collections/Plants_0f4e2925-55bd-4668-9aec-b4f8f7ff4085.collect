@@ -1,0 +1,56 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cfc8d3abbb89545a156b421a79d41b, type: 3}
+  m_Name: Plants
+  m_EditorClassIdentifier: 
+  _root: {fileID: 0}
+  _parent: {fileID: 0}
+  _parentID:
+    _serializedGuid: 5168b257b9fb59499bd2994c0b2629a4
+  _subcollections: []
+  _subcollectionIDs: []
+  _collectionName: Plants
+  _id:
+    _serializedGuid: 25294e0fbd5568469aecb4f8f7ff4085
+  _icon: {fileID: 0}
+  _rules:
+    _rules: []
+  _items:
+    _hashSetList:
+    - 6c5763059d78ddc449acd2e31e6f24d1
+    - 7f0b4051ed0c7104da43204b2ecb5c04
+    - 58b362373569bcc4d80d7e3f01f71fc3
+    - 51803f22817ba224297a8f4dc1585284
+    - 26d8ba263e005bc41afb31205a5dedb3
+    - 3f90b914695a45b4b8ec6533e009937c
+    - 154b2c1f1fdd06343a26e23086fcc184
+    - 406a5d7803b0f19438c33158b169dd14
+    - 8d560c9fa173a2a4ca67babc0f8a4432
+    - a55a5493fb3426d43a13a5b082e02558
+    - 57bca5bb26005a249ad8ad0575e31693
+    - 4a5410bae7964bf42b1abccfb070bd8a
+    - a0f542ba0461f8c4cbb89acbe6331cf5
+    - ee6af68a3d2c1864ebc6cfc3be82d851
+    - d93817f79a1e01242b20f7081cbfa384
+    - c50789636e1fc5c4b8a37e2700e4a3c1
+    - 99013786efd0c6345b7c4524a1915d80
+    - fc44d04a08f68ae4789dba68944286d1
+    - 4f1163ae2d5d3e04fad3842f3572e9d6
+    - 4107e3682b4a83943a34823596c46c42
+    - 1592722a574eb064a92f317ca3831bf5
+    - 2c7412ed6aa4bcf43b83c42160af3f58
+  _itemDisplaySize: 100
+  _viewStyle: 0
+  _useCollectionViewSettings: 0
+  references:
+    version: 2
+    RefIds: []

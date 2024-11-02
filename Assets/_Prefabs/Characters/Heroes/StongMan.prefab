@@ -645,7 +645,7 @@ PrefabInstance:
     - target: {fileID: 5380218228958069550, guid: 04c8837e64417394eb1ff55435545552,
         type: 3}
       propertyPath: glow
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5380218228958069550, guid: 04c8837e64417394eb1ff55435545552,
         type: 3}

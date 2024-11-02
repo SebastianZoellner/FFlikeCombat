@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2085464915442091133}
-  - component: {fileID: 6468230823712593821}
   - component: {fileID: 1207920488775072957}
+  - component: {fileID: 767313878047737329}
   m_Layer: 5
   m_Name: PlayerAvatar
   m_TagString: Untagged
@@ -25,32 +25,19 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8181100521284946605}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3617138083350332199}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -860, y: 440}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6468230823712593821
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8181100521284946605}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8fce67a6bfd7c9948bc192ae6bf32e30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1207920488775072957
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,6 +57,19 @@ MonoBehaviour:
   experienceBar: {fileID: 6522795004622287218}
   enduranceBar: {fileID: 1502743002748560688}
   avatar: {fileID: 884638217790777527}
+--- !u!114 &767313878047737329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8181100521284946605}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41b11bad2bbeb2945a926534898a69b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isPlayerAvatar: 1
 --- !u!1001 &346446030937273197
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -82,6 +82,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player Avatar
+      objectReference: {fileID: 0}
+    - target: {fileID: 1900701295943598135, guid: 361a635ea524f3e4faf91c24341c1fe7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3962170657680027722, guid: 361a635ea524f3e4faf91c24341c1fe7,
         type: 3}
@@ -187,6 +192,28 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 6b71a27ad61c8774b8a26a49db9bb273,
+        type: 2}
+    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
+        type: 3}
+      propertyPath: m_fontSizeMax
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -976379066588271947, guid: 6b71a27ad61c8774b8a26a49db9bb273,
+        type: 2}
+    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
+        type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5850222625983747411, guid: 361a635ea524f3e4faf91c24341c1fe7,
         type: 3}

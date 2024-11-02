@@ -2,65 +2,77 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelSetup : MonoBehaviour
 {
-    public static event Action LevelWon = delegate { };
     public static event Action<int> OnNewStage = delegate { };
     public event Action OnWaveDefeated = delegate { };
-    public static event Action OnGameWon = delegate { };
-    public static event Action OnGameLost = delegate { };
-
+   
+    public static event Action OnGameInitialized = delegate { };
     public static event Action<LevelSO> StartMissionBriefing; 
+
     [SerializeField] LevelSO level;
 
     private List<GameObject> spawnedEnemies;
 
     [SerializeField] CharacterManager characterManager;
-    [SerializeField] MomentumManager momentumManager;
     [SerializeField] GameSetupSO levelSetup;
+    private GameEnd gameEnd;
 
     private AudioManager audioManager;
+    private SceneLoader sceneLoader; 
 
     private int stage = 0;
     private bool allEnemiesSpawned;
 
     private void Awake()
     {
+        gameEnd = GetComponent<GameEnd>();
         audioManager = GetComponent<AudioManager>();
+        sceneLoader = GetComponent<SceneLoader>();
         level = levelSetup.levelList[0];
-        SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive); 
+
+        sceneLoader.LoadScene(level.sceneName,true);
+        sceneLoader.LoadScene("UI",true);
     }
 
     private void OnEnable()
     {
         ActionSequencer.OnNewRoundStarted += ActionSequencer_OnNewRoundStarted;
-        SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+        sceneLoader.OnSceneLoaded += SceneLoader_OnSceneLoaded;
+        
         characterManager.OnEnemiesDead += CharacterManager_OnEnemiesDead;
-        characterManager.OnHeroesDead += LoseGame;
-        momentumManager.OnMomentumLoss += LoseGame;
-        momentumManager.OnMomentumWin += WinGame;
+
+        GameMenuFunctions.OnMainMenue += GameMenuFunctions_OnMainMenue;
+        GameMenuFunctions.OnRestartLevel += GameMenuFunctions_OnRestartLevel;
     }
+
 
     private void OnDisable()
     {
         ActionSequencer.OnNewRoundStarted -= ActionSequencer_OnNewRoundStarted;
-        SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
+        sceneLoader.OnSceneLoaded += SceneLoader_OnSceneLoaded;
         characterManager.OnEnemiesDead -= CharacterManager_OnEnemiesDead;
-        characterManager.OnHeroesDead -= LoseGame;
-        momentumManager.OnMomentumLoss -= LoseGame;
-        momentumManager.OnMomentumWin -= WinGame;
     } 
-
-    private void Start()
-    {
-        SetupStage(stage);
-    }
 
     //---------------------------------------------------------------------
     //            Private Methods
     //---------------------------------------------------------------------
+    private void SceneLoader_OnSceneLoaded(string sceneName)
+    {
+        if (sceneName == "UI")
+        {
+            Debug.Log("UI loaded");
+            StartMissionBriefing.Invoke(level);
+        }
+
+        if (sceneName == level.sceneName)
+        {
+            OnGameInitialized.Invoke();
+            SetupStage(stage);
+        }
+    }
+
     private void SpawnHeroes()
     {
         foreach (CharacterSO ch in levelSetup.characterList)
@@ -80,8 +92,7 @@ public class LevelSetup : MonoBehaviour
 
             PCController hero = newHero.GetComponent<PCController>();
             characterManager.AddHero(hero);
-            StartCoroutine(SendToStart(hero.GetComponent<CharacterCombat>()));
-           
+            StartCoroutine(SendToStart(hero.GetComponent<CharacterCombat>()));         
         }
     }
 
@@ -131,20 +142,12 @@ public class LevelSetup : MonoBehaviour
             foreach(PCController hero in characterManager.heroList)
             {
                 SpawnPoint spawnPoint = SpawnPointController.Instance.GetEmptySpawnPoint(SpawnPointType.Hero);
+                SpawnPointController.Instance.AssignSpawnPoint(spawnPoint, SpawnPointType.Hero);
+
                 hero.transform.SetParent(spawnPoint.transform);
                 hero.GetComponent<CharacterMover>().SetNewCombatLocation();
                 hero.GetComponent<CharacterCombat>().StartMoveHome();
             }
-
-        }
-    }
-
-    private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if(scene.name == "UI")
-        {
-            Debug.Log("UI loaded");
-            StartMissionBriefing.Invoke(level);
         }
     }
 
@@ -156,7 +159,7 @@ public class LevelSetup : MonoBehaviour
 
             if (stage == level.GetNumberOfStages())
             {
-                WinGame();
+                gameEnd.WinGame();
                 return;
             }
 
@@ -189,13 +192,20 @@ public class LevelSetup : MonoBehaviour
         SetupStage(newStage);
     }
 
-    private void LoseGame()
+    private void GameMenuFunctions_OnMainMenue()
     {
-        OnGameLost.Invoke();
+        Debug.Log("<color=yellow>Returning to Main Menue</color>");
+        sceneLoader.UnloadScene("UI");
+        sceneLoader.UnloadScene(level.sceneName);
+        sceneLoader.LoadScene("StartScreen",false);
     }
 
-    private void WinGame()
+    private void GameMenuFunctions_OnRestartLevel()
     {
-        LevelWon.Invoke();
+        Debug.Log("<color=yellow>Restarting Level</color>");
+        sceneLoader.UnloadScene(level.sceneName);
+        stage = 0;
+        sceneLoader.LoadScene(level.sceneName, true);
+             
     }
 }

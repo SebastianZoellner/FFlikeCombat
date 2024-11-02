@@ -31,7 +31,7 @@ MonoBehaviour:
   - attribute: 5
     value: 20
   icon: {fileID: 21300000, guid: daba5c37a9f42d04d816e4eca47e2cb8, type: 3}
-  shortBlurb: 
+  shortBlurb: His word is the law, at least in this part of the hood.
   animatorController: {fileID: 22100000, guid: 3566b6e624e2c264da473edca6d6f98e, type: 2}
   characterToon: {fileID: 7291014174536126344, guid: b91553e2f12d1fe47b7f27c5f18f68ed,
     type: 3}

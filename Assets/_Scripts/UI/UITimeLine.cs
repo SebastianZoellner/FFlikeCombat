@@ -13,7 +13,7 @@ public class UITimeLine : MonoBehaviour
 
     private GameObject roundMarker;
     private float baseTime;
-    private int scalingFactor = 500;
+    private int scalingFactor = 800;
 
     private void Awake()
     {

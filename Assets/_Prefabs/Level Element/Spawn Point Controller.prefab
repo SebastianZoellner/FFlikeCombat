@@ -907,8 +907,6 @@ Transform:
   - {fileID: 7828077768585515823}
   - {fileID: 3917302406117801864}
   - {fileID: 2230254221270083551}
-  - {fileID: 5965336571465847638}
-  - {fileID: 5097504553453970224}
   - {fileID: 8528140873666879901}
   - {fileID: 1470718592816241554}
   - {fileID: 6874709849018494646}
@@ -927,6 +925,8 @@ Transform:
   - {fileID: 3411167767723856546}
   - {fileID: 7603509704469163401}
   - {fileID: 5043952993098650825}
+  - {fileID: 5965336571465847638}
+  - {fileID: 5097504553453970224}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2494646621491691402
@@ -941,6 +941,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e863f077aeb5384d8f7d09f98a94cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  emptyEnemySpawnPoints: []
+  fullEnemySpawnPoints: []
 --- !u!1 &7996141489816040524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1640,7 +1642,7 @@ PrefabInstance:
     - target: {fileID: 7039976143275067308, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_Name
-      value: Hero Spawn Point Stage2 (2)
+      value: Hero Spawn Point 4 Stage 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2338,7 +2340,7 @@ PrefabInstance:
     - target: {fileID: 7039976143275067308, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_Name
-      value: Hero Spawn Point Stage2 (3)
+      value: Hero Spawn Point 1 Stage2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2407,12 +2409,12 @@ PrefabInstance:
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.59
+      value: 17.590004
       objectReference: {fileID: 0}
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9978903
+      value: 0.99789035
       objectReference: {fileID: 0}
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
@@ -2422,7 +2424,7 @@ PrefabInstance:
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.06492285
+      value: 0.06492283
       objectReference: {fileID: 0}
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
@@ -2462,7 +2464,7 @@ PrefabInstance:
     - target: {fileID: 7039976143275067308, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_Name
-      value: Hero Spawn Point Stage2
+      value: Hero Spawn Point 2 Stage2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2521,7 +2523,7 @@ PrefabInstance:
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -7.2
+      value: -7.199997
       objectReference: {fileID: 0}
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
@@ -2531,12 +2533,12 @@ PrefabInstance:
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 15.9907255
+      value: 15.99073
       objectReference: {fileID: 0}
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9978903
+      value: 0.99789035
       objectReference: {fileID: 0}
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
@@ -2546,7 +2548,7 @@ PrefabInstance:
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.06492285
+      value: 0.06492283
       objectReference: {fileID: 0}
     - target: {fileID: 3287201751709346763, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
@@ -2586,7 +2588,7 @@ PrefabInstance:
     - target: {fileID: 7039976143275067308, guid: cfc4fe5db8f75b64e9b8a1e13d31d257,
         type: 3}
       propertyPath: m_Name
-      value: Hero Spawn Point Stage2 (1)
+      value: 'Hero Spawn Point 3 Stage 2 '
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

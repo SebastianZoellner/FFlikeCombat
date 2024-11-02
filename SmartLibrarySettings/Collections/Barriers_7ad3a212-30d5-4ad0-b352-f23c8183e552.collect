@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cfc8d3abbb89545a156b421a79d41b, type: 3}
+  m_Name: Barriers
+  m_EditorClassIdentifier: 
+  _root: {fileID: 0}
+  _parent: {fileID: 0}
+  _parentID:
+    _serializedGuid: 5168b257b9fb59499bd2994c0b2629a4
+  _subcollections: []
+  _subcollectionIDs: []
+  _collectionName: Barriers
+  _id:
+    _serializedGuid: 12a2d37ad530d04ab352f23c8183e552
+  _icon: {fileID: 0}
+  _rules:
+    _rules: []
+  _items:
+    _hashSetList:
+    - aab3193b237b50c4d85586e6c35e546c
+    - 2dc46eceffa3bcd4ea34c058b8b56bb5
+    - 5864addef94c23c458de5835888882f7
+    - 4fa78f9c9f4e51f43842fb4b079d75f8
+    - e530ecd98d6a5d541b12fe59c564d311
+    - 900434126ddade04c926449f3b23f354
+    - 9750a5084abaa524996cd407c1f09829
+    - aa02e489f4dc7094295e57c800dc8c49
+  _itemDisplaySize: 100
+  _viewStyle: 0
+  _useCollectionViewSettings: 0
+  references:
+    version: 2
+    RefIds: []

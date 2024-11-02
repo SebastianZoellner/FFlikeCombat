@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class StartScreenManager : MonoBehaviour
@@ -17,10 +16,12 @@ public class StartScreenManager : MonoBehaviour
     private int maxHeroes=2;
 
     bool isLoading = false;
-    AsyncOperation loadingOperation;
+    private SceneLoader sceneLoader;
+    
 
     private void Awake()
     {
+        sceneLoader = GetComponent<SceneLoader>();
         chosenTeam.characterList = new List<CharacterSO>();
     }
 
@@ -29,7 +30,7 @@ public class StartScreenManager : MonoBehaviour
         if (!isLoading)
             return;
         //Debug.Log("Loading progress " + loadingOperation.progress);
-        progressBar.value = Mathf.Clamp01(loadingOperation.progress / 0.9f);
+        progressBar.value = Mathf.Clamp01(sceneLoader.GetLoadProgress("GameScene") / 0.9f);
     }
 
     public CharacterSO[] GetAvailableHeroes()
@@ -72,19 +73,16 @@ public class StartScreenManager : MonoBehaviour
         OnMissionSelected.Invoke(level);
     }
 
-
     public void StartGame()
     {
         
         if (chosenTeam.characterList.Count > 0 && chosenTeam.levelList.Count==1 )
         {
-            Debug.Log("Starting Game");
-            Debug.Log("Level " + chosenTeam.levelList[0].LevelName);
+            Debug.Log("<color=blue> Starting Game");
+            Debug.Log("Level </color>" + chosenTeam.levelList[0].LevelName);
             fader.FadeOut();
-            loadingOperation = SceneManager.LoadSceneAsync(1);
+            sceneLoader.LoadScene("GameScene", false);
             isLoading = true;
         }
-
-
     }
 }

@@ -42,12 +42,23 @@ public class SetAvatarDisplay : MonoBehaviour
         ChangeHealthBar();
     }
 
+ public void HideAvatar()
+    {
+        Deregister();
+        display.SetActive(false);
+    }
+
     private void ChangeHealthBar()
     {
         healthBar.fillAmount = health.PresentHealth / health.StartingHealth;
         enduranceBar.fillAmount = health.PresentEndurance / health.StartingEndurance;
     } 
-    
+
+    private void ChangeExpereinceBar()
+    {
+        experienceBar.fillAmount = 0f;
+    }
+
     private void Deregister()
     {
         if (health)

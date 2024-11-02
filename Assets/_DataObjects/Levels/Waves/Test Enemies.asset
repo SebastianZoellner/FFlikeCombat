@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Test Enemies
   m_EditorClassIdentifier: 
   spawnGroupArray:
-  - enemy: {fileID: 11400000, guid: 84158ce5e9c737a4caff006e920475db, type: 2}
+  - enemy: {fileID: 11400000, guid: 851129b6e0bbee64ab60d370a15442eb, type: 2}
     minNumber: 1
-    maxNumber: 2
+    maxNumber: 1

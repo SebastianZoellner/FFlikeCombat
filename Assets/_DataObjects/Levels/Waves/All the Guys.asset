@@ -12,4 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 037c0716d8d1fc64da987f0a68848096, type: 3}
   m_Name: All the Guys
   m_EditorClassIdentifier: 
-  spawnGroupArray: []
+  spawnGroupArray:
+  - enemy: {fileID: 11400000, guid: ae99a249e9da0b74497ac95f14343226, type: 2}
+    minNumber: 2
+    maxNumber: 3
+  - enemy: {fileID: 11400000, guid: 84158ce5e9c737a4caff006e920475db, type: 2}
+    minNumber: 2
+    maxNumber: 3
+  - enemy: {fileID: 11400000, guid: 71935ff919f1915489e628260878877c, type: 2}
+    minNumber: 2
+    maxNumber: 3

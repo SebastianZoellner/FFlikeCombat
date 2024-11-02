@@ -21,7 +21,6 @@ public class SpawnPointController : MonoBehaviour
         fullEnemySpawnPoints = new List<SpawnPoint>();
         fullHeroSpawnPoints = new List<SpawnPoint>();
         emptyHeroSpawnPoints = new List<SpawnPoint>();
-
     }
 
     private void OnEnable()
@@ -48,12 +47,27 @@ public class SpawnPointController : MonoBehaviour
 
     public SpawnPoint GetEmptySpawnPoint(SpawnPointType type)
     {
-        
+        SpawnPoint spawnPoint;
         if (type == SpawnPointType.Enemy)
-            return GetPoint(emptyEnemySpawnPoints, fullEnemySpawnPoints);
-        return GetPoint(emptyHeroSpawnPoints, fullHeroSpawnPoints);
+            spawnPoint= GetPoint(emptyEnemySpawnPoints, fullEnemySpawnPoints);
+        else
+       spawnPoint= GetPoint(emptyHeroSpawnPoints, fullHeroSpawnPoints);
+
+        if (!spawnPoint)
+        {
+            Debug.LogWarning("Unable to provide spawn point of type " + type);
+            ProvideSpawnPointCount();
+        }
+
+        return spawnPoint;
     }
 
+    /// <summary>
+    /// Indicates to the spawn point controller that a spawn point has been filled
+    /// </summary>
+    /// <param name="newSpawnPoint"> the newly fille spawn point </param>
+    /// <param name="type"> The fraction of the spawn point. </param>
+    
     public void AssignSpawnPoint(SpawnPoint newSpawnPoint, SpawnPointType type)
     {
         if(type== SpawnPointType.Enemy)
@@ -154,6 +168,7 @@ public class SpawnPointController : MonoBehaviour
 
     private void InitializeSpawnPointLists(int stage)
     {
+        Debug.Log("Initializing Spawn Points Stage " + stage);
         RemoveFallenEnemies();
 
         emptyEnemySpawnPoints.Clear();
@@ -184,13 +199,17 @@ public class SpawnPointController : MonoBehaviour
             }
         }
 
-        Debug.Log("Spawn Points initialized: " + emptyHeroSpawnPoints.Count + " empty hero points, " + emptyEnemySpawnPoints.Count + " empty enemy points");
-        Debug.Log("Spawn Points initialized: " + fullHeroSpawnPoints.Count + " full hero points, " + fullEnemySpawnPoints.Count + " full enemy points");
+        ProvideSpawnPointCount();
         // foreach (SpawnPoint sp in emptyEnemySpawnPoints)
         //   Debug.Log(sp.name + " at position " + sp.transform.position);
     }
 
-   
+    private void ProvideSpawnPointCount()
+    {
+        Debug.Log("Spawn Points initialized: " + emptyHeroSpawnPoints.Count + " empty hero points, " + emptyEnemySpawnPoints.Count + " empty enemy points");
+        Debug.Log("Spawn Points initialized: " + fullHeroSpawnPoints.Count + " full hero points, " + fullEnemySpawnPoints.Count + " full enemy points");
+    }
+
 
     private SpawnPoint GetPoint(List<SpawnPoint> emptyList, List<SpawnPoint> fullList)
     {

@@ -38,6 +38,7 @@ MonoBehaviour:
     Civilians: Innocent bystanders may be present; minimize collateral damage.'
   missionVisual: {fileID: 21300000, guid: 208e600f34a3116448e2b2e08dfbbe9f, type: 3}
   numberOfHeroes: 2
+  sceneName: DrugDeal
   stages:
   - waveArray:
     - {fileID: 11400000, guid: 49f5348bfc8e4f146bd22961620f7fcc, type: 2}
@@ -45,8 +46,12 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 6fee0678351d5ef478cd5ac9b01a8cac, type: 2}
     ambience: {fileID: 8300000, guid: 4cf46afed0091d046a3cc336afcf7a57, type: 3}
     music: {fileID: 11400000, guid: b8735eaf4914c284b98c125b3668e411, type: 2}
+    timeLimit: 0
+    timeLimitPenalty: 0
   - waveArray:
     - {fileID: 11400000, guid: 73c11a207bd243b47b2227852a386e5b, type: 2}
     - {fileID: 11400000, guid: f599fa32754f1384b8356a34ee1224c8, type: 2}
     ambience: {fileID: 8300000, guid: 53bd19e618dd7a647ae8dc5446a0923d, type: 3}
     music: {fileID: 11400000, guid: 6bddc621c4a595f47a9c98ad9e704eb8, type: 2}
+    timeLimit: 0
+    timeLimitPenalty: 0

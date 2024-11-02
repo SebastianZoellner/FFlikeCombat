@@ -69,5 +69,8 @@ crashlytics-build.properties
 
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
-/[Aa]ssets/[Ss]treamingAssets/aa/*
-Assets/Downloaded Assets/Allsky/
+/[Aa]ssets/[Ss]treamingAssets/aa/*Library/
+
+#Custom added directories
+/[Aa]ssets/DownloadedAssets/Allsky
+/[Aa]ssets/DownloadedAssets/Animations

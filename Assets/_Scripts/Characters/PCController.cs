@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PCController : MonoBehaviour
@@ -47,7 +48,7 @@ public class PCController : MonoBehaviour
     {
         selectedPower = null;
         target = null;
-        if (target!=null)
+        if (target != null)
             target.selectionIndicator.SetSelected();
 
         selectionIndicator.SetSelected();
@@ -57,7 +58,7 @@ public class PCController : MonoBehaviour
     {
         selectedPower = null;
 
-        if (target!=null)
+        if (target != null)
             target.selectionIndicator.SetDeselected();
 
         target = null;
@@ -69,13 +70,13 @@ public class PCController : MonoBehaviour
     {
         selectedPower = power;
 
-        if (target!=null && selectedPower.target == TargetType.Enemy && target.IsHero)
+        if (target != null && selectedPower.target == TargetType.Enemy && target.IsHero)
         {
             target.selectionIndicator.SetDeselected();
             target = null;
         }
 
-        if (target!=null && selectedPower.target == TargetType.Friend && !target.IsHero)
+        if (target != null && selectedPower.target == TargetType.Friend && !target.IsHero)
         {
             target.selectionIndicator.SetDeselected();
             target = null;
@@ -93,7 +94,7 @@ public class PCController : MonoBehaviour
 
     public void SetTarget(IDamageable targetHealth)
     {
-        if (targetHealth==null)
+        if (targetHealth == null)
             return;
 
         if (!targetHealth.canBeTarget)
@@ -116,8 +117,8 @@ public class PCController : MonoBehaviour
         target.selectionIndicator.SetSelected();
         //Debug.Log("Set new target: " + target.GetTransform().name);
 
-        if (target!=null && selectedPower)
-            StartPower();
+        if (target != null && selectedPower)
+           StartCoroutine(DelayedStartPower());
     }
 
     //---------------------------------------------
@@ -137,21 +138,26 @@ public class PCController : MonoBehaviour
     private void StartPower()
     {
         if (selectedPower.target == TargetType.Enemy)
-            if (target==null || target.IsHero)
+            if (target == null || target.IsHero)
             {
                 Debug.LogWarning("Target for single enemy power not set or not enemy");
                 return;
             }
 
         if (selectedPower.target == TargetType.Friend)
-            if (target==null || !target.IsHero)
+            if (target == null || !target.IsHero)
             {
                 Debug.LogWarning("Target for single hero power not set or not hero");
                 return;
             }
 
-        
+
         if (initiative.ReadyAttack(selectedPower, target))
             SetDeselected();
+    }
+    private IEnumerator DelayedStartPower()
+    {
+        yield return new WaitForSecondsRealtime(0.25f);
+        StartPower();
     }
 }
