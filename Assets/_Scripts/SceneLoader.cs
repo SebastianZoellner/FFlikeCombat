@@ -40,6 +40,9 @@ public class SceneLoader : MonoBehaviour
         SceneManager.UnloadSceneAsync(sceneName);
     }
 
+    public void SetActiveScene(string sceneName) => SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName));
+    
+
     private void SceneManager_sceneLoaded(Scene scene, LoadSceneMode mode)
     {
         OnSceneLoaded.Invoke(scene.name);
@@ -47,5 +50,5 @@ public class SceneLoader : MonoBehaviour
             loadDictionary.Remove(scene.name);
     }
 
-
+    
 }

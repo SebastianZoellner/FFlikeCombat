@@ -126,7 +126,7 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
         round = 0;
         actionTime = 0;
         characterInitiativeList = new List<CharacterInitiative>();
-        //InitializeCharacterList();
+        InitializeCharacterList();
     }
 
     private void AddCharacter(CharacterInitiative initiative)

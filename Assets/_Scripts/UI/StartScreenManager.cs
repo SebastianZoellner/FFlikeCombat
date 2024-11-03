@@ -78,8 +78,8 @@ public class StartScreenManager : MonoBehaviour
         
         if (chosenTeam.characterList.Count > 0 && chosenTeam.levelList.Count==1 )
         {
-            Debug.Log("<color=blue> Starting Game");
-            Debug.Log("Level </color>" + chosenTeam.levelList[0].LevelName);
+            Debug.Log("<color=yellow> Starting Game</color>");
+            Debug.Log("Level " + chosenTeam.levelList[0].LevelName);
             fader.FadeOut();
             sceneLoader.LoadScene("GameScene", false);
             isLoading = true;

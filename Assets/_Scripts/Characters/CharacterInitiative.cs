@@ -33,7 +33,7 @@ public class CharacterInitiative : MonoBehaviour
     }
     private void OnDisable()
     {
-        LevelSetup.OnNewStage += LevelSetup_OnNewStage;
+        LevelSetup.OnNewStage -= LevelSetup_OnNewStage;
     }
 
     public bool HasReadiedAction() => readiedAction!=null;

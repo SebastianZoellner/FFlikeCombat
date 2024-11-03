@@ -26,6 +26,7 @@ public class LevelSO : ScriptableObject
     public int GetNumberOfStages() => stages.Length;
     public AudioClip GetAmbience(int stage) => stages[stage].ambience;
     public WaveMusicSO GetMusic(int stage) => stages[stage].music;
+    public Stage GetStage(int stageIndex) => stages[stageIndex];
     
 }
 

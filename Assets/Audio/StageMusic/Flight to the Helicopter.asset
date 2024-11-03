@@ -15,5 +15,7 @@ MonoBehaviour:
   SongArray:
   - music: {fileID: 8300000, guid: 5dbb20c4e68bc944d8e7ef2e9c32dedd, type: 3}
     volume: 50
-  - music: {fileID: 8300000, guid: df6dfe3b6a53dee43a2c1dc0b6f826db, type: 3}
+  - music: {fileID: 8300000, guid: 598ae61efaf012d4f94fdc332c462c4a, type: 3}
     volume: 50
+  - music: {fileID: 8300000, guid: df6dfe3b6a53dee43a2c1dc0b6f826db, type: 3}
+    volume: 0

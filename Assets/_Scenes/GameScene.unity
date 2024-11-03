@@ -26,7 +26,7 @@ RenderSettings:
   m_AmbientIntensity: 0.2
   m_AmbientMode: 0
   m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 740baf646217741a89e0d9ec12eff76e, type: 2}
+  m_SkyboxMaterial: {fileID: 0}
   m_HaloStrength: 0.784
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.044552706, g: 0.085975766, b: 0.21694401, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -217,6 +217,8 @@ GameObject:
   - component: {fileID: 5146944444430145655}
   - component: {fileID: 3082103647492657164}
   - component: {fileID: 5146944444430145656}
+  - component: {fileID: 5146944444430145657}
+  - component: {fileID: 5146944444430145658}
   m_Layer: 0
   m_Name: Level Setup
   m_TagString: Untagged
@@ -1110,6 +1112,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterManager: {fileID: 7628796724370099482}
   momentumManager: {fileID: 9123019401954428882}
+--- !u!114 &5146944444430145657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768033965039102842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad3c86951a603d4408e2290843926a09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterManager: {fileID: 7628796724370099482}
+--- !u!114 &5146944444430145658
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768033965039102842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9016efd00f35ff94b807066ea7df1672, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterManager: {fileID: 7628796724370099482}
 --- !u!114 &5334755033335384831
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -73,4 +73,5 @@ crashlytics-build.properties
 
 #Custom added directories
 /[Aa]ssets/DownloadedAssets/Allsky
-/[Aa]ssets/DownloadedAssets/Animations
+/[Aa]ssets/downloadedAssets/Animations
+
