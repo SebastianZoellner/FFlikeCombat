@@ -102,6 +102,7 @@ public class Projectile : MonoBehaviour
         if (other == attacker.GetComponentInChildren<CapsuleCollider>())
             return;
 
+        Debug.Log("Projectile hitting " + other.name);
         Impact(other);
     }
 

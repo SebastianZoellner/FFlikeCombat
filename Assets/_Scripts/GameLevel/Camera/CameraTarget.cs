@@ -1,10 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class CameraTarget : MonoBehaviour
 {
     [SerializeField] float cameraMove=0.1f;
+
+    [SerializeField] private bool bumpyCamera;
+    [SerializeField] private float bumpXIntensity = 0.1f; // How strong the bumps are
+    [SerializeField] private float bumpYIntensity = 0.1f; // How strong the bumps are
+    [SerializeField] private float bumpFrequency = 15f; // How often bumps occur
+
     private Transform activeCharacter;
     private Vector3 startPosition;
 
@@ -25,7 +30,11 @@ public class CameraTarget : MonoBehaviour
             transform.position = startPosition+cameraMove*(activeCharacter.position-startPosition);
         else
             transform.position = startPosition;
+
+        AddBumpyCamera();
     }
+
+    
 
     private void OnDisable()
     {
@@ -41,5 +50,18 @@ public class CameraTarget : MonoBehaviour
     private void ActionSequencer_OnNoActor()
     {
         activeCharacter = null;
+    }
+    
+    private void AddBumpyCamera()
+    {
+        if (!bumpyCamera)
+            return;
+
+        float bumpX = Mathf.PerlinNoise(Time.time * bumpFrequency, 0) * bumpXIntensity;
+        float bumpY = Mathf.PerlinNoise(0, Time.time * bumpFrequency) * bumpYIntensity;
+
+        Vector3 bumpOffset = new Vector3(bumpX, bumpY, 0);
+
+        transform.localPosition += bumpOffset;
     }
 }

@@ -14,12 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Dummy
   LabelName: 
+  fraction: 1
   powerArray: []
-  startingHealth: 10000
-  attributeArray: []
+  attributeBonusArray: []
   icon: {fileID: 0}
   shortBlurb: 
   animatorController: {fileID: 0}
   characterToon: {fileID: 0}
   level: 0
-  StartingEndurance: 0
+  characterClass: 0
+  statProgression: {fileID: 0}
+  impactToPower: 0.5
+  celerityToSpeed: 0.5
+  setHardiness: 0
+  setRecovery: 20

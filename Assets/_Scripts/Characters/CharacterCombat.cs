@@ -1,3 +1,4 @@
+using Sirenix.OdinInspector;
 using System;
 using UnityEngine;
 
@@ -69,6 +70,7 @@ public class CharacterCombat : MonoBehaviour
 
     public  void StartAttack(PowerSO attackPower, IDamageable target)
     {
+        
         if (!health.canBeTarget)
             return;
 

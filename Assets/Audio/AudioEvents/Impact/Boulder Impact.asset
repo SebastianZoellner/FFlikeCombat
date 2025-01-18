@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Boulder Impact
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: ba00a6f0c4942674e9899ce75ae870d3, type: 3}
+  - {fileID: 8300000, guid: 96dcbffaa635d3b4fac62396f2c76753, type: 3}
+  - {fileID: 8300000, guid: a3f0462d38130f64aad3b872d1ab4eea, type: 3}
+  volumeRange: {x: 0.9, y: 1.1}
+  pitchRange: {x: 0.9, y: 1.1}
+  distance: {x: 1, y: 1000}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

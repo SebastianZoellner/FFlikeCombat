@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eef63d5494c527c40a073f9394bb437f, type: 3}
+  m_Name: Magic
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: a82d84cd11152204c8556880f75f8ede, type: 3}
+  - {fileID: 8300000, guid: 6fecf552cb5405444a4fc9a6d3530746, type: 3}
+  - {fileID: 8300000, guid: 708fdafdc9536b541be8b09a8cc565e4, type: 3}
+  - {fileID: 8300000, guid: 5f9d43c44efdb9e4f9e5ab72f9f32312, type: 3}
+  - {fileID: 8300000, guid: 9434d756a67dc9646979358d52bef43d, type: 3}
+  - {fileID: 8300000, guid: a69ac10153fde65409d3cd72ffc815c1, type: 3}
+  volumeRange: {x: 0.9, y: 1.1}
+  pitchRange: {x: 0.9, y: 1.1}
+  distance: {x: 1, y: 1000}
+  mixer: {fileID: 8148528153103195969, guid: cfe4fe7b04360ab49a4f236d0d375fc2, type: 2}
+  spatialBlend: 1

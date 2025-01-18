@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: QuadupleShot Single Pistol
+  m_EditorClassIdentifier: 
+  minDamage: 1
+  maxDamage: 2
+  attack: -10
+  defense: -5
+  setupTime: 0.3
+  recoveryTime: 0.7
+  target: 0
+  radius: 0
+  successEffectArray: []
+  icon: {fileID: 0}
+  buttonName: Barrage
+  description: Quick series of 4 shots
+  range: 6
+  attackAnimation: {fileID: 7400000, guid: a723e2219bc8198479de34008d4ce5bf, type: 2}
+  flyingAnimation: {fileID: 0}
+  projectile: {fileID: 1756089082116642531, guid: 015614b05374d1b4a84be000f45e75c2,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 157586, guid: 9fcc9d5761b40bc4188599da2c83c412, type: 3}
+  attackOriginArray: 
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: a834f1140d67b4a4195da68cf9c1db68, type: 2}
+  missSound: {fileID: 0}
+  momentumEffect: 0
+  momentumCost: 0
+  momentumChange: 0
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 50

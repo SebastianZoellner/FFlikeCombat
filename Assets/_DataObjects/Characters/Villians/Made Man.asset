@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5807afadd574aa9438c13f40201b7fe3, type: 3}
+  m_Name: Made Man
+  m_EditorClassIdentifier: 
+  CharacterName: Made Man
+  LabelName: 
+  fraction: 1
+  powerArray:
+  - {fileID: 11400000, guid: ace88d9688e42b24f8125b6f6782779c, type: 2}
+  - {fileID: 11400000, guid: 307dbe79fc3df9046a4810d07d7ac1e6, type: 2}
+  - {fileID: 11400000, guid: 33448c7fd27d3cd4bbbbc98d7ca5ffcd, type: 2}
+  - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
+  attributeBonusArray: []
+  icon: {fileID: 21300000, guid: 273334bdb0a69164aa873fd34e4178c7, type: 3}
+  shortBlurb: Part of the family, not by birth but by deed.
+  animatorController: {fileID: 22100000, guid: 7dd6a069630b3c74d8878a8658ca0135, type: 2}
+  characterToon: {fileID: 3550478117515725222, guid: 1f786a7f00fa4b345a453f5c9ae3143d,
+    type: 3}
+  level: 1
+  characterClass: 0
+  statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
+  impactToPower: 1
+  celerityToSpeed: 0.5
+  setHardiness: 0
+  setRecovery: 20

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1
+MonoBehaviour:
+  m_ObjectHideFlags: 52
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60cfc8d3abbb89545a156b421a79d41b, type: 3}
+  m_Name: Street Details
+  m_EditorClassIdentifier: 
+  _root: {fileID: 0}
+  _parent: {fileID: 0}
+  _parentID:
+    _serializedGuid: 5168b257b9fb59499bd2994c0b2629a4
+  _subcollections: []
+  _subcollectionIDs: []
+  _collectionName: Street Details
+  _id:
+    _serializedGuid: 766bf874b8828747b95729f3f578eb4e
+  _icon: {fileID: 0}
+  _rules:
+    _rules: []
+  _items:
+    _hashSetList:
+    - 12633cd99f9582a49a33e00103daf054
+    - 17d89c35d4de1e34faab77de25282d4b
+    - 17fd2c85588a1954eb295a34c9775577
+    - 29c6f824a8087b549a0a0b68c7810a06
+    - a425d6179c7b4e045925dd078909c5d9
+    - 79d39b0d041480b479fb5cc05284aa87
+    - 804b4d4621262c6449916edf7614a719
+    - 008c6febfb8d88a4496fe51f2a2d409a
+    - f738f6acdbb1d5844bd657732cb05e13
+    - 34805116d018a9f4899f8ec1bb2948b3
+    - 8dbf8defb1d24b047a2eead4161cdac9
+    - ef632c1b440b045448e7ad09c6a093cf
+  _itemDisplaySize: 100
+  _viewStyle: 0
+  _useCollectionViewSettings: 0
+  references:
+    version: 2
+    RefIds: []

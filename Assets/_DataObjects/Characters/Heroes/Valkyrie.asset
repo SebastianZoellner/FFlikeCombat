@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   CharacterName: Valkyrie
   LabelName: 
+  fraction: 0
   powerArray:
   - {fileID: 11400000, guid: 0baa6deda8bebe04ab49f4f87c6d3c3b, type: 2}
   - {fileID: 11400000, guid: d6d4fe3199707d1498812864f69392bf, type: 2}
@@ -21,22 +22,16 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
   - {fileID: 11400000, guid: c8b973288db0483479bb6858dd83b6ef, type: 2}
   - {fileID: 11400000, guid: 32fce817e672e184abf2de6498ddcf74, type: 2}
-  startingHealth: 35
-  attributeArray:
-  - attribute: 0
-    value: 25
-  - attribute: 2
-    value: 25
-  - attribute: 1
-    value: 25
-  - attribute: 7
-    value: 10
-  - attribute: 5
-    value: 30
+  attributeBonusArray: []
   icon: {fileID: 21300000, guid: 329c39f28bc638a4396142893f6bac9a, type: 3}
   shortBlurb: 
   animatorController: {fileID: 22100000, guid: 58064e6760fd3ea44b34fe64039c241d, type: 2}
   characterToon: {fileID: 7489398626707582262, guid: 99d4fb12c0f7f74489f9b733185b73ce,
     type: 3}
   level: 4
-  StartingEndurance: 100
+  characterClass: 3
+  statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
+  impactToPower: 0.75
+  celerityToSpeed: 1
+  setHardiness: 0
+  setRecovery: 20

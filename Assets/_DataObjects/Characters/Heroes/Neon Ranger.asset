@@ -15,22 +15,15 @@ MonoBehaviour:
   CharacterName: Neon Ranger
   LabelName: 
   fraction: 0
-  powerArray: []
-  startingHealth: 35
-  attributeArray:
-  - attribute: 0
-    value: 25
-  - attribute: 1
-    value: 0
-  - attribute: 2
-    value: 35
-  - attribute: 4
-    value: 30
-  - attribute: 5
-    value: 15
-  - attribute: 7
-    value: 0
-  icon: {fileID: 0}
+  powerArray:
+  - {fileID: 11400000, guid: 0baa6deda8bebe04ab49f4f87c6d3c3b, type: 2}
+  - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
+  - {fileID: 11400000, guid: ace88d9688e42b24f8125b6f6782779c, type: 2}
+  - {fileID: 11400000, guid: 307dbe79fc3df9046a4810d07d7ac1e6, type: 2}
+  - {fileID: 11400000, guid: 33448c7fd27d3cd4bbbbc98d7ca5ffcd, type: 2}
+  - {fileID: 11400000, guid: 5fc366303691ac54cbd633be87cde314, type: 2}
+  attributeBonusArray: []
+  icon: {fileID: 21300000, guid: 5e4e654eb78182a4ab71b6d6c26bae47, type: 3}
   shortBlurb: 'Neon Ranger, formerly known as Jesse Ryder, was born and raised in
     Neo-Western City. From a young age, Jesse showcased a natural talent for sharpshooting
     and a keen sense of justice, often inspired by tales of old Western lawmen. As
@@ -38,16 +31,21 @@ MonoBehaviour:
     his city from the rising tide of corruption and crime that infiltrated its neon
     streets.
 
-    
 
-    After witnessing a brutal takeover of a local district
-    by a powerful syndicate known as "The Syndicate of Shadows," Jesse vowed to take
-    action. Utilizing his expertise in both traditional and cutting-edge weaponry,
-    he crafted a unique suit equipped with energy pistols and a shield generator,
-    combining the ruggedness of a cowboy with the technology of the future. His attire,
-    highlighted by vibrant neon accents, became a symbol of hope for the citizens.'
-  animatorController: {fileID: 0}
+
+    After witnessing a brutal takeover of a local district by a powerful
+    syndicate known as "The Syndicate of Shadows," Jesse vowed to take action. Utilizing
+    his expertise in both traditional and cutting-edge weaponry, he crafted a unique
+    suit equipped with energy pistols and a shield generator, combining the ruggedness
+    of a cowboy with the technology of the future. His attire, highlighted by vibrant
+    neon accents, became a symbol of hope for the citizens.'
+  animatorController: {fileID: 22100000, guid: 56b943d59b11ad142b3943fa73fd335b, type: 2}
   characterToon: {fileID: 711413668427960929, guid: 7ca4e0147e2d2d444bf444f2a7619357,
     type: 3}
   level: 4
-  StartingEndurance: 100
+  characterClass: 4
+  statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
+  impactToPower: 0.5
+  celerityToSpeed: 0
+  setHardiness: 0
+  setRecovery: 20

@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Warp Shot
+  m_EditorClassIdentifier: 
+  minDamage: 3
+  maxDamage: 4
+  attack: 10
+  defense: 0
+  setupTime: 0.6
+  recoveryTime: 0.4
+  target: 0
+  radius: 0
+  successEffectArray:
+  - level: 3
+    status: 0
+    intensity: 1
+    duration: 3
+  - level: 4
+    status: 0
+    intensity: 1
+    duration: 3
+  icon: {fileID: 0}
+  buttonName: Gunshot
+  description: A slow shot, likely to inflict a bleeding wound.
+  range: 7
+  attackAnimation: {fileID: 7400000, guid: fda41f5767b8e5745b037ffad7279095, type: 2}
+  flyingAnimation: {fileID: 0}
+  projectile: {fileID: 1756089082116642531, guid: f9a6f688e4a77594dba7ded730ccb72c,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 8968472839532094413, guid: c9de9ebc509795f439f29c0afefd7ee8, type: 3}
+  attackOriginArray: 
+  attackSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 71696d0629bef8e4db1b9fb0e1fda684, type: 2}
+  missSound: {fileID: 0}
+  momentumEffect: 1
+  momentumCost: 0
+  momentumChange: 1
+  minMomentum: -100
+  maxMomentum: 100
+  enduranceCost: 50

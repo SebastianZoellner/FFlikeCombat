@@ -13,26 +13,26 @@ public class ScrollObject : MonoBehaviour
     [SerializeField] bool scrollZ;
     [SerializeField] float scrollZdistance = 50f;
 
+    private Vector3 newPosition = new Vector3();
 
     // Update is called once per frame
     void Update()
     {
-        Vector3 newPosition = new Vector3();
         newPosition = transform.position;
         bool scrollAction = false;
 
-        if (scrollX == true && transform.position.x>scrollPoint.position.x)
+        if (scrollX == true && PastScrollPoint(transform.position.x,scrollPoint.position.x,scrollXdistance))
         {
             newPosition.x = transform.position.x + scrollXdistance;
             scrollAction = true;
         }
-        if (scrollY == true && transform.position.y > scrollPoint.position.y)
+        if (scrollY == true && PastScrollPoint(transform.position.y,scrollPoint.position.y,scrollYdistance))
         {
             newPosition.y = transform.position.y + scrollYdistance;
             scrollAction = true;
         }
 
-        if (scrollZ == true && transform.position.z > scrollPoint.position.z)
+        if (scrollZ == true && PastScrollPoint(transform.position.z,scrollPoint.position.z,scrollZdistance))
         {
             newPosition.z = transform.position.z + scrollZdistance;
             scrollAction = true;
@@ -41,4 +41,13 @@ public class ScrollObject : MonoBehaviour
         if (scrollAction)
             transform.position = newPosition;
     }
+
+    private bool PastScrollPoint(float coordinate, float scrollPointCoordinate, float scrollDistance)
+    {
+        if ((coordinate > scrollPointCoordinate && scrollDistance < 0 )|| (coordinate < scrollPointCoordinate && scrollDistance > 0))
+            return true;
+
+        return false;
+    }
+
 }

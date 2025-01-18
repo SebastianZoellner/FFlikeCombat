@@ -20,9 +20,9 @@ MonoBehaviour:
   sceneName: TruckHeist
   stages:
   - waveArray:
-    - {fileID: 11400000, guid: 0191bb8e837e05740ac9bd3753e1ced2, type: 2}
-    - {fileID: 11400000, guid: 082b302ee72cab049ae55aab99af41a8, type: 2}
-    - {fileID: 11400000, guid: 0191bb8e837e05740ac9bd3753e1ced2, type: 2}
+    - {fileID: 11400000, guid: db6bcca6ffd4c69459f0667434a74276, type: 2}
+    - {fileID: 11400000, guid: 344396cd3f26c6643bb49d6da71be21b, type: 2}
+    - {fileID: 11400000, guid: 344396cd3f26c6643bb49d6da71be21b, type: 2}
     ambience: {fileID: 8300000, guid: a30f81a43302ce048a567dd9804171e8, type: 3}
     music: {fileID: 11400000, guid: 9fb11a82fd927b0438e300ec7a0c7083, type: 2}
     timeLimit: 0

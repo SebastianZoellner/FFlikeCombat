@@ -9,7 +9,10 @@ public enum Attribute
     Initiative,
     Power,
     Recovery,
-    Speed
+    Speed,
+    Impact,
+    BaseHealth,
+    BaseEndurance
 }
 
 [System.Serializable]

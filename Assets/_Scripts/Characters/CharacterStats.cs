@@ -14,14 +14,14 @@ public class CharacterStats : MonoBehaviour,IStats
         statusManager = GetComponent<StatusManager>();
         health = GetComponent<CharacterHealth>();
 
-        health.SetStartingValues(character.startingHealth,character.StartingEndurance);   
+        health.SetStartingValues(character.GetBaseAttribute(Attribute.BaseHealth),character.GetBaseAttribute(Attribute.BaseEndurance));   
     }
 
     public string GetName() => character.CharacterName;
     public string GetBlurb() => character.shortBlurb;
     public Sprite GetIcon() => character.icon;
-    public float GetStartingHealth() => character.startingHealth;
-    public float GetStartingEndurance() => character.StartingEndurance;
+    public float GetStartingHealth() => character.GetBaseAttribute(Attribute.BaseHealth);
+    public float GetStartingEndurance() => character.GetBaseAttribute(Attribute.BaseEndurance);
 
 
     public PowerSO GetPower(int index) => character.GetPower(index);

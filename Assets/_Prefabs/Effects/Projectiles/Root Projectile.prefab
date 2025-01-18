@@ -94,7 +94,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8adc6a0605e83004d87bfe67ea8f0c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 1
+  projectileSpeed: 7
   isHoming: 0
   impactVfx: {fileID: 0}
   destroyOnHit: []

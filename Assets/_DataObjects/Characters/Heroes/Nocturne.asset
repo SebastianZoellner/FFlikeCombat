@@ -23,16 +23,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 84562222fa4bf8846b89b4a918db12b6, type: 2}
   - {fileID: 11400000, guid: 0baa6deda8bebe04ab49f4f87c6d3c3b, type: 2}
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
-  startingHealth: 35
-  attributeArray:
-  - attribute: 0
-    value: 50
-  - attribute: 2
-    value: 50
-  - attribute: 4
-    value: 28
-  - attribute: 5
-    value: 20
+  attributeBonusArray: []
   icon: {fileID: 21300000, guid: 2e298ad0f68104e4bb622ff9cac49a24, type: 3}
   shortBlurb: Alexandra "Nocturne" Rivera's near death expereince left her with a
     connection to Darkness. With this power and her extraordinary fighting skill,
@@ -41,4 +32,9 @@ MonoBehaviour:
   characterToon: {fileID: 5769878388494613830, guid: 16b662d1e0db77344b968288a7d28f6e,
     type: 3}
   level: 4
-  StartingEndurance: 100
+  characterClass: 2
+  statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
+  impactToPower: 0.6
+  celerityToSpeed: 0.5
+  setHardiness: 0
+  setRecovery: 20
