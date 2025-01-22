@@ -26,6 +26,11 @@ namespace AssetInventory
             Location = location;
         }
 
+        public void SetLocation(string location)
+        {
+            Location = location?.Replace("\\", "/");
+        }
+
         public override string ToString()
         {
             return $"Location '{Key}' ({Location})";

@@ -47,7 +47,7 @@ public class DefaultAI : BaseAI
         PowerSO returnedPower = powerList[0];
         for (int i = 1; i < powerList.Length; ++i)
         {
-            if (powerList[i].enduranceCost > returnedPower.enduranceCost)
+            if (powerList[i].GetEnduranceCost() > returnedPower.GetEnduranceCost())
                 returnedPower = powerList[i];
         }
         return returnedPower;

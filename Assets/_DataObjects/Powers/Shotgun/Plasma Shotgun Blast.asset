@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Plasma Shotgun Blast
   m_EditorClassIdentifier: 
-  minDamage: 2
-  maxDamage: 3
+  ShowDerivedAttributes: 1
   attack: 10
   defense: 0
-  setupTime: 0.4
-  recoveryTime: 0.5
   target: 0
   radius: 0
+  timeCost: 0.9
+  setupVsRecovery: 0.4
+  damageSpread: 0.703
+  numberOfHits: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0.5
   successEffectArray:
   - level: 3
     status: 3
@@ -29,6 +33,14 @@ MonoBehaviour:
     status: 4
     intensity: 1
     duration: 2
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3:
+  - {fileID: 11400000, guid: f186b213235b8664f88cd20074d8323d, type: 2}
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: f186b213235b8664f88cd20074d8323d, type: 2}
+  - {fileID: 11400000, guid: 8939c76db719f4441b5548c298216ada, type: 2}
+  enduranceToDamage: -0.5
   icon: {fileID: 0}
   buttonName: 
   description: 
@@ -43,9 +55,3 @@ MonoBehaviour:
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 90d105c07791a0047ba79b92e248644a, type: 2}
   missSound: {fileID: 0}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 0.9
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 44

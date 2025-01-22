@@ -56,12 +56,12 @@ public class CharacterInitiative : MonoBehaviour
         this.targetHealth = targetHealth;
 
         if (readiedAction.momentumEffect)
-            OnMomentumCostPayed.Invoke(this,readiedAction.momentumCost);
+            OnMomentumCostPayed.Invoke(this,readiedAction.GetMomentumCost());
 
         nextActionTime += GameSystem.Instance.CalculateReadytime(
             stats.GetAttribute(Attribute.Initiative),
-            readiedAction.setupTime
-            );
+            readiedAction.GetSetupTime()
+            ) ;
 
        // Debug.Log(name + " NextActionTime changed to " + nextActionTime);
 
@@ -90,7 +90,7 @@ public class CharacterInitiative : MonoBehaviour
 
         nextActionTime += GameSystem.Instance.CalculateWaitTime(
             stats.GetAttribute(Attribute.Speed),
-            readiedAction.recoveryTime+GetRandomNoise()
+            readiedAction.GetRecoveryTime()+GetRandomNoise()
             );
 
         OnAttackReadied.Invoke(false, this);

@@ -18,18 +18,27 @@ MonoBehaviour:
   defense: -10
   setupTime: 0.1
   recoveryTime: 1.1
+  timeCost: 0
+  setupVsRecovery: 0
+  damageSpread: 0
   target: 0
   radius: 0
-  successEffectArray: []
+  successEffectArray:
+  - level: 0
+    status: 0
+    intensity: 0
+    duration: 0
   icon: {fileID: 21300000, guid: bb6353fecb144324089265f8aee5cbc6, type: 3}
   buttonName: Blast Barage
   description: 
   range: 6
   attackAnimation: {fileID: 7400000, guid: 73024dcc8acfb6e44b834e406c7b63ee, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 2227070833989676974, guid: 2c7bcbcb2d737f9489d477ff196f515f,
     type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 2612828321144929153, guid: 3c9f9ffab26f8f54288b969d2a12233b, type: 3}
+  attackOriginArray: 
   attackSound: {fileID: 11400000, guid: 6e330c08597749743b14967ae1c67596, type: 2}
   hitSound: {fileID: 0}
   missSound: {fileID: 0}

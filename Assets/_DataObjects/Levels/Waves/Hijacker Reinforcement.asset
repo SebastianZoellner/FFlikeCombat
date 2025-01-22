@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnGroupArray:
   - enemy: {fileID: 11400000, guid: ae99a249e9da0b74497ac95f14343226, type: 2}
-    minNumber: 0
+    minNumber: 1
     maxNumber: 1
-  - enemy: {fileID: 11400000, guid: 71935ff919f1915489e628260878877c, type: 2}
-    minNumber: 0
+  - enemy: {fileID: 11400000, guid: 525c24e2a1c94e84ab0357121391ce90, type: 2}
+    minNumber: 1
     maxNumber: 1

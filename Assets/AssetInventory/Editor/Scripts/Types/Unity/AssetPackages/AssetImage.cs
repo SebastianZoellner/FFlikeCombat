@@ -14,7 +14,7 @@ namespace AssetInventory
 
         public override string ToString()
         {
-            return $"Asset Image ({type})";
+            return $"Asset Image ({type}, {width}x{height})";
         }
     }
 }

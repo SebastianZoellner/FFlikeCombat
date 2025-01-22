@@ -6,7 +6,7 @@ namespace AssetInventory
     public sealed class FolderSpec
     {
         public int folderType; // 0 = packages, 1 = media, 2 = zip
-        public int scanFor; // 0 = all, 2 = audio, 3 = images, 4 = models, 6 = pattern
+        public int scanFor; // 0 = all media, 1 = all, 3 = audio, 4 = images, 5 = models, 7 = pattern
         public bool enabled = true;
         public bool assignTag;
         public string tag;
@@ -16,8 +16,10 @@ namespace AssetInventory
         public string pattern;
         public bool createPreviews = true;
         public bool removeOrphans = true;
-        public bool attachToPackage;
-        public bool preferPackages = true;
+        public bool attachToPackage = true;
+        public bool createSubPackages;
+        public bool detectUnityProjects = true;
+        public bool checkSize;
 
         public FolderSpec()
         {
@@ -30,7 +32,12 @@ namespace AssetInventory
 
         public string GetLocation(bool expanded)
         {
-            return expanded ? AssetInventory.DeRel(location) : location;
+            return expanded ? AI.DeRel(location) : location;
+        }
+
+        public override string ToString()
+        {
+            return $"Folder Spec '{location}' ({folderType}, {enabled})";
         }
     }
 }

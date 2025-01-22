@@ -18,6 +18,9 @@ MonoBehaviour:
   defense: 0
   setupTime: 0.6
   recoveryTime: 0.4
+  timeCost: 1
+  setupVsRecovery: 0.6
+  damageSpread: 0
   target: 0
   radius: 0
   successEffectArray:
@@ -34,6 +37,7 @@ MonoBehaviour:
   description: A slow shot, likely to inflict a bleeding wound.
   range: 7
   attackAnimation: {fileID: 7400000, guid: fda41f5767b8e5745b037ffad7279095, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 1756089082116642531, guid: 015614b05374d1b4a84be000f45e75c2,
     type: 3}
   attackVFX: {fileID: 0}

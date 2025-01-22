@@ -12,7 +12,7 @@ namespace AssetInventory
         private Action<int> _callback;
         private int _current;
 
-        public void Init(List<Tuple<int, string>> data, int current, Action<int> callback)
+        private void Init(List<Tuple<int, string>> data, int current, Action<int> callback)
         {
             _data = data;
             _current = current;

@@ -12,15 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Double Strike
   m_EditorClassIdentifier: 
-  minDamage: 1.5
-  maxDamage: 2.5
+  ShowDerivedAttributes: 0
   attack: -10
   defense: -5
-  setupTime: 0.5
-  recoveryTime: 0.5
   target: 0
   radius: 0
+  timeCost: 1
+  setupVsRecovery: 0.5
+  damageSpread: 0.25
+  numberOfHits: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 2
   successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  enduranceToDamage: -0.2
   icon: {fileID: 21300000, guid: 4b2d809210c3f8a4ebc67fb873c7cd7e, type: 3}
   buttonName: 
   description: A series of 3 attacks.
@@ -34,9 +43,3 @@ MonoBehaviour:
   attackSound: {fileID: 11400000, guid: fdba71c18cc0d6e41aa629b7169e0159, type: 2}
   hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 1
-  momentumCost: 2
-  momentumChange: 1
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 40

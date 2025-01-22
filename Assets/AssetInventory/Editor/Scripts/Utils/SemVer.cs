@@ -5,17 +5,25 @@ namespace AssetInventory
 {
     public sealed class SemVer : IComparable
     {
+        public readonly int ComponentCount = 1;
         public readonly int Major;
         public readonly int Minor;
         public readonly string MinorQualifier;
+        public readonly bool SmallerMinorQualifier;
         public readonly int Micro;
         public readonly string MicroQualifier;
+        public readonly bool SmallerMicroQualifier;
         public readonly int Patch;
+        public readonly string PatchQualifier;
+        public readonly bool SmallerPatchQualifier;
 
-        public bool IsValid;
+        public readonly bool IsValid;
+
+        public string CleanedVersion => _originalVersion;
 
         private readonly string _originalVersion;
-        private readonly Regex _numbersOnly = new Regex("[0-9]*");
+        private static readonly Regex NumbersOnly = new Regex("[0-9]*", RegexOptions.Compiled | RegexOptions.CultureInvariant);
+        private static readonly Regex NoLeadingChars = new Regex("[^0-9]", RegexOptions.Compiled | RegexOptions.CultureInvariant);
 
         public SemVer(string version)
         {
@@ -24,16 +32,21 @@ namespace AssetInventory
             _originalVersion = version;
             if (!string.IsNullOrEmpty(version))
             {
+                version = version.Replace(",", ".");
                 string[] components = version.Split('.');
+                ComponentCount = components.Length;
 
                 // remove characters in first segment, like "v", "final"...
-                components[0] = Regex.Replace(components[0], "[^0-9]", "");
+                components[0] = NoLeadingChars.Replace(components[0], "");
+
+                // override stored version with cleaned up version
+                if (!string.IsNullOrWhiteSpace(components[0])) _originalVersion = string.Join(".", components);
 
                 if (int.TryParse(components[0], out Major))
                 {
                     if (components.Length >= 2)
                     {
-                        Match match = _numbersOnly.Match(components[1]);
+                        Match match = NumbersOnly.Match(components[1]);
                         if (match.Success)
                         {
                             if (int.TryParse(match.Value, out Minor))
@@ -41,7 +54,11 @@ namespace AssetInventory
                                 if (match.Length < components[1].Length)
                                 {
                                     MinorQualifier = components[1].Substring(match.Length);
-                                    if (MinorQualifier.StartsWith("-")) MinorQualifier = MinorQualifier.Substring(1);
+                                    if (MinorQualifier.StartsWith("-"))
+                                    {
+                                        MinorQualifier = MinorQualifier.Substring(1);
+                                        SmallerMinorQualifier = true;
+                                    }
                                 }
                             }
                             else
@@ -52,7 +69,7 @@ namespace AssetInventory
 
                         if (components.Length >= 3)
                         {
-                            match = _numbersOnly.Match(components[2]);
+                            match = NumbersOnly.Match(components[2]);
                             if (match.Success)
                             {
                                 if (int.TryParse(match.Value, out Micro))
@@ -60,7 +77,11 @@ namespace AssetInventory
                                     if (match.Length < components[2].Length)
                                     {
                                         MicroQualifier = components[2].Substring(match.Length);
-                                        if (MicroQualifier.StartsWith("-")) MicroQualifier = MicroQualifier.Substring(1);
+                                        if (MicroQualifier.StartsWith("-"))
+                                        {
+                                            MicroQualifier = MicroQualifier.Substring(1);
+                                            SmallerMicroQualifier = true;
+                                        }
                                     }
                                 }
                                 else
@@ -68,7 +89,29 @@ namespace AssetInventory
                                     MicroQualifier = components[2];
                                 }
                             }
-                            if (components.Length >= 4) int.TryParse(components[3], out Patch);
+                            if (components.Length >= 4)
+                            {
+                                match = NumbersOnly.Match(components[3]);
+                                if (match.Success)
+                                {
+                                    if (int.TryParse(match.Value, out Patch))
+                                    {
+                                        if (match.Length < components[3].Length)
+                                        {
+                                            PatchQualifier = components[3].Substring(match.Length);
+                                            if (PatchQualifier.StartsWith("-"))
+                                            {
+                                                PatchQualifier = PatchQualifier.Substring(1);
+                                                SmallerPatchQualifier = true;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        PatchQualifier = components[3];
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -110,19 +153,40 @@ namespace AssetInventory
             if (version1.Minor > version2.Minor) return true;
             if (version1.Minor < version2.Minor) return false;
 
+            if (version1.MinorQualifier != null || version2.MinorQualifier != null)
+            {
+                if (version1.MinorQualifier == null) return version2.SmallerMinorQualifier;
+                if (version2.MinorQualifier == null) return !version1.SmallerMinorQualifier;
+
+                if (string.CompareOrdinal(version1.MinorQualifier, version2.MinorQualifier) > 0) return true;
+                if (string.CompareOrdinal(version1.MinorQualifier, version2.MinorQualifier) < 0) return false;
+            }
+
             if (version1.Micro > version2.Micro) return true;
             if (version1.Micro < version2.Micro) return false;
 
             if (version1.MicroQualifier != null || version2.MicroQualifier != null)
             {
-                if (version1.MicroQualifier == null) return true;
-                if (version2.MicroQualifier == null) return false;
+                if (version1.MicroQualifier == null) return version2.SmallerMicroQualifier;
+                if (version2.MicroQualifier == null) return !version1.SmallerMicroQualifier;
 
                 if (string.CompareOrdinal(version1.MicroQualifier, version2.MicroQualifier) > 0) return true;
                 if (string.CompareOrdinal(version1.MicroQualifier, version2.MicroQualifier) < 0) return false;
             }
 
-            return version1.Patch > version2.Patch;
+            if (version1.Patch > version2.Patch) return true;
+            if (version1.Patch < version2.Patch) return false;
+
+            if (version1.PatchQualifier != null || version2.PatchQualifier != null)
+            {
+                if (version1.PatchQualifier == null) return version1.ComponentCount > version2.ComponentCount;
+                if (version2.PatchQualifier == null) return version1.ComponentCount > version2.ComponentCount;
+
+                if (string.CompareOrdinal(version1.PatchQualifier, version2.PatchQualifier) > 0) return true;
+                if (string.CompareOrdinal(version1.PatchQualifier, version2.PatchQualifier) < 0) return false;
+            }
+
+            return false;
         }
 
         public static bool operator <(SemVer version1, SemVer version2)
@@ -136,19 +200,40 @@ namespace AssetInventory
             if (version1.Minor < version2.Minor) return true;
             if (version1.Minor > version2.Minor) return false;
 
+            if (version1.MinorQualifier != null || version2.MinorQualifier != null)
+            {
+                if (version1.MinorQualifier == null) return !version2.SmallerMinorQualifier;
+                if (version2.MinorQualifier == null) return version1.SmallerMinorQualifier;
+
+                if (string.CompareOrdinal(version1.MinorQualifier, version2.MinorQualifier) < 0) return true;
+                if (string.CompareOrdinal(version1.MinorQualifier, version2.MinorQualifier) > 0) return false;
+            }
+
             if (version1.Micro < version2.Micro) return true;
             if (version1.Micro > version2.Micro) return false;
 
             if (version1.MicroQualifier != null || version2.MicroQualifier != null)
             {
-                if (version1.MicroQualifier == null) return false;
-                if (version2.MicroQualifier == null) return true;
+                if (version1.MicroQualifier == null) return !version2.SmallerMicroQualifier;
+                if (version2.MicroQualifier == null) return version1.SmallerMicroQualifier;
 
                 if (string.CompareOrdinal(version1.MicroQualifier, version2.MicroQualifier) < 0) return true;
                 if (string.CompareOrdinal(version1.MicroQualifier, version2.MicroQualifier) > 0) return false;
             }
 
-            return version1.Patch < version2.Patch;
+            if (version1.Patch < version2.Patch) return true;
+            if (version1.Patch > version2.Patch) return false;
+
+            if (version1.PatchQualifier != null || version2.PatchQualifier != null)
+            {
+                if (version1.PatchQualifier == null) return version1.ComponentCount < version2.ComponentCount;
+                if (version2.PatchQualifier == null) return version1.ComponentCount < version2.ComponentCount;
+
+                if (string.CompareOrdinal(version1.PatchQualifier, version2.PatchQualifier) < 0) return true;
+                if (string.CompareOrdinal(version1.PatchQualifier, version2.PatchQualifier) > 0) return false;
+            }
+
+            return false;
         }
 
         private bool Equals(SemVer other)
@@ -161,7 +246,7 @@ namespace AssetInventory
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((SemVer) obj);
+            return Equals((SemVer)obj);
         }
 
         public override int GetHashCode()

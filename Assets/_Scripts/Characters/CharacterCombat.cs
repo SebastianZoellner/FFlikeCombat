@@ -168,7 +168,7 @@ public class CharacterCombat : MonoBehaviour
    
 
     public bool ManageHit(IDamageable target)
-        //This manages all the rules effects of a hit, called from the projectile function 
+    //This manages all the rules effects of a hit, called from the projectile function 
     {
         int successLevel = 0;
         float highHitDamage = 1;
@@ -177,34 +177,27 @@ public class CharacterCombat : MonoBehaviour
         if (successLevel == 0)
             return false;
 
-        
+
         float damage = attackPower.GetDamage(highHitDamage);
-       
+
         damage = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), damage);
-       
+
         target.TakeDamage(damage);
 
         if (attackPower.momentumEffect)
         {
-            OnMomentumModified.Invoke(this, attackPower.momentumChange);
+            OnMomentumModified.Invoke(this, attackPower.GetMomentumChange());
         }
 
         if (!target.canBeTarget) //Target died
             return true;
 
-        
-        float damageModifier= GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
-        (StatusName status,float intensity,int duration)=attackPower.GetStatusEffect(successLevel);
-
-        if (status != StatusName.None && target is CharacterHealth)
-        {
-            //Debug.Log("Applying Status effects");
-            CharacterHealth targetCharacter = (CharacterHealth)target;
-            targetCharacter.GetComponent<StatusManager>().GainStatus(status, intensity, duration, damageModifier);
-        }
+        ApplySpecialEffects(target, successLevel);
 
         return true;
     }
+
+    
 
     //----------------------------------------------------------------------------------
     //            Private Functions
@@ -266,7 +259,7 @@ public class CharacterCombat : MonoBehaviour
     {
         hasActed = true;
         //Debug.Log("Starting action animation");
-        health.SpendEndurance(attackPower.enduranceCost);
+        health.SpendEndurance(attackPower.GetEnduranceCost());
         animator.SetAttack(attackPower);
         effects.StartAttack(attackPower.HasProjectile(),attackPower.attackOriginArray);
         //start beginning attack FX
@@ -353,20 +346,29 @@ public class CharacterCombat : MonoBehaviour
         float heal = attackPower.GetDamage(1);
         heal = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), heal);
         target.Heal(heal);
-     
-        (StatusName status, float intensity, int duration) = attackPower.GetStatusEffect(0);
 
-        if (status != StatusName.None)
-        {
-            float damageModifier = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
-            target.GetComponent<StatusManager>().GainStatus(status, intensity, duration, damageModifier);
-        }
+        ApplySpecialEffects(target, 1);
+       
 
         if (attackPower.momentumEffect)
         {
-            OnMomentumModified.Invoke(this, attackPower.momentumChange);
+            OnMomentumModified.Invoke(this, attackPower.GetMomentumChange());
         }
     }
+    private void ApplySpecialEffects(IDamageable target, int successLevel)
+    {
+        float damageModifier = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
+        //(StatusName status,float intensity,int duration)=attackPower.GetStatusEffect(successLevel);
+        AttackSuccessEffectSO[] attackEffects = attackPower.GetStatusEffects(successLevel);
 
+        if (attackEffects.Length > 0)
+        {
+            //Debug.Log("Applying Status effects");
+            CharacterHealth targetCharacter = (CharacterHealth)target;
+            StatusManager manager = targetCharacter.GetComponent<StatusManager>();
+            foreach (AttackSuccessEffectSO effect in attackEffects)
+                manager.GainStatus(effect.status, effect.intensity, effect.duration, damageModifier);
+        }
+    }
 
 }

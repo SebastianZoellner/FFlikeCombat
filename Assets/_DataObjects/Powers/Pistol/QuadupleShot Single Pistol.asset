@@ -18,6 +18,9 @@ MonoBehaviour:
   defense: -5
   setupTime: 0.3
   recoveryTime: 0.7
+  timeCost: 1
+  setupVsRecovery: 0.3
+  damageSpread: 0
   target: 0
   radius: 0
   successEffectArray: []

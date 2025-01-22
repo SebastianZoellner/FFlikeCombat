@@ -10,6 +10,8 @@ namespace AssetInventory
         public string searchPhrase;
         public string type;
         public int packageTypes;
+        public int packageSRPs;
+        public int imageType;
         public string package;
         public string packageTag;
         public string fileTag;

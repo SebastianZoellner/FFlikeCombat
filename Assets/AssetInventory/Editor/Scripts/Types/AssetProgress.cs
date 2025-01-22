@@ -10,9 +10,11 @@
         public static int SubProgress { get; protected set; }
         public static bool CancellationRequested { get; set; }
         public static bool Running { get; set; }
-        public static Cooldown Cooldown;
+        public static bool ReadOnly { get; protected set; }
+        protected static Cooldown Cooldown;
+        protected static MemoryObserver MemoryObserver;
 
-        protected void ResetState(bool done)
+        public static void ResetState(bool done)
         {
             Running = !done;
             CurrentMain = null;
@@ -21,9 +23,13 @@
             MainProgress = 0;
             SubCount = 0;
             SubProgress = 0;
+            ReadOnly = false;
 
-            Cooldown = new Cooldown(AssetInventory.Config.cooldownInterval, AssetInventory.Config.cooldownDuration);
-            Cooldown.Enabled = AssetInventory.Config.useCooldown;
+            Cooldown = new Cooldown(AI.Config.cooldownInterval, AI.Config.cooldownDuration);
+            Cooldown.Enabled = AI.Config.useCooldown;
+
+            MemoryObserver = new MemoryObserver(AI.Config.memoryLimit);
+            MemoryObserver.Enabled = true;
         }
     }
 }

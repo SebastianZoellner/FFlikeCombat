@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using SQLite;
@@ -20,16 +21,28 @@ namespace AssetInventory
 
         private static SQLiteConnection _db;
 
-        public static void InitDB()
+        private static void InitDB()
         {
-            _db = new SQLiteConnection(GetDBPath());
+            _db = new SQLiteConnection(GetDBPath(), SQLiteOpenFlags.Create | SQLiteOpenFlags.ReadWrite | SQLiteOpenFlags.FullMutex);
+            _db.BusyTimeout = TimeSpan.FromSeconds(10);
+
+            //_db.Trace = true;
+            //_db.Tracer += s => Debug.Log(s);
+
+            _db.ExecuteScalar<string>("PRAGMA journal_mode=" + AI.Config.dbJournalMode);
+            _db.Execute("PRAGMA case_sensitive_like = false");
+
             _db.CreateTable<Asset>();
             _db.CreateTable<AssetFile>();
+            _db.CreateTable<AssetMedia>();
             _db.CreateTable<AppProperty>();
             _db.CreateTable<Tag>();
             _db.CreateTable<TagAssignment>();
             _db.CreateTable<RelativeLocation>();
             _db.CreateTable<SystemData>();
+
+            _db.CreateIndex("AssetFile", new[] {"Type", "PreviewState", "Path"});
+            _db.CreateIndex("Asset", new[] {"Exclude", "AssetSource"});
         }
 
         public static long GetDBSize()
@@ -54,7 +67,7 @@ namespace AssetInventory
 
         public static string GetDBPath()
         {
-            return IOUtils.PathCombine(AssetInventory.GetStorageFolder(), DB_NAME);
+            return IOUtils.PathCombine(AI.GetStorageFolder(), DB_NAME);
         }
 
         public static bool IsDBOpen()

@@ -22,7 +22,7 @@ namespace AssetInventory
         private readonly List<TreeViewItem> _rows = new List<TreeViewItem>(100);
         public event Action TreeChanged;
 
-        public TreeModel<T> TreeModel { get; private set; }
+        protected TreeModel<T> TreeModel { get; private set; }
 
         public event Action<IList<TreeViewItem>> BeforeDroppingDraggedItems;
         public event Action<IList<int>> OnSelectionChanged;
@@ -73,8 +73,8 @@ namespace AssetInventory
                 if (TreeModel.Root.HasChildren) AddChildrenRecursive(TreeModel.Root, 0, _rows);
             }
 
-            // We still need to setup the child parent information for the rows since this 
-            // information is used by the TreeView internal logic (navigation, dragging etc)
+            // We still need to set up the child parent information for the rows since this 
+            // information is used by the TreeView internal logic (navigation, dragging etc.)
             SetupParentsAndChildrenFromDepths(root, _rows);
 
             return _rows;
@@ -108,9 +108,12 @@ namespace AssetInventory
             const int kItemDepth = 0; // tree is flattened when searching
 
             Stack<T> stack = new Stack<T>();
-            foreach (TreeElement element in searchFromThis.Children)
+            if (searchFromThis.Children != null)
             {
-                stack.Push((T) element);
+                foreach (TreeElement element in searchFromThis.Children)
+                {
+                    stack.Push((T)element);
+                }
             }
             while (stack.Count > 0)
             {
@@ -125,7 +128,7 @@ namespace AssetInventory
                 {
                     foreach (TreeElement element in current.Children)
                     {
-                        stack.Push((T) element);
+                        stack.Push((T)element);
                     }
                 }
             }
@@ -176,7 +179,7 @@ namespace AssetInventory
             DragAndDrop.PrepareStartDrag();
             List<TreeViewItem> draggedRows = GetRows().Where(item => args.draggedItemIDs.Contains(item.id)).ToList();
             DragAndDrop.SetGenericData(_genericDragID, draggedRows);
-            DragAndDrop.objectReferences = new UnityEngine.Object[] { }; // this IS required for dragging to work
+            DragAndDrop.objectReferences = new UnityEngine.Object[] {}; // this IS required for dragging to work
             string title = draggedRows.Count == 1 ? draggedRows[0].displayName : "< Multiple >";
             DragAndDrop.StartDrag(title);
         }
@@ -196,7 +199,7 @@ namespace AssetInventory
                     bool validDrag = ValidDrag(args.parentItem, draggedRows);
                     if (args.performDrop && validDrag)
                     {
-                        T parentData = ((TreeViewItem<T>) args.parentItem).Data;
+                        T parentData = ((TreeViewItem<T>)args.parentItem).Data;
                         OnDropDraggedElementsAtIndex(draggedRows, parentData, args.insertAtIndex == -1 ? 0 : args.insertAtIndex);
                     }
                     return validDrag ? DragAndDropVisualMode.Move : DragAndDropVisualMode.None;
@@ -216,14 +219,14 @@ namespace AssetInventory
             }
         }
 
-        public virtual void OnDropDraggedElementsAtIndex(List<TreeViewItem> draggedRows, T parent, int insertIndex)
+        protected virtual void OnDropDraggedElementsAtIndex(List<TreeViewItem> draggedRows, T parent, int insertIndex)
         {
             if (BeforeDroppingDraggedItems != null) BeforeDroppingDraggedItems(draggedRows);
 
             List<TreeElement> draggedElements = new List<TreeElement>();
             foreach (TreeViewItem x in draggedRows)
             {
-                draggedElements.Add(((TreeViewItem<T>) x).Data);
+                draggedElements.Add(((TreeViewItem<T>)x).Data);
             }
 
             int[] selectedIDs = draggedElements.Select(x => x.TreeId).ToArray();

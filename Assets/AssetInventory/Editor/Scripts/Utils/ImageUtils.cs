@@ -2,17 +2,25 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
+#if UNITY_2021_2_OR_NEWER && UNITY_EDITOR_WIN
+using System.Drawing;
+using System.Drawing.Imaging;
+using Graphics = System.Drawing.Graphics;
+#endif
 using System.Linq;
-using UnityEditor.Graphs;
 using UnityEngine;
 using UnityEngine.Experimental.Rendering;
+using Color = UnityEngine.Color;
 
 namespace AssetInventory
 {
     public static class ImageUtils
     {
+        public static readonly List<string> SYSTEM_IMAGE_TYPES = new List<string> {"jpg", "jpeg", "png", "bmp", "gif", "tiff", "tif"};
+
         // palette adapted from http://eastfarthing.com/blog/2016-05-06-palette/
-        public static Color[] PALETTE_32 =
+        private static Color[] PALETTE_32 =
         {
             FromHex("#d6a090"),
             FromHex("#fe3b1e"),
@@ -180,22 +188,111 @@ namespace AssetInventory
             return texture;
         }
 
-        public static Texture2D Resize(this Texture2D texture, int size)
+        public static Tuple<int, int> GetDimensions(string file, bool ignoreErrors = false)
+        {
+            #if UNITY_2021_2_OR_NEWER && UNITY_EDITOR_WIN
+            Image originalImage; // leave here as otherwise temp files will be created by FromFile() for yet unknown reasons 
+            #endif
+            try
+            {
+                #if UNITY_2021_2_OR_NEWER && UNITY_EDITOR_WIN
+                using (originalImage = Image.FromFile(IOUtils.ToLongPath(file)))
+                {
+                    return new Tuple<int, int>(originalImage.Width, originalImage.Height);
+                }
+                #else
+                Texture2D tmpTexture = new Texture2D(1, 1);
+                byte[] assetContent = File.ReadAllBytes(file);
+                if (tmpTexture.LoadImage(assetContent))
+                {
+                    return new Tuple<int, int>(tmpTexture.width, tmpTexture.height);
+                }
+                return null;
+                #endif
+            }
+            catch (Exception e)
+            {
+                if (!ignoreErrors && AI.Config.LogImageExtraction)
+                {
+                    Debug.LogWarning($"Could not determine image dimensions for '{file}': {e.Message}");
+                }
+                return null;
+            }
+        }
+
+        #if UNITY_2021_2_OR_NEWER && UNITY_EDITOR_WIN
+        public static bool ResizeImage(string originalFile, string outputFile, int maxSize, bool scaleBeyondSize = true, ImageFormat format = null)
+        {
+            Image originalImage; // leave here as otherwise temp files will be created by FromFile() for yet unknown reasons 
+            try
+            {
+                using (originalImage = Image.FromFile(IOUtils.ToLongPath(originalFile)))
+                {
+                    int originalWidth = originalImage.Width;
+                    int originalHeight = originalImage.Height;
+
+                    // Calculate the scaling
+                    double ratioX = (double)maxSize / originalWidth;
+                    double ratioY = (double)maxSize / originalHeight;
+                    double ratio = Math.Min(ratioX, ratioY);
+
+                    int newWidth = Mathf.Max(1, (int)(originalWidth * ratio));
+                    int newHeight = Mathf.Max(1, (int)(originalHeight * ratio));
+
+                    if (!scaleBeyondSize && (newWidth > originalWidth || newHeight > originalHeight))
+                    {
+                        newWidth = originalWidth;
+                        newHeight = originalHeight;
+                    }
+
+                    // Create a new empty image with the new dimensions
+                    using (Bitmap newImage = new Bitmap(newWidth, newHeight))
+                    {
+                        using (Graphics graphics = Graphics.FromImage(newImage))
+                        {
+                            graphics.CompositingQuality = System.Drawing.Drawing2D.CompositingQuality.HighQuality;
+                            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.HighQualityBicubic;
+                            graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
+                            graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+                        }
+
+                        // Save the resized image
+                        string dir = Path.GetDirectoryName(outputFile);
+                        if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
+                        newImage.Save(IOUtils.ToLongPath(outputFile), format != null ? format : ImageFormat.Png); // Adjust the format based on your needs
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                if (AI.Config.LogImageExtraction)
+                {
+                    Debug.LogWarning($"Could not resize image '{originalFile}': {e.Message}");
+                }
+                return false;
+            }
+            return true;
+        }
+        #endif
+
+        public static Texture2D Resize(this Texture2D source, int size)
         {
             int targetX = size;
             int targetY = size;
 
-            if (texture.width > texture.height) targetY = (int) (targetX * ((float) texture.height / texture.width));
-            if (texture.height > texture.width) targetX = (int) (targetY * ((float) texture.width / texture.height));
+            if (source.width > source.height) targetY = (int)(targetX * ((float)source.height / source.width));
+            if (source.height > source.width) targetX = (int)(targetY * ((float)source.width / source.height));
 
-            RenderTexture rt = RenderTexture.GetTemporary(targetX, targetY, 24, GraphicsFormat.R32G32B32A32_SFloat, 1);
+            RenderTexture rt = RenderTexture.GetTemporary(targetX, targetY, 24, RenderTextureFormat.Default);
             RenderTexture.active = rt;
-            Graphics.Blit(texture, rt);
+            UnityEngine.Graphics.Blit(source, rt);
             Texture2D result = new Texture2D(targetX, targetY, TextureFormat.RGBA32, false);
             result.ReadPixels(new Rect(0, 0, targetX, targetY), 0, 0);
-            result.filterMode = FilterMode.Bilinear;
-            texture.wrapMode = TextureWrapMode.Clamp;
+            result.filterMode = FilterMode.Trilinear;
+            result.wrapMode = TextureWrapMode.Clamp;
+            result.hideFlags = source.hideFlags;
             result.Apply();
+            RenderTexture.active = null;
             RenderTexture.ReleaseTemporary(rt);
 
             return result;

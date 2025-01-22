@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEditor;
 using UnityEngine;
 
@@ -12,16 +13,19 @@ namespace AssetInventory
     public sealed class ExportUI : EditorWindow
     {
         private const string REMAINING_EXTENSIONS = "All the Rest";
+
         private string _separator = ";";
         private Vector2 _scrollPos;
         private List<AssetInfo> _assets;
         private List<ED> _exportFields;
+        private List<ED> _overrideFields;
         private List<ED> _exportTypes;
         private string[] _exportOptions;
         private int _selectedExportOption;
         private bool _addHeader = true;
         private bool _showFields;
         private bool _clearTarget;
+        private bool _overrideExisting;
         private List<AssetInfo> _packages;
         private int _packageCount;
         private bool _exportInProgress;
@@ -29,6 +33,7 @@ namespace AssetInventory
         private int _curProgress;
         private int _maxProgress;
         private bool _autoDownload;
+        private bool _metaFiles;
 
         public static ExportUI ShowWindow()
         {
@@ -44,16 +49,18 @@ namespace AssetInventory
             _packages = assets.GroupBy(a => a.AssetId).Select(a => a.First()).ToList(); // cast to list to make it serializable during script reloads
             _packageCount = _packages.Count;
 
-            _exportableExtensions = AssetInventory.TypeGroups.SelectMany(tg => tg.Value).ToList();
+            _exportableExtensions = AI.TypeGroups.SelectMany(tg => tg.Value).ToList();
 
             _selectedExportOption = exportType;
-            _exportOptions = new[] {"Package info to file (CSV)", "Assets to external folder", "Catalog (HTML)"};
+            _exportOptions = new[] {"Package info to file (CSV)", "Package licenses to file (MD)", "Assets to external folder", "Package Override File", "Catalog (HTML)"};
             _exportFields = new List<ED>
             {
                 new ED("Asset/Id"),
+                new ED("Asset/ParentId"),
                 new ED("Asset/ForeignId"),
                 new ED("Asset/AssetRating"),
                 new ED("Asset/AssetSource"),
+                new ED("Asset/BIRPCompatible", false),
                 new ED("Asset/CompatibilityInfo", false),
                 new ED("Asset/CurrentState", false),
                 new ED("Asset/CurrentSubState", false),
@@ -63,9 +70,10 @@ namespace AssetInventory
                 new ED("Asset/DisplayPublisher"),
                 new ED("Asset/ETag", false),
                 new ED("Asset/Exclude", false),
-                new ED("Asset/Hue", false),
+                new ED("Asset/FirstRelease", false),
+                new ED("Asset/HDRPCompatible", false),
+                new ED("Asset/Hotness", false),
                 new ED("Asset/IsHidden", false),
-                new ED("Asset/IsLatestVersion"),
                 new ED("Asset/KeyFeatures", false),
                 new ED("Asset/Keywords"),
                 new ED("Asset/LastOnlineRefresh", false),
@@ -74,15 +82,15 @@ namespace AssetInventory
                 new ED("Asset/License"),
                 new ED("Asset/LicenseLocation", false),
                 new ED("Asset/Location"),
-                new ED("Asset/MainImage", false),
-                new ED("Asset/MainImageIcon", false),
-                new ED("Asset/MainImageSmall", false),
                 new ED("Asset/OriginalLocation", false),
                 new ED("Asset/OriginalLocationKey", false),
                 new ED("Asset/PackageSize", false),
                 new ED("Asset/PackageSource"),
-                new ED("Asset/PreferredVersion"),
-                new ED("Asset/PreviewImage", false),
+                new ED("Asset/PackageTags"),
+                new ED("Asset/PriceEur", false),
+                new ED("Asset/PriceUsd", false),
+                new ED("Asset/PriceCny", false),
+                new ED("Asset/PurchaseDate"),
                 new ED("Asset/RatingCount"),
                 new ED("Asset/Registry", false),
                 new ED("Asset/ReleaseNotes", false),
@@ -93,14 +101,50 @@ namespace AssetInventory
                 new ED("Asset/SafePublisher"),
                 new ED("Asset/Slug", false),
                 new ED("Asset/SupportedUnityVersions"),
-                new ED("Asset/Version"),
-                new ED("Asset/PackageTags")
+                new ED("Asset/UpdateStrategy", false),
+                new ED("Asset/URPCompatible", false),
+                new ED("Asset/Version")
+            };
+            _overrideFields = new List<ED>
+            {
+                new ED("Asset/AssetRating", false),
+                new ED("Asset/BIRPCompatible", false),
+                new ED("Asset/CompatibilityInfo", false),
+                new ED("Asset/Description", false),
+                new ED("Asset/DisplayCategory", false),
+                new ED("Asset/DisplayName", false),
+                new ED("Asset/DisplayPublisher", false),
+                new ED("Asset/FirstRelease", false),
+                new ED("Asset/HDRPCompatible", false),
+                new ED("Asset/Hotness", false),
+                new ED("Asset/KeyFeatures", false),
+                new ED("Asset/Keywords", false),
+                new ED("Asset/LastRelease", false),
+                new ED("Asset/LatestVersion", false),
+                new ED("Asset/License", false),
+                new ED("Asset/LicenseLocation", false),
+                new ED("Asset/PackageTags", false),
+                new ED("Asset/PriceEur", false),
+                new ED("Asset/PriceUsd", false),
+                new ED("Asset/PriceCny", false),
+                new ED("Asset/PurchaseDate", false),
+                new ED("Asset/RatingCount", false),
+                new ED("Asset/Registry", false),
+                new ED("Asset/ReleaseNotes", false),
+                new ED("Asset/Repository", false),
+                new ED("Asset/Revision", false),
+                new ED("Asset/SafeCategory", false),
+                new ED("Asset/SafePublisher", false),
+                new ED("Asset/Slug", false),
+                new ED("Asset/SupportedUnityVersions", false),
+                new ED("Asset/URPCompatible", false),
+                new ED("Asset/Version", false)
             };
             _exportTypes = new List<ED>
             {
                 new ED("Audio"),
                 new ED("Images"),
-                new ED("Video"),
+                new ED("Videos"),
                 new ED("Models"),
                 new ED("Documents", false),
                 new ED("Scripts", false),
@@ -118,13 +162,13 @@ namespace AssetInventory
                 return;
             }
 
-            int labelWidth = 100;
+            int labelWidth = 110;
             EditorGUI.BeginDisabledGroup(_exportInProgress);
             GUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("Source", EditorStyles.boldLabel, GUILayout.MaxWidth(labelWidth));
             if (_packageCount == 1)
             {
-                EditorGUILayout.LabelField($"Current Selection ({_assets.First().GetDisplayName(false)})");
+                EditorGUILayout.LabelField($"Current Selection ({_assets.First().GetDisplayName()})");
             }
             else
             {
@@ -172,14 +216,26 @@ namespace AssetInventory
                     break;
 
                 case 1:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.HelpBox("The export will only include information about packages that actually contain license data.", MessageType.Info);
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button("Export...", GUILayout.Height(50))) ExportLicenses();
+                    break;
+
+                case 2:
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(UIStyles.Content("Clear Target", "Deletes any previously existing export for the specific package, otherwise only copies new files"), EditorStyles.boldLabel, GUILayout.Width(labelWidth));
+                    EditorGUILayout.LabelField(UIStyles.Content("Clear Target", "Deletes any previously existing export for the specific package, otherwise only copies new files."), EditorStyles.boldLabel, GUILayout.Width(labelWidth));
                     _clearTarget = EditorGUILayout.Toggle(_clearTarget);
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(UIStyles.Content("Download", "Triggers download of package automatically in case it is not available yet in the cache"), EditorStyles.boldLabel, GUILayout.Width(labelWidth));
+                    EditorGUILayout.LabelField(UIStyles.Content("Download", "Triggers download of package automatically in case it is not available yet in the cache."), EditorStyles.boldLabel, GUILayout.Width(labelWidth));
                     _autoDownload = EditorGUILayout.Toggle(_autoDownload);
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(UIStyles.Content("Meta Files", "Exports also meta files if they exist."), EditorStyles.boldLabel, GUILayout.Width(labelWidth));
+                    _metaFiles = EditorGUILayout.Toggle(_metaFiles);
                     GUILayout.EndHorizontal();
 
                     GUILayout.BeginHorizontal();
@@ -196,7 +252,7 @@ namespace AssetInventory
                         if (i % 3 == 0)
                         {
                             GUILayout.BeginHorizontal();
-                            GUILayout.Space(107);
+                            GUILayout.Space(117);
                         }
                         _exportTypes[i].isSelected = EditorGUILayout.Toggle(_exportTypes[i].isSelected, GUILayout.Width(20));
                         EditorGUILayout.LabelField(_exportTypes[i].pointer, GUILayout.Width(typeWidth));
@@ -209,9 +265,38 @@ namespace AssetInventory
                     if (GUILayout.Button(_exportInProgress ? "Export in progress" : "Export...", GUILayout.Height(50))) ExportAssets();
                     break;
 
-                case 2:
+                case 3:
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(UIStyles.Content("Override Existing", ""), EditorStyles.boldLabel, GUILayout.Width(labelWidth));
+                    _overrideExisting = EditorGUILayout.Toggle(_overrideExisting);
+                    GUILayout.EndHorizontal();
+
                     EditorGUILayout.Space();
-                    EditorGUILayout.HelpBox("Coming Soon", MessageType.Info);
+                    EditorGUILayout.LabelField("Fields to override", EditorStyles.boldLabel);
+                    EditorGUILayout.Space();
+                    GUILayout.BeginHorizontal();
+                    if (GUILayout.Button("Select All")) _overrideFields.ForEach(f => f.isSelected = true);
+                    if (GUILayout.Button("Select None")) _overrideFields.ForEach(f => f.isSelected = false);
+                    GUILayout.EndHorizontal();
+                    EditorGUILayout.Space();
+
+                    _scrollPos = GUILayout.BeginScrollView(_scrollPos, false, false, GUIStyle.none, GUI.skin.verticalScrollbar, GUILayout.ExpandWidth(true));
+                    foreach (ED ed in _overrideFields)
+                    {
+                        GUILayout.BeginHorizontal();
+                        ed.isSelected = EditorGUILayout.Toggle(ed.isSelected, GUILayout.Width(20));
+                        EditorGUILayout.LabelField(ed.field);
+                        GUILayout.EndHorizontal();
+                    }
+                    GUILayout.EndScrollView();
+
+                    GUILayout.FlexibleSpace();
+                    if (GUILayout.Button(_exportInProgress ? "Export in progress" : "Export", GUILayout.Height(50))) ExportOverrides();
+                    break;
+
+                case 4:
+                    EditorGUILayout.Space();
+                    EditorGUILayout.HelpBox("Coming in future versions", MessageType.Info);
                     break;
             }
             EditorGUI.EndDisabledGroup();
@@ -219,11 +304,11 @@ namespace AssetInventory
 
         private async void ExportAssets()
         {
-            string folder = EditorUtility.OpenFolderPanel("Select storage folder for exports", AssetInventory.Config.exportFolder2, "");
+            string folder = EditorUtility.OpenFolderPanel("Select storage folder for exports", AI.Config.exportFolder2, "");
             if (string.IsNullOrEmpty(folder)) return;
 
-            AssetInventory.Config.exportFolder2 = Path.GetFullPath(folder);
-            AssetInventory.SaveConfig();
+            AI.Config.exportFolder2 = Path.GetFullPath(folder);
+            AI.SaveConfig();
 
             _exportInProgress = true;
             _curProgress = 0;
@@ -240,22 +325,29 @@ namespace AssetInventory
                     continue;
                 }
 
-                if (!info.Downloaded)
+                if (!info.IsDownloaded)
                 {
-                    if (!_autoDownload) continue;
-                    if (info.PackageDownloader == null) info.PackageDownloader = new AssetDownloader(info);
+                    if (info.IsAbandoned)
+                    {
+                        Debug.LogWarning($"Package '{info}' is not locally available and also abandoned and cannot be downloaded anymore. Continuing with next package.");
+                        continue;
+                    }
+                    if (!_autoDownload)
+                    {
+                        Debug.LogWarning($"Package '{info}' is not downloaded and cannot be exported. Continuing with next package.");
+                        continue;
+                    }
+                    AI.GetObserver().Attach(info);
                     if (!info.PackageDownloader.IsDownloadSupported()) continue;
 
                     info.PackageDownloader.Download();
                     do
                     {
-                        AssetDownloadState state = info.PackageDownloader.GetState();
-                        // SubCount = Mathf.RoundToInt(state.bytesTotal / 1024f / 1024f);
-                        // SubProgress = Mathf.RoundToInt(state.bytesDownloaded / 1024f / 1024f);
                         await Task.Yield();
                     } while (info.IsDownloading());
+                    await Task.Delay(3000); // ensure all file operations have finished, can otherwise lead to issues
                     info.Refresh();
-                    if (!info.Downloaded)
+                    if (!info.IsDownloaded)
                     {
                         Debug.LogError($"Downloading '{info}' failed. Continuing with next package.");
                         continue;
@@ -267,7 +359,7 @@ namespace AssetInventory
                 if (!Directory.Exists(targetFolder)) Directory.CreateDirectory(targetFolder);
 
                 // extract package
-                string cachePath = AssetInventory.GetMaterializedAssetPath(info.ToAsset());
+                string cachePath = AI.GetMaterializedAssetPath(info.ToAsset());
                 bool existing = Directory.Exists(cachePath);
 
                 // gather all indexed files
@@ -280,7 +372,7 @@ namespace AssetInventory
                         if (!type.isSelected) continue;
                         if (type.pointer != REMAINING_EXTENSIONS)
                         {
-                            if (AssetInventory.TypeGroups[type.pointer].Contains(af.Type)) include = true;
+                            if (AI.TypeGroups[type.pointer].Contains(af.Type)) include = true;
                         }
                         else
                         {
@@ -290,16 +382,23 @@ namespace AssetInventory
                     if (!include) continue;
 
                     string targetFile = Path.Combine(targetFolder, af.GetPath(true));
-                    if (File.Exists(targetFile)) return;
+                    string targetMeta = targetFile + ".meta";
+                    if (File.Exists(targetFile) && (!_metaFiles || File.Exists(targetMeta))) continue;
 
-                    string sourceFile = await AssetInventory.EnsureMaterializedAsset(info.ToAsset(), af);
+                    string sourceFile = await AI.EnsureMaterializedAsset(info.ToAsset(), af);
                     if (string.IsNullOrEmpty(sourceFile)) continue;
 
                     string targetDir = Directory.GetParent(targetFile)?.ToString();
                     if (targetDir == null) continue;
 
                     if (!Directory.Exists(targetDir)) Directory.CreateDirectory(targetDir);
-                    File.Copy(sourceFile, targetFile);
+                    File.Copy(sourceFile, targetFile, true);
+
+                    if (_metaFiles)
+                    {
+                        string sourceMeta = sourceFile + ".meta";
+                        if (File.Exists(sourceMeta)) File.Copy(sourceMeta, targetMeta, true);
+                    }
                 }
                 if (!existing) await IOUtils.DeleteFileOrDirectory(cachePath);
             }
@@ -307,15 +406,111 @@ namespace AssetInventory
             EditorUtility.RevealInFinder(folder);
         }
 
-        private void ExportMetaData()
+        private async void ExportOverrides()
         {
-            string file = EditorUtility.SaveFilePanel("Target file", AssetInventory.Config.exportFolder, "assets", "csv");
+            _exportInProgress = true;
+            _curProgress = 0;
+            _maxProgress = _packages.Count;
+
+            foreach (AssetInfo info in _packages)
+            {
+                _curProgress++;
+                if (info.AssetSource != Asset.Source.CustomPackage && info.AssetSource != Asset.Source.Archive)
+                {
+                    Debug.LogWarning($"Skipping package '{info}' since it is not a custom package or archive.");
+                    continue;
+                }
+                await Task.Yield();
+
+                string targetFile = info.GetLocation(true) + ".overrides.json";
+                if (!_overrideExisting && File.Exists(targetFile)) continue;
+
+                PackageOverrides po = new PackageOverrides();
+                foreach (ED field in _overrideFields.Where(f => f.isSelected))
+                {
+                    switch (field.field)
+                    {
+                        case "PackageTags":
+                            po.tags = info.PackageTags.Select(pt => pt.Name).ToArray();
+                            break;
+
+                        default:
+                            if (field.FieldInfo != null)
+                            {
+                                FieldInfo fi = typeof (PackageOverrides).GetField(field.field.ToLowercaseFirstLetter());
+                                if (fi != null)
+                                {
+                                    fi.SetValue(po, field.FieldInfo.GetValue(info));
+                                }
+                                else
+                                {
+                                    Debug.LogError($"Override field '{field.field}' not found.");
+                                }
+                            }
+                            else
+                            {
+                                Debug.LogError($"Override source field '{field.field}' not found.");
+                            }
+                            break;
+                    }
+                }
+
+                File.WriteAllText(targetFile, JsonConvert.SerializeObject(po, new JsonSerializerSettings
+                {
+                    Formatting = Formatting.Indented,
+                    NullValueHandling = NullValueHandling.Ignore,
+                    DefaultValueHandling = DefaultValueHandling.Ignore
+                }));
+            }
+            _exportInProgress = false;
+        }
+
+        private void ExportLicenses()
+        {
+            string file = EditorUtility.SaveFilePanel("Target file", AI.Config.exportFolder3, "ThirdParty", "md");
             if (string.IsNullOrEmpty(file)) return;
 
             _exportInProgress = true;
 
-            AssetInventory.Config.exportFolder = Directory.GetParent(Path.GetFullPath(file))?.ToString();
-            AssetInventory.SaveConfig();
+            AI.Config.exportFolder3 = Directory.GetParent(Path.GetFullPath(file))?.ToString();
+            AI.SaveConfig();
+
+            // TODO: switch to configurable templates
+            List<string> result = new List<string>();
+            result.Add("# Third Party Licenses");
+            result.Add("");
+            result.Add("The following third-party packages are included: ");
+            result.Add("");
+
+            List<AssetInfo> list = _assets.Where(a => !string.IsNullOrWhiteSpace(a.License))
+                .GroupBy(a => a.GetDisplayName() + " - " + a.License)
+                .Select(g => g.First())
+                .OrderBy(a => a.GetDisplayName())
+                .ToList();
+            foreach (AssetInfo info in list)
+            {
+                result.Add($"## {info.GetDisplayName(true)}");
+                result.Add("");
+                result.Add(info.License);
+                if (!string.IsNullOrWhiteSpace(info.LicenseLocation)) result.Add($"([Details]({info.LicenseLocation}))");
+                result.Add("");
+            }
+            File.WriteAllLines(file, result);
+
+            _exportInProgress = false;
+
+            EditorUtility.RevealInFinder(file);
+        }
+
+        private void ExportMetaData()
+        {
+            string file = EditorUtility.SaveFilePanel("Target file", AI.Config.exportFolder, "assets", "csv");
+            if (string.IsNullOrEmpty(file)) return;
+
+            _exportInProgress = true;
+
+            AI.Config.exportFolder = Directory.GetParent(Path.GetFullPath(file))?.ToString();
+            AI.SaveConfig();
 
             List<string> result = new List<string>();
 
@@ -341,7 +536,14 @@ namespace AssetInventory
                             break;
 
                         default:
-                            line.Add(field.FieldInfo?.GetValue(info));
+                            if (field.FieldInfo != null)
+                            {
+                                line.Add(field.FieldInfo.GetValue(info));
+                            }
+                            else
+                            {
+                                Debug.LogError($"Export field '{field.field}' not found.");
+                            }
                             break;
                     }
 

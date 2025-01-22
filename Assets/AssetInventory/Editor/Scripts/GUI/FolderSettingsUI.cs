@@ -6,7 +6,6 @@ namespace AssetInventory
     public sealed class FolderSettingsUI : PopupWindowContent
     {
         private FolderSpec _spec;
-        private Rect _relativeButtonRect;
 
         public void Init(FolderSpec spec)
         {
@@ -15,9 +14,9 @@ namespace AssetInventory
 
         public override void OnGUI(Rect rect)
         {
-            editorWindow.maxSize = new Vector2(300, 130);
+            editorWindow.maxSize = new Vector2(340, 190);
             editorWindow.minSize = editorWindow.maxSize;
-            int width = 110;
+            int width = 140;
 
             EditorGUILayout.Space();
 
@@ -31,6 +30,13 @@ namespace AssetInventory
             switch (_spec.folderType)
             {
                 case 0: // packages
+                    EditorGUI.BeginDisabledGroup(true);
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(UIStyles.Content("Assign Package", "Will connect indexed files to a new package with the name of the package file."), EditorStyles.boldLabel, GUILayout.Width(width));
+                    EditorGUILayout.Toggle(true);
+                    GUILayout.EndHorizontal();
+                    EditorGUI.EndDisabledGroup();
+
                     RenderAssignTag(width);
                     break;
 
@@ -40,7 +46,7 @@ namespace AssetInventory
                     _spec.scanFor = EditorGUILayout.Popup(_spec.scanFor, UIStyles.MediaTypes);
                     GUILayout.EndHorizontal();
 
-                    if (_spec.scanFor == 6)
+                    if (_spec.scanFor == 7)
                     {
                         GUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField(UIStyles.Content("Pattern", "e.g. *.jpg;*.wav"), EditorStyles.boldLabel, GUILayout.Width(width));
@@ -63,12 +69,17 @@ namespace AssetInventory
                     _spec.attachToPackage = EditorGUILayout.Toggle(_spec.attachToPackage);
                     GUILayout.EndHorizontal();
 
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(UIStyles.Content("Detect Unity Projects", "Will check if the folder is the root of a Unity project and will only index the Assets/ folder while keeping the name of the Unity project as the package name."), EditorStyles.boldLabel, GUILayout.Width(width));
+                    _spec.detectUnityProjects = EditorGUILayout.Toggle(_spec.detectUnityProjects);
+                    GUILayout.EndHorizontal();
+
                     break;
 
-                case 2: // zip
+                case 2: // archive
                     EditorGUI.BeginDisabledGroup(true);
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField(UIStyles.Content("Assign Package", $"Will connect indexed files to a new package with the name of the archive."), EditorStyles.boldLabel, GUILayout.Width(width));
+                    EditorGUILayout.LabelField(UIStyles.Content("Assign Package", "Will connect indexed files to a new package with the name of the archive."), EditorStyles.boldLabel, GUILayout.Width(width));
                     EditorGUILayout.Toggle(true);
                     GUILayout.EndHorizontal();
                     EditorGUI.EndDisabledGroup();
@@ -78,18 +89,35 @@ namespace AssetInventory
                     _spec.createPreviews = EditorGUILayout.Toggle(_spec.createPreviews);
                     GUILayout.EndHorizontal();
 
-                    if (AssetInventory.DEBUG_MODE)
-                    {
-                        GUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField(UIStyles.Content("Prefer Packages", "If the zip contains unity package files the package will be indexed instead and all other files ignored."), EditorStyles.boldLabel, GUILayout.Width(width));
-                        _spec.preferPackages = EditorGUILayout.Toggle(_spec.preferPackages);
-                        GUILayout.EndHorizontal();
-                    }
+                    RenderAssignTag(width);
+                    break;
+
+                case 3: // dev-packages
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(UIStyles.Content("Create Sub-Packages", ""), EditorStyles.boldLabel, GUILayout.Width(width));
+                    _spec.createSubPackages = EditorGUILayout.Toggle(_spec.createSubPackages);
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(UIStyles.Content("Create Previews", "Recommended. Will generate previews and additional metadata but requires more time during indexing."), EditorStyles.boldLabel, GUILayout.Width(width));
+                    _spec.createPreviews = EditorGUILayout.Toggle(_spec.createPreviews);
+                    GUILayout.EndHorizontal();
+
+                    GUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField(UIStyles.Content("Detect Unity Projects", "Will check if the folder is the root of a Unity project and will only index the Assets/ folder while keeping the name of the Unity project as the package name."), EditorStyles.boldLabel, GUILayout.Width(width));
+                    _spec.detectUnityProjects = EditorGUILayout.Toggle(_spec.detectUnityProjects);
+                    GUILayout.EndHorizontal();
+
                     RenderAssignTag(width);
                     break;
             }
 
-            if (Event.current.control)
+            GUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField(UIStyles.Content("Check File Sizes", "Will update files upon changes in file size. Can significantly slow down the process if files are stored on slow drives or network shares."), EditorStyles.boldLabel, GUILayout.Width(width));
+            _spec.checkSize = EditorGUILayout.Toggle(_spec.checkSize);
+            GUILayout.EndHorizontal();
+
+            if (AI.ShowAdvanced())
             {
                 GUILayout.BeginHorizontal();
                 EditorGUILayout.LabelField(UIStyles.Content("Store Relative", "Persists file paths relative without the concrete base folder location to allow reusing the same database from different systems."), EditorStyles.boldLabel, GUILayout.Width(width));
@@ -111,11 +139,10 @@ namespace AssetInventory
                         editorWindow.Close();
                     }
                 }
-                if (Event.current.type == EventType.Repaint) _relativeButtonRect = GUILayoutUtility.GetLastRect();
                 GUILayout.EndHorizontal();
             }
 
-            if (EditorGUI.EndChangeCheck()) AssetInventory.SaveConfig();
+            if (EditorGUI.EndChangeCheck()) AI.SaveConfig();
         }
 
         private void RenderAssignTag(int width)

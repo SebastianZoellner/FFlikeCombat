@@ -10,7 +10,8 @@ public class GameSystem : MonoBehaviour
     [SerializeField] float maximumHitChance = 0.95f;
     [SerializeField] float minimumHitChance = 0.1f;
 
-    [SerializeField] private float damageMultiplier = 1.2f;
+    [SerializeField] private float damageMultiplier = 1.2f;//I think this is redundant with base damage
+    [SerializeField] private float baseDamage = 5f;
 
     private float[] SuccessLevelArray = new float[] { 0.25f, 0.5f, 0.75f, 1 };
 
@@ -30,6 +31,8 @@ public class GameSystem : MonoBehaviour
     //------------------------------------------
     //---------Public Methods----------------
     //------------------------------------------
+
+    public float GetBaseDamage() => baseDamage;
 
     public (int,float) TestAttack(float attack, float defense,float critModifier)
     {

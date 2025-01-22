@@ -282,13 +282,13 @@ namespace AssetInventory
             TestElement[] result = TreeElementUtility.FindCommonAncestorsWithinList(input).ToArray();
             Assert.IsTrue(ArrayUtility.ArrayEquals(expectedResult, result), "Single input should return single output");
 
-            // Single sub tree
+            // Single subtree
             input = new[] {b1, b2};
             expectedResult = new[] {b1};
             result = TreeElementUtility.FindCommonAncestorsWithinList(input).ToArray();
             Assert.IsTrue(ArrayUtility.ArrayEquals(expectedResult, result), "Common ancestor should only be b1 ");
 
-            // Multiple sub trees
+            // Multiple subtrees
             input = new[] {b0, b2, f0, f2, c0};
             expectedResult = new[] {b0, f0, c0};
             result = TreeElementUtility.FindCommonAncestorsWithinList(input).ToArray();

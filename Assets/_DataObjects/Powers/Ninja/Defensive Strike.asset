@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Defensive Strike
   m_EditorClassIdentifier: 
-  minDamage: 3
-  maxDamage: 4
+  ShowDerivedAttributes: 0
   attack: 0
   defense: 10
-  setupTime: 0.5
-  recoveryTime: 0.2
   target: 0
   radius: 0
+  timeCost: 0.7
+  setupVsRecovery: 0.71428573
+  damageSpread: 0.3
+  numberOfHits: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0
   successEffectArray:
   - level: 2
     status: 6
@@ -33,6 +37,11 @@ MonoBehaviour:
     status: 6
     intensity: 8
     duration: 0
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  enduranceToDamage: 0
   icon: {fileID: 21300000, guid: 9e7266396fac1704f9d5f4788de2df03, type: 3}
   buttonName: Def Strike
   description: A careful, deliberate attack tht creates momentum and a tactical defensive
@@ -47,9 +56,3 @@ MonoBehaviour:
   attackSound: {fileID: 11400000, guid: fdba71c18cc0d6e41aa629b7169e0159, type: 2}
   hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 0.7
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 32

@@ -29,7 +29,10 @@ namespace JD.EditorAudioUtils
 		private static AudioUtilMethodWrapper _stopPreviewClip;
 		private static AudioUtilMethodWrapper _stopAllPreviewClips;
 		private static AudioUtilMethodWrapper _isPreviewClipPlaying;
-		
+        private static AudioUtilMethodWrapper _getPreviewClipPosition;
+        private static AudioUtilMethodWrapper _getPreviewClipSamplePosition;
+        private static AudioUtilMethodWrapper _getSampleCount;
+        
 		/// <summary>
 		/// Play an audio clip in the editor once
 		/// </summary>
@@ -141,7 +144,63 @@ namespace JD.EditorAudioUtils
 			return (bool)_isPreviewClipPlaying.Invoke(audioClip);
 			#endif
 		}
-		
+
+        public static bool IsPreviewClipPlaying()
+        {
+            if (!_initialized)
+            {
+                Initialize();
+            }
+
+			#if UNITY_2020_1_OR_NEWER
+            return (bool)_isPreviewClipPlaying.Invoke();
+			#else
+			return false;
+			#endif
+        }
+
+        public static float GetPreviewClipPosition()
+        {
+            if (!_initialized)
+            {
+                Initialize();
+            }
+
+			#if UNITY_2020_1_OR_NEWER
+            return (float)_getPreviewClipPosition.Invoke();
+			#else
+			return -1f;
+			#endif
+        }
+
+        public static int GetPreviewClipSamplePosition()
+        {
+            if (!_initialized)
+            {
+                Initialize();
+            }
+
+			#if UNITY_2020_1_OR_NEWER
+            return (int)_getPreviewClipSamplePosition.Invoke();
+			#else
+			return -1;
+			#endif
+        }
+
+        public static int GetSampleCount(AudioClip audioClip)
+        {
+            if (!_initialized)
+            {
+                Initialize();
+            }
+
+			#if UNITY_2020_1_OR_NEWER
+            return (int)_getSampleCount.Invoke(audioClip);
+			#else
+			return -1;
+			#endif
+        }
+
 		private static void Initialize()
 		{
 			Assembly unityEditorAssembly = typeof(AudioImporter).Assembly;
@@ -160,6 +219,12 @@ namespace JD.EditorAudioUtils
 				Array.Empty<Type>());
 			_isPreviewClipPlaying = new AudioUtilMethodWrapper(audioUtilClass, "IsPreviewClipPlaying",
 				Array.Empty<Type>());
+            _getPreviewClipPosition = new AudioUtilMethodWrapper(audioUtilClass, "GetPreviewClipPosition",
+                Array.Empty<Type>());
+            _getPreviewClipSamplePosition = new AudioUtilMethodWrapper(audioUtilClass, "GetPreviewClipSamplePosition",
+                Array.Empty<Type>());
+            _getSampleCount = new AudioUtilMethodWrapper(audioUtilClass, "GetSampleCount",
+                new[] {typeof(AudioClip)});
 			#else
 			_playPreviewClip = new AudioUtilMethodWrapper(audioUtilClass, "PlayClip",
 				new[] {typeof(AudioClip), typeof(int), typeof(bool)} );

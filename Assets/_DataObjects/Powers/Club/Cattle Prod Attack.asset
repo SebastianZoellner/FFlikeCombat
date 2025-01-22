@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Cattle Prod Attack
   m_EditorClassIdentifier: 
-  minDamage: 4
-  maxDamage: 6
+  ShowDerivedAttributes: 1
   attack: 5
   defense: 0
-  setupTime: 0.55
-  recoveryTime: 0.55
   target: 0
   radius: 0
+  timeCost: 1.1
+  setupVsRecovery: 0.5
+  damageSpread: 0.502
+  numberOfHits: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0
   successEffectArray:
   - level: 1
     status: 7
@@ -37,6 +41,15 @@ MonoBehaviour:
     status: 7
     intensity: 8
     duration: 1
+  attackEffectsLevel1:
+  - {fileID: 11400000, guid: b96e7ad53e9632c40a0222e5dd9e0568, type: 2}
+  attackEffectsLevel2:
+  - {fileID: 11400000, guid: f74642cc8ba81db4bad6172eacbdb022, type: 2}
+  attackEffectsLevel3:
+  - {fileID: 11400000, guid: b74e6f9be24f6be41bccc6e6cf15258b, type: 2}
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: f77d738148e16f741b3db0c3a50e0e3b, type: 2}
+  enduranceToDamage: 0
   icon: {fileID: 0}
   buttonName: 
   description: 
@@ -50,9 +63,3 @@ MonoBehaviour:
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 52e193ca6cdeb6044ba59d1e70075f5e, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 1.1
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 60

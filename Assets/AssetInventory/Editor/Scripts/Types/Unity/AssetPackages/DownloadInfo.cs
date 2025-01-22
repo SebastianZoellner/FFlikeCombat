@@ -11,6 +11,7 @@ namespace AssetInventory
         public string filename_safe_publisher_name;
         public string key;
         public string url;
+        public string upload_id;
 
         public override string ToString()
         {

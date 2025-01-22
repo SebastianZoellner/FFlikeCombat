@@ -8,10 +8,10 @@ namespace AssetInventory
 
         public static int Start(string name, string description = null, int parentId = -1)
         {
+            _idx++;
 #if UNITY_2020_1_OR_NEWER
             return Progress.Start(name, description, Progress.Options.None, parentId);
 #else
-            _idx++;
             return _idx;
 #endif
         }

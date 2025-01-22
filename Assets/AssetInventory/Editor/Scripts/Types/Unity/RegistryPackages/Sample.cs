@@ -8,6 +8,7 @@ namespace AssetInventory
         public string displayName;
         public string description;
         public string path;
+        public bool interactiveImport;
 
         public override string ToString()
         {

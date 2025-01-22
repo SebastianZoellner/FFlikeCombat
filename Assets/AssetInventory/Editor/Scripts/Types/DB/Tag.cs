@@ -10,7 +10,7 @@ namespace AssetInventory
         public static Color DefaultColor = UnityEngine.Color.white;
 
         [PrimaryKey, AutoIncrement] public int Id { get; set; }
-        [Indexed] public string Name { get; set; }
+        [Indexed] [Collation("NOCASE")] public string Name { get; set; }
         public string Color { get; set; }
         public bool FromAssetStore { get; set; }
 

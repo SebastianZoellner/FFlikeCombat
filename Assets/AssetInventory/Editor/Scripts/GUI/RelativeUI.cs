@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEngine;
 
@@ -40,14 +38,14 @@ namespace AssetInventory
         public void Init(FolderSpec spec)
         {
             _spec = spec;
-            _disableMode = spec.location.StartsWith(AssetInventory.TAG_START);
+            _disableMode = spec.location.StartsWith(AI.TAG_START);
             _key = _disableMode ? spec.relativeKey : Path.GetFileName(spec.location);
             _conversionRunning = false;
             _locationIdx = 0;
 
             if (_disableMode)
             {
-                _relLocation = AssetInventory.RelativeLocations.FirstOrDefault(rl => rl.Key == _spec.relativeKey);
+                _relLocation = AI.RelativeLocations.FirstOrDefault(rl => rl.Key == _spec.relativeKey);
                 _location = _relLocation?.Location;
                 _locations = new HashSet<string>();
                 if (!string.IsNullOrWhiteSpace(_location)) _locations.Add(ConvertSlashToUnicodeSlash(_location));
@@ -148,27 +146,33 @@ namespace AssetInventory
 
         private async void MakeRelative()
         {
+            if (new[] {"ac", "pc"}.Contains(_key.ToLowerInvariant()))
+            {
+                EditorUtility.DisplayDialog("Invalid key", "The key cannot be 'ac' or 'pc' as these are reserved for the Asset and Package cache.", "OK");
+                return;
+            }
+
             _conversionRunning = true;
 
             // create configuration
             RelativeLocation rel = new RelativeLocation();
-            rel.System = AssetInventory.GetSystemId();
+            rel.System = AI.GetSystemId();
             rel.Key = _key;
-            rel.Location = _spec.location;
+            rel.SetLocation(_spec.location);
             DBAdapter.DB.Insert(rel);
 
             // adapt all folder specs with that location since it is not unique to know exactly which folder resulted in which asset entry
-            AssetInventory.Config.folders.Where(f => f.location == rel.Location).ForEach(f =>
+            AI.Config.folders.Where(f => f.location == rel.Location).ForEach(f =>
             {
                 f.storeRelative = true;
                 f.relativeKey = _key;
-                f.location = $"{AssetInventory.TAG_START}{_key}{AssetInventory.TAG_END}";
+                f.location = $"{AI.TAG_START}{_key}{AI.TAG_END}";
             });
-            AssetInventory.SaveConfig();
-            AssetInventory.LoadRelativeLocations();
+            AI.SaveConfig();
+            AI.LoadRelativeLocations();
 
             // fetch assets in question
-            string dbKey = $"{AssetInventory.TAG_START}{_key}{AssetInventory.TAG_END}";
+            string dbKey = $"{AI.TAG_START}{_key}{AI.TAG_END}";
             List<Asset> assets = DBAdapter.DB.Query<Asset>("SELECT Id, Location from Asset where Location like ?", rel.Location + "%");
             _conversionCount = assets.Count;
             _conversionText = "Packages done";
@@ -191,7 +195,7 @@ namespace AssetInventory
 
             _conversionRunning = false;
 
-            Close();
+            CloseWindow();
         }
 
         private async void RevertRelative()
@@ -200,23 +204,23 @@ namespace AssetInventory
             _location = ConvertUnicodeSlashToSlash(_locationsArr[_locationIdx]);
 
             // adapt all folder specs with that location since it is not unique to know exactly which folder resulted in which asset entry
-            AssetInventory.Config.folders.Where(f => f.relativeKey == _key).ForEach(f =>
+            AI.Config.folders.Where(f => f.relativeKey == _key).ForEach(f =>
             {
                 f.storeRelative = false;
                 f.relativeKey = null;
                 f.location = _location;
             });
-            AssetInventory.SaveConfig();
+            AI.SaveConfig();
 
-            int keyUsages = AssetInventory.Config.folders.Count(fs => fs.relativeKey == _key);
+            int keyUsages = AI.Config.folders.Count(fs => fs.relativeKey == _key);
             if (keyUsages == 0)
             {
                 DBAdapter.DB.Execute("DELETE from RelativeLocation where Key=?", _key);
             }
-            AssetInventory.LoadRelativeLocations();
+            AI.LoadRelativeLocations();
 
             // fetch assets in question
-            string dbKey = $"{AssetInventory.TAG_START}{_key}{AssetInventory.TAG_END}";
+            string dbKey = $"{AI.TAG_START}{_key}{AI.TAG_END}";
             List<Asset> assets = DBAdapter.DB.Query<Asset>("SELECT Id, Location from Asset where Location like ?", dbKey + "%");
             _conversionCount = assets.Count;
             _conversionText = "Packages done";
@@ -239,9 +243,15 @@ namespace AssetInventory
 
             _conversionRunning = false;
 
-            Close();
+            CloseWindow();
         }
 
+        private void CloseWindow()
+        {
+            AI.TriggerPackageRefresh();
+            Close();
+        }
+        
         private string ConvertSlashToUnicodeSlash(string text)
         {
             return text.Replace('/', '\u2215');

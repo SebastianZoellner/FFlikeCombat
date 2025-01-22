@@ -1,51 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Newtonsoft.Json.Linq;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
 using UnityEngine;
 
 namespace AssetInventory
 {
     public sealed class AssetDownloader
     {
-        private const int STATE_CACHE_PERIOD = 1;
-        private const int START_STATE_DELAY_SECONDS = 5;
+        private const int HEADER_CACHE_PERIOD = 600;
+        private const int START_GRACE_PERIOD = 5;
+        private const int DOWNLOAD_STUCK_TIMEOUT = 30;
 
         public enum State
         {
+            Initializing,
             Unavailable,
             Unknown,
             Downloading,
+            Paused,
             Downloaded,
             UpdateAvailable
         }
 
-        private readonly AssetInfo _asset;
-        private State _state;
-        private long _bytesDownloaded;
-        private DateTime _lastWriteTime;
-        private DateTime _startTime;
+        public DateTime lastRefresh = DateTime.MinValue;
 
-        // global state since callback does not have object reference
-        public static Dictionary<string, bool> DownloadDone
-        {
-            get
-            {
-                if (_downloadDone == null) _downloadDone = new Dictionary<string, bool>();
-                return _downloadDone;
-            }
-        }
-
-        private static Dictionary<string, bool> _downloadDone;
+        private AssetInfo _asset;
+        private readonly AssetDownloadState _assetState = new AssetDownloadState();
 
         // caching
-        private AssetDownloadState _lastState;
-        private DateTime _lastStateTime;
+        private readonly TimedCache<int> _headerCache = new TimedCache<int>();
 
         public AssetDownloader(AssetInfo asset)
         {
             _asset = asset;
+            AssetDownloaderUtils.OnDownloadFinished += OnDownloadFinished;
+        }
+
+        public AssetInfo GetAsset()
+        {
+            return _asset;
+        }
+
+        public void SetAsset(AssetInfo asset)
+        {
+            _asset = asset;
+        }
+
+        private void OnDownloadFinished(int foreignId)
+        {
+            if (_asset.ForeignId != foreignId) return;
+
+            // update early in assumption it worked, reindexing will correct it if necessary
+            _asset.Version = _asset.LatestVersion;
+            DBAdapter.DB.Execute("update Asset set CurrentSubState=0, Version=? where Id=?", _asset.LatestVersion, _asset.AssetId);
+            _asset.Refresh();
+            _asset.PackageDownloader?.RefreshState();
         }
 
         public bool IsDownloadSupported()
@@ -60,81 +71,140 @@ namespace AssetInventory
 
         public AssetDownloadState GetState()
         {
-            if (_lastState != null && (DateTime.Now - _lastStateTime).Seconds < STATE_CACHE_PERIOD) return _lastState;
+            return _assetState;
+        }
+
+        public void RefreshState()
+        {
+            lastRefresh = DateTime.Now;
+            _headerCache.Clear();
 
             CheckState();
 
-            // start state checking only after minimum download duration has passed to give download time to initialize 
-            if ((_state == State.Unknown || _state == State.Unavailable) && (DateTime.Now - _startTime).Seconds < START_STATE_DELAY_SECONDS)
+            // TODO: do whenever file changes, not here?
+            if (_assetState.state == State.Downloading)
             {
-                _state = State.Downloading;
+                _assetState.bytesTotal = _asset.PackageSize;
+                if (_assetState.bytesTotal > 0) _assetState.progress = (float)_assetState.bytesDownloaded / _assetState.bytesTotal;
             }
-
-            AssetDownloadState state = new AssetDownloadState
-            {
-                state = _state
-            };
-            if (_state == State.Downloading)
-            {
-                state.bytesTotal = _asset.PackageSize;
-                state.bytesDownloaded = _bytesDownloaded;
-                state.lastDownloadChange = _lastWriteTime;
-                if (_asset.PackageSize > 0) state.progress = (float) _bytesDownloaded / _asset.PackageSize;
-            }
-
-            _lastState = state;
-            _lastStateTime = DateTime.Now;
-
-            return state;
         }
 
         private void CheckState()
         {
-            string targetFile = _asset.ToAsset().GetCalculatedLocation();
+            string targetFile = _asset.GetCalculatedLocation();
             if (targetFile == null)
             {
-                _state = State.Unknown;
+                _assetState.SetState(State.Unknown);
                 return;
             }
 
             string folder = Path.GetDirectoryName(targetFile);
 
             // see if any progress file is there
-            FileInfo fileInfo = null;
-            string downloadFile = Path.Combine(folder, $".{_asset.SafeName}-{_asset.ForeignId}.tmp");
-            if (File.Exists(downloadFile))
+            FileInfo curFileInfo = null;
+            FileInfo dlFileInfo = null;
+            FileInfo redlFileInfo = null;
+            _assetState.downloadFile = Path.Combine(folder, $".{_asset.SafeName}-{_asset.ForeignId}.tmp");
+            _assetState.reDownloadFile = Path.Combine(folder, $".{_asset.SafeName}-content__{_asset.ForeignId}.tmp");
+            _assetState.downloadInfoFile = _assetState.downloadFile + ".json";
+            _assetState.reDownloadInfoFile = _assetState.reDownloadFile + ".json";
+            if (File.Exists(_assetState.downloadFile)) dlFileInfo = new FileInfo(_assetState.downloadFile);
+            if (File.Exists(_assetState.reDownloadFile)) redlFileInfo = new FileInfo(_assetState.reDownloadFile);
+
+            // Unity sometimes uses the redl file also for initial downloading (6000.0.2f1)
+            if (dlFileInfo != null && redlFileInfo != null)
             {
-                fileInfo = new FileInfo(downloadFile);
+                // both files exist, check which one is newer
+                curFileInfo = dlFileInfo.LastWriteTime > redlFileInfo.LastWriteTime ? dlFileInfo : redlFileInfo;
             }
-            else
+            else if (dlFileInfo != null)
             {
-                string redownloadFile = Path.Combine(folder, $".{_asset.SafeName}-content__{_asset.ForeignId}.tmp");
-                if (File.Exists(redownloadFile)) fileInfo = new FileInfo(redownloadFile);
+                curFileInfo = dlFileInfo;
             }
-            if (fileInfo != null)
+            else if (redlFileInfo != null)
             {
-                _state = State.Downloading;
-                _bytesDownloaded = fileInfo.Length;
-                _lastWriteTime = fileInfo.LastWriteTime;
+                curFileInfo = redlFileInfo;
+            }
+
+            if (curFileInfo != null)
+            {
+                curFileInfo.Refresh(); // to ensure also data on network drives is up-to-date
+                _assetState.curDownloadFile = curFileInfo.FullName;
+                _assetState.curDownloadInfoFile = curFileInfo.FullName + ".json";
+                _assetState.bytesDownloaded = curFileInfo.Length;
+                _assetState.lastDownloadChange = curFileInfo.LastWriteTime;
+
+                // check if paused
+                bool isUnityDownloading = IsUnityDownloading();
+                if (!isUnityDownloading && File.Exists(_assetState.downloadInfoFile))
+                {
+                    _assetState.SetState(State.Paused);
+                    return;
+                }
+                _assetState.SetState(State.Downloading);
+
+                if (!isUnityDownloading && DateTime.Now - _assetState.lastDownloadChange > TimeSpan.FromSeconds(DOWNLOAD_STUCK_TIMEOUT))
+                {
+                    // if no change after a while, assume download is stuck
+                    // try to clean up left over tmp files which are likely broken
+                    try
+                    {
+                        File.Delete(_assetState.curDownloadFile);
+                        if (File.Exists(_assetState.curDownloadInfoFile)) File.Delete(_assetState.curDownloadInfoFile);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.Log($"Could not delete temp file {_assetState.curDownloadFile}: {e.Message}. This is unusual but not a problem. If the file is on a network share it could also mean Unity is still downloading the file. In that case running update again after a while will index it normally. Continuing with next package for now.");
+                    }
+                    _assetState.SetState(State.Unavailable);
+                }
                 return;
             }
+
+            // give started downloads some time to settle
+            if (_assetState.state == State.Downloading && DateTime.Now - _assetState.lastStateChange < TimeSpan.FromSeconds(START_GRACE_PERIOD)) return;
 
             bool exists = File.Exists(targetFile);
 
-            // update database location once file is downloaded
-            if (exists && string.IsNullOrEmpty(_asset.GetLocation(true)))
+            // check if package actually contains content for this asset
+            if (exists)
             {
-                _asset.Location = targetFile;
+                int id = 0;
+                if (_headerCache.TryGetValue(out int cachedId))
+                {
+                    id = cachedId;
+                }
+                else
+                {
+                    AssetHeader header = UnityPackageImporter.ReadHeader(targetFile, true);
+                    if (header != null && int.TryParse(header.id, out int parsedId))
+                    {
+                        id = parsedId;
+                    }
+                    _headerCache.SetValue(id, TimeSpan.FromSeconds(HEADER_CACHE_PERIOD));
+                }
+                if (id > 0 && id != _asset.ForeignId)
+                {
+                    _assetState.SetState(State.Unavailable);
+                    return;
+                }
+            }
+
+            // update database location once file is downloaded
+            string assetLocation = _asset.GetLocation(true);
+            if (exists && string.IsNullOrEmpty(assetLocation))
+            {
+                _asset.SetLocation(targetFile);
                 _asset.Refresh();
 
-                // work directly on db to make sure it's latest state
-                DBAdapter.DB.Execute("update Asset set Location=? where Id=?", targetFile, _asset.AssetId);
-                _state = State.Downloaded;
+                // work directly on db to make sure it's the latest state
+                DBAdapter.DB.Execute("update Asset set Location=? where Id=?", _asset.Location, _asset.AssetId);
+                _assetState.SetState(State.Downloaded);
                 return;
             }
 
-            exists = exists || (!string.IsNullOrEmpty(_asset.GetLocation(true)) && File.Exists(_asset.GetLocation(true)));
-            _state = exists ? (_asset.IsUpdateAvailable() ? State.UpdateAvailable : State.Downloaded) : State.Unavailable;
+            exists = exists || (!string.IsNullOrEmpty(assetLocation) && File.Exists(assetLocation));
+            _assetState.SetState(exists ? (_asset.IsUpdateAvailable() ? State.UpdateAvailable : State.Downloaded) : State.Unavailable);
         }
 
         public void Download()
@@ -144,64 +214,126 @@ namespace AssetInventory
             Assembly assembly = Assembly.Load("UnityEditor.CoreModule");
             Type asc = assembly.GetType("UnityEditor.AssetStoreUtils");
             MethodInfo download = asc.GetMethod("Download", BindingFlags.Public | BindingFlags.Static);
+            if (download == null)
+            {
+                Debug.LogError("Download method not found in UnityEditor.AssetStoreUtils. This is unexpected and hints to an incompatibility you should report to the asset author.");
+                return;
+            }
             Type downloadDone = assembly.GetType("UnityEditor.AssetStoreUtils+DownloadDoneCallback");
-            Delegate onDownloadDone = Delegate.CreateDelegate(downloadDone, typeof(AssetDownloaderUtils), "OnDownloadDone");
+            Delegate onDownloadDone = Delegate.CreateDelegate(downloadDone, typeof (AssetDownloaderUtils), "OnDownloadDone");
 
-            string json = new JObject(
-                new JProperty("download", new JObject(
-                    new JProperty("url", _asset.OriginalLocation),
-                    new JProperty("key", _asset.OriginalLocationKey)
-                ))).ToString();
+            DownloadState dls = new DownloadState
+            {
+                download = new DownloadStateDetails
+                {
+                    url = _asset.OriginalLocation,
+                    key = _asset.OriginalLocationKey
+                }
+            };
+            bool doResume = false;
+            if (_assetState.state == State.Paused && File.Exists(_assetState.downloadInfoFile))
+            {
+                DownloadState existingDls = JsonConvert.DeserializeObject<DownloadState>(File.ReadAllText(_assetState.downloadInfoFile));
+                doResume = existingDls != null && existingDls.download.key == dls.download.key && existingDls.download.url == dls.download.url;
+            }
+            string json = JsonConvert.SerializeObject(dls);
 
-            _state = State.Downloading;
-            _startTime = DateTime.Now;
+            _assetState.SetState(State.Downloading);
+            _assetState.bytesTotal = _asset.PackageSize;
+            _assetState.bytesDownloaded = 0;
+
             string key = _asset.ForeignId.ToString();
-            if (DownloadDone.ContainsKey(key))
-            {
-                DownloadDone[key] = false;
-            }
-            else
-            {
-                DownloadDone.Add(key, false);
-            }
-            download?.Invoke(null, new object[]
+            ThreadUtils.InvokeOnMainThread(download, null, new object[]
             {
                 key, _asset.OriginalLocation,
                 new[] {_asset.SafePublisher, _asset.SafeCategory, _asset.SafeName},
-                _asset.OriginalLocationKey, json, false, onDownloadDone
+                _asset.OriginalLocationKey, json, doResume, onDownloadDone
             });
+
             _asset.Refresh(true);
+        }
+
+        public async void PauseDownload(bool fullAbort)
+        {
+            Assembly assembly = Assembly.Load("UnityEditor.CoreModule");
+            Type asc = assembly.GetType("UnityEditor.AssetStoreUtils");
+            MethodInfo abortDownloadMethod = asc.GetMethod("AbortDownload", BindingFlags.Public | BindingFlags.Static);
+
+            // this will not really abort but simply stop at the current state which can be resumed later
+            abortDownloadMethod?.Invoke(null, new object[] {new[] {_asset.SafePublisher, _asset.SafeCategory, _asset.SafeName}});
+
+            if (fullAbort)
+            {
+                // let Unity close the files
+                await Task.Delay(2000);
+
+                // delete tmp files
+                if (File.Exists(_assetState.curDownloadFile)) IOUtils.TryDeleteFile(_assetState.curDownloadFile);
+                if (File.Exists(_assetState.curDownloadInfoFile)) IOUtils.TryDeleteFile(_assetState.curDownloadInfoFile);
+
+                AI.TriggerPackageRefresh();
+            }
+        }
+
+        public bool IsUnityDownloading()
+        {
+            if (!IsDownloadSupported()) return false;
+
+            Assembly assembly = Assembly.Load("UnityEditor.CoreModule");
+            Type asc = assembly.GetType("UnityEditor.AssetStoreUtils");
+            MethodInfo checkAssetDownload = asc.GetMethod("CheckDownload", BindingFlags.Public | BindingFlags.Static);
+
+            string key = _asset.ForeignId.ToString();
+            string result = (string)checkAssetDownload?.Invoke(null, new object[] {key, _asset.OriginalLocation, new[] {_asset.SafePublisher, _asset.SafeCategory, _asset.SafeName}, _asset.OriginalLocationKey});
+            if (string.IsNullOrEmpty(result)) return false;
+
+            DownloadState state = JsonConvert.DeserializeObject<DownloadState>(result);
+
+            return state.inProgress;
         }
     }
 
     public sealed class AssetDownloadState
     {
-        public AssetDownloader.State state;
+        public AssetDownloader.State state { get; private set; } = AssetDownloader.State.Initializing;
         public long bytesDownloaded;
         public long bytesTotal;
         public float progress;
+        public DateTime lastStateChange;
         public DateTime lastDownloadChange;
+
+        // file names
+        public string curDownloadFile;
+        public string curDownloadInfoFile;
+        public string downloadFile;
+        public string downloadInfoFile;
+        public string reDownloadFile;
+        public string reDownloadInfoFile;
+
+        public void SetState(AssetDownloader.State newState)
+        {
+            state = newState;
+            lastStateChange = DateTime.Now;
+        }
+
+        public override string ToString()
+        {
+            return $"Asset Download State '{state}' ({progress})";
+        }
     }
 
     public static class AssetDownloaderUtils
     {
+        public static Action<int> OnDownloadFinished;
+
         public static void OnDownloadDone(string package_id, string message, int bytes, int total)
         {
             if (message == "ok")
             {
-                if (AssetDownloader.DownloadDone.ContainsKey(package_id))
-                {
-                    AssetDownloader.DownloadDone[package_id] = true;
-                }
-                else
-                {
-                    AssetDownloader.DownloadDone.Add(package_id, true);
-                }
+                OnDownloadFinished?.Invoke(int.Parse(package_id));
+                return;
             }
-            else
-            {
-                Debug.LogError($"Error downloading asset {package_id} at {bytes}/{total}: {message}");
-            }
+            Debug.LogError($"Error downloading asset {package_id}: {message}");
         }
     }
 }

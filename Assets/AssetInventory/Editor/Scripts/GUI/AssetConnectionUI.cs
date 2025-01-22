@@ -10,6 +10,7 @@ namespace AssetInventory
         private string _url;
         private Action<AssetDetails> _callback;
         private bool _invalidInput;
+        private bool _focusDone;
         private AssetDetails _resolvedAsset;
 
         public void Init(Action<AssetDetails> callback)
@@ -30,7 +31,9 @@ namespace AssetInventory
             EditorGUILayout.Space();
             GUILayout.BeginHorizontal();
             EditorGUILayout.LabelField("URL/ID:", GUILayout.Width(50));
+            GUI.SetNextControlName("URLEntry");
             _url = EditorGUILayout.TextField(_url, GUILayout.ExpandWidth(true));
+            if (!_focusDone) GUI.FocusControl("URLEntry");
             if (GUILayout.Button("Verify", GUILayout.ExpandWidth(false))) CheckURL(_url);
             GUILayout.EndHorizontal();
             EditorGUILayout.Space();

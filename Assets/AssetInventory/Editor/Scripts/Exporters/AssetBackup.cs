@@ -23,15 +23,15 @@ namespace AssetInventory
         {
             _assetVersions = new Dictionary<int, List<BackupInfo>>();
 
-            string[] packages = Directory.GetFiles(AssetInventory.GetBackupFolder(), "*.unitypackage", SearchOption.AllDirectories);
+            string[] packages = Directory.GetFiles(AI.GetBackupFolder(), "*.unitypackage", SearchOption.AllDirectories);
             string[] sep =
             {
                 SEPARATOR
             };
-            for (int i = 0; i < packages.Length; i++)
+            foreach (string package in packages)
             {
                 // expected filename format is "foreignId-version
-                string fileName = Path.GetFileNameWithoutExtension(packages[i]);
+                string fileName = Path.GetFileNameWithoutExtension(package);
                 string[] arr = fileName.Split(sep, StringSplitOptions.None);
 
                 // skip packages without leading Id
@@ -40,7 +40,7 @@ namespace AssetInventory
                 string version = arr[1];
 
                 if (!_assetVersions.ContainsKey(id)) _assetVersions.Add(id, new List<BackupInfo>());
-                _assetVersions[id].Add(new BackupInfo(packages[i], version));
+                _assetVersions[id].Add(new BackupInfo(package, version));
                 _assetVersions[id] = _assetVersions[id].OrderByDescending(v => v.semVersion).ToList();
             }
         }
@@ -59,9 +59,9 @@ namespace AssetInventory
         {
             int progressId = MetaProgress.Start("Backing up assets");
 
-            string backupFolder = AssetInventory.GetBackupFolder();
+            string backupFolder = AI.GetBackupFolder();
             List<Asset> assets = DBAdapter.DB.Table<Asset>()
-                .Where(a => a.ForeignId > 0 && a.AssetSource != Asset.Source.Package && a.Backup && !string.IsNullOrEmpty(a.Version) && !string.IsNullOrEmpty(a.Location))
+                .Where(a => a.ForeignId > 0 && a.ParentId == 0 && a.AssetSource != Asset.Source.RegistryPackage && a.Backup && !string.IsNullOrEmpty(a.Version) && !string.IsNullOrEmpty(a.Location))
                 .ToList();
             if (assetId > 0) assets = assets.Where(a => a.Id == assetId).ToList();
 
@@ -74,7 +74,7 @@ namespace AssetInventory
                 Asset asset = assets[i];
                 MetaProgress.Report(progressId, i + 1, assets.Count, asset.SafeName);
 
-                if (!File.Exists(asset.Location)) continue;
+                if (!File.Exists(asset.GetLocation(true))) continue;
 
                 string targetFile = Path.Combine(backupFolder, $"{asset.ForeignId}{SEPARATOR}{asset.GetSafeVersion()}{SEPARATOR}{asset.SafeName}.unitypackage");
                 if (!File.Exists(targetFile))
@@ -84,7 +84,7 @@ namespace AssetInventory
 
                     try
                     {
-                        File.Copy(asset.Location, targetFile, true);
+                        File.Copy(asset.GetLocation(true), targetFile, true);
                         await Task.Yield();
                     }
                     catch (Exception e)
@@ -102,26 +102,32 @@ namespace AssetInventory
             foreach (KeyValuePair<int, List<BackupInfo>> pair in _assetVersions)
             {
                 // remove patch versions
-                if (AssetInventory.Config.onlyLatestPatchVersion)
+                if (AI.Config.onlyLatestPatchVersion)
                 {
                     for (int i = pair.Value.Count - 1; i >= 1; i--)
                     {
                         if (pair.Value[i].semVersion.OnlyDiffersInPatch(pair.Value[i - 1].semVersion))
                         {
                             Debug.Log($"Removing asset from backup (newer patch versions available): {pair.Value[i].location}");
-                            File.Delete(pair.Value[i].location);
+                            if (!IOUtils.TryDeleteFile(pair.Value[i].location))
+                            {
+                                Debug.LogWarning($"Could not delete file: {pair.Value[i].location}");
+                            }
                             pair.Value.RemoveAt(i);
                         }
                     }
                 }
 
                 // finally remove all remaining old ones 
-                if (pair.Value.Count > AssetInventory.Config.backupsPerAsset)
+                if (pair.Value.Count > AI.Config.backupsPerAsset)
                 {
-                    for (int i = pair.Value.Count - 1; i >= AssetInventory.Config.backupsPerAsset; i--)
+                    for (int i = pair.Value.Count - 1; i >= AI.Config.backupsPerAsset; i--)
                     {
                         Debug.Log($"Removing asset from backup (limit reached and newer versions available): {pair.Value[i].location}");
-                        File.Delete(pair.Value[i].location);
+                        if (!IOUtils.TryDeleteFile(pair.Value[i].location))
+                        {
+                            Debug.LogWarning($"Could not delete file: {pair.Value[i].location}");
+                        }
                     }
                 }
             }

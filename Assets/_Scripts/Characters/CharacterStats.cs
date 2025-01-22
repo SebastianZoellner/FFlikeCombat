@@ -57,33 +57,13 @@ public class CharacterStats : MonoBehaviour,IStats
     {
         List<PowerSO> availablePowerList = new List<PowerSO>();
         float momentum = MomentumManager.GetMomentum();
-        foreach(PowerSO pow in character.powerArray)
+        foreach (PowerSO pow in character.powerArray)
         {
             //Debug.Log("Available power; considering " + pow.name);
-            if (pow.enduranceCost >health.PresentEndurance ) continue;
-            //Debug.Log("Passed endurance");
-            if (pow.momentumEffect)
-            {
-                if (hero)
-                {
-                    if (pow.momentumCost > 0 && pow.momentumCost > momentum) continue;
-                    // Debug.Log("Passed momentum cost");
-                    if (pow.maxMomentum < momentum) continue;
-                    //Debug.Log("Passed maximum momentum");
-                    if (pow.minMomentum >= momentum) continue;
-                    //Debug.Log("Passed min momentum");
-                }
-                if(!hero)
-                {
-                    if (pow.momentumCost > 0 && pow.momentumCost <- momentum) continue;
-                    //Debug.Log("Passed momentum cost");
-                    if (-pow.maxMomentum > momentum) continue;
-                   // Debug.Log("Passed maximum momentum");
-                    if (-pow.minMomentum <= momentum) continue;
-                    //Debug.Log("Passed min momentum");
-                }
-            }
-            availablePowerList.Add(pow);
+            if (hero && pow.IsAvailable(momentum, health.PresentEndurance))
+                availablePowerList.Add(pow);
+            if (!hero && pow.IsAvailable(-momentum, health.PresentEndurance))
+                availablePowerList.Add(pow);
         }
 
         return availablePowerList.ToArray();

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEditor.IMGUI.Controls;
@@ -16,16 +17,23 @@ namespace AssetInventory
         private SearchField SearchField => _searchField = _searchField ?? new SearchField();
         private SearchField _searchField;
         private TagAssignment.Target _target;
+        private Action _onChange;
 
-        public void Init(TagAssignment.Target target)
+        public void Init(TagAssignment.Target target, Action onChange = null)
         {
             _target = target;
+            _onChange = onChange;
             _tags = DBAdapter.DB.Table<Tag>().OrderBy(t => t.Name).ToList();
         }
 
-        public void SetAsset(List<AssetInfo> info)
+        public override Vector2 GetWindowSize()
         {
-            _assetInfo = info;
+            return new Vector2(220, AI.Config.tagListHeight);
+        }
+
+        public void SetAssets(List<AssetInfo> infos)
+        {
+            _assetInfo = infos;
         }
 
         public override void OnGUI(Rect rect)
@@ -33,7 +41,7 @@ namespace AssetInventory
             if (_assetInfo == null) return;
             if (Event.current.isKey && Event.current.keyCode == KeyCode.Return)
             {
-                _assetInfo.ForEach(info => AssetInventory.AddTagAssignment(info, _newTag, _target));
+                _assetInfo.ForEach(info => Tagging.AddTagAssignment(info, _newTag, _target, true));
                 _newTag = "";
             }
             GUILayout.BeginHorizontal();
@@ -67,12 +75,16 @@ namespace AssetInventory
                                 if (_assetInfo.Count == 1 && _assetInfo[0].AssetTags.Any(t => t.TagId == tag.Id)) continue;
                                 break;
                         }
-                        if (!string.IsNullOrWhiteSpace(_newTag) && !tag.Name.Contains(_newTag)) continue;
+                        if (!string.IsNullOrWhiteSpace(_newTag) && !tag.Name.ToLowerInvariant().Contains(_newTag.ToLowerInvariant())) continue;
                         shownTags++;
 
                         GUILayout.BeginHorizontal();
                         GUILayout.Space(8);
-                        UIStyles.DrawTag(tag.Name, tag.GetColor(), () => { _assetInfo.ForEach(info => AssetInventory.AddTagAssignment(info, tag.Name, _target)); }, UIStyles.TagStyle.Add);
+                        UIStyles.DrawTag(tag.Name, tag.GetColor(), () =>
+                        {
+                            _assetInfo.ForEach(info => Tagging.AddTagAssignment(info, tag.Name, _target, true));
+                            _onChange?.Invoke();
+                        }, UIStyles.TagStyle.Add);
                         GUILayout.EndHorizontal();
                     }
                     if (shownTags == 0)

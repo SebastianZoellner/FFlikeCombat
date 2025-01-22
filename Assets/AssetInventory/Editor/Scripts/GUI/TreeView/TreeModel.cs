@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
+using UnityEngine;
 
 namespace AssetInventory
 {
@@ -31,10 +32,17 @@ namespace AssetInventory
 
         public T Find(int id)
         {
+            if (_itemLookup != null)
+            {
+                if (_itemLookup.TryGetValue(id, out T item)) return item;
+                return default(T);
+            }
             return m_Data.FirstOrDefault(element => element.TreeId == id);
         }
 
         public IList<T> GetData() => m_Data;
+
+        private Dictionary<int, T> _itemLookup = new Dictionary<int, T>();
 
         public void SetData(IList<T> data, bool sortFoldersFirst = false)
         {
@@ -58,6 +66,21 @@ namespace AssetInventory
                     } while (!info.Children[0].HasChildren && info.Children[0].TreeId != firstId);
                 }
             }
+
+            CacheItems();
+        }
+
+        private void CacheItems()
+        {
+            try
+            {
+                _itemLookup = m_Data.ToDictionary(x => x.TreeId, x => x);
+            }
+            catch (Exception)
+            {
+                // in case of duplicate keys disable caching
+                _itemLookup = null;
+            }
         }
 
         private void Init(IList<T> data)
@@ -65,7 +88,14 @@ namespace AssetInventory
             if (data == null) throw new ArgumentNullException("data", "Input data is null. Ensure input is a non-null list.");
 
             m_Data = data;
-            if (m_Data.Count > 0) Root = TreeElementUtility.ListToTree(data);
+            try
+            {
+                if (m_Data.Count > 0) Root = TreeElementUtility.ListToTree(data);
+            }
+            catch (Exception e)
+            {
+                Debug.LogWarning("Invalid tree structure, result potentially incomplete: " + e.Message);
+            }
 
             m_MaxID = m_Data.Count > 0 ? m_Data.Max(e => e.TreeId) : 0;
         }
@@ -202,7 +232,7 @@ namespace AssetInventory
             // Invalid reparenting input
             if (parentElement == null) return;
 
-            // We are moving items so we adjust the insertion index to accomodate that any items above the insertion index is removed before inserting
+            // We are moving items, so we adjust the insertion index to accomodate that any items above the insertion index is removed before inserting
             if (insertionIndex > 0) insertionIndex -= parentElement.Children.GetRange(0, insertionIndex).Count(elements.Contains);
 
             // Remove draggedItems from their parents
@@ -225,6 +255,7 @@ namespace AssetInventory
 
         private void Changed()
         {
+            CacheItems();
             ModelChanged?.Invoke();
         }
     }

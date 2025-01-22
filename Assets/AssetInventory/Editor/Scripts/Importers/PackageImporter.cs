@@ -20,71 +20,31 @@ namespace AssetInventory
 
             // pass 1: find latest cached packages
             int progressId = MetaProgress.Start("Discovering packages");
-            string[] packages = Directory.GetFiles(path, "package.json", SearchOption.AllDirectories);
+            string[] packages = await Task.Run(() => Directory.GetFiles(path, "package.json", SearchOption.AllDirectories));
             MainCount = packages.Length;
             bool tagsChanged = false;
             for (int i = 0; i < packages.Length; i++)
             {
                 if (CancellationRequested) break;
 
-                string package = packages[i];
+                string package = packages[i].Replace("\\", "/");
                 MetaProgress.Report(progressId, i + 1, packages.Length, Path.GetFileName(Path.GetDirectoryName(package)));
                 if (i % BREAK_INTERVAL == 0) await Task.Yield(); // let editor breath
 
-                Package info;
-                try
-                {
-                    info = JsonConvert.DeserializeObject<Package>(File.ReadAllText(package), new JsonSerializerSettings
-                    {
-                        Error = (sender, error) =>
-                        {
-                            Debug.Log($"Field inside package manifest '{package}' is malformed. This data will be ignored: {error.ErrorContext.Path}");
-                            error.ErrorContext.Handled = true;
-                        }
-                    });
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"Package manifest inside '{package}' is malformed and could not be read: {e.Message}");
-                    continue;
-                }
-                if (info == null)
-                {
-                    Debug.LogError($"Could not read package manifest: {package}");
-                    continue;
-                }
+                Package info = ReadPackageFile(package);
+                if (info == null) continue;
 
                 // create asset
-                Asset asset = new Asset(info);
-
-                // skip unchanged or older 
-                Asset existing = Fetch(asset);
-                if (existing != null)
-                {
-                    if (new SemVer(existing.Version) >= new SemVer(asset.Version)) continue;
-                    asset = existing.CopyFrom(info);
-                }
-                else
-                {
-                    if (AssetInventory.Config.excludeByDefault) asset.Exclude = true;
-                    if (AssetInventory.Config.backupByDefault) asset.Backup = true;
-                }
-
-                asset.Location = Path.GetDirectoryName(package);
-                asset.PackageSize = await IOUtils.GetFolderSize(asset.Location);
+                Asset asset = await CreateAsset(info, package, PackageSource.Unknown);
+                if (asset == null) continue;
 
                 // update progress only if really doing work to save refresh time in UI
                 CurrentMain = $"{info.name} - {info.version}";
+                MainCount = packages.Length;
                 MainProgress = i + 1;
 
                 // handle tags
-                if (AssetInventory.Config.importPackageKeywordsAsTags && info.keywords != null)
-                {
-                    foreach (string tag in info.keywords)
-                    {
-                        if (AssetInventory.AddTagAssignment(asset.Id, tag, TagAssignment.Target.Package, fromAssetStore)) tagsChanged = true;
-                    }
-                }
+                tagsChanged = tagsChanged || ApplyTags(asset, info, fromAssetStore);
 
                 // registry
                 float maxWaitTime = Time.realtimeSinceStartup + MAX_META_DATA_WAIT_TIME;
@@ -104,11 +64,10 @@ namespace AssetInventory
             if (!CancellationRequested)
             {
                 progressId = MetaProgress.Start("Discovering additional packages");
-                PackageCollection packageCollection = AssetStore.GetProjectPackages();
+                Dictionary<string, PackageInfo> packageCollection = AssetStore.GetProjectPackages();
                 if (packageCollection != null)
                 {
-                    List<PackageInfo> projectPackages = packageCollection.ToList();
-                    MainCount = projectPackages.Count;
+                    List<PackageInfo> projectPackages = packageCollection.Values.ToList();
                     for (int i = 0; i < projectPackages.Count; i++)
                     {
                         if (CancellationRequested) break;
@@ -116,7 +75,8 @@ namespace AssetInventory
                         PackageInfo package = projectPackages[i];
                         if (package.source == PackageSource.BuiltIn) continue;
 
-                        MetaProgress.Report(progressId, i + 1, packages.Length, package.name);
+                        MainCount = projectPackages.Count;
+                        MetaProgress.Report(progressId, i + 1, projectPackages.Count, package.name);
                         if (i % BREAK_INTERVAL == 0) await Task.Yield(); // let editor breath
 
                         // create asset
@@ -131,8 +91,9 @@ namespace AssetInventory
                         }
                         else
                         {
-                            if (AssetInventory.Config.excludeByDefault) asset.Exclude = true;
-                            if (AssetInventory.Config.backupByDefault) asset.Backup = true;
+                            if (AI.Config.excludeByDefault) asset.Exclude = true;
+                            if (AI.Config.extractByDefault) asset.KeepExtracted = true;
+                            if (AI.Config.backupByDefault) asset.Backup = true;
                         }
 
                         // update progress only if really doing work to save refresh time in UI
@@ -154,12 +115,50 @@ namespace AssetInventory
 
             if (tagsChanged)
             {
-                AssetInventory.LoadTags();
-                AssetInventory.LoadTagAssignments();
+                Tagging.LoadTags();
+                Tagging.LoadTagAssignments();
             }
 
             MetaProgress.Remove(progressId);
             ResetState(true);
+        }
+
+        public static bool ApplyTags(Asset asset, Package info, bool fromAssetStore)
+        {
+            bool tagsChanged = false;
+            if (AI.Config.importPackageKeywordsAsTags && info.keywords != null)
+            {
+                foreach (string tag in info.keywords)
+                {
+                    if (Tagging.AddTagAssignment(asset.Id, tag, TagAssignment.Target.Package, fromAssetStore)) tagsChanged = true;
+                }
+            }
+            return tagsChanged;
+        }
+
+        public static async Task<Asset> CreateAsset(Package info, string package, PackageSource source)
+        {
+            Asset asset = new Asset(info);
+            asset.PackageSource = source;
+            asset.SetLocation(Path.GetDirectoryName(package));
+
+            // skip unchanged or older 
+            Asset existing = Fetch(asset);
+            if (existing != null)
+            {
+                if (existing.CurrentState == Asset.State.Done && new SemVer(existing.Version) >= new SemVer(asset.Version)) return null;
+                asset = existing.CopyFrom(info);
+            }
+            else
+            {
+                if (AI.Config.excludeByDefault) asset.Exclude = true;
+                if (AI.Config.extractByDefault) asset.KeepExtracted = true;
+                if (AI.Config.backupByDefault) asset.Backup = true;
+            }
+
+            asset.PackageSize = await IOUtils.GetFolderSize(asset.Location);
+
+            return asset;
         }
 
         public async Task IndexDetails(int assetId = 0)
@@ -172,36 +171,78 @@ namespace AssetInventory
             List<Asset> assets;
             if (assetId == 0)
             {
-                assets = DBAdapter.DB.Table<Asset>().Where(a => a.AssetSource == Asset.Source.Package && a.CurrentState != Asset.State.Done).ToList();
+                assets = DBAdapter.DB.Table<Asset>().Where(a => a.AssetSource == Asset.Source.RegistryPackage && a.CurrentState != Asset.State.Done).ToList();
             }
             else
             {
-                assets = DBAdapter.DB.Table<Asset>().Where(a => a.Id == assetId && a.AssetSource == Asset.Source.Package).ToList();
+                assets = DBAdapter.DB.Table<Asset>().Where(a => a.Id == assetId && a.AssetSource == Asset.Source.RegistryPackage).ToList();
             }
-            MainCount = assets.Count;
             for (int i = 0; i < assets.Count; i++)
             {
                 Asset asset = assets[i];
                 if (CancellationRequested) break;
 
-                if (AssetInventory.Config.indexPackageContents)
-                {
-                    CurrentMain = $"{asset.SafeName} - {asset.Version}";
-                    MainProgress = i + 1;
+                MainCount = assets.Count;
+                CurrentMain = $"{asset.SafeName} - {asset.Version}";
+                MainProgress = i + 1;
 
+                // TODO: factually incorrect as indexed version does not need to correspond to latest version
+                if (Directory.Exists(asset.GetLocation(true)))
+                {
                     // remove old files
                     DBAdapter.DB.Execute("delete from AssetFile where AssetId=?", asset.Id);
 
-                    importSpec.location = asset.Location;
-                    await new MediaImporter().Index(importSpec, asset, true, true);
+                    importSpec.location = asset.GetLocation(true);
+                    await new MediaImporter().Index(importSpec, asset, false, true);
                 }
                 if (CancellationRequested) break;
 
-                asset.CurrentState = Asset.State.Done;
-                Persist(asset);
+                MarkDone(asset);
             }
             MetaProgress.Remove(progressId);
             ResetState(true);
+        }
+
+        public static Package ReadPackageFile(string package)
+        {
+            Package info;
+            try
+            {
+                info = JsonConvert.DeserializeObject<Package>(File.ReadAllText(package), new JsonSerializerSettings
+                {
+                    Error = (_, error) =>
+                    {
+                        if (AI.Config.LogPackageParsing)
+                        {
+                            Debug.Log($"Field inside package manifest '{package}' is malformed. This data will be ignored: {error.ErrorContext.Path}");
+                        }
+                        error.ErrorContext.Handled = true;
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Package manifest inside '{package}' is malformed and could not be read: {e.Message}");
+                return null;
+            }
+            if (info == null)
+            {
+                Debug.LogError($"Could not read package manifest: {package}");
+                return null;
+            }
+
+            return info;
+        }
+
+        public static bool Persist(PackageInfo package)
+        {
+            Asset asset = new Asset(package);
+            Asset existing = Fetch(asset);
+            if (existing != null) return false;
+
+            Persist(asset);
+
+            return true;
         }
     }
 }

@@ -18,6 +18,9 @@ MonoBehaviour:
   defense: 0
   setupTime: 0.4
   recoveryTime: 0.5
+  timeCost: 0.9
+  setupVsRecovery: 0.44444445
+  damageSpread: 0
   target: 0
   radius: 0
   successEffectArray:
@@ -34,6 +37,7 @@ MonoBehaviour:
   description: 
   range: 5
   attackAnimation: {fileID: 7400000, guid: 43b348acaa2148f40b1dca7ea5bb873e, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 7124448449439260488, guid: 1430ec27f5e0c4d49a1856c3ab09bb4b,
     type: 3}
   attackVFX: {fileID: 0}

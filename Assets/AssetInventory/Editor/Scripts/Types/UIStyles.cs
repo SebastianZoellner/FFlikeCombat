@@ -1,9 +1,9 @@
 ﻿// reference for built-in icons: https://github.com/halak/unity-editor-icons
 
 using System;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace AssetInventory
 {
@@ -21,9 +21,11 @@ namespace AssetInventory
         public const int INSPECTOR_WIDTH = 300;
         public const int TAG_SIZE_SPACING = 20;
         public const int TAG_OUTER_MARGIN = 20;
+        public const string INDENT = "  ";
+        public const int INDENT_WIDTH = 8;
 
-        public static readonly string[] FolderTypes = {"Unity Packages", "Media Files", "Zip Archives"};
-        public static readonly string[] MediaTypes = {"-All-", string.Empty, "Audio", "Images", "Models", string.Empty, "-Custom File Pattern-"};
+        public static readonly string[] FolderTypes = {"Unity Packages", "Media Folder", "Archives", "Dev Packages"};
+        public static readonly string[] MediaTypes = {"-All Media-", "-All Files-", string.Empty, "Audio", "Images", "Models", string.Empty, "-Custom File Pattern-"};
 
         private static readonly GUIContent GUIText = new GUIContent();
         private static readonly GUIContent GUIImage = new GUIContent();
@@ -33,13 +35,72 @@ namespace AssetInventory
         private const int ENTRY_FIXED_HEIGHT = ENTRY_FONT_SIZE + 7;
         private const int TOGGLE_FIXED_WIDTH = 10;
 
-        public static readonly GUIStyle tile = new GUIStyle(GUI.skin.button)
+        public static readonly GUIStyle searchTile = CreateTileStyle();
+        public static readonly GUIStyle packageTile = CreateTileStyle();
+        public static readonly GUIStyle selectedSearchTile = CreateSelectedTileStyle();
+        public static readonly GUIStyle selectedPackageTile = CreateSelectedTileStyle();
+
+        public static readonly GUIStyle toggleButtonStyleNormal = new GUIStyle("button");
+        public static readonly GUIStyle toggleButtonStyleToggled = CreateToggledStyle();
+
+        public static readonly GUIStyle wrappedLinkLabel = new GUIStyle("linkLabel")
         {
-            alignment = TextAnchor.MiddleCenter,
-            fontSize = 10,
-            imagePosition = ImagePosition.ImageAbove,
             wordWrap = true
         };
+
+        public static readonly GUIContent emptyTileContent = new GUIContent();
+        public static readonly GUIContent selectedTileContent = new GUIContent
+        {
+            image = LoadTexture("asset-inventory-selected"),
+            text = string.Empty,
+            tooltip = string.Empty
+        };
+        public static readonly GUIStyle richText = new GUIStyle(EditorStyles.wordWrappedLabel)
+        {
+            richText = true
+        };
+
+        public static Texture2D LoadTexture(string name)
+        {
+            string asset = AssetDatabase.FindAssets("t:Texture2d " + name).FirstOrDefault();
+            return AssetDatabase.LoadAssetAtPath<Texture2D>(AssetDatabase.GUIDToAssetPath(asset));
+        }
+
+        private static GUIStyle CreateToggledStyle()
+        {
+            GUIStyle baseStyle = new GUIStyle("button");
+            baseStyle.normal.background = baseStyle.active.background;
+
+            return baseStyle;
+        }
+
+        private static GUIStyle CreateTileStyle()
+        {
+            GUIStyle baseStyle = new GUIStyle(GUI.skin.button)
+            {
+                alignment = TextAnchor.MiddleCenter,
+                fontSize = 10,
+                imagePosition = ImagePosition.ImageAbove,
+                wordWrap = true
+            };
+
+            return baseStyle;
+        }
+
+        private static GUIStyle CreateSelectedTileStyle()
+        {
+            GUIStyle baseStyle = new GUIStyle
+            {
+                alignment = TextAnchor.MiddleCenter,
+                imagePosition = ImagePosition.ImageOnly,
+                overflow = new RectOffset(0, 0, 0, 0),
+                padding = new RectOffset(0, 0, 0, 0)
+            };
+
+            baseStyle.normal.background = LoadTexture("asset-inventory-transparent");
+
+            return baseStyle;
+        }
 
         public static readonly GUIStyle tag = new GUIStyle(EditorStyles.miniButton)
         {
@@ -147,7 +208,7 @@ namespace AssetInventory
 
         public static GUILayoutOption GetLabelMaxWidth()
         {
-            return GUILayout.MaxWidth(INSPECTOR_WIDTH - 110);
+            return GUILayout.MaxWidth(INSPECTOR_WIDTH - 115);
         }
 
         private static Color GetHSPColor(Color color)
@@ -189,8 +250,8 @@ namespace AssetInventory
         public static GUIContent Content(string text, string tip, string ctrlText = null, string ctrlTip = null)
         {
             GUIText.image = null;
-            GUIText.text = Event.current.control ? (string.IsNullOrEmpty(ctrlText) ? text : ctrlText) : text;
-            GUIText.tooltip = Event.current.control ? (string.IsNullOrEmpty(ctrlTip) ? tip : ctrlTip) : tip;
+            GUIText.text = AI.ShowAdvanced() ? (string.IsNullOrEmpty(ctrlText) ? text : ctrlText) : text;
+            GUIText.tooltip = AI.ShowAdvanced() ? (string.IsNullOrEmpty(ctrlTip) ? tip : ctrlTip) : tip;
             return GUIText;
         }
 
