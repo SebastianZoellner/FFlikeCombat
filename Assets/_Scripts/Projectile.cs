@@ -10,6 +10,7 @@ public class Projectile : MonoBehaviour
     [SerializeField] GameObject[] destroyOnHit = null;
     [SerializeField] SimpleAudioEventSO impactSFX;
     [SerializeField] float radius;
+    public bool projectilePerTarget = false;
 
     public event EventHandler OnImpact;
     private PowerSO attackPower;
@@ -102,7 +103,7 @@ public class Projectile : MonoBehaviour
         if (other == attacker.GetComponentInChildren<CapsuleCollider>())
             return;
 
-        Debug.Log("Projectile hitting " + other.name);
+        Debug.Log("Projectile "+name+" hitting " + other.name);
         Impact(other);
     }
 

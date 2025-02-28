@@ -1,5 +1,7 @@
 using UnityEngine;
 
+//Reduces Combat by 10* intensity and defense by 5* intensity
+
 public class BlindedStatus : BaseStatus
 {
     int turnCounter;

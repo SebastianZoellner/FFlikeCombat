@@ -1,5 +1,5 @@
+using DamageNumbersPro;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using TrailsFX;
 using UnityEngine;
@@ -8,34 +8,50 @@ public class CharacterVFX : MonoBehaviour
 {
     [SerializeField] private Transform statusEffectTransform;
     [SerializeField] private TrailPoint[] trailPointArray;
+
+    [Header("Main Particle systems")]
     [SerializeField] private ParticleSystem invigorateEffect;
+    [SerializeField] private ParticleSystem levelUpEffect;
     [SerializeField] private ParticleSystem tacticalAdvantageEffect;
 
-    TrailOrigin[] attackOrigin;
+    [Header("Damage Number Setup")]
+    [SerializeField] DamageNumber damagePrefab;
+    [SerializeField] DamageNumber healPrefab;
+    [SerializeField] DamageNumber textPrefab;
 
+    private TrailOrigin[] attackOrigin;
     private Dictionary<TrailOrigin,TrailEffect> trailEffect;
 
+    private CharacterHealth health;
     private void Awake()
     {
-        InitializeTrailEffectDictionary();  
-    }
-
-   
+        InitializeTrailEffectDictionary();
+        health = GetComponent<CharacterHealth>();    } 
 
     private void OnEnable()
     {
-        GetComponent<CharacterHealth>().OnInvigorate += health_OnInvigorate;
+        health.OnInvigorate += health_OnInvigorate;
+        if(health.IsHero)
+        GetComponent<CharacterExperience>().OnLevelUp += CharacterVFX_OnLevelUp;
+    }
+
+private void Start()
+    {
+        DisableTrail();
     }
 
     private void OnDisable()
     {
-        GetComponent<CharacterHealth>().OnInvigorate -= health_OnInvigorate;
+        health.OnInvigorate -= health_OnInvigorate;
+        if(health.IsHero)
+        GetComponent<CharacterExperience>().OnLevelUp -= CharacterVFX_OnLevelUp;
     }
-
-    private void Start()
-    {
-        StopTrail();
-    }
+    //-----------------------------------------------------------------------------------
+    //                    Public functions
+    //-----------------------------------------------------------------------------------
+    public void SpawnDamageText(float damage) => healPrefab.Spawn(transform.position + 2 * Vector3.up, damage);
+    public void SpawnHealText(float heal) => damagePrefab.Spawn(transform.position + 2 * Vector3.up, heal);
+    public void SpawnFloatingText(string text) => textPrefab.Spawn(transform.position + 2 * Vector3.up, text);
 
     public void AttackingEffect(GameObject effect, Transform target)
     {       
@@ -49,6 +65,12 @@ public class CharacterVFX : MonoBehaviour
             //Debug.Log("Hit at  " + hit.point);
             CreateEffect(effect, hit.point);
         }
+    }
+
+    public void MissEffect(GameObject missEffect, Transform target)
+    {
+        AttackingEffect(missEffect, target);
+        textPrefab.Spawn(target.position + 2 * Vector3.up, "Missed");
     }
 
     public void BuffingEffect(GameObject effect)
@@ -79,8 +101,28 @@ public class CharacterVFX : MonoBehaviour
 
     public void EndAttack()
     {
-        StopTrail();
+        DisableTrail();
     }
+
+    public void EnableTrail() //Called from anmation events
+    {
+        foreach (TrailOrigin to in attackOrigin)
+        {
+            if (trailEffect.ContainsKey(to))
+                trailEffect[to].active = true;
+            else
+                Debug.Log(name + " does not have a trail set for origin " + to, gameObject);
+        }
+    }
+    public void DisableTrail()
+    {
+        foreach (TrailPoint tp in trailPointArray)
+            tp.trail.active = false;
+    }
+
+    //------------------------------------------------------------------------
+    //                  Private functions
+    //------------------------------------------------------------------------
 
     private void InitializeTrailEffectDictionary()
     {
@@ -103,21 +145,16 @@ public class CharacterVFX : MonoBehaviour
             invigorateEffect.Play();
     }
 
-    private void StartTrail() //Called from anmation events
+    
+    private void CharacterVFX_OnLevelUp()
     {
-        foreach (TrailOrigin to in attackOrigin)
-        {
-            if (trailEffect.ContainsKey(to))
-                trailEffect[to].active = true;
-            else
-                Debug.Log(name + " does not have a trail set for origin "+to, gameObject);
-        }
+        if (levelUpEffect)
+            levelUpEffect.Play();
+
+        SpawnFloatingText("Level up!");
+
     }
-    private void StopTrail()
-    {
-        foreach(TrailPoint tp in trailPointArray)      
-        tp.trail.active = false;
-    }
+
 }
 
 [Serializable]

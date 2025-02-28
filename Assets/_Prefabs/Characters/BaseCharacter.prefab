@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: -3261786334885755302}
   - component: {fileID: -6854644152824318921}
   - component: {fileID: -4274710741510444355}
+  - component: {fileID: 8462206055967672838}
   m_Layer: 10
   m_Name: BaseCharacter
   m_TagString: Untagged
@@ -82,6 +83,7 @@ MonoBehaviour:
   stepAudioSource: {fileID: 4998464470784866740}
   step: {fileID: 11400000, guid: df04dfe4609e12b46a8ff95e1853870e, type: 2}
   dropSound: {fileID: 11400000, guid: ab2ff408031d2a141af0cc2bf1c89c7a, type: 2}
+  levelSound: {fileID: 0}
 --- !u!114 &2244223287724845499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,10 +168,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87b8cf92359953f49b9cc749a478c927, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  statusEffectTransform: {fileID: 0}
+  statusEffectTransform: {fileID: 7131848831004049689}
   trailPointArray: []
   invigorateEffect: {fileID: 0}
+  levelUpEffect: {fileID: 0}
   tacticalAdvantageEffect: {fileID: 3134416913319394410}
+  damagePrefab: {fileID: 5253832901645359921, guid: 198f09c9d0292b04ba79e339af5daebc,
+    type: 3}
+  healPrefab: {fileID: 5253832901645359921, guid: 66967f59e2bb116428301f21a1b54074,
+    type: 3}
+  textPrefab: {fileID: 5253832901645359921, guid: 27bf809da24acbe4bb738efc664b7917,
+    type: 3}
 --- !u!114 &4406790374327832200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -430,6 +439,18 @@ NavMeshAgent:
   m_BaseOffset: -0.02
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &8462206055967672838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 747939967994630441}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd8def6d2359999478006712e6bcfa27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3788141912768694364
 GameObject:
   m_ObjectHideFlags: 0

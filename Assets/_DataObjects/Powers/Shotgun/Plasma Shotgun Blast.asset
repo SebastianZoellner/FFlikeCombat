@@ -13,26 +13,19 @@ MonoBehaviour:
   m_Name: Plasma Shotgun Blast
   m_EditorClassIdentifier: 
   ShowDerivedAttributes: 1
-  attack: 10
+  attack: 5
   defense: 0
   target: 0
   radius: 0
-  timeCost: 0.9
+  timeCost: 1
   setupVsRecovery: 0.4
-  damageSpread: 0.703
+  damageSpread: 0.502
   numberOfHits: 1
+  level: 0
   momentumLimit: 0
   momentumEffect: 1
   momentumCostFactor: 0.5
-  successEffectArray:
-  - level: 3
-    status: 3
-    intensity: 3
-    duration: 0
-  - level: 4
-    status: 4
-    intensity: 1
-    duration: 2
+  successEffectArray: []
   attackEffectsLevel1: []
   attackEffectsLevel2: []
   attackEffectsLevel3:
@@ -40,6 +33,7 @@ MonoBehaviour:
   attackEffectsLevel4:
   - {fileID: 11400000, guid: f186b213235b8664f88cd20074d8323d, type: 2}
   - {fileID: 11400000, guid: 8939c76db719f4441b5548c298216ada, type: 2}
+  boostEffects: []
   enduranceToDamage: -0.5
   icon: {fileID: 0}
   buttonName: 
@@ -50,8 +44,11 @@ MonoBehaviour:
   projectile: {fileID: 6887941228343807703, guid: 6b3c21e3be0b28943ab4e3faa03d4617,
     type: 3}
   attackVFX: {fileID: 0}
-  hitVFX: {fileID: 2612828321144929153, guid: 61d5602d400a21941ba04633b3a9b4bb, type: 3}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 2612828321144929153, guid: 61d5602d400a21941ba04633b3a9b4bb,
+    type: 3}
   attackOriginArray: 
   attackSound: {fileID: 0}
+  shootSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 90d105c07791a0047ba79b92e248644a, type: 2}
   missSound: {fileID: 0}

@@ -137,23 +137,79 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
         type: 3}
+      propertyPath: glow
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: profile
+      value: 
+      objectReference: {fileID: 11400000, guid: e6e74f38237364260b68bef0cd1b8795,
+        type: 2}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
       propertyPath: rmsCount
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: glowWidth
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: innerGlow
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: glowQuality
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: outlineWidth
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: outlineQuality
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: outlineDownsampling
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: targetFXGroundMaxDistance
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: seeThroughOccluderThreshold
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7371468793014640278, guid: 3e57dec8c7ed8b14788f4b586d15a459,
+        type: 3}
+      propertyPath: targetFXScaleToRenderBounds
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7826619342387407058, guid: 3e57dec8c7ed8b14788f4b586d15a459,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 13.682892
       objectReference: {fileID: 0}
     - target: {fileID: 7826619342387407058, guid: 3e57dec8c7ed8b14788f4b586d15a459,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 7826619342387407058, guid: 3e57dec8c7ed8b14788f4b586d15a459,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 2.3661635
       objectReference: {fileID: 0}
     - target: {fileID: 7826619342387407058, guid: 3e57dec8c7ed8b14788f4b586d15a459,
         type: 3}

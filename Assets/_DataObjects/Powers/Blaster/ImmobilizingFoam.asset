@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: ImmobilizingFoam
   m_EditorClassIdentifier: 
-  minDamage: 0
-  maxDamage: 1
-  attack: 30
-  defense: 10
-  setupTime: 0.35
-  recoveryTime: 0.35
+  ShowDerivedAttributes: 1
+  attack: 10
+  defense: 0
   target: 0
   radius: 0
+  timeCost: 1
+  setupVsRecovery: 0.751
+  damageSpread: 1
+  numberOfHits: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0.75
   successEffectArray:
   - level: 1
     status: 2
@@ -37,23 +41,28 @@ MonoBehaviour:
     status: 2
     intensity: 4
     duration: 4
+  attackEffectsLevel1:
+  - {fileID: 11400000, guid: 7e552ac9c7a4f594eb0aa5aff3386dd6, type: 2}
+  attackEffectsLevel2:
+  - {fileID: 11400000, guid: d1625fe99c9b007428b504a334aceb06, type: 2}
+  attackEffectsLevel3:
+  - {fileID: 11400000, guid: 684d71701af0513499fc4a7e712e2be4, type: 2}
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: a018581c3b268384286b553b580c2e93, type: 2}
+  enduranceToDamage: 0
   icon: {fileID: 21300000, guid: f3ec6b593e23b374eb9142fc11f0d4c4, type: 3}
   buttonName: Entangle
   description: This attack does very little damage by slows the target considerably.
-  range: 5
+  range: 7
   attackAnimation: {fileID: 7400000, guid: 1c8bd50fa59b28b4ca2f7e5aa33f0791, type: 2}
   flyingAnimation: {fileID: 0}
   projectile: {fileID: 7037852181789672172, guid: efaedb0ef48fbe241961a24bf5cfefad,
     type: 3}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 1870224526385031345, guid: 86679e2f90735414c8bc1f7706f29b83,
+    type: 3}
   attackOriginArray: 
   attackSound: {fileID: 11400000, guid: 01c1c04210d9d3646bf43b8789060764, type: 2}
   hitSound: {fileID: 0}
   missSound: {fileID: 0}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 1.35
-  minMomentum: -60
-  maxMomentum: 100
-  enduranceCost: 35

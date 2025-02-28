@@ -12,34 +12,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Block
   m_EditorClassIdentifier: 
-  minDamage: 0
-  maxDamage: 0
+  ShowDerivedAttributes: 0
   attack: 0
   defense: 0
-  setupTime: 0.01
-  recoveryTime: 0.5
   target: 2
   radius: 0
-  successEffectArray:
-  - level: 0
-    status: 9
-    intensity: 0
-    duration: 0
+  timeCost: 0.5
+  setupVsRecovery: 0.012
+  damageSpread: 0
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 1.5
+  successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  boostEffects:
+  - {fileID: 11400000, guid: 96cffa53d7b66a049bf7852d42f21195, type: 2}
+  enduranceToDamage: 0
   icon: {fileID: 21300000, guid: 80153f509d0b231408e02c07754b8d24, type: 3}
   buttonName: Block
-  description: 
+  description: Substantially increases the armor of the character.
   range: 2
   attackAnimation: {fileID: 7400000, guid: 701e6768fa8084a4bbce789ed134d154, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 7600427495753292919, guid: b7d6f9ac51418ab4296468712a4daca0, type: 3}
+  muzzleVFX: {fileID: 0}
   attackOriginArray: 
   attackSound: {fileID: 0}
+  shootSound: {fileID: 0}
   hitSound: {fileID: 0}
   missSound: {fileID: 0}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: -0.25
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 0

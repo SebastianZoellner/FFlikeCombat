@@ -125,7 +125,7 @@ public class PCController : MonoBehaviour
     //      Private Methods
     //---------------------------------------------
 
-    private void OnAnyEnemyDied(IDamageable deadHealth)
+    private void OnAnyEnemyDied(IDamageable deadHealth, CharacterCombat ignored)
     {
         if (deadHealth == target)
         {

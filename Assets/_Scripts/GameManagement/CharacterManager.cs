@@ -174,7 +174,7 @@ public class CharacterManager : MonoBehaviour
             OnHeroesDead.Invoke();
     }
 
-    private void CharacterHealth_OnAnyEnemyDied(CharacterHealth deadEnemyHealth)
+    private void CharacterHealth_OnAnyEnemyDied(CharacterHealth deadEnemyHealth, CharacterCombat ignored)
     {
         EnemyController deadEnemy = deadEnemyHealth.GetComponent<EnemyController>();
         enemyList.Remove(deadEnemy);

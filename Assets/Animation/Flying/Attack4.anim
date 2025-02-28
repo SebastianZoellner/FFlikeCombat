@@ -43165,7 +43165,7 @@ AnimationClip:
   m_HasMotionFloatCurves: 1
   m_Events:
   - time: 0.30580807
-    functionName: Impact
+    functionName: Projectile
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

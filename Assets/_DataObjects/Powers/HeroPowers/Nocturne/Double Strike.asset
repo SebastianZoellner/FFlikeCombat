@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Double Strike
+  m_EditorClassIdentifier: 
+  ShowDerivedAttributes: 1
+  attack: -10
+  defense: -5
+  target: 0
+  radius: 0
+  timeCost: 1
+  setupVsRecovery: 0.5
+  damageSpread: 0.5
+  numberOfHits: 3
+  level: 0
+  momentumLimit: 3
+  momentumEffect: 1
+  momentumCostFactor: 2
+  successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  boostEffects: []
+  enduranceToDamage: -0.2
+  icon: {fileID: 21300000, guid: 4b2d809210c3f8a4ebc67fb873c7cd7e, type: 3}
+  buttonName: Triple Strike
+  description: A series of 3 attacks.
+  range: 1.8
+  attackAnimation: {fileID: 7400000, guid: d61b6385107c29b458a2ad84ac126fdc, type: 2}
+  flyingAnimation: {fileID: 0}
+  projectile: {fileID: 0}
+  projectileOrigin: 0
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 6936232475657237404, guid: 5de528df336a71c40aae35edaa0fc558, type: 3}
+  muzzleVFX: {fileID: 0}
+  attackOriginArray: 0400000005000000
+  attackSound: {fileID: 11400000, guid: fdba71c18cc0d6e41aa629b7169e0159, type: 2}
+  shootSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
+  missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}

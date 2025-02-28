@@ -16,19 +16,30 @@ MonoBehaviour:
   LabelName: 
   fraction: 0
   powerArray:
-  - {fileID: 11400000, guid: 0baa6deda8bebe04ab49f4f87c6d3c3b, type: 2}
+  - {fileID: 11400000, guid: ebc094e2a96718a4090724af3d163630, type: 2}
   - {fileID: 11400000, guid: d6d4fe3199707d1498812864f69392bf, type: 2}
-  - {fileID: 11400000, guid: 9a41f4d377b001e419ae5bc23ac87e62, type: 2}
+  - {fileID: 11400000, guid: 2c0cda4c3bfc7f6448dea601369fe03f, type: 2}
+  - {fileID: 11400000, guid: 10287f8d2d0e9ec49b237915bcc23644, type: 2}
+  - {fileID: 11400000, guid: 2d0dab7f5e3c5c8439b8027b3e27d1be, type: 2}
+  - {fileID: 11400000, guid: 0baa6deda8bebe04ab49f4f87c6d3c3b, type: 2}
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
-  - {fileID: 11400000, guid: c8b973288db0483479bb6858dd83b6ef, type: 2}
+  leveledPowerArray:
   - {fileID: 11400000, guid: 32fce817e672e184abf2de6498ddcf74, type: 2}
   attributeBonusArray: []
   icon: {fileID: 21300000, guid: 329c39f28bc638a4396142893f6bac9a, type: 3}
-  shortBlurb: 
+  shortBlurb: Powered by alien tech, Air Force pilot Captain Erica Thorne  soars
+    into action, determined to protect humanity while uncovering the truth about
+    her past.
+  blurb: After surviving a mysterious crash that claims her squadron, Air Force pilot
+    Captain Erica Thorne is saved by a recluse inventor who equips her with a powered
+    flying armor incorporating alien technology. As Valkyrie, Erica must confront
+    a shadowy syndicate led by the enigmatic Fenrir, who seeks to weaponize the technology.
+    Battling personal demons and global threats, Valkyrie soars into action, determined
+    to protect humanity while uncovering the truth about her past.
   animatorController: {fileID: 22100000, guid: 58064e6760fd3ea44b34fe64039c241d, type: 2}
   characterToon: {fileID: 7489398626707582262, guid: 99d4fb12c0f7f74489f9b733185b73ce,
     type: 3}
-  level: 4
+  rank: 4
   characterClass: 3
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
   impactToPower: 0.75

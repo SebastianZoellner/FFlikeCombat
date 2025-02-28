@@ -31,9 +31,9 @@ public class HoverTipManager : MonoBehaviour
         //Debug.Log(tipText.text + "    " + tipText.preferredWidth + " " + tipText.preferredHeight);
         tipText.text = tip;
         //Debug.Log(tipText.text+"    "+tipText.preferredWidth + " " + tipText.preferredHeight);
-        tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > tipWindowWidth ? tipWindowWidth : tipText.preferredWidth, tipText.preferredHeight);
+       // tipWindow.sizeDelta = new Vector2(tipText.preferredWidth > tipWindowWidth ? tipWindowWidth : tipText.preferredWidth, tipText.preferredHeight);
         tipWindow.gameObject.SetActive(true);
-        tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x * 0.75f,mousePos.y);
+        tipWindow.transform.position = new Vector2(mousePos.x + tipWindow.sizeDelta.x * 0.5f,mousePos.y);
     }
 
     private void HideTip()

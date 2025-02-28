@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shell Shocked 1
   m_EditorClassIdentifier: 
   status: 4
+  vfx: {fileID: 5659291355382750488, guid: b3db7d4d711f94d4796743baa5ba7a38, type: 3}
   intensity: 1
   duration: 3
-  damageCost: 0

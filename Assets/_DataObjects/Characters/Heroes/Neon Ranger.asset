@@ -16,18 +16,24 @@ MonoBehaviour:
   LabelName: 
   fraction: 0
   powerArray:
+  - {fileID: 11400000, guid: 545bc79a6055f7941a2b24da64f2ff01, type: 2}
+  - {fileID: 11400000, guid: 17b890412aa474142939f51cf6ee84a0, type: 2}
+  - {fileID: 11400000, guid: 75d10c6e46799de4c826525b023b18cb, type: 2}
+  - {fileID: 11400000, guid: 793300020a5ef7748a19e4b0f9a36812, type: 2}
+  - {fileID: 11400000, guid: fe34553c89a5d7041b0030284f72c254, type: 2}
   - {fileID: 11400000, guid: 0baa6deda8bebe04ab49f4f87c6d3c3b, type: 2}
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
-  - {fileID: 11400000, guid: ace88d9688e42b24f8125b6f6782779c, type: 2}
-  - {fileID: 11400000, guid: 307dbe79fc3df9046a4810d07d7ac1e6, type: 2}
-  - {fileID: 11400000, guid: 33448c7fd27d3cd4bbbbc98d7ca5ffcd, type: 2}
-  - {fileID: 11400000, guid: 5fc366303691ac54cbd633be87cde314, type: 2}
+  leveledPowerArray:
+  - {fileID: 11400000, guid: f3c296e4a06e47a46af8078ab44c8e8a, type: 2}
+  - {fileID: 11400000, guid: a3f74cafbbd052f4eb73db8d9065a9c5, type: 2}
+  - {fileID: 11400000, guid: 2c38541ddf751f94dbede380c87cc8bc, type: 2}
   attributeBonusArray: []
   icon: {fileID: 21300000, guid: 5e4e654eb78182a4ab71b6d6c26bae47, type: 3}
-  shortBlurb: 'Neon Ranger, formerly known as Jesse Ryder, was born and raised in
-    Neo-Western City. From a young age, Jesse showcased a natural talent for sharpshooting
-    and a keen sense of justice, often inspired by tales of old Western lawmen. As
-    he grew older, he decided to don the mantle of a modern-day vigilante to protect
+  shortBlurb: 'Neon Ranger, the Marshal from Neo-Western City. '
+  blurb: 'Neon Ranger, formerly known as Jesse Ryder, was born and raised in Neo-Western
+    City. From a young age, Jesse showcased a natural talent for sharpshooting and
+    a keen sense of justice, often inspired by tales of old Western lawmen. As he
+    grew older, he decided to don the mantle of a modern-day vigilante to protect
     his city from the rising tide of corruption and crime that infiltrated its neon
     streets.
 
@@ -42,7 +48,7 @@ MonoBehaviour:
   animatorController: {fileID: 22100000, guid: 56b943d59b11ad142b3943fa73fd335b, type: 2}
   characterToon: {fileID: 711413668427960929, guid: 7ca4e0147e2d2d444bf444f2a7619357,
     type: 3}
-  level: 4
+  rank: 4
   characterClass: 4
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
   impactToPower: 0.5

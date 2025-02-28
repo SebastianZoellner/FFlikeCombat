@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72e42c947f1b0c14481296ec8e3b9f4f, type: 3}
   m_Name: Blinded 1
   m_EditorClassIdentifier: 
-  status: 0
-  intensity: 0
-  duration: 0
-  damageCost: 0
+  status: 5
+  vfx: {fileID: 526442615249922012, guid: 71b408165392a3a43ba4b2ac3702dc5d, type: 3}
+  intensity: 1
+  duration: 2

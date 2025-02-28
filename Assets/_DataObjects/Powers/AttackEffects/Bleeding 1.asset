@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Bleeding 1
   m_EditorClassIdentifier: 
   status: 0
+  vfx: {fileID: 8163684771574148739, guid: c16ce2b852a9d3c45b5390b4e0585436, type: 3}
   intensity: 1
   duration: 3
-  damageCost: 2

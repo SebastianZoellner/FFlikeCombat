@@ -15,6 +15,8 @@ public class GameSystem : MonoBehaviour
 
     private float[] SuccessLevelArray = new float[] { 0.25f, 0.5f, 0.75f, 1 };
 
+    //public float[] LevelAdvanceArray = new float[] { 10, 25, 50 };
+
     readonly float attackFactor = 1;
     readonly float defenseFactor = 1;
     readonly float damageFactor = 20;
@@ -22,6 +24,7 @@ public class GameSystem : MonoBehaviour
     readonly float speedFactor = 20;
     readonly float inititativeFactor = 20;
 
+    readonly int maxLevel = 4;
 
     private void Awake()
     {
@@ -68,7 +71,7 @@ public class GameSystem : MonoBehaviour
 
     public float CalculateDamage(float power, float baseDamage)
     {
-      //  Debug.Log($"Calculating damage; Base Damage {baseDamage}, power {power}: "+ baseDamage * Mathf.Pow(2, power / damageFactor));
+      Debug.Log($"Calculating damage; Base Damage {baseDamage}, power {power}: "+ baseDamage * Mathf.Pow(2, power / damageFactor));
 
         return damageMultiplier*baseDamage *Mathf.Pow(2,power / damageFactor);
     }
@@ -110,7 +113,29 @@ public class GameSystem : MonoBehaviour
             return baseTime / (1 + initiative / inititativeFactor);
         else return baseTime * (1 - initiative / inititativeFactor);
     }
+    public float GetLevelUpCost(int level, int rank)
+    {
+        float rankMultiplier = 2.5f;
+        float l2Multiplier = 2.5f;
+        float l3Multiplier = 2f;
 
+        float cost = rankMultiplier * level;
+        if (level > 1)
+            cost *= l2Multiplier;
+        if (level == 3)
+            cost *= l3Multiplier;
+
+        return cost;
+
+    }
+
+    public bool TestLevelUp(float experience, int level, int rank)
+    {
+        if (level >= maxLevel)
+            return false;
+
+        return experience > GetLevelUpCost(level, rank);
+    }
     //------------------------------------------
     //---------Private Methods----------------
     //------------------------------------------

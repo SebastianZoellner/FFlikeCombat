@@ -1,4 +1,5 @@
 using UnityEngine;
+//reduce combat and initiative by 10* the intensity of the effect
 
 public class ShellShockedStatus : BaseStatus
 {
@@ -12,7 +13,6 @@ public class ShellShockedStatus : BaseStatus
     public override void BeginStatus()
     {
         statusName = StatusName.ShellShocked;
-        statusManager.Health.TakeDamage(intensity*3);
         if (statusVFX)
         {
             activeVFX = statusManager.InitializeStatusVFX(statusVFX);

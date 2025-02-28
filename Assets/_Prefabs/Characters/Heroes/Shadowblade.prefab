@@ -664,6 +664,11 @@ PrefabInstance:
       propertyPath: attackOrigin
       value: 
       objectReference: {fileID: 8771747698063710125}
+    - target: {fileID: 519185359904861391, guid: 04c8837e64417394eb1ff55435545552,
+        type: 3}
+      propertyPath: attackOrigin.Array.data[0]
+      value: 
+      objectReference: {fileID: 8771747698063710125}
     - target: {fileID: 718639754217217773, guid: 04c8837e64417394eb1ff55435545552,
         type: 3}
       propertyPath: playOnAwake

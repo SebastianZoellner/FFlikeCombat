@@ -8,6 +8,6 @@ public interface IStats
     public string GetBlurb();
     public Sprite GetIcon();
     public float GetStartingHealth();
-    public int GetLevel();
+    public int GetRank();
     public float GetDefenseValue();
 }

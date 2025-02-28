@@ -1,12 +1,8 @@
-
-
 using UnityEngine;
 
 public class BleedingStatus : BaseStatus
 {
-    int turnCounter = 0;
-    
-    private GameObject activeVFX;
+     private GameObject activeVFX;
 
     public BleedingStatus(StatusManager statusManager, float intensity, float damageModifier, int duration, GameObject statusVFX) : base(statusManager, intensity, damageModifier, duration, statusVFX)
     {
@@ -25,7 +21,7 @@ public class BleedingStatus : BaseStatus
     public override bool OnActivation()
     {
         //Debug.Log("Bleeding");
-        statusManager.Health.TakeDamage(intensity * damageModifier);
+        statusManager.Health.TakeDamage(intensity * damageModifier,null);
         --duration;
 
         if (duration<=0)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BlockingStatus : BaseStatus
@@ -33,7 +31,7 @@ public class BlockingStatus : BaseStatus
         switch (attribute)
         {
             case Attribute.Armor:
-                return 40;
+                return 5*intensity;
 
             default:
                 return 0;

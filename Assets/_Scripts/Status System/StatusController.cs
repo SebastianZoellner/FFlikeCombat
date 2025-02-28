@@ -53,8 +53,13 @@ public class StatusController : MonoBehaviour
                 newStatus=new BlockingStatus(manager, intensity, damageModifier, duration, vfx);
                 break;
             case StatusName.Resting:
-                newStatus = new RestingStatus(manager, 0, 0, 0, null);
+                newStatus = new RestingStatus(manager, intensity, 0, 0, null);
                 break;
+            case StatusName.Enraged:
+                newStatus = new EnragedStatus(manager, intensity, damageModifier, duration, vfx);
+                break;
+
+
         }
 
         return newStatus;

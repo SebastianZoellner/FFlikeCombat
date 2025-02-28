@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Warp Shot
+  m_EditorClassIdentifier: 
+  ShowDerivedAttributes: 1
+  attack: 0
+  defense: 0
+  target: 0
+  radius: 0
+  timeCost: 1
+  setupVsRecovery: 0.306
+  damageSpread: 0.443
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0
+  successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2:
+  - {fileID: 11400000, guid: f74642cc8ba81db4bad6172eacbdb022, type: 2}
+  attackEffectsLevel3:
+  - {fileID: 11400000, guid: f74642cc8ba81db4bad6172eacbdb022, type: 2}
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: 8939c76db719f4441b5548c298216ada, type: 2}
+  - {fileID: 11400000, guid: f74642cc8ba81db4bad6172eacbdb022, type: 2}
+  boostEffects: []
+  enduranceToDamage: 0
+  icon: {fileID: 21300000, guid: 616013b5184a3d346849311628488fc1, type: 3}
+  buttonName: Warp Shot
+  description: A slow shot, likely to stun the enemy.
+  range: 7
+  attackAnimation: {fileID: 7400000, guid: fda41f5767b8e5745b037ffad7279095, type: 2}
+  flyingAnimation: {fileID: 0}
+  projectile: {fileID: 1756089082116642531, guid: f9a6f688e4a77594dba7ded730ccb72c,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 8968472839532094413, guid: c9de9ebc509795f439f29c0afefd7ee8,
+    type: 3}
+  attackOriginArray: 
+  attackSound: {fileID: 0}
+  shootSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 71696d0629bef8e4db1b9fb0e1fda684, type: 2}
+  missSound: {fileID: 0}

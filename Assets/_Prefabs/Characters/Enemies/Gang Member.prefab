@@ -4388,6 +4388,11 @@ PrefabInstance:
       propertyPath: attackOrigin
       value: 
       objectReference: {fileID: 4503360179420719156}
+    - target: {fileID: 4502215914140379427, guid: 8678638650932ce4d80671e6f2b5825e,
+        type: 3}
+      propertyPath: attackOrigin.Array.data[0]
+      value: 
+      objectReference: {fileID: 4503360179420719156}
     - target: {fileID: 4643450964703292969, guid: 8678638650932ce4d80671e6f2b5825e,
         type: 3}
       propertyPath: isAnimated

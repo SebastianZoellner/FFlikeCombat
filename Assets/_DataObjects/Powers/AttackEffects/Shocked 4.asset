@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Shocked 4
   m_EditorClassIdentifier: 
   status: 7
+  vfx: {fileID: 0}
   intensity: 4
   duration: 1
-  damageCost: 2

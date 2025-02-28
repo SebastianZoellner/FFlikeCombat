@@ -9,6 +9,8 @@ public class MomentumPowers : MonoBehaviour
     private static readonly float SwitchInitiativeCost = 5f;
 
     private MomentumManager momentumManager;
+    [SerializeField] private AttackSuccessEffectSO tacticalAdvantageStatus;
+
     [SerializeField] CharacterManager characterManager;
     [SerializeField] ActionSequencer actionSequencer;
 
@@ -35,21 +37,18 @@ public class MomentumPowers : MonoBehaviour
     public void AwakeHero(CharacterHealth downedHero)
     {
         if (!momentumManager.PayMomentum(AwakeCost))
-        {
-           
             return;
-        }
 
         downedHero.Raise();      
     }
 
     public void Envigorate()
     {
-        if(!momentumManager.PayMomentum(EnvigorateCost))
+        if (!momentumManager.PayMomentum(EnvigorateCost))
             return;
         PCController activeCharacter = characterManager.GetActiveCharacter();
-        if(activeCharacter)
-        activeCharacter.GetComponent<CharacterHealth>().Envigorate();
+        if (activeCharacter)
+            activeCharacter.GetComponent<CharacterHealth>().Envigorate(1);
     }
 
     public void TakeAdvantage()
@@ -61,7 +60,7 @@ public class MomentumPowers : MonoBehaviour
 
         PCController activeCharacter = characterManager.GetActiveCharacter();
         if (activeCharacter)
-            activeCharacter.GetComponent<StatusManager>().GainStatus(StatusName.TacticalAdvantage,0,0,0);
+            activeCharacter.GetComponent<StatusManager>().GainStatus(tacticalAdvantageStatus,0);
     }
 
     public void SwitchInitiative(CharacterInitiative otherHero)

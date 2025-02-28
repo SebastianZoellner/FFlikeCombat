@@ -9,7 +9,7 @@ public class DamageStatus : BaseStatus
     public override void BeginStatus()
     {
         statusName = StatusName.Damage;
-        statusManager.Health.TakeDamage(intensity*damageModifier);     
+        statusManager.Health.TakeDamage(intensity*damageModifier,null);     
         statusManager.LoseStatus(this);
     }
 

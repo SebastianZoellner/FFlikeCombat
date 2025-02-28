@@ -19,13 +19,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1d41959b5bf364f4586fd29c3fb274a5, type: 2}
   - {fileID: 11400000, guid: 159f50b03b7f1324db2b74b5a0aa38a7, type: 2}
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
+  leveledPowerArray: []
   attributeBonusArray: []
   icon: {fileID: 21300000, guid: d198e52868f3b25418ba2bd2e4d30273, type: 3}
   shortBlurb: A tough life on the street has made her even tougher.
+  blurb: 
   animatorController: {fileID: 22100000, guid: 9a95febdb27c6ca48acfe2fc6062c70c, type: 2}
   characterToon: {fileID: 8973485430670085023, guid: 0cd02968f7406e14ba5755f70c562fde,
     type: 3}
-  level: 1
+  rank: 1
   characterClass: 2
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
   impactToPower: 0.5

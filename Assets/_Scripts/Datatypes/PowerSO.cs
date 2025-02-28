@@ -40,6 +40,9 @@ public class PowerSO : ScriptableObject
     [SerializeField] private float damageSpread;
     [SerializeField] private int numberOfHits = 1;
 
+    [Range(0, 3)]
+    [SerializeField] private int level = 0;
+
     [Header("Momentum Effects")]
     [SerializeField] private MomentumLimit momentumLimit=MomentumLimit.NoLimit;
     [ShowInInspector,ShowIf("ShowDerivedAttributes")] private float minMomentum = -100;
@@ -62,6 +65,7 @@ public class PowerSO : ScriptableObject
     [SerializeField] AttackSuccessEffectSO[] attackEffectsLevel2;
     [SerializeField] AttackSuccessEffectSO[] attackEffectsLevel3;
     [SerializeField] AttackSuccessEffectSO[] attackEffectsLevel4;
+    [SerializeField] AttackSuccessEffectSO[] boostEffects;
 
 
     [ShowInInspector, ShowIf("ShowDerivedAttributes")] private float baseDamage;
@@ -103,17 +107,28 @@ public class PowerSO : ScriptableObject
 
     [SerializeField] private Projectile projectile;
 
+    private bool NoProjectile => projectile == null;
+    [ShowIf("HasProjectile")]
+    public int projectileOrigin=0;
     [BoxGroup("VFX")]
     public GameObject attackVFX;
-    [BoxGroup("VFX")]
+    [BoxGroup("VFX"), ShowIf("NoProjectile")]
     public GameObject hitVFX;
+    [BoxGroup("VFX"), ShowIf("HasProjectile")]
+    public GameObject muzzleVFX;
     [BoxGroup("VFX")]
     public TrailOrigin[] attackOriginArray;
-    [BoxGroup("SFX")]
+
+
+    [BoxGroup("SFX")] //this is triggered by an animation event PlayAttackSound
     [SerializeField] private SimpleAudioEventSO attackSound;
+    [BoxGroup("SFX"), ShowIf("HasProjectile")]
+    public SimpleAudioEventSO shootSound;
+    
+
     [BoxGroup("SFX")]
     public SimpleAudioEventSO hitSound;
-    [BoxGroup("SFX")]
+    [BoxGroup("SFX"), ShowIf("NoProjectile")]
     public SimpleAudioEventSO missSound;
 
     private bool isInitialized = false;
@@ -121,7 +136,9 @@ public class PowerSO : ScriptableObject
     public float GetMomentumChange() => momentumChange;
     public float GetMomentumCost() => momentumCost;
     public float GetSetupTime() => setupTime;
-    public float GetRecoveryTime() => recoveryTime;
+    public float GetRecoveryTime() => recoveryTime; 
+    public AttackSuccessEffectSO[] GetBuffEffects() => boostEffects;
+
     public float GetEnduranceCost()
     {
         InitializePower();
@@ -135,10 +152,13 @@ public class PowerSO : ScriptableObject
         return false;
     }
 
-    public bool IsAvailable(float momentum, float endurance)
+    public bool IsAvailable(float momentum, float endurance, int expereinceLevel)
     {
         InitializePower();
+        if(expereinceLevel==0)
         return momentum >= minMomentum && momentum < maxMomentum && endurance >= enduranceCost;
+
+        return momentum >= minMomentum && momentum < maxMomentum && endurance >= enduranceCost && expereinceLevel==level;
     }
 
     public float GetDamage(float highHitModifier)
@@ -148,6 +168,7 @@ public class PowerSO : ScriptableObject
         return UnityEngine.Random.Range(minDamage, maxDamage) * highHitModifier;
     }
 
+   
     
 
     public AttackSuccessEffectSO[] GetStatusEffects(int successLevel)
@@ -175,12 +196,21 @@ public class PowerSO : ScriptableObject
         return null;
     }
 
-    public void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker, IDamageable targetHealth)
+    public void LaunchProjectileVolley(Vector3 launchPosition, CharacterCombat attacker, IDamageable[] targetArray)
     {
-        //Debug.Log("Launching projectile " + projectile.name+" at "+targetHealth.transform.position);
-        GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition, Quaternion.identity);
-        projectileInstance.GetComponent<Projectile>().Setup(attacker, targetHealth, range, this);
+        if (!projectile.projectilePerTarget)
+        {
+            LaunchProjectile(launchPosition, attacker, targetArray[0]);
+            return;
+        }
+
+        foreach (IDamageable target in targetArray)
+        {
+            LaunchProjectile(launchPosition, attacker, target);
+        }
     }
+
+   
 
     public void PlayAttackSound(AudioSource source)
     {
@@ -196,7 +226,14 @@ public class PowerSO : ScriptableObject
          hitSound.Play(source);
      }
     */
-    
+
+    private void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker, IDamageable targetHealth)
+    {
+        //Debug.Log("Launching projectile " + projectile.name);
+        GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition, Quaternion.identity);
+        projectileInstance.GetComponent<Projectile>().Setup(attacker, targetHealth, range, this);
+    }
+
     private void InitializePower()
     {
         if (isInitialized)
@@ -225,45 +262,99 @@ public class PowerSO : ScriptableObject
     {
         float momentumCostEffect = 0.2f;
 
-        baseDamage = timeCost * GameSystem.Instance.GetBaseDamage()/numberOfHits;       //base damage depends on the time cost
-       // Debug.Log("Base damage " + baseDamage.ToString());
-        baseDamage += baseDamage * momentumCostFactor *momentumCostEffect;              //momentum effects change damage
+        baseDamage = timeCost * GameSystem.Instance.GetBaseDamage() / numberOfHits;       //base damage depends on the time cost
+
+        baseDamage *= (1+momentumCostFactor * momentumCostEffect);              //momentum effects change damage
         baseDamage -= CalculateEffectCost();                                            //special effects reduce damage
-       // Debug.Log("Base damage " + baseDamage.ToString());
-        float attackBonusEffect=1;
+
+        float attackBonusEffect = 1;
         float defenseBonusEffect = 0.3f;
-        baseDamage *= (1 -attackBonusEffect* attack/100);
-        baseDamage *=  (1 - defenseBonusEffect *defense / 100);
-       // Debug.Log("Base damage " + baseDamage.ToString());
+        baseDamage *= (1 - attackBonusEffect * attack / 100);
+        baseDamage *= (1 - defenseBonusEffect * defense / 100);
+
         float speedEffect = 0.3f;
 
-       baseDamage*= 1+(setupVsRecovery - 0.5f) * speedEffect;                           //faster powers loose up to 15% damage
+        baseDamage *= 1 + (setupVsRecovery - 0.5f) * speedEffect;                           //faster powers loose up to 15% damage
 
-        float enduranceEffect=0.5f;
+        float enduranceEffect = 0.5f;
 
         baseDamage *= 1 + (enduranceEffect * enduranceToDamage);                        //endurance costs reduce or increase the damage
 
-       // Debug.Log("Base damage " + baseDamage.ToString());
+        baseDamage = CalculateLevelDamageEffect(baseDamage);
+       baseDamage =ModifyForActionType(baseDamage);
+
         minDamage = (1 - damageSpread) * baseDamage;
         maxDamage = 2 * baseDamage - minDamage;
     }
 
+    private float ModifyForActionType(float baseDamage)
+    {
+        float allenemiesModifier = 0.25f;
+        float allFriendsModifier = 0.4f;
+        float areaEnemiesFactor = 0.4f;                                                 //Powers with radius >7 are worse than all enemies powers
+        switch (target)
+        {
+            case TargetType.Enemy:
+                break;
+            case TargetType.AllEnemies:
+                baseDamage = baseDamage * allenemiesModifier;
+                break;
+            case TargetType.AreaEnemies:
+                baseDamage = baseDamage / (1 + radius * areaEnemiesFactor);
+                break;
+            case TargetType.AllFriends:
+                baseDamage = baseDamage * allFriendsModifier;
+                break;
+
+        }
+        return baseDamage;
+    }
+
+    private float CalculateLevelDamageEffect(float baseDamage)
+    {
+        return baseDamage * (1f + (float)level / 10f);
+    }
+
     private float CalculateEffectCost()
     {
-        float stageWeight = 0.25f;//This is assuming each success level hasthesame probabillity
-
+        float stageWeight = 0.25f;//This is assuming each success level has the same probabillity
+        float buffWeight = 1.3f;
         float cost = 0;
 
         foreach (AttackSuccessEffectSO ase in attackEffectsLevel1)
-            cost += ase.damageCost;
+            cost += ase.DamageCost();
         foreach (AttackSuccessEffectSO ase in attackEffectsLevel2)
-            cost += ase.damageCost;
+            cost += ase.DamageCost();
         foreach (AttackSuccessEffectSO ase in attackEffectsLevel3)
-            cost += ase.damageCost;
+            cost += ase.DamageCost();
         foreach (AttackSuccessEffectSO ase in attackEffectsLevel4)
-            cost += ase.damageCost;
+            cost += ase.DamageCost();
 
-        return cost * stageWeight;
+        cost= cost * stageWeight;
+
+        foreach (AttackSuccessEffectSO ase in boostEffects)
+            cost -= ase.DamageCost()*buffWeight;
+
+        float allEnemiesModifier = 4f;
+        float allFriendsModifier = 2.5f;
+        float areaEnemiesFactor = 0.4f;                                                 //Powers with radius >7 are worse than all enemies powers
+       
+        switch (target)
+        {
+            case TargetType.Enemy:
+                break;
+            case TargetType.AllEnemies:
+                cost *= allEnemiesModifier;
+                break;
+            case TargetType.AreaEnemies:
+                cost*=(1 + radius * areaEnemiesFactor);
+                break;
+            case TargetType.AllFriends:
+                cost*= allFriendsModifier;
+                break;
+        }
+
+        return cost;
     }
 
     private void InititializeMomentum()

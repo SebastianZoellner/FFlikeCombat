@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Armed Kick
+  m_EditorClassIdentifier: 
+  ShowDerivedAttributes: 1
+  attack: -5
+  defense: -5
+  target: 0
+  radius: 0
+  timeCost: 0.8
+  setupVsRecovery: 0.7
+  damageSpread: 0.5
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0.5
+  successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  boostEffects: []
+  enduranceToDamage: 0
+  icon: {fileID: 21300000, guid: c42eb73551d389740b0e6009fd084be6, type: 3}
+  buttonName: Kick
+  description: A quick and imprecise melee attack.
+  range: 1.8
+  attackAnimation: {fileID: 7400000, guid: b65e9a77f0fd63741b5af5c65c012b90, type: 2}
+  flyingAnimation: {fileID: 0}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 5688621020241137862, guid: 2f5ce8a3fb89a8947867f6c90b20e807, type: 3}
+  muzzleVFX: {fileID: 0}
+  attackOriginArray: 03000000
+  attackSound: {fileID: 0}
+  shootSound: {fileID: 0}
+  hitSound: {fileID: 11400000, guid: 55a9ca1ccb1d812408f58c94c526e320, type: 2}
+  missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}

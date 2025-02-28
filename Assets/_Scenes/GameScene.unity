@@ -812,7 +812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   SelectableLayerMask:
     serializedVersion: 2
-    m_Bits: 1047
+    m_Bits: 1921
 --- !u!114 &4078187032624367205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1173,6 +1173,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf44abb147811440abe0bc689aa1f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tacticalAdvantageStatus: {fileID: 11400000, guid: 2b3672d983cd9a140b8ecddf7ed99c7f,
+    type: 2}
   characterManager: {fileID: 7628796724370099482}
   actionSequencer: {fileID: 8566463548458974687}
 --- !u!114 &5561348136639483056
@@ -2164,6 +2166,7 @@ MonoBehaviour:
   maximumHitChance: 0.95
   minimumHitChance: 0.1
   damageMultiplier: 1.2
+  baseDamage: 5
 --- !u!114 &9050163449144760248
 MonoBehaviour:
   m_ObjectHideFlags: 0

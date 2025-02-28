@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Disadvantaged 8
   m_EditorClassIdentifier: 
   status: 6
-  intensity: 1
+  intensity: 8
   duration: 0
-  damageCost: 0
+  baseDamageCost: 0.5

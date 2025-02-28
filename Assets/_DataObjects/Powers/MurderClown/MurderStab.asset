@@ -12,14 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: MurderStab
   m_EditorClassIdentifier: 
-  minDamage: 4
-  maxDamage: 5
+  ShowDerivedAttributes: 1
   attack: 0
   defense: 0
-  setupTime: 0.6
-  recoveryTime: 0.6
   target: 0
   radius: 0
+  timeCost: 0.8
+  setupVsRecovery: 0.5
+  damageSpread: 0.802
+  numberOfHits: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0
   successEffectArray:
   - level: 3
     status: 0
@@ -29,21 +33,24 @@ MonoBehaviour:
     status: 0
     intensity: 2
     duration: 3
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3:
+  - {fileID: 11400000, guid: 6b29e488c13f88d4ea37ce2938cb0393, type: 2}
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: 6faa416c623321d4993d3b9061b4f502, type: 2}
+  enduranceToDamage: 0.5
   icon: {fileID: 0}
   buttonName: 
   description: 
   range: 1.6
   attackAnimation: {fileID: 7400000, guid: 44d66421fed48eb4c8e60bea84df5f36, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 8781331233716584084, guid: e48bb5898f7e7a347aa4ffb1f06b9b11, type: 3}
+  muzzleVFX: {fileID: 0}
   attackOriginArray: 00000000
   attackSound: {fileID: 11400000, guid: f7fbf4728da7d0944bb4fb2067357594, type: 2}
   hitSound: {fileID: 11400000, guid: ce644e44fcc540f46a833c5a2dd53ecf, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 1.2
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 60

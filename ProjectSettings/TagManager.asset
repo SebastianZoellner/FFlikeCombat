@@ -13,11 +13,11 @@ TagManager:
   - Water
   - UI
   - PostProcessing
-  - 
-  - 
-  - 
+  - Enemy
+  - Hero
+  - Item
   - Selectable Target
-  - 
+  - Missile
   - 
   - 
   - 

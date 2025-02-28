@@ -1,6 +1,8 @@
 
 using UnityEngine;
 
+//Entangled reduces Initiative by intensity*10 and Speed by Intensity*15
+
 public class EntangleStatus : BaseStatus
 {
     int turnCounter;

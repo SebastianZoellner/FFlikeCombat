@@ -8,11 +8,13 @@ public class CharacterStats : MonoBehaviour,IStats
     private float baseDefense;
     private StatusManager statusManager;
    private CharacterHealth health;
+    private CharacterExperience experience;
 
     private void Awake()
     {
         statusManager = GetComponent<StatusManager>();
         health = GetComponent<CharacterHealth>();
+        experience = GetComponent<CharacterExperience>();
 
         health.SetStartingValues(character.GetBaseAttribute(Attribute.BaseHealth),character.GetBaseAttribute(Attribute.BaseEndurance));   
     }
@@ -21,13 +23,17 @@ public class CharacterStats : MonoBehaviour,IStats
     public string GetBlurb() => character.shortBlurb;
     public Sprite GetIcon() => character.icon;
     public float GetStartingHealth() => character.GetBaseAttribute(Attribute.BaseHealth);
+
+    public float GetExperienceValue() => character.xpValue;
+    
+
     public float GetStartingEndurance() => character.GetBaseAttribute(Attribute.BaseEndurance);
 
 
     public PowerSO GetPower(int index) => character.GetPower(index);
     public bool HasPowerID(int index) => character.HasPowerID(index);
     public int GetNumbeOfPowers() => character.powerArray.Length;
-    public int GetLevel() => character.level;
+    public int GetRank() => character.rank;
     
 
     public AnimatorOverrideController GetAnimatorOverrideController() => character.animatorController;
@@ -57,14 +63,28 @@ public class CharacterStats : MonoBehaviour,IStats
     {
         List<PowerSO> availablePowerList = new List<PowerSO>();
         float momentum = MomentumManager.GetMomentum();
+
+        if (experience != null)
+            foreach (PowerSO pow in character.leveledPowerArray)
+            {
+                //Debug.Log("Available power; considering " + pow.name);
+                if (hero && pow.IsAvailable(momentum, health.PresentEndurance, experience.level))
+                    availablePowerList.Add(pow);
+                if (!hero && pow.IsAvailable(-momentum, health.PresentEndurance, experience.level))
+                    availablePowerList.Add(pow);
+            }
+
         foreach (PowerSO pow in character.powerArray)
         {
             //Debug.Log("Available power; considering " + pow.name);
-            if (hero && pow.IsAvailable(momentum, health.PresentEndurance))
+            if (hero && pow.IsAvailable(momentum, health.PresentEndurance, 0))
                 availablePowerList.Add(pow);
-            if (!hero && pow.IsAvailable(-momentum, health.PresentEndurance))
+            if (!hero && pow.IsAvailable(-momentum, health.PresentEndurance, 0))
                 availablePowerList.Add(pow);
         }
+
+
+
 
         return availablePowerList.ToArray();
     }

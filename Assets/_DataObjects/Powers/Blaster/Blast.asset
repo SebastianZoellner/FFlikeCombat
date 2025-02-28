@@ -12,28 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Blast
   m_EditorClassIdentifier: 
-  minDamage: 3
-  maxDamage: 5
+  ShowDerivedAttributes: 1
   attack: 0
   defense: 0
+  target: 0
+  radius: 0
+  timeCost: 0.55
+  setupVsRecovery: 0.09090909
+  damageSpread: 0.5
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 0
+  momentumEffect: 0
+  momentumCostFactor: 0
   successEffectArray: []
-  buttonName: Blast
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  boostEffects: []
+  enduranceToDamage: -0.35
   icon: {fileID: 21300000, guid: 99325f387212d7e4f97439d016abff83, type: 3}
-  setupTime: 0.05
-  recoveryTime: 0.5
+  buttonName: Blast
+  description: Quick blaster discharge does light damage.
   range: 8
   attackAnimation: {fileID: 7400000, guid: fc0671af77193984eb4de7e5d7542d16, type: 2}
+  flyingAnimation: {fileID: 7400000, guid: 3d91900c41db6f248bee98ac35542348, type: 2}
   projectile: {fileID: 2227070833989676974, guid: 2c7bcbcb2d737f9489d477ff196f515f,
     type: 3}
   attackVFX: {fileID: 0}
-  hitVFX: {fileID: 2612828321144929153, guid: 3fe0011d9a75066448694ef451f59859, type: 3}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 2612828321144929153, guid: 61d5602d400a21941ba04633b3a9b4bb,
+    type: 3}
+  attackOriginArray: 
   attackSound: {fileID: 0}
+  shootSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 6e330c08597749743b14967ae1c67596, type: 2}
   missSound: {fileID: 0}
-  description: 
-  momentumEffect: 0
-  momentumCost: 0
-  momentumChange: 0
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 0

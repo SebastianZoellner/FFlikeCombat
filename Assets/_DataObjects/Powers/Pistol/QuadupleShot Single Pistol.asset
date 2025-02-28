@@ -12,18 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: QuadupleShot Single Pistol
   m_EditorClassIdentifier: 
-  minDamage: 1
-  maxDamage: 2
+  ShowDerivedAttributes: 1
   attack: -10
   defense: -5
-  setupTime: 0.3
-  recoveryTime: 0.7
-  timeCost: 1
-  setupVsRecovery: 0.3
-  damageSpread: 0
   target: 0
   radius: 0
+  timeCost: 1
+  setupVsRecovery: 0.3
+  damageSpread: 0.5
+  numberOfHits: 4
+  momentumLimit: 3
+  momentumEffect: 1
+  momentumCostFactor: 1.5
   successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  enduranceToDamage: 0
   icon: {fileID: 0}
   buttonName: Barrage
   description: Quick series of 4 shots
@@ -33,14 +39,9 @@ MonoBehaviour:
   projectile: {fileID: 1756089082116642531, guid: 015614b05374d1b4a84be000f45e75c2,
     type: 3}
   attackVFX: {fileID: 0}
-  hitVFX: {fileID: 157586, guid: 9fcc9d5761b40bc4188599da2c83c412, type: 3}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 157586, guid: 80f16efc874dfe64c9d77f3d6404f873, type: 3}
   attackOriginArray: 
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: a834f1140d67b4a4195da68cf9c1db68, type: 2}
   missSound: {fileID: 0}
-  momentumEffect: 0
-  momentumCost: 0
-  momentumChange: 0
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 50

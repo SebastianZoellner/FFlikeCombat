@@ -6,7 +6,7 @@ using DamageNumbersPro;
 public class CharacterHealth : MonoBehaviour,IDamageable
 {
     public static Action<CharacterHealth> OnAnyPCDied=delegate { };
-    public static Action<CharacterHealth> OnAnyEnemyDied = delegate { };
+    public static Action<CharacterHealth, CharacterCombat> OnAnyEnemyDied = delegate { };
     public static Action<CharacterHealth> OnHeroResurrected = delegate { };
     public static Action<CharacterHealth> OnHeavyHit = delegate { };
     public event Action OnDied = delegate { }; 
@@ -15,8 +15,8 @@ public class CharacterHealth : MonoBehaviour,IDamageable
    
     public Action OnInvigorate = delegate { };
 
-    [SerializeField] DamageNumber damagePrefab;
-    [SerializeField] DamageNumber healPrefab;
+    //[SerializeField] DamageNumber damagePrefab;
+    //[SerializeField] DamageNumber healPrefab;
 
     public float StartingHealth { get; private set; }
     public float PresentHealth  { get; private set; }
@@ -30,6 +30,8 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     public bool IsHero{ get; private set; }
 
     private CharacterAnimator animator;
+    private CharacterCombat damageSource;
+    private CharacterVFX effects;
 
     
 
@@ -38,6 +40,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
        selectionIndicator = GetComponent<SelectionIndicator>();
         Stats = GetComponent<CharacterStats>();
         animator = GetComponent<CharacterAnimator>();
+        effects = GetComponent<CharacterVFX>();
         IsHero = GetComponent<PCController>();    
     }
 
@@ -71,7 +74,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     public float GetDefenseValue() => Stats.GetDefenseValue();
 
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, CharacterCombat source)
     {
        Debug.Log(name+"Taking Damage " + damage);
         damage=GameSystem.Instance.CalculateArmor(Stats.GetAttribute(Attribute.Armor), damage);
@@ -80,6 +83,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
         if (damage > HealthGameSystem.Instance.HeavyHitThreshold(StartingHealth))
             OnHeavyHit.Invoke(this);
 
+        damageSource = source;
         ChangeHealth(-damage);
         
     }
@@ -96,13 +100,16 @@ public class CharacterHealth : MonoBehaviour,IDamageable
             ChangeEndurance(-cost);
     }
 
-    public void Envigorate()
+    public void ModifyEndurance(float change) => ChangeEndurance(change);
+
+
+    public void Envigorate(float intensity)
     {
         float recoveredHealth = HealthGameSystem.Instance.RestHealthBonus(StartingHealth, Stats.GetAttribute(Attribute.Hardiness));
         if (recoveredHealth != 0)
-            ChangeHealth(recoveredHealth);
-
-        ChangeEndurance(HealthGameSystem.Instance.RestEnduranceBonus(StartingEndurance));
+            ChangeHealth(recoveredHealth*intensity);
+        Debug.Log("In Envigorate");
+        ChangeEndurance(HealthGameSystem.Instance.RestEnduranceBonus(StartingEndurance)*intensity);
         OnInvigorate.Invoke();
     }
 
@@ -141,9 +148,9 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     private void ChangeHealth(float change)
     {
         if (change > 0)
-            healPrefab.Spawn(transform.position+2*Vector3.up, change);
-        if(change<0)
-            damagePrefab.Spawn(transform.position+2*Vector3.up, -change);
+            effects.SpawnDamageText(change);
+        if (change < 0)
+            effects.SpawnHealText(-change);
 
         PresentHealth += change;
         if (PresentHealth > StartingHealth)
@@ -184,17 +191,20 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     private void Die()
     {
         canBeTarget = false;
+
         animator.SetDied();
+
         Debug.Log(name + " died");
-        if (GetComponent<PCController>())
+
+        if (IsHero)
             OnAnyPCDied.Invoke(this);
         else
+        {
             if (GetComponent<EnemyController>())
-                OnAnyEnemyDied.Invoke(this);
-           
-        OnDied.Invoke();
-
-        if (!IsHero)
+                OnAnyEnemyDied.Invoke(this, damageSource);
             GetComponentInChildren<CapsuleCollider>().enabled = false;
+        }
+           
+        OnDied.Invoke();            
     } 
 }

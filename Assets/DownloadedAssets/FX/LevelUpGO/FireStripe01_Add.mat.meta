@@ -1,0 +1,17 @@
+fileFormatVersion: 2
+guid: c9221deb562d0754ebe47c516d6c4c0d
+timeCreated: 1521213145
+licenseType: Store
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 177657
+  packageName: RPG Builder
+  packageVersion: 2.0.6
+  assetPath: Assets/DownloadedAssets/FX/LevelUpGO/FireStripe01_Add.mat
+  uploadId: 720622

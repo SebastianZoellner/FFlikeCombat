@@ -12,30 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Jab
   m_EditorClassIdentifier: 
-  minDamage: 1
-  maxDamage: 2
+  ShowDerivedAttributes: 0
   attack: 10
   defense: 10
-  setupTime: 0.2
-  recoveryTime: 0.1
   target: 0
   radius: 0
+  timeCost: 0.4
+  setupVsRecovery: 0.6666667
+  damageSpread: 0.5
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0
   successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  boostEffects:
+  - {fileID: 11400000, guid: df1202175a48e3c43b39fe59721f3708, type: 2}
+  enduranceToDamage: 0
   icon: {fileID: 21300000, guid: dfe039e2f46a22e4088b0c7ea2940038, type: 3}
   buttonName: Jab
-  description: A very quick no-frills attack.
+  description: A very quick attack that sets up the next punch.
   range: 1.8
   attackAnimation: {fileID: 7400000, guid: 075293e411b0c9b4c8335d6b2d63edf3, type: 2}
+  flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 5688621020241137862, guid: 2f5ce8a3fb89a8947867f6c90b20e807, type: 3}
+  muzzleVFX: {fileID: 0}
   attackOriginArray: 01000000
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 55a9ca1ccb1d812408f58c94c526e320, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 0.3
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 8

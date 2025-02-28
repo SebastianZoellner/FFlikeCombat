@@ -17,5 +17,5 @@ MonoBehaviour:
     minNumber: 1
     maxNumber: 1
   - enemy: {fileID: 11400000, guid: 525c24e2a1c94e84ab0357121391ce90, type: 2}
-    minNumber: 1
-    maxNumber: 1
+    minNumber: 2
+    maxNumber: 2

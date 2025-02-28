@@ -34,7 +34,7 @@ public class ObjectHealth : MonoBehaviour,IDamageable
     public Transform GetTransform() => transform;
     public float GetDefenseValue() => Stats.GetDefenseValue();
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, CharacterCombat source)
     {
         Debug.Log(name + "Taking Damage " + damage);
         damage = GameSystem.Instance.CalculateArmor(Stats.GetArmor(), damage);
@@ -66,7 +66,7 @@ public class ObjectHealth : MonoBehaviour,IDamageable
        // OnHealthChanged.Invoke();
         if (PresentHealth <= 0)
         {
-            Destroy();
+            Destroy(gameObject);
             return;
         }   
     }

@@ -98,6 +98,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1432614701025398271, guid: 19a2767abcec4584db3c813e60c4f34b,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432614701025398271, guid: 19a2767abcec4584db3c813e60c4f34b,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432614701025398271, guid: 19a2767abcec4584db3c813e60c4f34b,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1432614701025398271, guid: 19a2767abcec4584db3c813e60c4f34b,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -146,6 +161,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1432614701025398271, guid: 19a2767abcec4584db3c813e60c4f34b,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5108506120720094068, guid: 19a2767abcec4584db3c813e60c4f34b,
         type: 3}
       propertyPath: radius
@@ -153,14 +173,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5108506120720094068, guid: 19a2767abcec4584db3c813e60c4f34b,
         type: 3}
+      propertyPath: impactSFX
+      value: 
+      objectReference: {fileID: 11400000, guid: 7690f075a4c48764eac0bcfcc147c7d3,
+        type: 2}
+    - target: {fileID: 5108506120720094068, guid: 19a2767abcec4584db3c813e60c4f34b,
+        type: 3}
       propertyPath: impactVfx
       value: 
-      objectReference: {fileID: 1987315549368570848, guid: 357cf18bed2cd724eba3537d13691f6a,
+      objectReference: {fileID: 5879467084554991519, guid: b85130f4278eb7344bb9a8ad64b45cc5,
         type: 3}
     - target: {fileID: 5108506120720094068, guid: 19a2767abcec4584db3c813e60c4f34b,
         type: 3}
       propertyPath: projectileSpeed
-      value: 10
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6719097688298201691, guid: 19a2767abcec4584db3c813e60c4f34b,
         type: 3}
@@ -194,6 +220,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5470889645366014245}
     m_Modifications:
+    - target: {fileID: 9049134270283572208, guid: 30c0fcd019d88384bb34fd2c55b237c2,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.19277322
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049134270283572208, guid: 30c0fcd019d88384bb34fd2c55b237c2,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0.54415965
+      objectReference: {fileID: 0}
+    - target: {fileID: 9049134270283572208, guid: 30c0fcd019d88384bb34fd2c55b237c2,
+        type: 3}
+      propertyPath: InitialModule.startColor.maxColor.r
+      value: 0.7169812
+      objectReference: {fileID: 0}
     - target: {fileID: 9049134270283572209, guid: 30c0fcd019d88384bb34fd2c55b237c2,
         type: 3}
       propertyPath: m_RootOrder

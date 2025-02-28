@@ -12,43 +12,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Shotgun Blast
   m_EditorClassIdentifier: 
-  minDamage: 2
-  maxDamage: 3
-  attack: 10
+  ShowDerivedAttributes: 1
+  attack: 5
   defense: 0
-  setupTime: 0.4
-  recoveryTime: 0.5
-  timeCost: 0.9
-  setupVsRecovery: 0.44444445
-  damageSpread: 0
   target: 0
   radius: 0
-  successEffectArray:
-  - level: 3
-    status: 3
-    intensity: 3
-    duration: 0
-  - level: 4
-    status: 4
-    intensity: 1
-    duration: 2
+  timeCost: 1
+  setupVsRecovery: 0.4
+  damageSpread: 0.5
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 1
+  successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3:
+  - {fileID: 11400000, guid: c6776689f6f113f42a76e9ca15e4116c, type: 2}
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: f186b213235b8664f88cd20074d8323d, type: 2}
+  - {fileID: 11400000, guid: 8939c76db719f4441b5548c298216ada, type: 2}
+  boostEffects: []
+  enduranceToDamage: -0.5
   icon: {fileID: 0}
   buttonName: 
   description: 
-  range: 5
+  range: 7
   attackAnimation: {fileID: 7400000, guid: 43b348acaa2148f40b1dca7ea5bb873e, type: 2}
   flyingAnimation: {fileID: 0}
   projectile: {fileID: 7124448449439260488, guid: 1430ec27f5e0c4d49a1856c3ab09bb4b,
     type: 3}
   attackVFX: {fileID: 0}
-  hitVFX: {fileID: 157586, guid: 2574ca206a571a342a7fab69fdfb87aa, type: 3}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 157586, guid: 80f16efc874dfe64c9d77f3d6404f873, type: 3}
   attackOriginArray: 
   attackSound: {fileID: 0}
+  shootSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: 71696d0629bef8e4db1b9fb0e1fda684, type: 2}
   missSound: {fileID: 0}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 0.9
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 44

@@ -24,8 +24,6 @@ public class MomentumManager : MonoBehaviour
         StatusManager.OnChangeMomentum += StatusManager_OnChangeMomentum;       
     }
 
-   
-
     private void Start()
     {
         OnMomentumChanged.Invoke(momentum);
@@ -54,7 +52,7 @@ public class MomentumManager : MonoBehaviour
 
     private void CharacterCombat_OnMomentumModified(CharacterCombat combat, float change)
     {
-        int level = combat.GetComponent<CharacterStats>().GetLevel();
+        int level = combat.GetComponent<CharacterStats>().GetRank();
 
         change = gameSystem.AttackMomentumChange(change, level);
 
@@ -73,7 +71,7 @@ public class MomentumManager : MonoBehaviour
     }
     private void CharacterHealth_OnHeavyHit(CharacterHealth health)
     {
-        float momentumEffect = gameSystem.HeavyHitMomentum(health.Stats.GetLevel());
+        float momentumEffect = gameSystem.HeavyHitMomentum(health.Stats.GetRank());
 
         if (health.GetComponent<PCController>())
             ModifyMomentum(momentumEffect);
@@ -83,12 +81,12 @@ public class MomentumManager : MonoBehaviour
 
     private void HeroDied(CharacterHealth hero)
     {
-        ModifyMomentum(-gameSystem.DeathMomentum(hero.Stats.GetLevel()));
+        ModifyMomentum(-gameSystem.DeathMomentum(hero.Stats.GetRank()));
     }
 
-    private void EnemyDied(CharacterHealth enemy)
+    private void EnemyDied(CharacterHealth enemy, CharacterCombat ignored)
     {
-        ModifyMomentum(gameSystem.DeathMomentum(enemy.Stats.GetLevel()));
+        ModifyMomentum(gameSystem.DeathMomentum(enemy.Stats.GetRank()));
     }
 
     private void StatusManager_OnChangeMomentum(float change)

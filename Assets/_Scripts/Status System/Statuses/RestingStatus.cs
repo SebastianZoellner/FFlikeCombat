@@ -9,7 +9,8 @@ public class RestingStatus : BaseStatus
     public override void BeginStatus()
     {
         statusName = StatusName.Resting;
-        statusManager.Health.Envigorate();
+        Debug.Log("Calling Envigorate");
+        statusManager.Health.Envigorate(intensity);
         statusManager.LoseStatus(this);
     }
 

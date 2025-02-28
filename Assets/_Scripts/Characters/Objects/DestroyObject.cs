@@ -21,6 +21,7 @@ public class DestroyObject : MonoBehaviour
 
     private void Start()
     {
+        if(destroyEffect)
         destroyEffect.SetActive(false);
     }
     private void OnDisable()
@@ -31,7 +32,9 @@ public class DestroyObject : MonoBehaviour
 
     private void Health_OnObjectDestroyed()
     {
+        if(visual)
         visual.SetActive(false);
+        if(destroyEffect)
         destroyEffect.SetActive(true);
         Destroy(gameObject, 5);
     }

@@ -19,19 +19,24 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dd6d5295bc8f07744b54d9830a0acc9e, type: 2}
   - {fileID: 11400000, guid: a64acd0eb242a2d478c8cd326004f768, type: 2}
   - {fileID: 11400000, guid: 0c470263263845e4587062f45e0bd1ab, type: 2}
-  - {fileID: 11400000, guid: efc7be4020f74434393d202f68e8e95c, type: 2}
   - {fileID: 11400000, guid: 84562222fa4bf8846b89b4a918db12b6, type: 2}
   - {fileID: 11400000, guid: 0baa6deda8bebe04ab49f4f87c6d3c3b, type: 2}
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
+  - {fileID: 11400000, guid: f99c790ada0741e48adec6fb060595b9, type: 2}
+  leveledPowerArray:
+  - {fileID: 11400000, guid: 5550cc6a1aa7c994fb0de05818b66bb5, type: 2}
+  - {fileID: 11400000, guid: efc7be4020f74434393d202f68e8e95c, type: 2}
+  - {fileID: 11400000, guid: b62570d228808684ea604f28bb98aeef, type: 2}
   attributeBonusArray: []
   icon: {fileID: 21300000, guid: 2e298ad0f68104e4bb622ff9cac49a24, type: 3}
   shortBlurb: Alexandra "Nocturne" Rivera's near death expereince left her with a
     connection to Darkness. With this power and her extraordinary fighting skill,
     she fights to reclaim the street s of Detroit from organized Crime.
+  blurb: 
   animatorController: {fileID: 22100000, guid: b87def1b7a12d7543849e695d364bd86, type: 2}
   characterToon: {fileID: 5769878388494613830, guid: 16b662d1e0db77344b968288a7d28f6e,
     type: 3}
-  level: 4
+  rank: 4
   characterClass: 2
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
   impactToPower: 0.6

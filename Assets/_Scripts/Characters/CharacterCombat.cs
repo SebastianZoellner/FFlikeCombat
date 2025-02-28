@@ -24,7 +24,7 @@ public class CharacterCombat : MonoBehaviour
 
     [SerializeField] GameObject hitEffect;
     [SerializeField] GameObject missEffect;
-    [SerializeField] Transform attackOrigin;
+    [SerializeField] Transform[] attackOrigin;
 
     private PowerSO attackPower;
     //private CharacterHealth target;
@@ -182,7 +182,7 @@ public class CharacterCombat : MonoBehaviour
 
         damage = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), damage);
 
-        target.TakeDamage(damage);
+        target.TakeDamage(damage, this);
 
         if (attackPower.momentumEffect)
         {
@@ -192,12 +192,89 @@ public class CharacterCombat : MonoBehaviour
         if (!target.canBeTarget) //Target died
             return true;
 
-        ApplySpecialEffects(target, successLevel);
+        ApplySpecialEffects(target, attackPower.GetStatusEffects(successLevel));
+
+        ApplySpecialEffects(health, attackPower.GetBuffEffects());
 
         return true;
     }
 
-    
+    public void StartBuff()//Triggered from animations
+    {
+        foreach (CharacterHealth target in targetArray)
+        {
+            Debug.Log(target.name + " Buff applied ");
+            if (attackPower.hitVFX)
+            {
+                CharacterVFX targetVFX = target.GetComponent<CharacterVFX>();
+                if (targetVFX)
+                {
+                    targetVFX.BuffingEffect(attackPower.hitVFX);
+                    //Debug.Log("Spawning VFX");
+                }
+
+            }
+
+            sound.SetHitSound(attackPower, target.GetTransform());
+            //FeelManager.Instance.BuffEffect();
+
+            ManageBuff(target);
+        }
+    }
+
+    public void ManageImpact() //Triggered from Animation
+    {
+        if (attackPower.HasProjectile())
+        {
+            LaunchProjectile();
+            return;
+        }
+
+        foreach (IDamageable target in targetArray)
+        {
+            bool hasHit = ManageHit(target);
+            if (hasHit)
+            {
+                // Debug.Log("Hit, success level " + successLevel);
+                if (attackPower.hitVFX)
+                    effects.AttackingEffect(attackPower.hitVFX, target.GetTransform());
+
+                sound.SetHitSound(attackPower, target.GetTransform());
+                OnAnyPowerHit.Invoke();
+            }
+            else
+            {
+                //Debug.Log("Missed");
+                effects.MissEffect(missEffect, target.GetTransform());            
+                sound.PlayHitSound(attackPower.missSound);
+            }
+        }
+    }
+
+    public void LaunchProjectile()
+    {
+        if (attackPower == null || !attackPower.HasProjectile())
+        {
+            Debug.LogError("LaunchProjectile Called without projectile");
+            return;
+        }
+
+        if (attackPower.muzzleVFX)
+        {
+            GameObject muzzleVFX = Instantiate(attackPower.muzzleVFX, attackOrigin[attackPower.projectileOrigin].position, Quaternion.Euler(attackOrigin[attackPower.projectileOrigin].forward));
+
+            muzzleVFX.transform.forward = gameObject.transform.forward;
+            var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
+            Destroy(muzzleVFX, 2);
+
+        }
+
+        sound.PlayShootSound(attackPower.hitSound);//this is from an earlier version where hit sound was used for two different sounds
+        sound.PlayShootSound(attackPower.shootSound);
+
+        attackPower.LaunchProjectileVolley(attackOrigin[attackPower.projectileOrigin].position, this, targetArray);
+
+    }
 
     //----------------------------------------------------------------------------------
     //            Private Functions
@@ -266,109 +343,39 @@ public class CharacterCombat : MonoBehaviour
 
         sound.SetAttack(attackPower);
        
-    }
-
-    private void Impact() //Triggered from animations
-        //This manages all the FX of the hit and the lauch of projectiles
-    {
-        if (attackPower.HasProjectile())
-        {
-            //Debug.Log("Has a projectile");
-            if (attackPower.hitVFX)
-            {
-                GameObject muzzleVFX = Instantiate(attackPower.hitVFX, attackOrigin.position, Quaternion.Euler(attackOrigin.forward));
-               
-                muzzleVFX.transform.forward = gameObject.transform.forward;
-                var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
-                Destroy(muzzleVFX, 2);
-                
-            }
-
-            sound.PlayShootSound(attackPower.hitSound);
-            foreach (IDamageable target in targetArray)
-            {             
-                attackPower.LaunchProjectile(attackOrigin.position, this, target);
-            }
-            return;
-        }
-
-        //Debug.Log("No projectile");
-
-        foreach (IDamageable target in targetArray)
-        {
-            bool hasHit = ManageHit(target);
-            if (hasHit)
-            {
-                // Debug.Log("Hit, success level " + successLevel);
-                if (attackPower.hitVFX)
-                    effects.AttackingEffect(attackPower.hitVFX, target.GetTransform());
-
-                sound.SetHitSound(attackPower, target.GetTransform());
-                OnAnyPowerHit.Invoke();
-            }
-            else
-            {
-                //Debug.Log("Missed");
-                effects.AttackingEffect(missEffect, target.GetTransform());
-                sound.PlayHitSound(attackPower.missSound);
-            }
-        }
-    }
-
-    private void Buff()//Triggered from animations
-    {
-       
-        foreach (CharacterHealth target in targetArray)
-        {
-            Debug.Log( target.name+" Buff applied ");
-            if (attackPower.hitVFX)
-            {
-                CharacterVFX targetVFX = target.GetComponent<CharacterVFX>();
-                if (targetVFX)
-                {
-                    targetVFX.BuffingEffect(attackPower.hitVFX);
-                    //Debug.Log("Spawning VFX");
-                }
-                
-            }
-
-            sound.SetHitSound(attackPower, target.GetTransform());
-            //FeelManager.Instance.BuffEffect();
-
-            ManageBuff(target);
-        }
-    }
+    } 
 
     public void ManageBuff(CharacterHealth target)
     //This manages all the rules effects of a buff
-    //Right now this is a static effect, we may want to add a random effect later.
+    //Right now this is a nonrandom effect, we may want to add a random effect later.
     {
-        float heal = attackPower.GetDamage(1);
-        heal = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), heal);
-        target.Heal(heal);
 
-        ApplySpecialEffects(target, 1);
-       
+        ApplySpecialEffects(target, attackPower.GetBuffEffects());
+        Debug.Log("Applying "+ attackPower.GetBuffEffects().Length+" special effects to " + target.name);
 
         if (attackPower.momentumEffect)
         {
             OnMomentumModified.Invoke(this, attackPower.GetMomentumChange());
         }
     }
-    private void ApplySpecialEffects(IDamageable target, int successLevel)
-    {
-        float damageModifier = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
-        //(StatusName status,float intensity,int duration)=attackPower.GetStatusEffect(successLevel);
-        AttackSuccessEffectSO[] attackEffects = attackPower.GetStatusEffects(successLevel);
 
-        if (attackEffects.Length > 0)
-        {
-            //Debug.Log("Applying Status effects");
-            CharacterHealth targetCharacter = (CharacterHealth)target;
-            StatusManager manager = targetCharacter.GetComponent<StatusManager>();
-            foreach (AttackSuccessEffectSO effect in attackEffects)
-                manager.GainStatus(effect.status, effect.intensity, effect.duration, damageModifier);
-        }
+
+    private void ApplySpecialEffects(IDamageable target, AttackSuccessEffectSO[] effectArray)
+    {
+        if (effectArray == null || effectArray.Length == 0) 
+            return;
+
+        float damageModifier = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), 1);
+       
+        CharacterHealth targetCharacter = target as CharacterHealth;
+        if (targetCharacter == null)
+            return;
+
+        StatusManager manager = targetCharacter.GetComponent<StatusManager>();
+        foreach (AttackSuccessEffectSO effect in effectArray)
+            manager.GainStatus(effect, damageModifier);
+
     }
 
+   
 }

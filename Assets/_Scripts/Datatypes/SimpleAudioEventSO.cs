@@ -21,6 +21,10 @@ public class SimpleAudioEventSO : ScriptableObject
 
     public void Play(AudioSource source)
     {
+        if (clips == null || clips.Length == 0)
+            return;
+
+        //Debug.Log("Playing " + name);
         source.outputAudioMixerGroup = mixer;
 
         int clipIndex = UnityEngine.Random.Range(0, clips.Length);

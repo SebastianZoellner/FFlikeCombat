@@ -11,7 +11,7 @@ public class ObjectStats : MonoBehaviour,IStats
     public float GetStartingHealth() => activeObject.StartingHealth;
     public float GetDefenseValue() => activeObject.BaseDefense;
     public float GetArmor() => activeObject.Armor;
-    public int GetLevel() => activeObject.level;
+    public int GetRank() => activeObject.level;
 
     
 }

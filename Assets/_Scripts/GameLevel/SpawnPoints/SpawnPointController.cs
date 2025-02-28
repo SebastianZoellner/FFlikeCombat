@@ -154,7 +154,7 @@ public class SpawnPointController : MonoBehaviour
     //                       Private Functions
     //-------------------------------------------------------------------------------
 
-    private void OnAnyEnemyDied(CharacterHealth deadEnemy)
+    private void OnAnyEnemyDied(CharacterHealth deadEnemy, CharacterCombat ignored)
     {
         SpawnPoint spawnPoint = deadEnemy.GetComponentInParent<SpawnPoint>();
 
@@ -240,7 +240,7 @@ public class SpawnPointController : MonoBehaviour
 
     private float SpawnPointDistance(SpawnPoint sp1, SpawnPoint sp2)
     {
-        Debug.Log("Evaluating Spawn Points " + sp1.name + " and " + sp2.name);
+        //Debug.Log("Evaluating Spawn Points " + sp1.name + " and " + sp2.name);
         return (sp1.GetCombatLocation().position - sp2.GetCombatLocation().position).magnitude;
     }
 

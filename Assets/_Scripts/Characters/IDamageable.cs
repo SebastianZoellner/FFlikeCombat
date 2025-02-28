@@ -12,7 +12,7 @@ public interface IDamageable
 
     public bool IsHero { get; }
 
-    public void TakeDamage(float damage);
+    public void TakeDamage(float damage, CharacterCombat source);
     public string GetName();
     public Transform GetTransform();
     public float GetDefenseValue();

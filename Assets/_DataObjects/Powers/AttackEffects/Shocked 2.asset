@@ -15,4 +15,4 @@ MonoBehaviour:
   status: 7
   intensity: 2
   duration: 1
-  damageCost: 1
+  baseDamageCost: 0.5

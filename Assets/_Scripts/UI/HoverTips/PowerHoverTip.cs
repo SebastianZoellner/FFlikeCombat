@@ -11,7 +11,7 @@ public class PowerHoverTip : HoverTip
         string tip;
         tip = power.name;
         tip += "\n" + power.description;
-        tip += "Endurance Cost:  " + power.GetEnduranceCost().ToString("0");
+        tip += "\nEndurance Cost:  " + power.GetEnduranceCost().ToString("0");
 
         return tip;
     }

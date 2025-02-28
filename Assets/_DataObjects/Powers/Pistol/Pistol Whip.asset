@@ -12,38 +12,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Pistol Whip
   m_EditorClassIdentifier: 
-  minDamage: 3
-  maxDamage: 5
+  ShowDerivedAttributes: 1
   attack: 0
-  defense: 5
-  setupTime: 0.4
-  recoveryTime: 0.3
-  timeCost: 0.7
-  setupVsRecovery: 0.5714286
-  damageSpread: 0
+  defense: -5
   target: 0
   radius: 0
+  timeCost: 0.7
+  setupVsRecovery: 0.5714286
+  damageSpread: 0.768
+  numberOfHits: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0
   successEffectArray:
   - level: 4
     status: 4
     intensity: 1
     duration: 3
-  icon: {fileID: 0}
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: 8939c76db719f4441b5548c298216ada, type: 2}
+  enduranceToDamage: 0
+  icon: {fileID: 21300000, guid: 9465b65c85bb3634188a0477c6cc76b0, type: 3}
   buttonName: Pistol Whip
-  description: 
+  description: Getting close and personal.
   range: 1.6
   attackAnimation: {fileID: 7400000, guid: 47147cba23a1faa458edd6ead4132465, type: 2}
   flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 5286328772216621839, guid: 3bbf7e996e9d4004981ad9b327a6a00a, type: 3}
+  muzzleVFX: {fileID: 0}
   attackOriginArray: 04000000
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: c638ea1d0ac4c5140bad620fa9f3f93f, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 0.7
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 35

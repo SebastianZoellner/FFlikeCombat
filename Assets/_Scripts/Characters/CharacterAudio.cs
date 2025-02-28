@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterAudio : Audio
@@ -9,8 +6,28 @@ public class CharacterAudio : Audio
     [SerializeField] AudioSource stepAudioSource;  
     [SerializeField] SimpleAudioEventSO step;
     [SerializeField] SimpleAudioEventSO dropSound;
+    [SerializeField] SimpleAudioEventSO levelSound;
 
     private PowerSO attack;
+    private CharacterCombat characterCombat;
+    private CharacterExperience experience;
+
+    private void Awake()
+    {
+        characterCombat = GetComponent<CharacterCombat>();
+        experience = GetComponent<CharacterExperience>();
+    }
+
+    private void OnEnable()
+    {if(experience)
+        GetComponent<CharacterExperience>().OnLevelUp += CharacterExperience_OnLevelUp;
+    }
+    private void OnDisable()
+    {if(experience)
+        GetComponent<CharacterExperience>().OnLevelUp -= CharacterExperience_OnLevelUp;
+    }
+
+   
 
     public void SetHitSound(PowerSO attackPower, Transform target)
     {
@@ -39,21 +56,32 @@ public class CharacterAudio : Audio
 
    
     //Animation Events
-    private void Step()
+    public void PlayStep()
     {
         if(step)
         step.Play(stepAudioSource);
     }
 
-   private void Drop()
+   public void PlayDrop()
     {
         if(dropSound)
         dropSound.Play(stepAudioSource);
     }
 
-    private void PlayAttackSound() //This is an animation event
+    public void PlayAttackSound() 
     {
         if (attack)
             attack.PlayAttackSound(attackAudioSource);
+    }
+
+    //------------------------------------------------------------------------
+    //                  Private functions
+    //------------------------------------------------------------------------
+
+
+    private void CharacterExperience_OnLevelUp()
+    {
+        if (levelSound)
+            levelSound.Play(attackAudioSource);
     }
 }

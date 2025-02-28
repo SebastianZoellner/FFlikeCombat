@@ -8,10 +8,20 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4274710741510444355, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 747939967994630441, guid: 041924f1a292f154598d5203164c7d52,
         type: 3}
       propertyPath: m_Name
       value: BaseEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 747939967994630441, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 790330061998614621, guid: 041924f1a292f154598d5203164c7d52,
         type: 3}
@@ -111,6 +121,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: 29fe07d02b8afdf41a7096f037d50593,
         type: 2}
+    - target: {fileID: 5773028945011780741, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6311430840982657967, guid: 041924f1a292f154598d5203164c7d52,
         type: 3}
       propertyPath: statusEffectTransform

@@ -14,14 +14,17 @@ public class UIInfoScreen : MonoBehaviour
     [SerializeField] TMP_Text attributes;
     [SerializeField] TMP_Text otherAttributes;
     [SerializeField] TMP_Text healthScore;
-    [SerializeField] TMP_Text enduranceScore;
+     [SerializeField] TMP_Text enduranceScore;
+    
     [SerializeField] TMP_Text defense;
     [SerializeField] TMP_Text statuses;
 
     [SerializeField] GameObject objectInfoScreen;
-    
+    [SerializeField] GameObject expereinceDisplay;
+   [SerializeField] TMP_Text experienceScore; 
 
     private CharacterHealth health;
+    private CharacterExperience experience;
     private StatusManager statusManager;
     private CharacterStats stats;
 
@@ -55,10 +58,12 @@ public class UIInfoScreen : MonoBehaviour
             Icon.sprite = entity.Stats.GetIcon();
             if (entity.Stats.GetBlurb() != "")
                 blurb.text = entity.Stats.GetBlurb();
-            health = entity.Health;
+            health = (CharacterHealth) entity.Health;
+            experience = entity.experience;
             statusManager = entity.StatusManager;
-            stats = entity.Health.Stats;
+            stats = entity.Stats;
             SetHealthParameters();
+            SetExperience();
             SetAttributes();
             SetStatuses();
             Bind();
@@ -118,6 +123,19 @@ public class UIInfoScreen : MonoBehaviour
         health.OnHealthChanged += SetHealthParameters;
         statusManager.OnStatusChanged += StatusManager_OnStatusChanged;
         health.OnDied += Health_OnDied;
+        if(experience)
+            experience.OnExperienceChanged += SetExperience;
+    }
+
+    private void SetExperience()
+    {
+        if (!experience)
+        {
+            expereinceDisplay.SetActive(false);
+            return;
+        }
+        expereinceDisplay.SetActive(true);
+        experienceScore.text = DisplayFloat(experience.experience) + "/" + DisplayFloat(experience.GetLevelUpCost());
     }
 
     private void Health_OnDied()
@@ -142,6 +160,9 @@ public class UIInfoScreen : MonoBehaviour
         }
         if (statusManager)
             statusManager.OnStatusChanged -= StatusManager_OnStatusChanged;
+        if (experience)
+            experience.OnExperienceChanged -= SetExperience;
+
     }
 
    

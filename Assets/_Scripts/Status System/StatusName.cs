@@ -12,5 +12,12 @@ public enum StatusName
     Blocking,
     TacticalAdvantage,
     Resting,
-    None
+    None,
+    Enraged,
+    Healing,
+    BoostInitiative,
+    BoostCombat,
+    BoostAgillity,
+    ModifyEndurance,
+    ModifyPower
 }

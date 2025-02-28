@@ -40,8 +40,7 @@ public class ActionSequencer : MonoBehaviour
         CharacterInitiative.OnAttackReadied += CharacterInitiative_OnAttackReadied;
         CharacterInitiative.OnActionTimeChanged += CharacterInitiative_OnActionTimeChanged;
         CharacterHealth.OnAnyPCDied += Remove_Character;
-        CharacterHealth.OnAnyEnemyDied += Remove_Character;
-        
+        CharacterHealth.OnAnyEnemyDied += CharacterHealth_OnAnyEnemyDied;      
         CharacterManager.OnCharacterAdded += CharacterManager_OnCharacterAdded;
         characterManager.OnEnemiesDead += CharacterManager_OnWaveDefeated;
         GameEnd.OnGameLost += StopActionSequence;
@@ -49,7 +48,7 @@ public class ActionSequencer : MonoBehaviour
         LevelSetup.OnGameInitialized += LevelSetup_OnGameInitialized;
     }
 
-   
+    
 
     private void Update()
     {
@@ -88,7 +87,7 @@ public class ActionSequencer : MonoBehaviour
         CharacterInitiative.OnAttackReadied -= CharacterInitiative_OnAttackReadied;
         CharacterInitiative.OnActionTimeChanged -= CharacterInitiative_OnActionTimeChanged;
         CharacterHealth.OnAnyPCDied -= Remove_Character;
-        CharacterHealth.OnAnyEnemyDied -= Remove_Character;
+        CharacterHealth.OnAnyEnemyDied -= CharacterHealth_OnAnyEnemyDied;
         CharacterManager.OnCharacterAdded -= CharacterManager_OnCharacterAdded;
         characterManager.OnEnemiesDead -= CharacterManager_OnWaveDefeated;
 
@@ -208,6 +207,11 @@ public void SwitchCharacters(CharacterInitiative characterInitiative1, Character
         else
             Debug.Log("No next Actor set");*/
         return nextActor;
+    }
+
+    private void CharacterHealth_OnAnyEnemyDied(CharacterHealth enemy, CharacterCombat ignored)
+    {
+        Remove_Character(enemy);
     }
 
     private void Remove_Character(CharacterHealth health)

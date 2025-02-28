@@ -12,17 +12,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Double Pistol Melee combo
   m_EditorClassIdentifier: 
-  minDamage: 1
-  maxDamage: 3
+  ShowDerivedAttributes: 1
   attack: 5
   defense: -10
-  setupTime: 0.5
-  recoveryTime: 0.5
-  timeCost: 1
-  setupVsRecovery: 0.5
-  damageSpread: 0
   target: 0
   radius: 0
+  timeCost: 1
+  setupVsRecovery: 0.5
+  damageSpread: 0.5
+  numberOfHits: 2
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0
   successEffectArray:
   - level: 3
     status: 7
@@ -32,6 +33,13 @@ MonoBehaviour:
     status: 4
     intensity: 1
     duration: 2
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3:
+  - {fileID: 11400000, guid: f74642cc8ba81db4bad6172eacbdb022, type: 2}
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: 8939c76db719f4441b5548c298216ada, type: 2}
+  enduranceToDamage: 0
   icon: {fileID: 0}
   buttonName: 
   description: 
@@ -41,13 +49,8 @@ MonoBehaviour:
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 5286328772216621839, guid: 3bbf7e996e9d4004981ad9b327a6a00a, type: 3}
+  muzzleVFX: {fileID: 0}
   attackOriginArray: 00000000
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: c638ea1d0ac4c5140bad620fa9f3f93f, type: 2}
   missSound: {fileID: 11400000, guid: 5d3aaf058de2b3a4bb6bb4965b11f06a, type: 2}
-  momentumEffect: 1
-  momentumCost: 0
-  momentumChange: 1
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 50

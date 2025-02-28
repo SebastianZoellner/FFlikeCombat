@@ -14,7 +14,7 @@ public class StatusManager : MonoBehaviour
     private CharacterStats stats;
     private CharacterVFX effects;
     private CharacterInitiative initiative;
-    private StatusController statusController;
+    //private StatusController statusController;
 
     
 
@@ -23,7 +23,7 @@ public class StatusManager : MonoBehaviour
 
     private void Awake()
     {
-        statusController = FindObjectOfType<StatusController>();
+        //statusController = FindObjectOfType<StatusController>();
         Health = GetComponent<CharacterHealth>();
         stats = GetComponent<CharacterStats>();
         effects = GetComponent<CharacterVFX>();
@@ -72,12 +72,14 @@ public class StatusManager : MonoBehaviour
         return modifiers;
     }
 
-    
 
-    public void GainStatus(StatusName newStatusName, float intensity, int duration,float damageModifier)
+
+    public void GainStatus(AttackSuccessEffectSO attackStatus, float damageModifier)
     {
-        BaseStatus newStatus = statusController.GetNewStatus(this,newStatusName,intensity,duration,damageModifier);
-       
+        BaseStatus newStatus = attackStatus.InitializeStatus(this, damageModifier);
+
+        Debug.Log("Gaining status on character " + name);
+
         if (newStatus == null)
             return;
 
@@ -122,6 +124,12 @@ public class StatusManager : MonoBehaviour
 
         initiative.ChangeActionTime(change);
     }
+
+    public void HealDamage(float intensity)
+    {
+        float healAmount = GameSystem.Instance.CalculateDamage(stats.GetAttribute(Attribute.Power), intensity);
+        Health.Heal(healAmount);
+    } 
 
     public void EndAll()
     { 

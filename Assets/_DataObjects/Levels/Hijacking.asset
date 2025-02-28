@@ -13,15 +13,32 @@ MonoBehaviour:
   m_Name: Hijacking
   m_EditorClassIdentifier: 
   LevelName: Truck Heist
-  missionIcon: {fileID: 21300000, guid: 3c4dff0db6f3fd94c928805aeb9623ac, type: 3}
-  missionBriefing: bla
-  missionVisual: {fileID: 21300000, guid: 21604d8039e988747b4eba16bf2eb5bc, type: 3}
+  missionIcon: {fileID: 21300000, guid: 7ce7b75cbe7ca1842bb9361f2fc99c93, type: 3}
+  missionBriefing: 'Stop the hijacking in progress and secure the truck while ensuring
+    the safety of all involved.
+
+
+    At 14:30 hours, a cargo truck carrying critical
+    supplies was hijacked by an unknown group of assailants. The truck is currently
+    traveling south on Highway 47 at high speeds, creating a significant threat to
+    civilian safety and property. We need to stop the truck, capture the highjackers
+    and make sure nobody gets hurt!
+
+
+    We don''t know how many assailants we are
+    dealing with, but they seem to armed with high-tech weaponry. Taking them out
+    quickly will be critical to avoid collateral damage.
+
+
+    Stay sharp, heroes,
+    and let''s keep those roads safe!'
+  missionVisual: {fileID: 21300000, guid: ed0d6eb119358ef4cb6091be43fc6740, type: 3}
   numberOfHeroes: 2
   sceneName: TruckHeist
   stages:
   - waveArray:
     - {fileID: 11400000, guid: db6bcca6ffd4c69459f0667434a74276, type: 2}
-    - {fileID: 11400000, guid: 344396cd3f26c6643bb49d6da71be21b, type: 2}
+    - {fileID: 11400000, guid: ea79e918898b9b44cb7fbbeb22e4489f, type: 2}
     - {fileID: 11400000, guid: 344396cd3f26c6643bb49d6da71be21b, type: 2}
     ambience: {fileID: 8300000, guid: a30f81a43302ce048a567dd9804171e8, type: 3}
     music: {fileID: 11400000, guid: 9fb11a82fd927b0438e300ec7a0c7083, type: 2}

@@ -56,7 +56,7 @@ MonoBehaviour:
   healthBar: {fileID: 5811871792351225801}
   experienceBar: {fileID: 6522795004622287218}
   enduranceBar: {fileID: 1502743002748560688}
-  avatar: {fileID: 884638217790777527}
+  avatar: {fileID: 1490557508825883775}
 --- !u!114 &767313878047737329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,11 +83,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player Avatar
       objectReference: {fileID: 0}
-    - target: {fileID: 1900701295943598135, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3962170657680027722, guid: 361a635ea524f3e4faf91c24341c1fe7,
         type: 3}
       propertyPath: m_Pivot.x
@@ -97,11 +92,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3962170657680027722, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 3962170657680027722, guid: 361a635ea524f3e4faf91c24341c1fe7,
         type: 3}
@@ -193,51 +183,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_fontAsset
-      value: 
-      objectReference: {fileID: 11400000, guid: 6b71a27ad61c8774b8a26a49db9bb273,
-        type: 2}
-    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_fontSizeMax
-      value: 36
-      objectReference: {fileID: 0}
-    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: -976379066588271947, guid: 6b71a27ad61c8774b8a26a49db9bb273,
-        type: 2}
-    - target: {fileID: 4311721122588811410, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_enableAutoSizing
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5850222625983747411, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_Name
-      value: ExperienceFill
-      objectReference: {fileID: 0}
-    - target: {fileID: 8519930861017894881, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_Name
-      value: Endurance Fill
-      objectReference: {fileID: 0}
-    - target: {fileID: 8757621384201399313, guid: 361a635ea524f3e4faf91c24341c1fe7,
-        type: 3}
-      propertyPath: m_Name
-      value: Health Fill
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 361a635ea524f3e4faf91c24341c1fe7, type: 3}
---- !u!114 &884638217790777527 stripped
+--- !u!114 &1490557508825883775 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 614757919018933210, guid: 361a635ea524f3e4faf91c24341c1fe7,
+  m_CorrespondingSourceObject: {fileID: 1180318020552595218, guid: 361a635ea524f3e4faf91c24341c1fe7,
     type: 3}
   m_PrefabInstance: {fileID: 346446030937273197}
   m_PrefabAsset: {fileID: 0}

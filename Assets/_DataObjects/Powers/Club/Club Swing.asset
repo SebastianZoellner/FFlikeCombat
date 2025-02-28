@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Club Swing
   m_EditorClassIdentifier: 
-  ShowDerivedAttributes: 1
+  ShowDerivedAttributes: 0
   attack: 0
   defense: 0
   target: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   projectile: {fileID: 0}
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 5286328772216621839, guid: 3bbf7e996e9d4004981ad9b327a6a00a, type: 3}
+  muzzleVFX: {fileID: 0}
   attackOriginArray: 04000000
   attackSound: {fileID: 0}
   hitSound: {fileID: 11400000, guid: c638ea1d0ac4c5140bad620fa9f3f93f, type: 2}

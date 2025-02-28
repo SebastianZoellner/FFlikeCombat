@@ -6,7 +6,7 @@ public class UIMissionSelectButton : MonoBehaviour
 {
     [SerializeField] TMP_Text missionName;
     [SerializeField] Image icon;
-    [SerializeField] Image frame;
+    [SerializeField] GameObject selectionIndicator;
 
     private bool isSelected = false;
 
@@ -28,6 +28,7 @@ public class UIMissionSelectButton : MonoBehaviour
 
         missionName.text = mission.LevelName;
         icon.sprite = mission.missionIcon;
+        selectionIndicator.SetActive(false);
     }
 
     public void MissionButtonPressed()
@@ -39,13 +40,12 @@ public class UIMissionSelectButton : MonoBehaviour
     {
         if(selectedLevel!=mission)
         {
-
-            frame.color = Color.white;
+            selectionIndicator.SetActive(false);          
             isSelected = false;
         }
         else
         {
-            frame.color = Color.red;
+            selectionIndicator.SetActive(true);
             isSelected = true;
         }
     }

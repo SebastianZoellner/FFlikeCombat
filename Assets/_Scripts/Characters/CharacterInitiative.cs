@@ -113,7 +113,7 @@ public class CharacterInitiative : MonoBehaviour
     {
         nextActionTime += delta;
         if (nextActionTime < ActionSequencer.actionTime)
-            nextActionTime = ActionSequencer.actionTime;
+            nextActionTime = ActionSequencer.actionTime+0.001f;
 
         OnActionTimeChanged.Invoke();
     }

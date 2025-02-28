@@ -23,13 +23,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a4ee9ce33c5acc845abf3d9ee71068ad, type: 2}
   - {fileID: 11400000, guid: fdc0adf5863e3914b839043cb7635d6c, type: 2}
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
+  leveledPowerArray: []
   attributeBonusArray: []
   icon: {fileID: 21300000, guid: e06df6066ec8f884faef82d131660f0a, type: 3}
   shortBlurb: 
+  blurb: 
   animatorController: {fileID: 22100000, guid: ffcbf9d412d57534e898e30bfd3350f1, type: 2}
   characterToon: {fileID: 6910464345339074373, guid: ccace65814773a3418cd5c6ea59a5db3,
     type: 3}
-  level: 4
+  rank: 4
   characterClass: 1
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
   impactToPower: 1

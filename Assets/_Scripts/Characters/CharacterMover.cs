@@ -82,11 +82,18 @@ public class CharacterMover : MonoBehaviour
         defaultFacing = Quaternion.LookRotation(spawnPoint.GetCombatLocation().forward, Vector3.up);
     }
 
-    public void MoveTo(Vector3 position, float distance)
+    public void MoveTo(Vector3 targetPosition, float distance)
     {
+      
         //Debug.Log("Mover input parameters: position " + position + " distance" + distance);
+        if(Vector3.Distance(transform.position,targetPosition)<distance+distanceThreshold)
+        {
+            OnMovementFinished.Invoke();
+            return;
+        }
+
         agent.stoppingDistance = distance;
-        agent.SetDestination(position);
+        agent.SetDestination(targetPosition);
         isMoving = true;
     }
 

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: MiniRocket
+  m_EditorClassIdentifier: 
+  ShowDerivedAttributes: 0
+  attack: 0
+  defense: -20
+  target: 5
+  radius: 2.5
+  timeCost: 1
+  setupVsRecovery: 0.3
+  damageSpread: 0.5
+  numberOfHits: 1
+  level: 1
+  momentumLimit: 0
+  momentumEffect: 1
+  momentumCostFactor: 0.5
+  successEffectArray:
+  - level: 3
+    status: 4
+    intensity: 1
+    duration: 2
+  - level: 4
+    status: 4
+    intensity: 1
+    duration: 4
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4:
+  - {fileID: 11400000, guid: 8939c76db719f4441b5548c298216ada, type: 2}
+  boostEffects: []
+  enduranceToDamage: 0
+  icon: {fileID: 21300000, guid: 1c99027ea2fa42b4a99834ca60887f0f, type: 3}
+  buttonName: MicroRocket
+  description: 
+  range: 9
+  attackAnimation: {fileID: 7400000, guid: 023ab59c8a2b6c842916debdf165e823, type: 3}
+  flyingAnimation: {fileID: 7400000, guid: 3d91900c41db6f248bee98ac35542348, type: 2}
+  projectile: {fileID: 2039520221526181666, guid: ffaeae479d4238e479cb5a085f9ea596,
+    type: 3}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 0}
+  muzzleVFX: {fileID: 6413794195403919843, guid: 458a889c7f1723b42989f54efec043f6,
+    type: 3}
+  attackOriginArray: 
+  attackSound: {fileID: 0}
+  shootSound: {fileID: 11400000, guid: 61f1352fcbc1e0d44be9512c61a21808, type: 2}
+  hitSound: {fileID: 0}
+  missSound: {fileID: 0}

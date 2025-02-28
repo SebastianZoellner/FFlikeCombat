@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
+  m_Name: Charge Up
+  m_EditorClassIdentifier: 
+  ShowDerivedAttributes: 1
+  attack: 0
+  defense: 0
+  target: 2
+  radius: 0
+  timeCost: 0.6
+  setupVsRecovery: 0.99
+  damageSpread: 0
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 3
+  momentumEffect: 0
+  momentumCostFactor: 0
+  successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  boostEffects:
+  - {fileID: 11400000, guid: e5ffa056817f13246b93a1e620f96266, type: 2}
+  - {fileID: 11400000, guid: 3d7ff1acdeda70b4d9be6008ba01f581, type: 2}
+  - {fileID: 11400000, guid: 5defd2ed931acda40b4b7aa3fdb003d6, type: 2}
+  enduranceToDamage: -1
+  icon: {fileID: 21300000, guid: 9b130c6a02254884f8d4f9455e116598, type: 3}
+  buttonName: 
+  description: 
+  range: 2
+  attackAnimation: {fileID: 1827226128182048838, guid: 9530d4eec4cb42740b182bd79c6c91bc,
+    type: 3}
+  flyingAnimation: {fileID: 7400000, guid: 39d78042caa22744d96d9dda8c5ac1a2, type: 2}
+  projectile: {fileID: 0}
+  attackVFX: {fileID: 0}
+  hitVFX: {fileID: 1979696918565472049, guid: 97cd60f6d617f7e44b46618a763377c8, type: 3}
+  muzzleVFX: {fileID: 0}
+  attackOriginArray: 
+  attackSound: {fileID: 11400000, guid: 673d3414ac5fe6c49bacdc526295cc69, type: 2}
+  shootSound: {fileID: 0}
+  hitSound: {fileID: 0}
+  missSound: {fileID: 0}
