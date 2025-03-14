@@ -18,7 +18,7 @@ MonoBehaviour:
   target: 0
   radius: 0
   timeCost: 0.5
-  setupVsRecovery: 0.01
+  setupVsRecovery: 0.2
   damageSpread: 0.725
   numberOfHits: 1
   level: 0
@@ -36,12 +36,13 @@ MonoBehaviour:
   enduranceToDamage: -0.5
   icon: {fileID: 21300000, guid: d485d7ca1e7af264a980dfd1fc88d9fe, type: 3}
   buttonName: 
-  description: A quick shot that may inflict a bleeding wound.
+  description: A quick shot.
   range: 5
   attackAnimation: {fileID: 7400000, guid: 9cfc4bb4c4d7aee48b526c1479f59819, type: 2}
   flyingAnimation: {fileID: 0}
   projectile: {fileID: 1756089082116642531, guid: db01f5298e3632644980c5c09d10e7c5,
     type: 3}
+  projectileOrigin: 0
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 0}
   muzzleVFX: {fileID: 6076308697013177144, guid: 43931dbfcffdceb49979ad9f5d868995,

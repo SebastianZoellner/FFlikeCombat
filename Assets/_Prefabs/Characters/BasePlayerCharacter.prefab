@@ -189,6 +189,11 @@ PrefabInstance:
       propertyPath: invigorateEffect
       value: 
       objectReference: {fileID: 3801170521035178836}
+    - target: {fileID: 6311430840982657967, guid: 041924f1a292f154598d5203164c7d52,
+        type: 3}
+      propertyPath: statusEffectTransform
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8808268184167857145, guid: 041924f1a292f154598d5203164c7d52,
         type: 3}
       propertyPath: levelSound

@@ -112,27 +112,27 @@ MonoBehaviour:
       valueByLevel:
       - 0
       - 20
-      - 30
-      - 35
+      - 28
+      - 37
       - 45
       - 52
       - 60
       - 80
       - 95
-      - 110
+      - 112
       - 130
     - stat: 9
       valueByLevel:
       - 12
       - 24
       - 32
-      - 40
+      - 42
       - 55
       - 70
       - 100
       - 180
       - 300
-      - 600
+      - 575
       - 1000
     - stat: 1
       valueByLevel:
@@ -161,59 +161,59 @@ MonoBehaviour:
       - 200
       - 200
   - characterClass: 2
-    statByLevelArray: 
+    statByLevelArray:
     - stat: 0
       valueByLevel:
       - 0
-      - 10
-      - 15
       - 20
-      - 25
       - 30
-      - 35
       - 40
       - 50
       - 60
       - 70
+      - 80
+      - 90
+      - 100
+      - 110
     - stat: 2
       valueByLevel:
       - 0
-      - 10
-      - 15
       - 20
-      - 25
       - 30
-      - 35
       - 40
       - 50
       - 60
       - 70
+      - 80
+      - 90
+      - 100
+      - 110
     - stat: 8
       valueByLevel:
       - 0
+      - 12
       - 20
       - 25
-      - 30
+      - 34
       - 40
-      - 50
-      - 60
-      - 75
-      - 90
-      - 110
-      - 120
+      - 48
+      - 65
+      - 80
+      - 97
+      - 115
     - stat: 9
       valueByLevel:
       - 12
-      - 20
-      - 30
+      - 18
+      - 24
+      - 28
       - 35
+      - 42
       - 50
-      - 65
-      - 90
-      - 160
-      - 300
-      - 500
-      - 900
+      - 80
+      - 150
+      - 260
+      - 450
     - stat: 10
       valueByLevel:
       - 200
@@ -228,72 +228,72 @@ MonoBehaviour:
       - 200
       - 200
   - characterClass: 3
-    statByLevelArray: 
+    statByLevelArray:
     - stat: 0
       valueByLevel:
       - 0
-      - 0
-      - 5
       - 10
-      - 10
-      - 15
       - 15
       - 20
       - 25
       - 30
       - 35
-    - stat: 2
-      valueByLevel:
-      - 0
-      - 0
-      - 5
-      - 10
-      - 15
-      - 20
-      - 25
-      - 30
       - 40
       - 50
       - 60
-    - stat: 8
-      valueByLevel:
-      - 0
-      - 20
-      - 30
-      - 35
-      - 45
-      - 52
-      - 60
-      - 80
-      - 95
-      - 110
-      - 130
-    - stat: 9
-      valueByLevel:
-      - 12
-      - 24
-      - 32
-      - 40
-      - 55
       - 70
-      - 100
-      - 180
-      - 300
-      - 600
-      - 1000
-    - stat: 1
+    - stat: 2
       valueByLevel:
       - 0
-      - 0
-      - 0
-      - 0
-      - 5
       - 10
       - 15
       - 20
       - 25
       - 30
       - 35
+      - 40
+      - 50
+      - 60
+      - 70
+    - stat: 8
+      valueByLevel:
+      - 0
+      - 15
+      - 20
+      - 27
+      - 37
+      - 44
+      - 53
+      - 70
+      - 87
+      - 103
+      - 120
+    - stat: 9
+      valueByLevel:
+      - 12
+      - 20
+      - 26
+      - 35
+      - 45
+      - 60
+      - 75
+      - 140
+      - 240
+      - 380
+      - 600
+    - stat: 1
+      valueByLevel:
+      - 0
+      - 10
+      - 15
+      - 20
+      - 25
+      - 30
+      - 35
+      - 40
+      - 50
+      - 60
+      - 70
     - stat: 10
       valueByLevel:
       - 200
@@ -308,20 +308,20 @@ MonoBehaviour:
       - 200
       - 200
   - characterClass: 4
-    statByLevelArray: 
+    statByLevelArray:
     - stat: 0
       valueByLevel:
       - 0
-      - 10
       - 15
       - 20
       - 25
       - 30
       - 35
       - 40
-      - 50
+      - 45
       - 60
       - 70
+      - 80
     - stat: 2
       valueByLevel:
       - 0
@@ -339,28 +339,28 @@ MonoBehaviour:
       valueByLevel:
       - 0
       - 20
-      - 25
       - 30
       - 40
       - 50
       - 60
-      - 75
+      - 70
       - 90
-      - 110
-      - 120
+      - 105
+      - 122
+      - 140
     - stat: 9
       valueByLevel:
       - 12
-      - 20
-      - 30
+      - 18
+      - 22
+      - 28
       - 35
-      - 50
-      - 65
-      - 90
+      - 45
+      - 55
+      - 95
       - 160
-      - 300
-      - 500
-      - 900
+      - 285
+      - 475
     - stat: 10
       valueByLevel:
       - 200

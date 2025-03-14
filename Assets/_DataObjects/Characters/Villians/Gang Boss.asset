@@ -31,7 +31,8 @@ MonoBehaviour:
   rank: 3
   characterClass: 0
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
+  levelUpProgression: {fileID: 0}
   impactToPower: 0.5
   celerityToSpeed: 0.5
   setHardiness: 3
-  setRecovery: 30
+  setRecovery: 5

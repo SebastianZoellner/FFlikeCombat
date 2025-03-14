@@ -25,6 +25,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6a357f6845baafe42a3a482ecb35a46d, type: 2}
   leveledPowerArray:
   - {fileID: 11400000, guid: 32fce817e672e184abf2de6498ddcf74, type: 2}
+  - {fileID: 11400000, guid: 9a41f4d377b001e419ae5bc23ac87e62, type: 2}
+  - {fileID: 11400000, guid: f74fecbd308e7614193fdc45ea1f3c70, type: 2}
   attributeBonusArray: []
   icon: {fileID: 21300000, guid: 329c39f28bc638a4396142893f6bac9a, type: 3}
   shortBlurb: Powered by alien tech, Air Force pilot Captain Erica Thorne  soars
@@ -42,6 +44,7 @@ MonoBehaviour:
   rank: 4
   characterClass: 3
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
+  levelUpProgression: {fileID: 11400000, guid: cf8c52765271239438bd4d4017fe50c2, type: 2}
   impactToPower: 0.75
   celerityToSpeed: 1
   setHardiness: 0

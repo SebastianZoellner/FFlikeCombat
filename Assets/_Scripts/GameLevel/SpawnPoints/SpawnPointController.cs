@@ -88,22 +88,22 @@ public class SpawnPointController : MonoBehaviour
     }
 
 
-    public List<CharacterHealth> GetAllFraction(Faction fraction)
+    public List<IDamageable> GetAllFraction(Faction fraction)
     {
-        List<CharacterHealth> foundList = new List<CharacterHealth>();
+        List<IDamageable> foundList = new List<IDamageable>();
 
         if (fraction == Faction.Enemy)
             foreach (SpawnPoint sp in fullEnemySpawnPoints)
             {
-                CharacterHealth ch = sp.GetComponentInChildren<CharacterHealth>();
-                if (ch)
+                IDamageable ch = sp.GetComponentInChildren<IDamageable>();
+                if (ch!=null)
                     foundList.Add(ch);
             }
         else
             foreach (SpawnPoint sp in fullHeroSpawnPoints)
             {
-                CharacterHealth ch = sp.GetComponentInChildren<CharacterHealth>();
-                if (ch)
+                IDamageable ch = sp.GetComponentInChildren<IDamageable>();
+                if (ch!=null)
                     foundList.Add(ch);
             }
 

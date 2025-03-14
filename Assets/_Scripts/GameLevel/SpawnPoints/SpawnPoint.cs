@@ -17,10 +17,14 @@ public class SpawnPoint : MonoBehaviour
             return false;
         }
 
-        IDamageable character = GetComponentInChildren<IDamageable>();
-        if (character != null)
+        IDamageable[] characterArray = GetComponentsInChildren<IDamageable>();
+
+        if (characterArray.Length > 1)
+            Debug.LogError("More than one IDamageable in spawn point " + name);
+
+        if (characterArray.Length>0)
         {
-            Debug.Log("Spawn point " + name + " holds " + character.GetTransform().name);
+            Debug.Log("Spawn point " + name + " holds " + characterArray[0].GetTransform().name);
             return true;
         }
 
@@ -34,6 +38,7 @@ public class SpawnPoint : MonoBehaviour
 
         return transform;
     }
+
     public void EmptyPoint()
     {
         IDamageable character = GetComponentInChildren<IDamageable>();

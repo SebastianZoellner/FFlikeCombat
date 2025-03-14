@@ -196,7 +196,7 @@ public class PowerSO : ScriptableObject
         return null;
     }
 
-    public void LaunchProjectileVolley(Vector3 launchPosition, CharacterCombat attacker, IDamageable[] targetArray)
+    public void LaunchProjectileVolley(Transform launchPosition, CharacterCombat attacker, IDamageable[] targetArray)
     {
         if (!projectile.projectilePerTarget)
         {
@@ -227,10 +227,10 @@ public class PowerSO : ScriptableObject
      }
     */
 
-    private void LaunchProjectile(Vector3 launchPosition, CharacterCombat attacker, IDamageable targetHealth)
+    private void LaunchProjectile(Transform launchPosition, CharacterCombat attacker, IDamageable targetHealth)
     {
         //Debug.Log("Launching projectile " + projectile.name);
-        GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition, Quaternion.identity);
+        GameObject projectileInstance = Instantiate(projectile.gameObject, launchPosition.position, Quaternion.LookRotation(launchPosition.forward));
         projectileInstance.GetComponent<Projectile>().Setup(attacker, targetHealth, range, this);
     }
 

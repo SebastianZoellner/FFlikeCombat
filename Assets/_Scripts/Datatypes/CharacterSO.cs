@@ -12,7 +12,7 @@ public class CharacterSO : ScriptableObject
     public Faction fraction;
    public PowerSO[] powerArray;
     public PowerSO[] leveledPowerArray;
-   // public float startingHealth;
+   
     [SerializeField] AttributeValue[] attributeBonusArray;
     private Dictionary<Attribute, float> baseAttribute = null;
     [PreviewField(75)]
@@ -26,9 +26,10 @@ public class CharacterSO : ScriptableObject
     [SerializeField] GameObject characterToon;
     [Range(0,10)]
     public int rank;
-    //public float StartingEndurance;
+    
     public CharacterClass characterClass;
     [SerializeField] StatProgressionSO statProgression;
+    [SerializeField] StatProgressionSO levelUpProgression;
     [Range (0,1)]
     [SerializeField] float impactToPower=0.5f;
     [Range(0, 1)]
@@ -37,6 +38,10 @@ public class CharacterSO : ScriptableObject
     [SerializeField] float setRecovery = 20;
     public float xpValue { get; private set; }
 
+
+    //-----------------------------------------------------------------------
+    //                    Public Methods
+    //-----------------------------------------------------------------------
     public float GetBaseAttribute(Attribute attribute)
     {
         if (baseAttribute == null)
@@ -71,19 +76,18 @@ public class CharacterSO : ScriptableObject
 
         return newCharacter;
     }
-
-/*
-    private void InitializeBaseAttribute()
+    public float GetLevelModifier(Attribute attribute,  int level)
     {
-        baseAttribute = new Dictionary<Attribute, float>();
-        foreach (Attribute att in System.Enum.GetValues(typeof(Attribute)))
-            baseAttribute[att] = 0;
+        if (level < 2 || level > 3)
+            return 0;
 
-        foreach (AttributeValue av in attributeBonusArray)
-            baseAttribute[av.attribute] = av.value;
-
+        return levelUpProgression.GetStat(attribute, characterClass, level-2);
     }
-*/
+
+    //-----------------------------------------------------------------------
+    //                    Private Methods
+    //-----------------------------------------------------------------------
+
     private void SetAttributes()
     {
         baseAttribute = new Dictionary<Attribute, float>();

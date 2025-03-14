@@ -323,6 +323,37 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4286077833608678224}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5231578738111699666
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 576435501525023232}
+  m_Layer: 0
+  m_Name: Missile Barrage Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &576435501525023232
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231578738111699666}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: -0, y: 1.584, z: 0.025}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4286071645297608694}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!1001 &14200626701082898
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1496,6 +1527,10 @@ PrefabInstance:
         type: 3}
       insertIndex: 0
       addedObject: {fileID: 7844815001507948065}
+    - targetCorrespondingSourceObject: {fileID: 4173771564108184, guid: 0418708de6c1f5d4799def6776f61029,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 576435501525023232}
     - targetCorrespondingSourceObject: {fileID: 4556177675296540, guid: 0418708de6c1f5d4799def6776f61029,
         type: 3}
       insertIndex: -1
@@ -1761,9 +1796,19 @@ PrefabInstance:
       objectReference: {fileID: 7844815001507948065}
     - target: {fileID: 519185359904861391, guid: 04c8837e64417394eb1ff55435545552,
         type: 3}
+      propertyPath: attackOrigin.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 519185359904861391, guid: 04c8837e64417394eb1ff55435545552,
+        type: 3}
       propertyPath: attackOrigin.Array.data[0]
       value: 
       objectReference: {fileID: 7844815001507948065}
+    - target: {fileID: 519185359904861391, guid: 04c8837e64417394eb1ff55435545552,
+        type: 3}
+      propertyPath: attackOrigin.Array.data[1]
+      value: 
+      objectReference: {fileID: 576435501525023232}
     - target: {fileID: 1328744500162122845, guid: 04c8837e64417394eb1ff55435545552,
         type: 3}
       propertyPath: m_Name

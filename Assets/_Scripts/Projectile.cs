@@ -6,6 +6,8 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] float projectileSpeed = 1f;
     [SerializeField] bool isHoming = false;
+    [SerializeField] float rotationSpeed = 2f;
+    [SerializeField] float homingDelay = 0.3f;
     [SerializeField] GameObject impactVfx;
     [SerializeField] GameObject[] destroyOnHit = null;
     [SerializeField] SimpleAudioEventSO impactSFX;
@@ -19,6 +21,7 @@ public class Projectile : MonoBehaviour
     private Vector3 target;
 
     private Vector3 startPosition;
+    private float flyTime;
 
     private CharacterCombat attacker;
 
@@ -30,17 +33,23 @@ public class Projectile : MonoBehaviour
     {
         startPosition = transform.position;
         if (target == null) return;
-        target = GetAimLocation();
-        transform.LookAt(target);
+target = GetAimLocation();
+        if (!isHoming)
+        {         
+            transform.LookAt(target);
+        }
     }
 
     private void Update()
     {
-        
-            if (isHoming && targetHealth.canBeTarget)
-                transform.LookAt(GetAimLocation());
-            //Here we could have a slower turn;
-        
+        flyTime += Time.deltaTime;
+
+        if (isHoming && targetHealth.canBeTarget&&flyTime>homingDelay)
+        {
+            Vector3 targetDirection=target-transform.position;
+            Vector3 newDirection = Vector3.RotateTowards(transform.forward, targetDirection, rotationSpeed * Time.deltaTime,0f);
+            transform.rotation = Quaternion.LookRotation(newDirection);
+        }  
 
         if (Vector3.Distance(transform.position, startPosition) > 2 * range)
             Destroy(gameObject);

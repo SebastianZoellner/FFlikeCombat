@@ -1,5 +1,7 @@
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PowerTest : MonoBehaviour
 {
@@ -10,11 +12,15 @@ public class PowerTest : MonoBehaviour
     [SerializeField] ObjectHealth target;
     [SerializeField] ObjectHealth objectHealth;
     [SerializeField] Transform characterLocations;
+    [SerializeField] GameObject button;
 
 
     private void Start()
-    {if(SpawnPointController.Instance)
+    {
+        if(SpawnPointController.Instance)
         SpawnPointController.Instance.SetupStage(1);
+
+        SetupButton();
     }
 
     private CharacterCombat FindActiveCharacter()
@@ -46,5 +52,13 @@ public class PowerTest : MonoBehaviour
             testCombat.StartAttack(testPower, objectHealth);
         else
             testCombat.StartAttack(testPower, target);
+
+        SetupButton();
+    }
+
+    private void SetupButton()
+    {
+        button.GetComponent<Image>().sprite = testPower.icon;
+        button.GetComponentInChildren<TMP_Text>().text = testPower.buttonName;
     }
 }

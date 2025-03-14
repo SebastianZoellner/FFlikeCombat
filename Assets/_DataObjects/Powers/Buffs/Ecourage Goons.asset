@@ -12,19 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 400237f72f69b7c45995e6c6bf4f21b7, type: 3}
   m_Name: Ecourage Goons
   m_EditorClassIdentifier: 
-  minDamage: 0
-  maxDamage: 2
+  ShowDerivedAttributes: 1
   attack: 0
   defense: 10
-  setupTime: 0.2
-  recoveryTime: 0.8
   target: 4
   radius: 0
-  successEffectArray:
-  - level: 0
-    status: 8
-    intensity: 0
-    duration: 0
+  timeCost: 0.8
+  setupVsRecovery: 0.5
+  damageSpread: 0
+  numberOfHits: 1
+  level: 0
+  momentumLimit: 0
+  momentumEffect: 0
+  momentumCostFactor: 0
+  successEffectArray: []
+  attackEffectsLevel1: []
+  attackEffectsLevel2: []
+  attackEffectsLevel3: []
+  attackEffectsLevel4: []
+  boostEffects:
+  - {fileID: 11400000, guid: e5ffa056817f13246b93a1e620f96266, type: 2}
+  - {fileID: 11400000, guid: 3d7ff1acdeda70b4d9be6008ba01f581, type: 2}
+  enduranceToDamage: 0
   icon: {fileID: 0}
   buttonName: 
   description: 
@@ -32,15 +41,12 @@ MonoBehaviour:
   attackAnimation: {fileID: 7400000, guid: 7eb7b1fd581b1914cbaf828239a0b545, type: 2}
   flyingAnimation: {fileID: 0}
   projectile: {fileID: 0}
+  projectileOrigin: 0
   attackVFX: {fileID: 0}
   hitVFX: {fileID: 1979696918565472049, guid: 97cd60f6d617f7e44b46618a763377c8, type: 3}
+  muzzleVFX: {fileID: 0}
   attackOriginArray: 
   attackSound: {fileID: 11400000, guid: 5ab057db39c95954eb7d4989e4f680f5, type: 2}
+  shootSound: {fileID: 0}
   hitSound: {fileID: 0}
   missSound: {fileID: 0}
-  momentumEffect: 0
-  momentumCost: 0
-  momentumChange: 0
-  minMomentum: -100
-  maxMomentum: 100
-  enduranceCost: 30

@@ -51,6 +51,7 @@ MonoBehaviour:
   rank: 4
   characterClass: 4
   statProgression: {fileID: 11400000, guid: 1cf448f61f2b733459877f2abb94f15e, type: 2}
+  levelUpProgression: {fileID: 11400000, guid: cf8c52765271239438bd4d4017fe50c2, type: 2}
   impactToPower: 0.5
   celerityToSpeed: 0
   setHardiness: 0

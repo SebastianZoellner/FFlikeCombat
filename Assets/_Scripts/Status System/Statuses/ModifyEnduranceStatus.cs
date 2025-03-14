@@ -1,3 +1,5 @@
+// increases the endurance by 5*intensity
+
 using UnityEngine;
 
 public class ModifyEnduranceStatus : BaseStatus

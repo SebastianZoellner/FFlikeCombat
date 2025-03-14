@@ -1,7 +1,6 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using System;
-using DamageNumbersPro;
 
 public class CharacterHealth : MonoBehaviour,IDamageable
 {
@@ -27,11 +26,12 @@ public class CharacterHealth : MonoBehaviour,IDamageable
    public SelectionIndicator selectionIndicator { get; private set; }
     public bool canBeTarget { get; private set; }
     public CharacterStats Stats { get; private set; }
-    public bool IsHero{ get; private set; }
+    public bool IsHero=> GetComponent<PCController>();
 
     private CharacterAnimator animator;
     private CharacterCombat damageSource;
     private CharacterVFX effects;
+    private CharacterExperience expereince;
 
     
 
@@ -41,19 +41,21 @@ public class CharacterHealth : MonoBehaviour,IDamageable
         Stats = GetComponent<CharacterStats>();
         animator = GetComponent<CharacterAnimator>();
         effects = GetComponent<CharacterVFX>();
-        IsHero = GetComponent<PCController>();    
+        
+        expereince = GetComponent<CharacterExperience>();
     }
 
     private void OnEnable()
     {
         ActionSequencer.OnNewRoundStarted += ActionSequencer_OnNewRoundStarted;
+        if(IsHero)
+        expereince.OnLevelUp += Expereince_OnLevelUp;
     }
 
-    private void Start()
-    {
-        StartingHealth = Stats.GetStartingHealth();
-        StartingEndurance = Stats.GetStartingEndurance();
+    
 
+    private void Start()
+    { 
         PresentHealth = StartingHealth;
         PresentEndurance = StartingEndurance;
         canBeTarget = true;
@@ -63,6 +65,8 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     private void OnDisable()
     {
         ActionSequencer.OnNewRoundStarted -= ActionSequencer_OnNewRoundStarted;
+        if (IsHero)
+            expereince.OnLevelUp -= Expereince_OnLevelUp;
     }
 
     //-----------------------------------------------------------------------------------
@@ -84,14 +88,14 @@ public class CharacterHealth : MonoBehaviour,IDamageable
             OnHeavyHit.Invoke(this);
 
         damageSource = source;
-        ChangeHealth(-damage);
+        ChangeHealth(-damage,true);
         
     }
 
     public void Heal(float healAmount)
     {
         if(healAmount>0)
-        ChangeHealth(healAmount);
+        ChangeHealth(healAmount,true);
     }
 
     public void SpendEndurance(float cost)
@@ -107,7 +111,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     {
         float recoveredHealth = HealthGameSystem.Instance.RestHealthBonus(StartingHealth, Stats.GetAttribute(Attribute.Hardiness));
         if (recoveredHealth != 0)
-            ChangeHealth(recoveredHealth*intensity);
+            ChangeHealth(recoveredHealth*intensity,true);
         Debug.Log("In Envigorate");
         ChangeEndurance(HealthGameSystem.Instance.RestEnduranceBonus(StartingEndurance)*intensity);
         OnInvigorate.Invoke();
@@ -136,7 +140,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     public void NewStage()
     {
         ChangeEndurance(HealthGameSystem.Instance.NewStageEndurance( StartingEndurance));
-        ChangeHealth(HealthGameSystem.Instance.NewStageHeal(StartingHealth - PresentHealth));
+        ChangeHealth(HealthGameSystem.Instance.NewStageHeal(StartingHealth - PresentHealth), true);
             
     }
 
@@ -145,11 +149,11 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     //------------------------------------------------------------------------
 
 
-    private void ChangeHealth(float change)
+    private void ChangeHealth(float change, bool spawnText)
     {
-        if (change > 0)
+        if (spawnText && change > 0)
             effects.SpawnDamageText(change);
-        if (change < 0)
+        if (spawnText && change < 0)
             effects.SpawnHealText(-change);
 
         PresentHealth += change;
@@ -169,7 +173,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
 
     private void ChangeEndurance(float change)
     {
-        PresentEndurance += change;
+              PresentEndurance += change;
         if (PresentEndurance > StartingEndurance)
             PresentEndurance = StartingEndurance;
 
@@ -184,7 +188,7 @@ public class CharacterHealth : MonoBehaviour,IDamageable
     {
         float recoveredHealth = HealthGameSystem.Instance.NewRoundHealthBonus(StartingHealth, Stats.GetAttribute(Attribute.Hardiness));
         if(recoveredHealth!=0)
-        ChangeHealth(recoveredHealth);
+        ChangeHealth(recoveredHealth,true);
         ChangeEndurance(HealthGameSystem.Instance.NewRoundEnduranceBonus(StartingEndurance));
     }
 
@@ -206,5 +210,13 @@ public class CharacterHealth : MonoBehaviour,IDamageable
         }
            
         OnDied.Invoke();            
-    } 
+    }
+
+    private void Expereince_OnLevelUp()
+    {
+        StartingHealth = Stats.GetStartingHealth();
+        StartingEndurance = Stats.GetStartingEndurance();
+        ChangeHealth(StartingHealth / 3,false);
+        ChangeEndurance(StartingEndurance / 3);
+    }
 }

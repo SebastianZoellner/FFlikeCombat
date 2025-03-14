@@ -4,13 +4,17 @@ using Sirenix.OdinInspector;
 
 public class CharacterExperience : MonoBehaviour
 {
+    public static event Action<CharacterExperience> OnAnyLevelUp=delegate { };
     public event Action OnLevelUp = delegate { };
     public event Action OnExperienceChanged = delegate { };
 
     public int level { get; private set; } = 1;
     public float experience { get; private set;}
+
+    private bool canLevelUp = false;
     private CharacterCombat characterCombat;
     private CharacterStats characterStats;
+    
 
     private void Awake()
     {
@@ -21,11 +25,15 @@ public class CharacterExperience : MonoBehaviour
     private void OnEnable()
     {
         CharacterHealth.OnAnyEnemyDied += CharacterHealth_OnAnyEnemyDied;
+        characterCombat.OnAttackFinished += CharacterCombat_OnAttackFinished;
     }
+
+   
 
     private void OnDisable()
     {
         CharacterHealth.OnAnyEnemyDied -= CharacterHealth_OnAnyEnemyDied;
+        characterCombat.OnAttackFinished -= CharacterCombat_OnAttackFinished;
     }
 
     public float GetLevelUpCost() => GameSystem.Instance.GetLevelUpCost(level, characterStats.GetRank());
@@ -53,16 +61,31 @@ public class CharacterExperience : MonoBehaviour
 
         if (GameSystem.Instance.TestLevelUp(experience, level,characterStats.GetRank()))
         {
-            ++level;
-            OnLevelUp.Invoke();
+            canLevelUp = true;
         }
+    }
+
+   
+    private void CharacterCombat_OnAttackFinished(bool finnished)
+    {
+        if (!finnished || !canLevelUp)
+            return;
+        LevelUp();
+    }
+
+
+    private void LevelUp()
+    {
+        ++level;
+        OnLevelUp.Invoke();
+        OnAnyLevelUp.Invoke(this);
+        canLevelUp = false;
     }
 
     [Button]
     private void TestLevel()
     {
-        ++level;
-        OnLevelUp.Invoke();
+        canLevelUp = true;
     }
         
 }

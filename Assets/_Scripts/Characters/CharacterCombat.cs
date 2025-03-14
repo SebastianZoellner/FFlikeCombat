@@ -81,10 +81,10 @@ public class CharacterCombat : MonoBehaviour
         float range=0;
 
         switch (attackPower.target)
-            {
+        {
             case TargetType.Enemy:
-                if (target==null) return;
-               // Debug.Log("Starting attack "+attackPower.name+" against " + target.GetName());            
+                if (target == null) return;
+                // Debug.Log("Starting attack "+attackPower.name+" against " + target.GetName());            
                 hasActed = false;
                 targetArray = new IDamageable[1];
                 targetArray[0] = target;
@@ -92,29 +92,30 @@ public class CharacterCombat : MonoBehaviour
                 moveToPosition = target.GetTransform().position;
                 range = attackPower.range;
 
-               if(target is CharacterHealth targetHealth)
-                OnAnyAttackStarted(health, targetHealth,attackPower);//Eventually we need an avatar for items, but that's for later.
+                if (target is CharacterHealth targetHealth)
+                    OnAnyAttackStarted(health, targetHealth, attackPower);//Eventually we need an avatar for items, but that's for later.
 
-                             
+
                 break;
 
             case TargetType.AllEnemies:
                 hasActed = false;
-                if(IsHero)
-                targetArray = SpawnPointController.Instance.GetAllFraction(Faction.Enemy).ToArray();
+                if (IsHero)
+                    targetArray = SpawnPointController.Instance.GetAllFraction(Faction.Enemy).ToArray();
                 else
-                    targetArray= SpawnPointController.Instance.GetAllFraction(Faction.Hero).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllFraction(Faction.Hero).ToArray();
+
                 Debug.Log("All Enemy attack with " + targetArray.Length + " targets");
 
                 moveToPosition = transform.position + transform.forward;
                 range = 0;
 
-                OnAnyAttackStarted(health, null,attackPower);
+                OnAnyAttackStarted(health, null, attackPower);
 
                 break;
 
             case TargetType.Self:
-            
+
                 hasActed = false;
                 targetArray = new IDamageable[1];
                 targetArray[0] = health;
@@ -122,7 +123,7 @@ public class CharacterCombat : MonoBehaviour
                 moveToPosition = transform.position + transform.forward;
                 range = 0;
 
-                OnAnyAttackStarted(health, null,attackPower);
+                OnAnyAttackStarted(health, null, attackPower);
                 break;
 
             case TargetType.AllFriends:
@@ -143,7 +144,7 @@ public class CharacterCombat : MonoBehaviour
             case TargetType.AreaEnemies:
                 hasActed = false;
                 if (IsHero)
-                    targetArray = SpawnPointController.Instance.GetAllInRadius(target.GetTransform(),attackPower.radius,Faction.Enemy).ToArray();
+                    targetArray = SpawnPointController.Instance.GetAllInRadius(target.GetTransform(), attackPower.radius, Faction.Enemy).ToArray();
                 else
                     targetArray = SpawnPointController.Instance.GetAllInRadius(target.GetTransform(), attackPower.radius, Faction.Hero).ToArray();
 
@@ -263,8 +264,8 @@ public class CharacterCombat : MonoBehaviour
         {
             GameObject muzzleVFX = Instantiate(attackPower.muzzleVFX, attackOrigin[attackPower.projectileOrigin].position, Quaternion.Euler(attackOrigin[attackPower.projectileOrigin].forward));
 
-            muzzleVFX.transform.forward = gameObject.transform.forward;
-            var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
+            //muzzleVFX.transform.forward = gameObject.transform.forward;
+            //var psMuzzle = muzzleVFX.GetComponent<ParticleSystem>();
             Destroy(muzzleVFX, 2);
 
         }
@@ -272,7 +273,7 @@ public class CharacterCombat : MonoBehaviour
         sound.PlayShootSound(attackPower.hitSound);//this is from an earlier version where hit sound was used for two different sounds
         sound.PlayShootSound(attackPower.shootSound);
 
-        attackPower.LaunchProjectileVolley(attackOrigin[attackPower.projectileOrigin].position, this, targetArray);
+        attackPower.LaunchProjectileVolley(attackOrigin[attackPower.projectileOrigin], this, targetArray);
 
     }
 

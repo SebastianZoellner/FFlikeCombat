@@ -26,7 +26,8 @@ public class CharacterVFX : MonoBehaviour
     private void Awake()
     {
         InitializeTrailEffectDictionary();
-        health = GetComponent<CharacterHealth>();    } 
+        health = GetComponent<CharacterHealth>();    
+    } 
 
     private void OnEnable()
     {
@@ -35,7 +36,7 @@ public class CharacterVFX : MonoBehaviour
         GetComponent<CharacterExperience>().OnLevelUp += CharacterVFX_OnLevelUp;
     }
 
-private void Start()
+    private void Start()
     {
         DisableTrail();
     }
